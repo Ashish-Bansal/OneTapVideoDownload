@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         addUrl(url);
+                        adapter.notifyDataSetChanged();
                     }
                 });
                 return true;
