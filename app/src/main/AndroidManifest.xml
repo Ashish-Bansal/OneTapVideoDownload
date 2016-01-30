@@ -30,6 +30,16 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".UrlLog"
+            android:label="@string/url_log"
+            android:exported="true"  >
+            <intent-filter>
+                <action android:name="com.phantom.videoplayerselect.UrlLog" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <service
             android:name=".IpcService"
             android:exported="true" >
