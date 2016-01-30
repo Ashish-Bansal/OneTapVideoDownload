@@ -76,13 +76,13 @@ public class MainActivity extends AppCompatActivity {
                 Uri copyUri = Uri.parse(itemData.getUrl());
                 ClipData clip = ClipData.newUri(getContentResolver(), "URI", copyUri);
                 clipboard.setPrimaryClip(clip);
-                displaySnackbar("Link copied", null, null);
+                displaySnackbar("URL copied", null, null);
                 return true;
             }
 
             @Override
             public void onClick(Url itemData) {
-                displaySnackbar(itemData.getFilename(), null, null);
+                displaySnackbar("Filename : " + itemData.getFilename(), null, null);
             }
 
             @Override
