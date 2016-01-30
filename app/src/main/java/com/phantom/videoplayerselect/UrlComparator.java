@@ -12,12 +12,15 @@ public class UrlComparator implements Comparator<Url> {
 
     }
 
+    /*
+        Comparator for Reverse Sorting List<Url> according to time/date
+     */
     @Override
     public int compare(Url firstUrlObj, Url secondUrlObj) {
         try {
-            Date thisDate = DateFormat.getDateTimeInstance().parse(firstUrlObj.getMetadata());
-            Date urlObjDate = DateFormat.getDateTimeInstance().parse(secondUrlObj.getMetadata());
-            return thisDate.compareTo(urlObjDate);
+            Date firstUrlDate = DateFormat.getDateTimeInstance().parse(firstUrlObj.getMetadata());
+            Date secondUrlDate = DateFormat.getDateTimeInstance().parse(secondUrlObj.getMetadata());
+            return secondUrlDate.compareTo(firstUrlDate);
         } catch(java.text.ParseException e) {
             Log.e("URL", e.getStackTrace().toString());
         }
