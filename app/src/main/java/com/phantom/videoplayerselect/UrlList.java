@@ -103,7 +103,6 @@ public class UrlList {
             Url urlObj = new Url(url, metadata);
             loadUrlIntoList(urlObj);
         }
-        Collections.sort(mList, new UrlComparator());
     }
 
     public void removeUrlFromSavedPerf(String url, String metadata) {
