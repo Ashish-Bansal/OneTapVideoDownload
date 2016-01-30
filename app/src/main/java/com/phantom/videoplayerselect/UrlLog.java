@@ -18,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.util.Vector;
+
 import co.dift.ui.SwipeToAction;
 
 public class UrlLog extends AppCompatActivity {
@@ -150,9 +152,22 @@ public class UrlLog extends AppCompatActivity {
 
         if (id == R.id.action_clear_urls) {
             mUrlList.clearLocalList();
+            mUrlList.loadSavedUrls();
+
+            final Vector<Url> urlList = mUrlList.getUrlList();
+
+            mUrlList.clearLocalList();
             mUrlList.clearSavedList();
+
             mUrlAdapter.notifyDataSetChanged();
-            displaySnackbar("URL List cleared", null, null);
+            displaySnackbar("URL List cleared", "Undo", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for(Url u : urlList) {
+                        mUrlList.addUrl(u);
+                    }
+                }
+            });
             return true;
         }
 
