@@ -124,4 +124,8 @@ public class UrlList {
     public Vector<Url> getUrlList() {
         return new Vector<Url>(mList);
     }
+
+    public boolean isEmpty() {
+        return size() > 0 ? false : true;
+    }
 }
