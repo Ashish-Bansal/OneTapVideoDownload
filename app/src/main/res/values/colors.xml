@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#2d2d2d</color>
+    <color name="accent">#512DA8</color>
+    <color name="divider">#CCC</color>
+    <color name="icons">#FFF</color>
+    <color name="item_background">#FFF</color>
+    <color name="action_bar_light">#4527A0</color>
+    <color name="action_bar_dark">#311B92</color>
+    <color name="snackbar">#512DA8</color>
+</resources>
