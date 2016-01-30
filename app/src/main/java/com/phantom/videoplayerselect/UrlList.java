@@ -2,15 +2,16 @@ package com.phantom.videoplayerselect;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.Vector;
 
 public class UrlList {
     private UrlList() {}
     public static final String PREFS_NAME = "SavedUrls";
     public static UrlList mUrlList;
-    List<Url> mList = new ArrayList<>();
+    Vector<Url> mList = new Vector<>();
     private Context mContext;
 
     public static UrlList getUrlListSingleton(Context context) {
@@ -25,27 +26,43 @@ public class UrlList {
         return mUrlList;
     }
 
-    public void addUrl(Url url) {
+    public void loadUrlIntoList(Url url) {
         mList.add(url);
-
+        Collections.sort(mList, new UrlComparator());
     }
 
-    public void addUrl(int pos, Url url) {
-        mList.add(pos, url);
-    }
+    public void addUrl(Url url) {
+        SharedPreferences settings = mContext.getSharedPreferences(PREFS_NAME, 0);
+        int urlSavedCount = settings.getInt("count", 0);
+        for(int i = 0; i < urlSavedCount*2; i+=2) {
+            String savedUrl = settings.getString(Integer.toString(i+1), "");
+            String savedMetadata = settings.getString(Integer.toString(i+2), "");
+            if (savedUrl.equals(url.getUrl()) && savedMetadata.equals(url.getMetadata())) {
+                return;
+            }
+        }
 
-    public int removeUrl(int pos) {
-        assert pos < mList.size();
-        mList.remove(pos);
-        return pos;
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(Integer.toString(urlSavedCount*2+1), url.getUrl());
+        editor.putString(Integer.toString(urlSavedCount*2+2), url.getMetadata());
+        editor.putInt("count", urlSavedCount + 1);
+        editor.apply();
+        Collections.sort(mList, new UrlComparator());
     }
 
     public int removeUrl(Url url) {
-        int pos = mList.indexOf(url);
+        int pos = -1;
+        for(int i=0; i<mList.size(); i++) {
+            if (mList.elementAt(i).equals(url)) {
+                pos = i;
+                break;
+            }
+        }
+
         assert pos != -1;
 
+        removeUrlFromSavedPerf(url.getUrl(), url.getMetadata());
         mList.remove(pos);
-        removeUrlFromSavedPerf(pos);
         return pos;
     }
 
@@ -58,26 +75,39 @@ public class UrlList {
         return mList.get(pos);
     }
 
+    public void clearList() {
+        mList.clear();
+    }
+
     public void loadSavedUrls() {
         SharedPreferences settings = mContext.getSharedPreferences(PREFS_NAME, 0);
         int urlSavedCount = settings.getInt("count", 0);
-        for(int i = 0; i < urlSavedCount*2; i+=2) {
+        for(int i = 0; i < urlSavedCount*2 ; i+=2) {
             String url = settings.getString(Integer.toString(i+1), "");
             String metadata = settings.getString(Integer.toString(i+2), "");
             if (url.isEmpty() || metadata.isEmpty()) {
                 continue;
             }
 
+            Log.e("URLList", url);
             Url urlObj = new Url(url, metadata);
-            addUrl(urlObj);
+            loadUrlIntoList(urlObj);
         }
+        Collections.sort(mList, new UrlComparator());
     }
 
-    public void removeUrlFromSavedPerf(int pos) {
+    public void removeUrlFromSavedPerf(String url, String metadata) {
         SharedPreferences settings = mContext.getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
-        editor.remove(Integer.toString(pos*2+1));
-        editor.remove(Integer.toString(pos*2+2));
+        int urlSavedCount = settings.getInt("count", 0);
+        for(int i = 0; i < urlSavedCount*2 ; i+=2) {
+            String savedUrl = settings.getString(Integer.toString(i+1), "");
+            String savedMetadata = settings.getString(Integer.toString(i+2), "");
+            if (savedUrl.equals(url) && savedMetadata.equals(metadata)) {
+                editor.remove(Integer.toString(i+1));
+                editor.remove(Integer.toString(i+2));
+            }
+        }
         editor.apply();
     }
 }
