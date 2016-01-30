@@ -32,6 +32,17 @@ public class IpcService extends IntentService {
         context.startService(intent);
     }
 
+    public static void startSaveUrlAction(Context context, String url) {
+        Intent intent = new Intent(ACTION_SAVE_URI);
+        intent.setClassName(PACKAGE_NAME, CLASS_NAME);
+        intent.putExtra(EXTRA_URL, url);
+
+        Calendar cal = Calendar.getInstance();
+        intent.putExtra(EXTRA_METADATA, DateFormat.getDateTimeInstance().format(cal.getTime()));
+
+        context.startService(intent);
+    }
+
     public IpcService() {
         super("IpcService");
     }
@@ -65,9 +76,9 @@ public class IpcService extends IntentService {
         SharedPreferences.Editor editor = settings.edit();
         int urlSavedCount = settings.getInt("count", 0);
         for(int i = 0; i < urlSavedCount*2; i+=2) {
-            String savedUrl = settings.getString(Integer.toString(i+1), "");
+            String savedUrl = settings.getString(Integer.toString(i + 1), "");
             if (savedUrl.equals(url)) {
-                editor.putString(Integer.toString(i+2), metadata);
+                editor.putString(Integer.toString(i + 2), metadata);
                 return;
             }
         }
