@@ -120,4 +120,8 @@ public class UrlList {
         }
         editor.apply();
     }
+
+    public Vector<Url> getUrlList() {
+        return new Vector<Url>(mList);
+    }
 }
