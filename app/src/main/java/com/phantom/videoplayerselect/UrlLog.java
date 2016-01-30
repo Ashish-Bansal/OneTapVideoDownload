@@ -2,6 +2,7 @@ package com.phantom.videoplayerselect;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -86,8 +87,14 @@ public class UrlLog extends AppCompatActivity {
             }
 
             @Override
-            public void onClick(Url itemData) {
-                displaySnackbar("Filename : " + itemData.getFilename(), null, null);
+            public void onClick(final Url itemData) {
+                displaySnackbar("Filename : " + itemData.getFilename(), "Open", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(itemData.getUrl()));
+                        startActivity(intent);
+                    }
+                });
             }
 
             @Override
