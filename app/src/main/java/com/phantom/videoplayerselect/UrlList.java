@@ -77,8 +77,16 @@ public class UrlList {
         return mList.get(pos);
     }
 
-    public void clearList() {
+
+    public void clearLocalList() {
         mList.clear();
+    }
+
+    public void clearSavedList() {
+        SharedPreferences settings = mContext.getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.clear();
+        editor.apply();
     }
 
     public void loadSavedUrls() {
