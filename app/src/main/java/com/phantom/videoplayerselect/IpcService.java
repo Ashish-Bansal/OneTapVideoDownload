@@ -66,7 +66,6 @@ public class IpcService extends IntentService {
         mBuilder.setContentTitle("Any Video Downloader");
         mBuilder.setContentText(url);
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        intent.setData(Uri.parse(url));
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, Intent.FILL_IN_ACTION);
         mBuilder.setContentIntent(pendingIntent);
         NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
