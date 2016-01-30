@@ -5,7 +5,7 @@ import android.util.Log;
 import java.text.DateFormat;
 import java.util.Date;
 
-public class Url {
+public class Url implements Comparable<Url> {
     private String mUrl, mMetadata;
 
     public Url(String url, String metadata) {
@@ -34,6 +34,7 @@ public class Url {
         return false;
     }
 
+    @Override
     public int compareTo(Url urlObj) {
         Url url = (Url)urlObj;
         try {
