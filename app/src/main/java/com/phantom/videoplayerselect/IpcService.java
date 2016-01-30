@@ -49,26 +49,33 @@ public class IpcService extends IntentService {
         }
     }
 
-    private void handleActionSaveUrl(String uri, String metadata) {
+    private void handleActionSaveUrl(String url, String metadata) {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
         mBuilder.setSmallIcon(R.drawable.copy);
         mBuilder.setContentTitle("Any Video Downloader");
-        mBuilder.setContentText(uri);
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-        intent.setDataAndType(Uri.parse(uri), "video/mp4");
+        mBuilder.setContentText(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        intent.setDataAndType(Uri.parse(url), "video/mp4");
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, Intent.FILL_IN_ACTION);
         mBuilder.setContentIntent(pendingIntent);
         NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationmanager.notify(0, mBuilder.build());
 
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        SharedPreferences.Editor editor = settings.edit();
         int urlSavedCount = settings.getInt("count", 0);
-        editor.putString(Integer.toString(urlSavedCount*2+1), uri);
+        for(int i = 0; i < urlSavedCount*2; i+=2) {
+            String savedUrl = settings.getString(Integer.toString(i+1), "");
+            String savedMetadata = settings.getString(Integer.toString(i+2), "");
+            if (savedUrl.equals(url) && savedMetadata.equals(metadata)) {
+                return;
+            }
+        }
+
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(Integer.toString(urlSavedCount*2+1), url);
         editor.putString(Integer.toString(urlSavedCount*2+2), metadata);
         editor.putInt("count", urlSavedCount+1);
         editor.apply();
-
     }
 
 }
