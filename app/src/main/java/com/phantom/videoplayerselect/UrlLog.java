@@ -166,6 +166,7 @@ public class UrlLog extends AppCompatActivity {
                     for(Url u : urlList) {
                         mUrlList.addUrl(u);
                     }
+                    mUrlAdapter.notifyDataSetChanged();
                 }
             });
             return true;
