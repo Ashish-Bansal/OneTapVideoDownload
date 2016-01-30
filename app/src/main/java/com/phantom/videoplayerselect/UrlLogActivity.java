@@ -52,6 +52,10 @@ public class UrlLogActivity extends AppCompatActivity {
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+        if (mToolbar != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -150,28 +154,32 @@ public class UrlLogActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_clear_urls) {
-            mUrlList.clearLocalList();
-            mUrlList.loadSavedUrls();
+        switch (id) {
+            case R.id.action_clear_urls :
+                mUrlList.clearLocalList();
+                mUrlList.loadSavedUrls();
 
-            final Vector<Url> urlList = mUrlList.getUrlList();
+                final Vector<Url> urlList = mUrlList.getUrlList();
 
-            mUrlList.clearLocalList();
-            mUrlList.clearSavedList();
+                mUrlList.clearLocalList();
+                mUrlList.clearSavedList();
 
-            mUrlAdapter.notifyDataSetChanged();
-            displaySnackbar("URL List cleared", "Undo", new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    for(Url u : urlList) {
-                        mUrlList.addUrl(u);
+                mUrlAdapter.notifyDataSetChanged();
+                displaySnackbar("URL List cleared", "Undo", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        for(Url u : urlList) {
+                            mUrlList.addUrl(u);
+                        }
+                        mUrlAdapter.notifyDataSetChanged();
                     }
-                    mUrlAdapter.notifyDataSetChanged();
-                }
-            });
-            return true;
+                });
+                return true;
+            case android.R.id.home :
+                onBackPressed();
+                return true;
+            default :
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }
