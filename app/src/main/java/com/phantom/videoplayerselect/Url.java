@@ -1,11 +1,6 @@
 package com.phantom.videoplayerselect;
 
-import android.util.Log;
-
-import java.text.DateFormat;
-import java.util.Date;
-
-public class Url implements Comparable<Url> {
+public class Url {
     private String mUrl, mMetadata;
 
     public Url(String url, String metadata) {
@@ -34,16 +29,4 @@ public class Url implements Comparable<Url> {
         return false;
     }
 
-    @Override
-    public int compareTo(Url urlObj) {
-        Url url = (Url)urlObj;
-        try {
-            Date thisDate = DateFormat.getDateTimeInstance().parse(mMetadata);
-            Date urlObjDate = DateFormat.getDateTimeInstance().parse(url.getMetadata());
-            return thisDate.compareTo(urlObjDate);
-        } catch(java.text.ParseException e) {
-            Log.e("URL", e.getStackTrace().toString());
-        }
-        return 0;
-    }
 }
