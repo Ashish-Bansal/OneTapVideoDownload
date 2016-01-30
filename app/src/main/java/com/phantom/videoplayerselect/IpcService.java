@@ -62,16 +62,16 @@ public class IpcService extends IntentService {
         notificationmanager.notify(0, mBuilder.build());
 
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
         int urlSavedCount = settings.getInt("count", 0);
         for(int i = 0; i < urlSavedCount*2; i+=2) {
             String savedUrl = settings.getString(Integer.toString(i+1), "");
-            String savedMetadata = settings.getString(Integer.toString(i+2), "");
-            if (savedUrl.equals(url) && savedMetadata.equals(metadata)) {
+            if (savedUrl.equals(url)) {
+                editor.putString(Integer.toString(i+2), metadata);
                 return;
             }
         }
 
-        SharedPreferences.Editor editor = settings.edit();
         editor.putString(Integer.toString(urlSavedCount*2+1), url);
         editor.putString(Integer.toString(urlSavedCount*2+2), metadata);
         editor.putInt("count", urlSavedCount+1);
