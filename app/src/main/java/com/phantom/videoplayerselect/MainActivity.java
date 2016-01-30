@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mUrlList.clearList();
+                mUrlList.clearLocalList();
                 mUrlList.loadSavedUrls();
                 mSwipeRefreshLayout.setRefreshing(false);
             }
@@ -58,12 +58,11 @@ public class MainActivity extends AppCompatActivity {
         swipeToAction = new SwipeToAction(recyclerView, new SwipeToAction.SwipeListener<Url>() {
             @Override
             public boolean swipeLeft(final Url url) {
-                System.out.println(url.getUrl());
-                final int pos = removeUrl(url);
+                removeUrl(url);
                 displaySnackbar(url.getUrl() + " removed", "Undo", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        addUrl(pos, url);
+                        addUrl(url);
                     }
                 });
                 return true;
@@ -107,9 +106,9 @@ public class MainActivity extends AppCompatActivity {
         return position;
     }
 
-    private void addUrl(int pos, Url url) {
-        mUrlList.addUrl(pos, url);
-        adapter.notifyItemInserted(pos);
+    private void addUrl(Url url) {
+        mUrlList.addUrl(url);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -121,11 +120,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
