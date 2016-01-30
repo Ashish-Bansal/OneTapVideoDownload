@@ -122,6 +122,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        if (id == R.id.action_clear_urls) {
+            mUrlList.clearLocalList();
+            mUrlList.clearSavedList();
+            adapter.notifyDataSetChanged();
+            displaySnackbar("URL List cleared", null, null);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 }
