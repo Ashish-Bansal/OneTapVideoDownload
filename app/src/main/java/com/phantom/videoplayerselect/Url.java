@@ -1,5 +1,7 @@
 package com.phantom.videoplayerselect;
 
+import android.net.Uri;
+
 public class Url {
     private String mUrl, mMetadata;
 
@@ -14,6 +16,11 @@ public class Url {
 
     public String getMetadata() {
         return mMetadata;
+    }
+
+    public String fileName() {
+        Uri uri = Uri.parse(mUrl);
+        return uri.getLastPathSegment();
     }
 
     @Override
