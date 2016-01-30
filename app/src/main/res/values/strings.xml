@@ -3,4 +3,6 @@
     <string name="app_description">Play a Video from browsers using different player</string>
     <string name="action_settings">Settings</string>
     <string name="action_clear_urls">Clear URL List</string>
+    <string name="url_log">URL Log</string>
+    <string name="prefs_open_url_log">Open URL Log</string>
 </resources>
