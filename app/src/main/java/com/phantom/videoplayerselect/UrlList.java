@@ -35,21 +35,21 @@ public class UrlList {
 
     public void addUrl(Url url) {
         SharedPreferences settings = mContext.getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
         int urlSavedCount = settings.getInt("count", 0);
         for (int i = 0; i < urlSavedCount * 2; i += 2) {
             String savedUrl = settings.getString(Integer.toString(i + 1), "");
-            String savedMetadata = settings.getString(Integer.toString(i + 2), "");
-            if (savedUrl.equals(url.getUrl()) && savedMetadata.equals(url.getMetadata())) {
+            if (savedUrl.equals(url.getUrl())) {
+                editor.putString(Integer.toString(i + 2), url.getMetadata());
                 return;
             }
         }
 
-        SharedPreferences.Editor editor = settings.edit();
         editor.putString(Integer.toString(urlSavedCount * 2 + 1), url.getUrl());
         editor.putString(Integer.toString(urlSavedCount * 2 + 2), url.getMetadata());
         editor.putInt("count", urlSavedCount + 1);
         editor.apply();
-        Collections.sort(mList, new UrlComparator());
+        loadUrlIntoList(url);
     }
 
     public int removeUrl(Url url) {
