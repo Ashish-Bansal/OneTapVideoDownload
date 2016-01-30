@@ -22,7 +22,7 @@ import java.util.Vector;
 
 import co.dift.ui.SwipeToAction;
 
-public class UrlLog extends AppCompatActivity {
+public class UrlLogActivity extends AppCompatActivity {
     private UrlList mUrlList;
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;

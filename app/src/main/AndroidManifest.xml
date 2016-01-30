@@ -31,7 +31,7 @@
         </activity>
 
         <activity
-            android:name=".UrlLog"
+            android:name=".UrlLogActivity"
             android:label="@string/url_log"
             android:exported="true"  >
             <intent-filter>
