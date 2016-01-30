@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
             public void onRefresh() {
                 mUrlList.clearLocalList();
                 mUrlList.loadSavedUrls();
+                displaySnackbar("URL List updated", null, null);
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
