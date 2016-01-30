@@ -21,11 +21,12 @@ import co.dift.ui.SwipeToAction;
 
 public class UrlLog extends AppCompatActivity {
     private UrlList mUrlList;
-    private Toolbar toolbar;
+    private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
-    RecyclerView recyclerView;
-    UrlAdapter adapter;
-    SwipeToAction swipeToAction;
+    private RecyclerView mRecyclerView;
+    private UrlAdapter mUrlAdapter;
+    private SwipeToAction mSwipeToAction;
+    private TextView mEmptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,21 +43,25 @@ public class UrlLog extends AppCompatActivity {
                 mUrlList.loadSavedUrls();
                 displaySnackbar("URL List updated", null, null);
                 mSwipeRefreshLayout.setRefreshing(false);
+                evaluateVisibility();
             }
         });
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setHasFixedSize(true);
 
-        adapter = new UrlAdapter(mUrlList);
-        recyclerView.setAdapter(adapter);
+        mUrlAdapter = new UrlAdapter(mUrlList);
+        mRecyclerView.setAdapter(mUrlAdapter);
 
-        swipeToAction = new SwipeToAction(recyclerView, new SwipeToAction.SwipeListener<Url>() {
+
+        mEmptyView = (TextView) findViewById(R.id.empty_view);
+        evaluateVisibility();
+        mSwipeToAction = new SwipeToAction(mRecyclerView, new SwipeToAction.SwipeListener<Url>() {
             @Override
             public boolean swipeLeft(final Url url) {
                 removeUrl(url);
@@ -64,7 +69,7 @@ public class UrlLog extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         addUrl(url);
-                        adapter.notifyDataSetChanged();
+                        mUrlAdapter.notifyDataSetChanged();
                     }
                 });
                 return true;
@@ -105,13 +110,25 @@ public class UrlLog extends AppCompatActivity {
 
     private int removeUrl(Url url) {
         int position = UrlList.getUrlListSingleton(this).removeUrl(url);
-        adapter.notifyItemRemoved(position);
+        mUrlAdapter.notifyItemRemoved(position);
+        evaluateVisibility();
         return position;
     }
 
     private void addUrl(Url url) {
         mUrlList.addUrl(url);
-        adapter.notifyDataSetChanged();
+        mUrlAdapter.notifyDataSetChanged();
+        evaluateVisibility();
+    }
+
+    private void evaluateVisibility() {
+        if (mUrlList.isEmpty()) {
+            mRecyclerView.setVisibility(View.GONE);
+            mEmptyView.setVisibility(View.VISIBLE);
+        } else {
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mEmptyView.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -127,7 +144,7 @@ public class UrlLog extends AppCompatActivity {
         if (id == R.id.action_clear_urls) {
             mUrlList.clearLocalList();
             mUrlList.clearSavedList();
-            adapter.notifyDataSetChanged();
+            mUrlAdapter.notifyDataSetChanged();
             displaySnackbar("URL List cleared", null, null);
             return true;
         }

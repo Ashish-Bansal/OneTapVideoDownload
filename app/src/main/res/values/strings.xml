@@ -5,4 +5,5 @@
     <string name="action_clear_urls">Clear URL List</string>
     <string name="url_log">URL Log</string>
     <string name="prefs_open_url_log">Open URL Log</string>
+    <string name="no_data_available"> URL Log Empty </string>
 </resources>
