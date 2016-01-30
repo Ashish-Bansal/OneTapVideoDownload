@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(Url itemData) {
+                displaySnackbar(itemData.getFilename(), null, null);
             }
 
             @Override

@@ -18,7 +18,7 @@ public class Url {
         return mMetadata;
     }
 
-    public String fileName() {
+    public String getFilename() {
         Uri uri = Uri.parse(mUrl);
         return uri.getLastPathSegment();
     }
