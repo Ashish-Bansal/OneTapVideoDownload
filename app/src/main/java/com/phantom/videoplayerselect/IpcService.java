@@ -11,7 +11,7 @@ import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
 import java.text.DateFormat;
-import java.util.Date;
+import java.util.Calendar;
 
 public class IpcService extends IntentService {
     public static final String PREFS_NAME = "SavedUrls";
@@ -25,7 +25,10 @@ public class IpcService extends IntentService {
         Intent intent = new Intent(ACTION_SAVE_URI);
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent.putExtra(EXTRA_URL, uri.toString());
-        intent.putExtra(EXTRA_METADATA, DateFormat.getDateTimeInstance().format(new Date(0)));
+
+        Calendar cal = Calendar.getInstance();
+        intent.putExtra(EXTRA_METADATA, DateFormat.getDateTimeInstance().format(cal.getTime()));
+
         context.startService(intent);
     }
 
@@ -53,7 +56,7 @@ public class IpcService extends IntentService {
         mBuilder.setContentText(uri);
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
         intent.setDataAndType(Uri.parse(uri), "video/mp4");
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,   intent, Intent.FILL_IN_ACTION);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, Intent.FILL_IN_ACTION);
         mBuilder.setContentIntent(pendingIntent);
         NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationmanager.notify(0, mBuilder.build());
@@ -65,6 +68,7 @@ public class IpcService extends IntentService {
         editor.putString(Integer.toString(urlSavedCount*2+2), metadata);
         editor.putInt("count", urlSavedCount+1);
         editor.apply();
+
     }
 
 }
