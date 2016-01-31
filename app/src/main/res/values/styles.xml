@@ -5,6 +5,27 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/action_bar_light</item>
         <item name="colorPrimaryDark">@color/action_bar_dark</item>
+
+        <item name="alertDialogTheme">@style/AppTheme.Dialog.Alert</item>
+        <item name="dialogTheme">@style/AppTheme.Dialog</item>
+
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Material</item>
+        <item name="preferenceTint">@color/accent_state_list</item>
+
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
+    <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorAccent">@color/accent</item>
+
+        <item name="android:textColorHighlight">@color/highlight</item>
+    </style>
+
+    <style name="AppTheme.Dialog.Alert" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:textColorHighlight">@color/highlight</item>
     </style>
 
 </resources>
