@@ -8,4 +8,6 @@
     <color name="action_bar_light">#4527A0</color>
     <color name="action_bar_dark">#311B92</color>
     <color name="snackbar">#512DA8</color>
+
+    <color name="highlight">#311B92</color>
 </resources>

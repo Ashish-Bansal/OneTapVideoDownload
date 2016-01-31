@@ -9,4 +9,22 @@
     <string name="pref_url_logging_title">Enable URL logging</string>
     <string name="pref_url_logging_summary">Show Call Interface when clicking call button</string>
     <string name="pref_url_logging_header">URL Logging</string>
+    <string name="pref_notification_header">Notification Settings</string>
+    <string name="pref_notification_enable_title">Enable Notifications</string>
+    <string name="pref_notification_enable_summary">Show URL Notifications</string>
+    <string name="pref_notification_count_title">Maximum No. of Notifications</string>
+    <string-array name="pref_notification_count_titles">
+        <item>1 Notification</item>
+        <item>2 Notifications</item>
+        <item>3 Notifications</item>
+        <item>4 Notifications</item>
+        <item>5 Notifications</item>
+    </string-array>
+    <string-array name="pref_notification_count_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
 </resources>

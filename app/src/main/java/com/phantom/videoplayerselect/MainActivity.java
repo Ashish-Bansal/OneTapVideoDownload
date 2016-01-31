@@ -11,17 +11,20 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import net.xpece.android.support.preference.Fixes;
+
 public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fixes.updateLayoutInflaterFactory(getLayoutInflater());
         setContentView(R.layout.activity_main);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getFragmentManager().beginTransaction().replace(R.id.content_frame, new CustomPreferenceFragment()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.content_frame, new CustomPreferenceFragment(), "Preferences").commit();
     }
 
     private void displaySnackbar(String text, String actionName, View.OnClickListener action) {

@@ -36,4 +36,5 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'co.dift.ui.swipetoaction:library:1.1'
     compile 'com.google.android.gms:play-services-analytics:8.4.0'
+    compile 'net.xpece.android:support-preference:0.5.3'
 }

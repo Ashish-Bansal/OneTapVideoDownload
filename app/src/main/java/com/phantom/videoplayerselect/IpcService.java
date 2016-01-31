@@ -1,6 +1,7 @@
 package com.phantom.videoplayerselect;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -12,14 +13,16 @@ import android.util.Log;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class IpcService extends IntentService {
     public static final String PREFS_NAME = "SavedUrls";
     private static final String PACKAGE_NAME = "com.phantom.videoplayerselect";
-    private static final String CLASS_NAME = "com.phantom.videoplayerselect.IpcService";
+    private static final String CLASS_NAME = "IpcService";
     private static final String ACTION_SAVE_URI = "com.phantom.videoplayerselect.action.saveurl";
     private static final String EXTRA_URL = "com.phantom.videoplayerselect.extra.url";
     private static final String EXTRA_METADATA = "com.phantom.videoplayerselect.extra.metadata";
+    private static final AtomicInteger notificationId = new AtomicInteger();
 
     public static void startSaveUrlAction(Context context, Uri uri) {
         Intent intent = new Intent(ACTION_SAVE_URI);
@@ -60,21 +63,27 @@ public class IpcService extends IntentService {
         }
     }
 
-    private void handleActionSaveUrl(String url, String metadata) {
+    private void showNotification(String url) {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
         mBuilder.setSmallIcon(R.drawable.copy);
         mBuilder.setContentTitle("Any Video Downloader");
         mBuilder.setContentText(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, Intent.FILL_IN_ACTION);
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         mBuilder.setContentIntent(pendingIntent);
         NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationmanager.notify(0, mBuilder.build());
-
-        if (CheckPreferences.loggingDisabled(this)) {
-            return;
+        Notification notification = mBuilder.build();
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+        int id = notificationId.getAndIncrement();
+        if (id == CheckPreferences.notificationCountAllowed(this)) {
+            id = 0;
+            notificationId.set(id);
         }
 
+        notificationmanager.notify(id, notification);
+    }
+
+    private void logUrl(String url, String metadata) {
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         int urlSavedCount = settings.getInt("count", 0);
@@ -86,10 +95,19 @@ public class IpcService extends IntentService {
             }
         }
 
-        editor.putString(Integer.toString(urlSavedCount*2+1), url);
+        editor.putString(Integer.toString(urlSavedCount * 2 + 1), url);
         editor.putString(Integer.toString(urlSavedCount*2+2), metadata);
-        editor.putInt("count", urlSavedCount+1);
+        editor.putInt("count", urlSavedCount + 1);
         editor.apply();
     }
 
+    private void handleActionSaveUrl(String url, String metadata) {
+        if (CheckPreferences.notificationsEnabled(this)) {
+            showNotification(url);
+        }
+
+        if (CheckPreferences.loggingEnabled(this)) {
+            logUrl(url, metadata);
+        }
+    }
 }
