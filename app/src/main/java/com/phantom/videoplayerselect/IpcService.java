@@ -71,6 +71,10 @@ public class IpcService extends IntentService {
         NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationmanager.notify(0, mBuilder.build());
 
+        if (CheckPreferences.loggingDisabled(this)) {
+            return;
+        }
+
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         int urlSavedCount = settings.getInt("count", 0);
