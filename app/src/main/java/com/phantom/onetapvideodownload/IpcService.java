@@ -1,4 +1,4 @@
-package com.phantom.videoplayerselect;
+package com.phantom.onetapvideodownload;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -17,11 +17,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class IpcService extends IntentService {
     public static final String PREFS_NAME = "SavedUrls";
-    private static final String PACKAGE_NAME = "com.phantom.videoplayerselect";
-    private static final String CLASS_NAME = "IpcService";
-    private static final String ACTION_SAVE_URI = "com.phantom.videoplayerselect.action.saveurl";
-    private static final String EXTRA_URL = "com.phantom.videoplayerselect.extra.url";
-    private static final String EXTRA_METADATA = "com.phantom.videoplayerselect.extra.metadata";
+    private static final String PACKAGE_NAME = "com.phantom.onetapvideodownload";
+    private static final String CLASS_NAME = "com.phantom.onetapvideodownload.IpcService";
+    private static final String ACTION_SAVE_URI = "com.phantom.onetapvideodownload.action.saveurl";
+    private static final String EXTRA_URL = "com.phantom.onetapvideodownload.extra.url";
+    private static final String EXTRA_METADATA = "com.phantom.onetapvideodownload.extra.metadata";
     private static final AtomicInteger notificationId = new AtomicInteger();
 
     public static void startSaveUrlAction(Context context, Uri uri) {

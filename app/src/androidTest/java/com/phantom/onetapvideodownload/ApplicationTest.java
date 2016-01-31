@@ -1,4 +1,4 @@
-package com.phantom.videoplayerselect;
+package com.phantom.onetapvideodownload;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

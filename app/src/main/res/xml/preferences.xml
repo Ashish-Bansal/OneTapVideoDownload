@@ -12,7 +12,7 @@
         <Preference
             android:title="@string/prefs_open_url_log"
             android:dependency="pref_url_logging">
-            <intent android:action="com.phantom.videoplayerselect.UrlLog" />
+            <intent android:action="com.phantom.onetapvideodownload.UrlLog" />
         </Preference>
     </PreferenceCategory>
 

@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "com.phantom.videoplayerselect"
+        applicationId "com.phantom.onetapvideodownload"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 100

@@ -1,4 +1,4 @@
-package com.phantom.videoplayerselect;
+package com.phantom.onetapvideodownload;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

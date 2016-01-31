@@ -1,4 +1,4 @@
-package com.phantom.videoplayerselect;
+package com.phantom.onetapvideodownload;
 
 import android.content.Context;
 import android.content.SharedPreferences;

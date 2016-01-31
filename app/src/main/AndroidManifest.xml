@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.phantom.videoplayerselect" >
+    package="com.phantom.onetapvideodownload" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -21,7 +21,7 @@
             android:value="30" />
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.phantom.onetapvideodownload.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,17 +31,17 @@
         </activity>
 
         <activity
-            android:name=".UrlLogActivity"
+            android:name="com.phantom.onetapvideodownload.UrlLogActivity"
             android:label="@string/url_log"
             android:exported="true"  >
             <intent-filter>
-                <action android:name="com.phantom.videoplayerselect.UrlLog" />
+                <action android:name="com.phantom.onetapvideodownload.UrlLog" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
         <service
-            android:name=".IpcService"
+            android:name="com.phantom.onetapvideodownload.IpcService"
             android:exported="true" >
         </service>
     </application>

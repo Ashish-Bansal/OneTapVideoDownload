@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.phantom.videoplayerselect;
+package com.phantom.onetapvideodownload;
 
 import android.app.Application;
 
