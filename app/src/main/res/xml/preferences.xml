@@ -31,6 +31,7 @@
             android:entryValues="@array/pref_notification_count_values"
             android:negativeButtonText="@null"
             android:positiveButtonText="@null"
+            android:dependency="pref_notification"
             app:asp_iconPaddingEnabled="false"/>
     </PreferenceCategory>
 
