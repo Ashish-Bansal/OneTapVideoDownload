@@ -1,7 +1,6 @@
 package com.phantom.onetapvideodownload;
 
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -68,19 +67,19 @@ public class IpcService extends IntentService {
         mBuilder.setSmallIcon(R.drawable.copy);
         mBuilder.setContentTitle("Any Video Downloader");
         mBuilder.setContentText(url);
+        mBuilder.setAutoCancel(true);
+        mBuilder.setOnlyAlertOnce(true);
         Intent intent = new Intent(Intent.ACTION_VIEW);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         mBuilder.setContentIntent(pendingIntent);
         NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        Notification notification = mBuilder.build();
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
         int id = notificationId.getAndIncrement();
         if (id == CheckPreferences.notificationCountAllowed(this)) {
             id = 0;
             notificationId.set(id);
         }
 
-        notificationmanager.notify(id, notification);
+        notificationmanager.notify(id, mBuilder.build());
     }
 
     private void logUrl(String url, String metadata) {
