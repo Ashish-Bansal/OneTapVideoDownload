@@ -69,9 +69,19 @@ public class IpcService extends IntentService {
         mBuilder.setContentText(url);
         mBuilder.setAutoCancel(true);
         mBuilder.setOnlyAlertOnce(true);
-        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-        mBuilder.setContentIntent(pendingIntent);
+
+        Intent downloadIntent = DownloadService.getActionDownload(url);
+        PendingIntent downloadPendingIntent = PendingIntent.getService(this, 0, downloadIntent, 0);
+        mBuilder.addAction(android.R.drawable.stat_sys_download, "Download", downloadPendingIntent);
+
+        Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        PendingIntent viewPendingIntent = PendingIntent.getActivity(this, 0, viewIntent, 0);
+        mBuilder.addAction(android.R.drawable.ic_media_play, "Play", viewPendingIntent);
+
+        Intent urlLogIntent = new Intent(this, UrlLogActivity.class);
+        PendingIntent urlLogPendingIntent = PendingIntent.getActivity(this, 0, urlLogIntent, 0);
+        mBuilder.setContentIntent(urlLogPendingIntent);
+
         NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         int id = notificationId.getAndIncrement();
         if (id == CheckPreferences.notificationCountAllowed(this)) {
