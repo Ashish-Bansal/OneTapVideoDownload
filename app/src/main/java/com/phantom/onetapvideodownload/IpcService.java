@@ -65,7 +65,7 @@ public class IpcService extends IntentService {
     private void showNotification(String url) {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
         mBuilder.setSmallIcon(R.drawable.one_tap);
-        mBuilder.setContentTitle("Any Video Downloader");
+        mBuilder.setContentTitle("One Tap Video Download");
         mBuilder.setContentText(url);
         mBuilder.setAutoCancel(true);
         mBuilder.setOnlyAlertOnce(true);
