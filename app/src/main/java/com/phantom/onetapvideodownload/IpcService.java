@@ -69,7 +69,7 @@ public class IpcService extends IntentService {
         mBuilder.setContentText(url);
         mBuilder.setAutoCancel(true);
         mBuilder.setOnlyAlertOnce(true);
-        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
         mBuilder.setContentIntent(pendingIntent);
         NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
