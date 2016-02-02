@@ -17,15 +17,15 @@ One Tap Video Download is an application which enables user to download or selec
 
 Any kind of contributions are welcomed!
 
-Credits :
-&#8226;&#8195; Icons : Stefan Ivic
-&#8226;&#8195; Application Name : Deepak Sharma
-&#8226;&#8195; Xposed Module Inspiration : Rutvik Rajagopal
-&#8226;&#8195; Module Developer : Ashish Bansal
+<b>Credits :</b>
+&#8226; Icons : Stefan Ivic<br>
+&#8226; Application Name : Deepak Sharma<br>
+&#8226; Xposed Module Inspiration : Rutvik Rajagopal<br>
+&#8226; Module Developer : Ashish Bansal
  
 If you find any bugs or issues, post issue on community page given below to help you better and get your issue solved.
 
 Google+ Community : https://plus.google.com/communities/112297408050451250430
 
-*DISCLAIMER*
+<br>*DISCLAIMER*</b></br>
 I take no responsibility for any fault or damage caused by any procedures of the app. No warranties of any kind are given.
