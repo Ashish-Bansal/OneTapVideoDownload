@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
@@ -64,7 +65,8 @@ public class IpcService extends IntentService {
 
     private void showNotification(String url) {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setSmallIcon(R.drawable.one_tap);
+        mBuilder.setSmallIcon(R.drawable.one_tap_small);
+        mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.one_tap_large));
         mBuilder.setContentTitle("One Tap Video Download");
         mBuilder.setContentText(url);
         mBuilder.setAutoCancel(true);
