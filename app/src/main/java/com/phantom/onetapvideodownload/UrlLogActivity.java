@@ -18,6 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.Vector;
 
 import co.dift.ui.SwipeToAction;
@@ -30,6 +33,7 @@ public class UrlLogActivity extends AppCompatActivity {
     private UrlAdapter mUrlAdapter;
     private SwipeToAction mSwipeToAction;
     private TextView mEmptyView;
+    private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +111,18 @@ public class UrlLogActivity extends AppCompatActivity {
             public void onLongClick(Url itemData) {
             }
         });
+
+        GoogleAnalyticsApplication application = (GoogleAnalyticsApplication) getApplication();
+        mTracker = application.getDefaultTracker();
+        mTracker.setScreenName("Activity~" + getClass().getName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mTracker.setScreenName("Activity~" + getClass().getName());
+        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void displaySnackbar(String text, String actionName, View.OnClickListener action) {

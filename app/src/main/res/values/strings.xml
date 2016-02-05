@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">One Tap Video Download</string>
+    <string name="app_name">Xposed One Tap Video Download</string>
     <string name="app_description">Downloads any video expect Youtube Videos</string>
     <string name="action_settings">Settings</string>
     <string name="action_clear_urls">Clear URL List</string>
