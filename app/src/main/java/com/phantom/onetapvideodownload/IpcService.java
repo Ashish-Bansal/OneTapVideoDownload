@@ -74,11 +74,16 @@ public class IpcService extends IntentService {
 
         Intent downloadIntent = DownloadService.getActionDownload(url);
         PendingIntent downloadPendingIntent = PendingIntent.getService(this, 0, downloadIntent, 0);
-        mBuilder.addAction(android.R.drawable.stat_sys_download, "Download", downloadPendingIntent);
+        mBuilder.addAction(R.drawable.download, "Download", downloadPendingIntent);
 
         Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        viewIntent.setDataAndType(Uri.parse(url), "video/mp4");
         PendingIntent viewPendingIntent = PendingIntent.getActivity(this, 0, viewIntent, 0);
-        mBuilder.addAction(android.R.drawable.ic_media_play, "Play", viewPendingIntent);
+        mBuilder.addAction(R.drawable.play, "Play", viewPendingIntent);
+
+        Intent openIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        PendingIntent openPendingIntent = PendingIntent.getActivity(this, 0, openIntent, 0);
+        mBuilder.addAction(R.drawable.browser, "Open", openPendingIntent);
 
         Intent urlLogIntent = new Intent(this, UrlLogActivity.class);
         PendingIntent urlLogPendingIntent = PendingIntent.getActivity(this, 0, urlLogIntent, 0);
