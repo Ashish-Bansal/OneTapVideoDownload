@@ -1,5 +1,6 @@
 package com.phantom.onetapvideodownload;
 
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         Fixes.updateLayoutInflaterFactory(getLayoutInflater());
         setContentView(R.layout.activity_main);
 
@@ -32,6 +34,13 @@ public class MainActivity extends AppCompatActivity {
 
         AnalyticsApplication application = (AnalyticsApplication) getApplication();
         mTracker = application.getDefaultTracker();
+
+        if (!isXposedInstalled()) {
+            XposedNotFoundActivity.startXposedNotFoundActivity(this);
+            finish();
+            return;
+        }
+
         mTracker.setScreenName("Activity~" + getClass().getName());
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
@@ -65,5 +74,16 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean isXposedInstalled() {
+        String packagename = "de.robv.android.xposed.installer";
+        PackageManager pm = getPackageManager();
+        try {
+            pm.getPackageInfo(packagename, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
     }
 }
