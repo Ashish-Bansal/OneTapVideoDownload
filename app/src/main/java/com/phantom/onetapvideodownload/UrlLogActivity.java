@@ -112,7 +112,7 @@ public class UrlLogActivity extends AppCompatActivity {
             }
         });
 
-        GoogleAnalyticsApplication application = (GoogleAnalyticsApplication) getApplication();
+        AnalyticsApplication application = (AnalyticsApplication) getApplication();
         mTracker = application.getDefaultTracker();
         mTracker.setScreenName("Activity~" + getClass().getName());
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
