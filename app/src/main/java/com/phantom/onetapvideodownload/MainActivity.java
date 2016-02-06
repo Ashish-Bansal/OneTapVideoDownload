@@ -77,10 +77,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isXposedInstalled() {
-        String packagename = "de.robv.android.xposed.installer";
+        String packageName = "de.robv.android.xposed.installer";
         PackageManager pm = getPackageManager();
         try {
-            pm.getPackageInfo(packagename, PackageManager.GET_ACTIVITIES);
+            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
             return true;
         } catch (PackageManager.NameNotFoundException e) {
             return false;
