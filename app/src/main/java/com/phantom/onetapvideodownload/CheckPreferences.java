@@ -26,4 +26,9 @@ public class CheckPreferences {
                         .getDefaultSharedPreferences(preference.getContext())
                         .getString(preference.getKey(), "");
     }
+
+    public static Integer notificationDismissTime(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return Integer.parseInt(prefs.getString("pref_notification_dismiss_time", "15"));
+    }
 }

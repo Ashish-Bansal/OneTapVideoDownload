@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
@@ -23,6 +24,7 @@ public class IpcService extends IntentService {
     private static final String EXTRA_URL = "com.phantom.onetapvideodownload.extra.url";
     private static final String EXTRA_METADATA = "com.phantom.onetapvideodownload.extra.metadata";
     private static final AtomicInteger notificationId = new AtomicInteger();
+    private Handler mHandler = new Handler();
 
     public static void startSaveUrlAction(Context context, Uri uri) {
         Intent intent = new Intent(ACTION_SAVE_URI);
@@ -89,14 +91,21 @@ public class IpcService extends IntentService {
         PendingIntent urlLogPendingIntent = PendingIntent.getActivity(this, 0, urlLogIntent, 0);
         mBuilder.setContentIntent(urlLogPendingIntent);
 
-        NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        int id = notificationId.getAndIncrement();
-        if (id == CheckPreferences.notificationCountAllowed(this)) {
-            id = 0;
-            notificationId.set(id);
+        final NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        int possibleId = notificationId.getAndIncrement();
+        if (possibleId >= CheckPreferences.notificationCountAllowed(this)) {
+            possibleId = 0;
+            notificationId.set(possibleId);
         }
 
+        final int id = possibleId;
         notificationmanager.notify(id, mBuilder.build());
+        long delayInSeconds = CheckPreferences.notificationDismissTime(this);
+        mHandler.postDelayed(new Runnable() {
+            public void run() {
+                notificationmanager.cancel(id);
+            }
+        }, delayInSeconds*1000);
     }
 
     private void logUrl(String url, String metadata) {

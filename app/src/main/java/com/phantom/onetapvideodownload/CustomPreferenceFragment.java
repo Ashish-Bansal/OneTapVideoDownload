@@ -11,6 +11,7 @@ public class CustomPreferenceFragment extends XpPreferenceFragment {
     public void onCreatePreferences2(final Bundle savedInstanceState, final String rootKey) {
         addPreferencesFromResource(R.xml.preferences);
         bindPreferenceSummaryToValue(findPreference("pref_notification_count"));
+        bindPreferenceSummaryToValue(findPreference("pref_notification_dismiss_time"));
     }
 
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {

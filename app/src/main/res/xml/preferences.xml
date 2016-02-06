@@ -33,6 +33,17 @@
             android:positiveButtonText="@null"
             android:dependency="pref_notification"
             app:asp_iconPaddingEnabled="false"/>
+
+        <ListPreference
+            android:key="pref_notification_dismiss_time"
+            android:title="@string/pref_notification_dismiss_time_title"
+            android:defaultValue="15"
+            android:entries="@array/pref_notification_dismiss_time_titles"
+            android:entryValues="@array/pref_notification_dismiss_time_values"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:dependency="pref_notification"
+            app:asp_iconPaddingEnabled="false"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

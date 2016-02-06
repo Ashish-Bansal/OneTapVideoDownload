@@ -13,6 +13,7 @@
     <string name="pref_notification_enable_title">Enable Notifications</string>
     <string name="pref_notification_enable_summary">Show URL Notifications</string>
     <string name="pref_notification_count_title">Maximum No. of Notifications</string>
+    <string name="pref_notification_dismiss_time_title">Notification Dismiss Time</string>
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
         <item>2 Notifications</item>
@@ -26,5 +27,22 @@
         <item>3</item>
         <item>4</item>
         <item>5</item>
+    </string-array>
+
+    <string-array name="pref_notification_dismiss_time_titles">
+        <item>10 Seconds</item>
+        <item>15 Seconds</item>
+        <item>20 Seconds</item>
+        <item>30 Seconds</item>
+        <item>1 Minute</item>
+        <item>3 Minutes</item>
+    </string-array>
+    <string-array name="pref_notification_dismiss_time_values">
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
     </string-array>
 </resources>
