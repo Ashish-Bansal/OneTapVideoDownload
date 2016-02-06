@@ -46,11 +46,9 @@ public class UrlLogActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                mUrlList.clearLocalList();
-                mUrlList.loadSavedUrls();
+                reload();
                 displaySnackbar("URL List updated", null, null);
                 mSwipeRefreshLayout.setRefreshing(false);
-                evaluateVisibility();
             }
         });
 
@@ -121,6 +119,7 @@ public class UrlLogActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        reload();
         mTracker.setScreenName("Activity~" + getClass().getName());
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
@@ -142,6 +141,12 @@ public class UrlLogActivity extends AppCompatActivity {
         mUrlAdapter.notifyItemRemoved(position);
         evaluateVisibility();
         return position;
+    }
+
+    private void reload() {
+        mUrlList.reload();
+        mUrlAdapter.notifyDataSetChanged();
+        evaluateVisibility();
     }
 
     private void addUrl(Url url) {

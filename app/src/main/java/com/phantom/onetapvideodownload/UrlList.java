@@ -121,10 +121,15 @@ public class UrlList {
     }
 
     public Vector<Url> getUrlList() {
-        return new Vector<Url>(mList);
+        return new Vector<>(mList);
     }
 
     public boolean isEmpty() {
-        return size() > 0 ? false : true;
+        return size() <= 0;
+    }
+
+    public void reload() {
+        clearLocalList();
+        loadSavedUrls();
     }
 }
