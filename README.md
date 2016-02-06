@@ -1,29 +1,30 @@
 # OneTapVideoDownload
 
-One Tap Video Download is an application which enables user to download or select video player to play video from most the websites <b>EXCEPT YOUTUBE</b>
+One Tap Video Download is an Xposed Module which enables user to download or select video player to play video from most of the websites <b>EXCEPT YOUTUBE</b> and some other websites.
+
 
 
 <b>Requirements:</b><br/>
-★Android 4.0+ and ROOT<br/>
-★It Requires Xposed Framework<br/>
+&#8226; Android 4.0+ and ROOT<br/>
+&#8226; It Requires Xposed Framework<br/>
 
 
 <b>Install Instructions</b><br/>
-★Install Xposed Installer<br/>
-★Install Xposed Framework (from the Xposed Installer app)<br/>
-★Install One Tap Video Download<br/>
-★Activate the module in Xposed Installer app and reboot your device to see the changes<br/>
-★Configure the application as you like.<br/>
+&#8226; Install Xposed Installer<br/>
+&#8226; Install Xposed Framework (from the Xposed Installer app)<br/>
+&#8226; Install One Tap Video Download from [here](https://play.google.com/store/apps/details?id=com.phantom.onetapvideodownload)<br/>
+&#8226; Activate the module in Xposed Installer app and reboot your device to see the changes<br/>
+&#8226; Configure the application as you like.<br/>
 
 Any kind of contributions are welcomed!
 
 <b>Credits :</b><br>
-&#8226; Icons : Stefan Ivic<br>
-&#8226; Application Name : Deepak Sharma<br>
-&#8226; Xposed Module Inspiration : Rutvik Rajagopal<br>
-&#8226; Module Developer : Ashish Bansal
+★ Image Graphics: Stefan Ivic<br>
+★ Application Name : Deepak Sharma<br>
+★ Xposed Module Inspiration : Rutvik Rajagopal<br>
+★ Module Developer : Ashish Bansal
  
-If you find any bugs or issues, post issue on community page given below to help you better and get your issue solved.
+If you find any bugs or issues, please post it on github or Google+ community page.
 
 <b>Google+ Community :</b> https://plus.google.com/communities/112297408050451250430
 
