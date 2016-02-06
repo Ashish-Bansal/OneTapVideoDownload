@@ -19,7 +19,11 @@ public class Url {
     }
 
     public String getFilename() {
-        Uri uri = Uri.parse(mUrl);
+        return getFilename(mUrl);
+    }
+
+    public static String getFilename(String url) {
+        Uri uri = Uri.parse(url);
         return uri.getLastPathSegment();
     }
 

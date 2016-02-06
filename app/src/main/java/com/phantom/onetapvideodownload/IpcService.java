@@ -69,7 +69,7 @@ public class IpcService extends IntentService {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
         mBuilder.setSmallIcon(R.drawable.one_tap_small);
         mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.one_tap_large));
-        mBuilder.setContentTitle("One Tap Video Download");
+        mBuilder.setContentTitle(Url.getFilename(url));
         mBuilder.setContentText(url);
         mBuilder.setAutoCancel(true);
         mBuilder.setOnlyAlertOnce(true);
