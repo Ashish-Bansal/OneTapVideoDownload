@@ -64,12 +64,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        if (id == R.id.action_clear_urls) {
-            displaySnackbar("URL List cleared", null, null);
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 }
