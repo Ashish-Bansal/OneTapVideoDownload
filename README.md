@@ -26,7 +26,5 @@ Any kind of contributions are welcomed!
  
 If you find any bugs or issues, please post it on github or Google+ community page.
 
-<b>Google+ Community :</b> https://plus.google.com/communities/112297408050451250430
-
 <b>*DISCLAIMER*</b></br>
 I take no responsibility for any fault or damage caused by any procedures of the app. No warranties of any kind are given.
