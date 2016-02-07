@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 
@@ -94,6 +95,14 @@ public class XposedChecker {
     }
 
     public static boolean isXposedInstalled(Context context) {
+        String packagename = "de.robv.android.xposed.installer";
+        PackageManager pm = context.getPackageManager();
+        try {
+            pm.getPackageInfo(packagename, PackageManager.GET_ACTIVITIES);
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+
         String FRAMEWORK_JAR_DALVIK = context.getFilesDir().getPath() + "/data/de.robv.android.xposed.installer/bin/XposedBridge.jar";
         String FRAMEWORK_JAR_ART = "/system/framework/XposedBridge.jar";
 
