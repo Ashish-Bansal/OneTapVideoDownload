@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
     public void checkXposedInstallation() {
         if (!XposedChecker.isXposedInstalled(this)) {
             XposedChecker.showXposedNotFound(this);
+        } else if (!MediaPlayerHook.isModuleEnabled()) {
+            XposedChecker.showModuleNotEnalbed(this);
         }
     }
 }

@@ -16,6 +16,8 @@
     <string name="pref_notification_dismiss_time_title">Notification Dismiss Time</string>
     <string name="xposed_not_found_title">Xposed Framework not found</string>
     <string name="xposed_not_found_description">You need root and Xposed Framework to use this application</string>
+    <string name="module_not_enabled_title">Module not enabled or Needs Reboot</string>
+    <string name="module_not_enabled_description">You need to enable this module in Xposed Installer. If you already have enabled it, please reboot your device.</string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>

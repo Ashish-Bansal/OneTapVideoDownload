@@ -4,9 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
+
+import java.io.File;
 
 public class XposedChecker {
     private static Context mContext;
@@ -47,19 +48,49 @@ public class XposedChecker {
         alert.show();
     }
 
+    public static void showModuleNotEnalbed(Context context) {
+        mContext = context;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(mContext.getResources().getString(R.string.module_not_enabled_title));
+        builder.setMessage(mContext.getResources().getString(R.string.module_not_enabled_description));
+
+        builder.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                exit(dialog);
+            }
+        });
+
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                exit(dialog);
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.setCanceledOnTouchOutside(false);
+        alert.show();
+    }
+
     public static void exit(DialogInterface dialog) {
         dialog.dismiss();
         ((Activity)mContext).finish();
     }
 
     public static boolean isXposedInstalled(Context context) {
-        String packageName = "de.robv.android.xposed.installer";
-        PackageManager pm = context.getPackageManager();
-        try {
-            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+        String FRAMEWORK_JAR_DALVIK = context.getFilesDir().getPath() + "/data/de.robv.android.xposed.installer/bin/XposedBridge.jar";
+        String FRAMEWORK_JAR_ART = "/system/framework/XposedBridge.jar";
+
+        String NEWVERSION_SUFFIX = ".newversion";
+        if (new File(FRAMEWORK_JAR_DALVIK).exists()
+                || new File(FRAMEWORK_JAR_ART).exists()
+                || new File(FRAMEWORK_JAR_DALVIK + NEWVERSION_SUFFIX).exists()
+                || new File(FRAMEWORK_JAR_ART + NEWVERSION_SUFFIX).exists()) {
             return true;
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
         }
+        return false;
     }
+
 }
