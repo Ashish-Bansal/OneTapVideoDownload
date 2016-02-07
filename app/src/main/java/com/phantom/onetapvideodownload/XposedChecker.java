@@ -19,7 +19,14 @@ public class XposedChecker {
         builder.setTitle(mContext.getResources().getString(R.string.xposed_not_found_title));
         builder.setMessage(mContext.getResources().getString(R.string.xposed_not_found_description));
 
-        builder.setPositiveButton("Read More", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNeutralButton("Read More", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String url = "http://repo.xposed.info/module/de.robv.android.xposed.installer";
@@ -59,6 +66,13 @@ public class XposedChecker {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 exit(dialog);
+            }
+        });
+
+        builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
             }
         });
 
