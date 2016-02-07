@@ -14,6 +14,9 @@
     <string name="pref_notification_enable_summary">Show URL Notifications</string>
     <string name="pref_notification_count_title">Maximum No. of Notifications</string>
     <string name="pref_notification_dismiss_time_title">Notification Dismiss Time</string>
+    <string name="xposed_not_found_title">Xposed Framework not found</string>
+    <string name="xposed_not_found_description">You need root and Xposed Framework to use this application</string>
+
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
         <item>2 Notifications</item>
