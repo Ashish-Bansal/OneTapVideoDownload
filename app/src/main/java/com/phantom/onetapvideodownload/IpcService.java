@@ -100,7 +100,7 @@ public class IpcService extends IntentService {
 
         final int id = possibleId;
         notificationmanager.notify(id, mBuilder.build());
-        long delayInSeconds = CheckPreferences.notificationDismissTime(this);
+        int delayInSeconds = CheckPreferences.notificationDismissTime(this);
         mHandler.postDelayed(new Runnable() {
             public void run() {
                 notificationmanager.cancel(id);

@@ -26,7 +26,7 @@
         <ListPreference
             android:key="pref_notification_count"
             android:title="@string/pref_notification_count_title"
-            android:defaultValue="1"
+            android:defaultValue="@string/notification_count"
             android:entries="@array/pref_notification_count_titles"
             android:entryValues="@array/pref_notification_count_values"
             android:negativeButtonText="@null"
@@ -37,7 +37,7 @@
         <ListPreference
             android:key="pref_notification_dismiss_time"
             android:title="@string/pref_notification_dismiss_time_title"
-            android:defaultValue="15"
+            android:defaultValue="@string/notification_dismiss_time"
             android:entries="@array/pref_notification_dismiss_time_titles"
             android:entryValues="@array/pref_notification_dismiss_time_values"
             android:negativeButtonText="@null"
