@@ -49,15 +49,16 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
         // Method Signature
         // public MainClass(MethodParameterClass paramJlb, String paramString, long paramLong)
 
+        final Context context = getContext();
+
         final XC_MethodHook methodHook = new XC_MethodHook() {
-            protected void afterHookedMethod(XC_MethodHook.MethodHookParam paramAnonymousMethodHookParam)
-                    throws Throwable {
-                String paramString = (String)paramAnonymousMethodHookParam.args[1];
+            protected void afterHookedMethod(XC_MethodHook.MethodHookParam hookParams) throws Throwable {
+                String paramString = (String)hookParams.args[1];
                 XposedBridge.log(paramString);
+                IpcService.startSaveYoutubeVideoAction(context, paramString);
             }
         };
 
-        Context context = getContext();
         int packageVersion = context.getPackageManager()
                 .getPackageInfo(paramLoadPackageParam.packageName, 0).versionCode;
 
