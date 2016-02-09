@@ -15,7 +15,7 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
 
     public static final String PACKAGE_NAME = "com.google.android.youtube";
     public static final HashMap<Integer, YouTubePackage> applicationMap = new HashMap<>();
-
+    public static long lastVideoTime = System.currentTimeMillis();
     static {
         applicationMap.put(108358, new YouTubePackage("jci", "noo"));
         applicationMap.put(107756, new YouTubePackage("ipz", "myv"));
@@ -53,6 +53,12 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
 
         final XC_MethodHook methodHook = new XC_MethodHook() {
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam hookParams) throws Throwable {
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - lastVideoTime < 1000L) {
+                    return;
+                }
+
+                lastVideoTime = currentTime;
                 String paramString = (String)hookParams.args[1];
                 XposedBridge.log(paramString);
                 IpcService.startSaveYoutubeVideoAction(context, paramString);
