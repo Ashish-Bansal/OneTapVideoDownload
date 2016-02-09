@@ -203,7 +203,6 @@ public class IpcService extends IntentService {
             String json = convertStreamToString(in);
             urlConnection.disconnect();
 
-            Log.e(LOG_TAG, json);
             // Parsing JSON
             // JSON Format : https://youtube-dl-api-server.readthedocs.org/en/latest/api.html
             JSONObject jsonObject = new JSONObject(json);
