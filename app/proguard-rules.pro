@@ -27,3 +27,4 @@
 
 -keep class com.phantom.onetapvideodownload.MediaPlayerHook { *; }
 -keep class de.robv.** { *; }
+-keep class com.evgenii.jsevaluator.**  { *; }
