@@ -8,8 +8,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 
-import java.io.File;
-
 public class XposedChecker {
     private static Context mContext;
 
@@ -95,25 +93,14 @@ public class XposedChecker {
     }
 
     public static boolean isXposedInstalled(Context context) {
-        String packagename = "de.robv.android.xposed.installer";
-        PackageManager pm = context.getPackageManager();
+        String packageName = "de.robv.android.xposed.installer";
+        PackageManager packageManager = context.getPackageManager();
         try {
-            pm.getPackageInfo(packagename, PackageManager.GET_ACTIVITIES);
+            packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            return true;
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
-
-        String FRAMEWORK_JAR_DALVIK = context.getFilesDir().getPath() + "/data/de.robv.android.xposed.installer/bin/XposedBridge.jar";
-        String FRAMEWORK_JAR_ART = "/system/framework/XposedBridge.jar";
-
-        String NEWVERSION_SUFFIX = ".newversion";
-        if (new File(FRAMEWORK_JAR_DALVIK).exists()
-                || new File(FRAMEWORK_JAR_ART).exists()
-                || new File(FRAMEWORK_JAR_DALVIK + NEWVERSION_SUFFIX).exists()
-                || new File(FRAMEWORK_JAR_ART + NEWVERSION_SUFFIX).exists()) {
-            return true;
-        }
-        return false;
     }
 
 }
