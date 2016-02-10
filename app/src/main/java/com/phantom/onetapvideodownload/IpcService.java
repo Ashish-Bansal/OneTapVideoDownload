@@ -192,11 +192,14 @@ public class IpcService extends IntentService {
 
                     Log.e(LOG_TAG, video.getBestAudioFormat().url);
                     Log.e(LOG_TAG, video.getBestVideoFormat().url);
+                } else {
+                    Log.e(LOG_TAG, "URLs are empty");
                 }
             }
         };
 
         Log.e(LOG_TAG, YOUTUBE_URL_PREFIX + paramString);
+        youtubeExtractor.setParseDashManifest(true);
         youtubeExtractor.execute(YOUTUBE_URL_PREFIX + paramString);
     }
 }
