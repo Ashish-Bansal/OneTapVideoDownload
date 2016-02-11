@@ -97,29 +97,42 @@ public class IpcService extends IntentService {
         mBuilder.setAutoCancel(true);
         mBuilder.setOnlyAlertOnce(true);
 
-        Intent downloadIntent = DownloadService.getActionDownload(url);
-        PendingIntent downloadPendingIntent = PendingIntent.getService(this, 0, downloadIntent, 0);
-        mBuilder.addAction(R.drawable.download, "Download", downloadPendingIntent);
-
-        Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        viewIntent.setDataAndType(Uri.parse(url), "video/mp4");
-        PendingIntent viewPendingIntent = PendingIntent.getActivity(this, 0, viewIntent, 0);
-        mBuilder.addAction(R.drawable.play, "Play", viewPendingIntent);
-
-        Intent openIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-        PendingIntent openPendingIntent = PendingIntent.getActivity(this, 0, openIntent, 0);
-        mBuilder.addAction(R.drawable.browser, "Open", openPendingIntent);
-
-        Intent urlLogIntent = new Intent(this, UrlLogActivity.class);
-        PendingIntent urlLogPendingIntent = PendingIntent.getActivity(this, 0, urlLogIntent, 0);
-        mBuilder.setContentIntent(urlLogPendingIntent);
-
-        final NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         int possibleId = notificationId.getAndIncrement();
         if (possibleId >= CheckPreferences.notificationCountAllowed(this)) {
             possibleId = 0;
             notificationId.set(possibleId);
         }
+
+        Intent downloadIntent = DownloadService.getActionDownload(url);
+        PendingIntent downloadPendingIntent = PendingIntent.getService(this,
+                possibleId,
+                downloadIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.addAction(R.drawable.download, "Download", downloadPendingIntent);
+
+        Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        viewIntent.setDataAndType(Uri.parse(url), "video/mp4");
+        PendingIntent viewPendingIntent = PendingIntent.getActivity(this,
+                possibleId,
+                viewIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.addAction(R.drawable.play, "Play", viewPendingIntent);
+
+        Intent openIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        PendingIntent openPendingIntent = PendingIntent.getActivity(this,
+                possibleId,
+                openIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.addAction(R.drawable.browser, "Open", openPendingIntent);
+
+        Intent urlLogIntent = new Intent(this, UrlLogActivity.class);
+        PendingIntent urlLogPendingIntent = PendingIntent.getActivity(this,
+                possibleId,
+                urlLogIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        mBuilder.setContentIntent(urlLogPendingIntent);
+
+        final NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         final int id = possibleId;
         notificationmanager.notify(id, mBuilder.build());
