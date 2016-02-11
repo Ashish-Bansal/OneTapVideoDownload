@@ -20,6 +20,16 @@
     <string name="module_not_enabled_description">You need to enable this module in Xposed Installer. If you already have enabled it, please reboot your device.</string>
     <string name="notification_dismiss_time">15</string>
     <string name="notification_count">1</string>
+    <string name="permission_accepted">One Tap Video Download : Write Permission Accepted</string>
+    <string name="permission_denied">One Tap Video Download : Write Permission Denied</string>
+    <string name="accept_write_permission_title">Enable Storage write permission</string>
+    <string name="accept_write_permission_description">You need to give write permission in order to store your videos in your phone storage.
+        \n \n Steps to provide permission :
+        \n 1. Press continue
+        \n 2. Select Permissions
+        \n 3. Enable Storage Permission
+        \n 4. Restart application
+    </string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
