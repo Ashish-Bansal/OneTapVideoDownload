@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.support.v4.util.Pair;
 import android.support.v7.app.NotificationCompat;
@@ -102,7 +103,8 @@ public class IpcService extends IntentService {
         long vibrationAmount = CheckPreferences.vibrationAmount(this);
         mBuilder.setVibrate(new long[] {0, vibrationAmount});
 
-        if (CheckPreferences.headsUpEnabled(this)) {
+        int currentApiVersion = android.os.Build.VERSION.SDK_INT;
+        if (CheckPreferences.headsUpEnabled(this) && currentApiVersion >= Build.VERSION_CODES.JELLY_BEAN) {
             mBuilder.setPriority(Notification.PRIORITY_HIGH);
         }
 
