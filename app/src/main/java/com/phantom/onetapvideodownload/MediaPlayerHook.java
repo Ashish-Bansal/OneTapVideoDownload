@@ -19,7 +19,7 @@ public class MediaPlayerHook implements IXposedHookLoadPackage {
     @Override
     public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
         if (lpparam.packageName.equals(packageName)) {
-            XposedBridge.log("Self hooking.");
+            XposedBridge.log("OneTapVideoDownload : Self hooking.");
             XposedHelpers.findAndHookMethod(packageName + ".MediaPlayerHook", lpparam.classLoader, "isModuleEnabled", XC_MethodReplacement.returnConstant(true));
         }
 
