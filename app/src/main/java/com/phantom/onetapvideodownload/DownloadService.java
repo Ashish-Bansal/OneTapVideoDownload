@@ -5,14 +5,15 @@ import android.app.DownloadManager.Request;
 import android.app.IntentService;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Environment;
+
+import java.io.File;
 
 public class DownloadService extends IntentService {
     private static final String PACKAGE_NAME = "com.phantom.onetapvideodownload";
     private static final String CLASS_NAME = "com.phantom.onetapvideodownload.DownloadService";
     private static final String ACTION_DOWNLOAD = "com.phantom.onetapvideodownload.action.download";
     private static final String EXTRA_URL = "com.phantom.onetapvideodownload.extra.url";
-
-    private DownloadManager dm;
 
     public static Intent getActionDownload(String url) {
         Intent intent = new Intent(ACTION_DOWNLOAD);
@@ -38,8 +39,11 @@ public class DownloadService extends IntentService {
     }
 
     private void handleActionDownload(String url) {
+        DownloadManager dm;
         dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
         Request request = new Request(Uri.parse(url));
+        File downloadDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        request.setDestinationUri(Uri.fromFile(downloadDirectory));
         dm.enqueue(request);
     }
 
