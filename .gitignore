@@ -34,3 +34,5 @@ captures/
 .idea/
 
 *.jks
+app/google-services.json
+
