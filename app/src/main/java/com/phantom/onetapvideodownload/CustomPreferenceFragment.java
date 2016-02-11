@@ -12,6 +12,7 @@ public class CustomPreferenceFragment extends XpPreferenceFragment {
         addPreferencesFromResource(R.xml.preferences);
         bindPreferenceSummaryToValue(findPreference("pref_notification_count"));
         bindPreferenceSummaryToValue(findPreference("pref_notification_dismiss_time"));
+        bindPreferenceSummaryToValue(findPreference("pref_vibrate_amount"));
     }
 
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {

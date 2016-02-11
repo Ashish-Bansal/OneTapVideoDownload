@@ -31,6 +31,13 @@
         \n 4. Restart application
     </string>
 
+    <string name="pref_notification_vibrate_title">Vibration on Notification</string>
+    <string name="pref_notification_vibrate_summary">Vibrates the device when video is being streamed</string>
+    <string name="pref_notification_vibrate_amount_title">Vibration amount</string>
+    <string name="default_vibrate_amount">200</string>
+    <string name="pref_notification_headsup_title">Enable Heads up notification</string>
+    <string name="pref_notification_headsup_summary">Show Heads up notification along with normal notification \n (Requires Android version >= v5)</string>
+
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
         <item>2 Notifications</item>
@@ -61,5 +68,20 @@
         <item>30</item>
         <item>60</item>
         <item>180</item>
+    </string-array>
+
+    <string-array name="pref_vibrate_amount_titles">
+        <item>100 Milliseconds</item>
+        <item>200 Milliseconds</item>
+        <item>300 Milliseconds</item>
+        <item>400 Milliseconds</item>
+        <item>500 Milliseconds</item>
+    </string-array>
+    <string-array name="pref_vibrate_amount_values">
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+        <item>400</item>
+        <item>500</item>
     </string-array>
 </resources>

@@ -1,6 +1,7 @@
 package com.phantom.onetapvideodownload;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -96,6 +97,14 @@ public class IpcService extends IntentService {
         mBuilder.setContentText(url);
         mBuilder.setAutoCancel(true);
         mBuilder.setOnlyAlertOnce(true);
+
+        // 0 if vibration is disabled.
+        long vibrationAmount = CheckPreferences.vibrationAmount(this);
+        mBuilder.setVibrate(new long[] {0, vibrationAmount});
+
+        if (CheckPreferences.headsUpEnabled(this)) {
+            mBuilder.setPriority(Notification.PRIORITY_HIGH);
+        }
 
         int possibleId = notificationId.getAndIncrement();
         if (possibleId >= CheckPreferences.notificationCountAllowed(this)) {

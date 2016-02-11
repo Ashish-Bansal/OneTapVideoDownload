@@ -31,4 +31,24 @@ public class CheckPreferences {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return Integer.parseInt(prefs.getString("pref_notification_dismiss_time", "15"));
     }
+
+    public static boolean headsUpEnabled(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean("pref_headsup", false);
+    }
+
+    public static boolean vibrationEnabled(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean("pref_vibrate", false);
+    }
+
+    public static Integer vibrationAmount(Context context) {
+        if (!vibrationEnabled(context)) {
+            return 0;
+        }
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return Integer.parseInt(prefs.getString("pref_vibrate_amount", "200"));
+    }
+
 }
