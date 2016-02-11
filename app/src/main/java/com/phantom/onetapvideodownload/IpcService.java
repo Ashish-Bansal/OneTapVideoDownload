@@ -96,7 +96,7 @@ public class IpcService extends IntentService {
         mBuilder.setContentTitle(title);
         mBuilder.setContentText(url);
         mBuilder.setAutoCancel(true);
-        mBuilder.setOnlyAlertOnce(true);
+        mBuilder.setOnlyAlertOnce(false);
 
         // 0 if vibration is disabled.
         long vibrationAmount = CheckPreferences.vibrationAmount(this);
