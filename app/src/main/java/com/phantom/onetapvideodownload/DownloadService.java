@@ -87,15 +87,19 @@ public class DownloadService extends IntentService {
     }
 
     private void handleActionDownload(String url) {
+        if (!checkPermissionGranted(AppPermissions.External_Storage_Permission)) {
+            requestPermission(AppPermissions.External_Storage_Permission);
+        }
+
         DownloadManager dm;
         dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
         Request request = new Request(Uri.parse(url));
+        request.setTitle(Url.getFilename(url));
+        request.setDescription(url);
+        request.allowScanningByMediaScanner();
+
         File downloadDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
         request.setDestinationUri(Uri.fromFile(downloadDirectory));
-        if (checkPermissionGranted(AppPermissions.External_Storage_Permission)) {
-            dm.enqueue(request);
-        } else {
-            requestPermission(AppPermissions.External_Storage_Permission);
-        }
+        dm.enqueue(request);
     }
 }
