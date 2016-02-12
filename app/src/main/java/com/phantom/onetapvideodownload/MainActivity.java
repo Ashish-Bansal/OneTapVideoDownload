@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.design.widget.Snackbar;
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     @TargetApi(23)
     public void checkAndRequestPermission(AppPermissions permission) {
         int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-        if (currentApiVersion > android.os.Build.VERSION_CODES.LOLLIPOP){
+        if (currentApiVersion > Build.VERSION_CODES.LOLLIPOP_MR1){
             if (shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 showDialogToAccessPermission(permission);
             } else {
