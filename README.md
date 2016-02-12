@@ -1,8 +1,8 @@
 # OneTapVideoDownload
 
-One Tap Video Download is an Xposed Module which enables user to download or select video player to play video from most of the websites <b>EXCEPT YOUTUBE</b> and some other websites.
+One Tap Video Download is an Xposed Module which enables user to download or select video player to play video from most of the websites ~~<b>EXCEPT YOUTUBE</b>~~ and some other websites.
 
-
+Now Youtube Videos can be downloaded as well by using [this](http://repo.xposed.info/module/com.phantom.onetapyoutubemodule) module
 
 <b>Requirements:</b><br/>
 &#8226; Android 4.0+ and ROOT<br/>
