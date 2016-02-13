@@ -87,9 +87,15 @@ public class MainActivity extends AppCompatActivity {
     public void checkXposedInstallation() {
         if (!XposedChecker.isXposedInstalled(this)) {
             XposedChecker.showXposedNotFound(this);
-        } else if (!MediaPlayerHook.isModuleEnabled()) {
+        } else if (!isModuleEnabled()) {
             XposedChecker.showModuleNotEnalbed(this);
         }
+    }
+
+
+    //If self hooking is successful, it will return true.
+    public static boolean isModuleEnabled() {
+        return false;
     }
 
     @TargetApi(23)

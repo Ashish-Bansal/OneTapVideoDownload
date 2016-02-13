@@ -33,7 +33,8 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    provided fileTree(dir: 'libs', include: ['XposedBridgeApi-20150213.jar'])
+    compile fileTree(dir: 'libs', include: ['youtubeExtractor.jar'])
     repositories {
         mavenCentral()
     }

@@ -14,13 +14,12 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class MediaPlayerHook implements IXposedHookLoadPackage {
     private String packageName = "com.phantom.onetapvideodownload";
-    private static boolean moduleEnabled = false;
 
     @Override
     public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
         if (lpparam.packageName.equals(packageName)) {
             XposedBridge.log("OneTapVideoDownload : Self hooking.");
-            XposedHelpers.findAndHookMethod(packageName + ".MediaPlayerHook", lpparam.classLoader, "isModuleEnabled", XC_MethodReplacement.returnConstant(true));
+            XposedHelpers.findAndHookMethod(packageName + ".MainActivity", lpparam.classLoader, "isModuleEnabled", XC_MethodReplacement.returnConstant(true));
         }
 
         XC_MethodHook methodHook = new XC_MethodHook() {
@@ -41,8 +40,4 @@ public class MediaPlayerHook implements IXposedHookLoadPackage {
         XposedHelpers.findAndHookMethod(mediaPlayerClass, "setDataSource", objects);
     }
 
-    //If self hooking is successful, it will return true.
-    public static boolean isModuleEnabled() {
-        return false;
-    }
 }
