@@ -47,13 +47,13 @@ public class MainActivity extends AppCompatActivity {
 
         mTracker.setScreenName("Activity~" + getClass().getName());
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        checkXposedInstallation();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        checkXposedInstallation();
         checkAndRequestPermission(AppPermissions.External_Storage_Permission);
 
         mTracker.setScreenName("Class~" + getClass().getName());
