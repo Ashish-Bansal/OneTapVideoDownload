@@ -22,15 +22,24 @@ import java.io.File;
 public class DownloadService extends IntentService {
     private static final String PACKAGE_NAME = "com.phantom.onetapvideodownload";
     private static final String CLASS_NAME = "com.phantom.onetapvideodownload.DownloadService";
-    private static final String ACTION_DOWNLOAD = "com.phantom.onetapvideodownload.action.download";
+    private static final String ACTION_BROWSER_DOWNLOAD = "com.phantom.onetapvideodownload.action.browser_download";
+    private static final String ACTION_YOUTUBE_DOWNLOAD = "com.phantom.onetapvideodownload.action.youtube_download";
     private static final String EXTRA_VIDEO_ID = "com.phantom.onetapvideodownload.extra.video_id";
     private static final String EXTRA_VIDEO_ITAG = "com.phantom.onetapvideodownload.extra.itag";
     private static final int STORAGE_PERMISSION_NOTIFICATION_ID = 100;
 
-    public static Intent getActionDownload(long videoId) {
-        Intent intent = new Intent(ACTION_DOWNLOAD);
+    public static Intent getActionBrowserVideoDownload(long videoId) {
+        Intent intent = new Intent(ACTION_BROWSER_DOWNLOAD);
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent.putExtra(EXTRA_VIDEO_ID, videoId);
+        return intent;
+    }
+
+    public static Intent getActionBrowserVideoDownload(long videoId, int itag) {
+        Intent intent = new Intent(ACTION_YOUTUBE_DOWNLOAD);
+        intent.setClassName(PACKAGE_NAME, CLASS_NAME);
+        intent.putExtra(EXTRA_VIDEO_ID, videoId);
+        intent.putExtra(EXTRA_VIDEO_ITAG, itag);
         return intent;
     }
 
@@ -43,7 +52,7 @@ public class DownloadService extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             System.out.println(action);
-            if (ACTION_DOWNLOAD.equals(action)) {
+            if (ACTION_BROWSER_DOWNLOAD.equals(action)) {
                 final long videoId = intent.getLongExtra(EXTRA_VIDEO_ID, -1);
                 if (videoId == -1) {
                     return;

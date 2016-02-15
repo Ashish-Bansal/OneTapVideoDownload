@@ -11,21 +11,36 @@ import java.util.List;
 public class YoutubeVideo implements Video {
     private String mTitle, mParam;
     private long mDatabaseId = -1;
-    public static List<Pair<Integer, String>> itagMapping = new ArrayList<>();
+    public static List<Pair<Integer, String>> itagQualityMapping = new ArrayList<>();
+    public static List<Pair<Integer, String>> itagExtensionMapping = new ArrayList<>();
 
     static {
-        itagMapping.add(Pair.create(22, "MP4 - 720p"));
-        itagMapping.add(Pair.create(18, "MP4 - 360p"));
-        itagMapping.add(Pair.create(43, "WebM - 360p"));
-        itagMapping.add(Pair.create(36, "3GB - 240p"));
-        itagMapping.add(Pair.create(5, "FLV - 240p"));
-        itagMapping.add(Pair.create(17, "3GP - 144p"));
-        itagMapping.add(Pair.create(141, "M4A - 256 kbit/s"));
-        itagMapping.add(Pair.create(140, "M4A - 128 kbit/s"));
-        itagMapping.add(Pair.create(251, "WebM - 160 kbit/s"));
-        itagMapping.add(Pair.create(171, "WebM - 128 kbit/s"));
-        itagMapping.add(Pair.create(250, "WebM - 64 kbit/s"));
-        itagMapping.add(Pair.create(249, "WebM - 48 kbit/s"));
+        itagQualityMapping.add(Pair.create(22, "MP4 - 720p"));
+        itagQualityMapping.add(Pair.create(18, "MP4 - 360p"));
+        itagQualityMapping.add(Pair.create(43, "WebM - 360p"));
+        itagQualityMapping.add(Pair.create(36, "3GB - 240p"));
+        itagQualityMapping.add(Pair.create(5, "FLV - 240p"));
+        itagQualityMapping.add(Pair.create(17, "3GP - 144p"));
+        itagQualityMapping.add(Pair.create(141, "M4A - 256 kbit/s"));
+        itagQualityMapping.add(Pair.create(140, "M4A - 128 kbit/s"));
+        itagQualityMapping.add(Pair.create(251, "WebM - 160 kbit/s"));
+        itagQualityMapping.add(Pair.create(171, "WebM - 128 kbit/s"));
+        itagQualityMapping.add(Pair.create(250, "WebM - 64 kbit/s"));
+        itagQualityMapping.add(Pair.create(249, "WebM - 48 kbit/s"));
+
+
+        itagExtensionMapping.add(Pair.create(22, "mp4"));
+        itagExtensionMapping.add(Pair.create(18, "mp4"));
+        itagExtensionMapping.add(Pair.create(43, "webm"));
+        itagExtensionMapping.add(Pair.create(36, "3gp"));
+        itagExtensionMapping.add(Pair.create(5, "flv"));
+        itagExtensionMapping.add(Pair.create(17, "3gp"));
+        itagExtensionMapping.add(Pair.create(141, "m4a"));
+        itagExtensionMapping.add(Pair.create(140, "m4a"));
+        itagExtensionMapping.add(Pair.create(251, "webm"));
+        itagExtensionMapping.add(Pair.create(171, "webm"));
+        itagExtensionMapping.add(Pair.create(250, "webm"));
+        itagExtensionMapping.add(Pair.create(249, "webm"));
     }
 
     public class Format {
@@ -46,7 +61,7 @@ public class YoutubeVideo implements Video {
         format.url = videoUrl;
         format.itag = itag;
         format.dashAudio = false;
-        for (Pair p : itagMapping) {
+        for (Pair p : itagQualityMapping) {
             if (p.first == itag && p.second.toString().contains("kbit")) {
                 format.dashAudio = true;
             }
@@ -79,7 +94,7 @@ public class YoutubeVideo implements Video {
     }
 
     public String getFormatDescription(int itag) {
-        for (Pair p : itagMapping) {
+        for (Pair p : itagQualityMapping) {
             if (p.first == itag) {
                 return p.second.toString();
             }
@@ -102,7 +117,7 @@ public class YoutubeVideo implements Video {
     }
 
     public Format getBestVideoFormat() {
-        for (Pair p : itagMapping) {
+        for (Pair p : itagQualityMapping) {
             if (p.second.toString().contains("kbit")) {
                 continue;
             }
@@ -116,7 +131,7 @@ public class YoutubeVideo implements Video {
     }
 
     public Format getBestAudioFormat() {
-        for (Pair p : itagMapping) {
+        for (Pair p : itagQualityMapping) {
             if (!p.second.toString().contains("kbit")) {
                 continue;
             }
@@ -131,7 +146,7 @@ public class YoutubeVideo implements Video {
 
     public ArrayList<Format> getAllFormats() {
         ArrayList<Format> formats = new ArrayList<>();
-        for (Pair p : itagMapping) {
+        for (Pair p : itagQualityMapping) {
             Format format = mFormatList.get((int) p.first);
             if (format != null) {
                 formats.add(format);

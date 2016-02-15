@@ -113,7 +113,7 @@ public class IpcService extends IntentService {
             notificationId.set(possibleId);
         }
 
-        Intent downloadIntent = DownloadService.getActionDownload(videoId);
+        Intent downloadIntent = DownloadService.getActionBrowserVideoDownload(videoId);
         PendingIntent downloadPendingIntent = PendingIntent.getService(this,
                 possibleId,
                 downloadIntent,
@@ -178,7 +178,7 @@ public class IpcService extends IntentService {
             public void onUrisAvailable(String videoId, String videoTitle, SparseArray<YtFile> ytFiles) {
                 if (ytFiles != null) {
                     YoutubeVideo video = new YoutubeVideo(videoTitle, videoId);
-                    for(Pair p : YoutubeVideo.itagMapping) {
+                    for(Pair p : YoutubeVideo.itagQualityMapping) {
                         YtFile videoFormat = ytFiles.get(Integer.parseInt(p.first.toString()));
                         if (videoFormat == null) {
                             continue;
