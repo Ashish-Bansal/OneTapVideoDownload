@@ -95,6 +95,10 @@ public class DownloadService extends IntentService {
     private void handleActionDownload(long id) {
         DatabaseHandler databaseHandler = DatabaseHandler.getDatabase(this);
         Video video = databaseHandler.getVideo(id);
+        if (video == null) {
+            return;
+        }
+
         if (!checkPermissionGranted(AppPermissions.External_Storage_Permission)) {
             requestPermission(AppPermissions.External_Storage_Permission);
         }
