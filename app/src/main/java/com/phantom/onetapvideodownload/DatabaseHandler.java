@@ -248,7 +248,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String selectQuery = "SELECT * FROM " + TABLE_VIDEO_LIST
-                + " WHERE " + KEY_VIDEO_ID + "=" + videoId;
+                + " WHERE " + KEY_ID + "=" + videoId;
 
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
