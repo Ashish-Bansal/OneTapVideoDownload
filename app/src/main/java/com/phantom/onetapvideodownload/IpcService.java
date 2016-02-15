@@ -6,7 +6,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
@@ -15,6 +14,10 @@ import android.support.v4.util.Pair;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.util.SparseArray;
+
+import com.phantom.onetapvideodownload.Video.BrowserVideo;
+import com.phantom.onetapvideodownload.Video.Video;
+import com.phantom.onetapvideodownload.Video.YoutubeVideo;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -27,8 +30,8 @@ public class IpcService extends IntentService {
     public static final String PREFS_NAME = "SavedUrls";
     private static final String PACKAGE_NAME = "com.phantom.onetapvideodownload";
     private static final String CLASS_NAME = "com.phantom.onetapvideodownload.IpcService";
-    private static final String ACTION_SAVE_URI = "com.phantom.onetapvideodownload.action.saveurl";
-    private static final String ACTION_SAVE_YOUTUBE_URI = "com.phantom.onetapvideodownload.action.saveyoutubeurl";
+    private static final String ACTION_SAVE_BROWSER_VIDEO = "com.phantom.onetapvideodownload.action.saveurl";
+    private static final String ACTION_SAVE_YOUTUBE_VIDEO = "com.phantom.onetapvideodownload.action.saveyoutubeurl";
     private static final String EXTRA_URL = "com.phantom.onetapvideodownload.extra.url";
     private static final String EXTRA_PARAM_STRING = "com.phantom.onetapvideodownload.extra.url";
     private static final String EXTRA_METADATA = "com.phantom.onetapvideodownload.extra.metadata";
@@ -38,7 +41,7 @@ public class IpcService extends IntentService {
     private Handler mHandler = new Handler();
 
     public static void startSaveUrlAction(Context context, Uri uri) {
-        Intent intent = new Intent(ACTION_SAVE_URI);
+        Intent intent = new Intent(ACTION_SAVE_BROWSER_VIDEO);
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent.putExtra(EXTRA_URL, uri.toString());
 
@@ -49,14 +52,14 @@ public class IpcService extends IntentService {
     }
 
     public static void startSaveYoutubeVideoAction(Context context, String paramString) {
-        Intent intent = new Intent(ACTION_SAVE_YOUTUBE_URI);
+        Intent intent = new Intent(ACTION_SAVE_YOUTUBE_VIDEO);
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent.putExtra(EXTRA_PARAM_STRING, paramString);
         context.startService(intent);
     }
 
     public static void startSaveUrlAction(Context context, String url) {
-        Intent intent = new Intent(ACTION_SAVE_URI);
+        Intent intent = new Intent(ACTION_SAVE_BROWSER_VIDEO);
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent.putExtra(EXTRA_URL, url);
 
@@ -75,11 +78,11 @@ public class IpcService extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             Log.e("IpcService", action);
-            if (ACTION_SAVE_URI.equals(action)) {
-                final String url = intent.getStringExtra(EXTRA_URL);
-                final String metadata = intent.getStringExtra(EXTRA_METADATA);
-                handleActionSaveUrl(url, metadata);
-            } else if (ACTION_SAVE_YOUTUBE_URI.equals(action)) {
+            if (ACTION_SAVE_BROWSER_VIDEO.equals(action)) {
+                String url = intent.getStringExtra(EXTRA_URL);
+                Video video = new BrowserVideo(url);
+                handleActionSaveBrowserVideo(video);
+            } else if (ACTION_SAVE_YOUTUBE_VIDEO.equals(action)) {
                 final String paramString = intent.getStringExtra(EXTRA_PARAM_STRING);
                 handleActionSaveYoutubeVideo(paramString);
             }
@@ -87,7 +90,7 @@ public class IpcService extends IntentService {
     }
 
     private void showNotification(String url) {
-        showNotification(url, Url.getFilename(url));
+        showNotification(url, Global.getFilenameFromUrl(url));
     }
 
     private void showNotification(String url, String title) {
@@ -155,31 +158,18 @@ public class IpcService extends IntentService {
         }, delayInSeconds*1000);
     }
 
-    private void logUrl(String url, String metadata) {
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        int urlSavedCount = settings.getInt("count", 0);
-        for(int i = 0; i < urlSavedCount*2; i+=2) {
-            String savedUrl = settings.getString(Integer.toString(i + 1), "");
-            if (savedUrl.equals(url)) {
-                editor.putString(Integer.toString(i + 2), metadata);
-                return;
-            }
-        }
-
-        editor.putString(Integer.toString(urlSavedCount * 2 + 1), url);
-        editor.putString(Integer.toString(urlSavedCount*2+2), metadata);
-        editor.putInt("count", urlSavedCount + 1);
-        editor.apply();
+    private void logUrl(Video video) {
+        DatabaseHandler databaseHandler = DatabaseHandler.getDatabase(this);
+        databaseHandler.addOrUpdateVideo(video);
     }
 
-    private void handleActionSaveUrl(String url, String metadata) {
+    private void handleActionSaveBrowserVideo(Video video) {
         if (CheckPreferences.notificationsEnabled(this)) {
-            showNotification(url);
+            showNotification(video.getUrl());
         }
 
         if (CheckPreferences.loggingEnabled(this)) {
-            logUrl(url, metadata);
+            logUrl(video);
         }
     }
 
@@ -194,7 +184,7 @@ public class IpcService extends IntentService {
             @Override
             public void onUrisAvailable(String videoId, String videoTitle, SparseArray<YtFile> ytFiles) {
                 if (ytFiles != null) {
-                    YoutubeVideo video = new YoutubeVideo(videoTitle);
+                    YoutubeVideo video = new YoutubeVideo(videoTitle, videoId);
                     for(Pair p : YoutubeVideo.itagMapping) {
                         YtFile videoFormat = ytFiles.get(Integer.parseInt(p.first.toString()));
                         if (videoFormat == null) {
@@ -207,11 +197,8 @@ public class IpcService extends IntentService {
                         showNotification(video.getBestVideoFormat().url, videoTitle);
                     }
 
-                    Calendar cal = Calendar.getInstance();
-                    String metadata = DateFormat.getDateTimeInstance().format(cal.getTime());
-
                     if (CheckPreferences.loggingEnabled(context)) {
-                        logUrl(video.getBestVideoFormat().url, metadata);
+                        logUrl(video);
                     }
 
                     Log.e(LOG_TAG, video.getBestAudioFormat().url);

@@ -13,7 +13,6 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.NotificationCompat;
-import android.util.Log;
 
 import java.io.File;
 
@@ -92,7 +91,7 @@ public class DownloadService extends IntentService {
             requestPermission(AppPermissions.External_Storage_Permission);
         }
 
-        String filename = Url.getFilename(url);
+        String filename = Global.getFilenameFromUrl(url);
         DownloadManager dm;
         dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
         Request request = new Request(Uri.parse(url));

@@ -3,9 +3,11 @@ package com.phantom.onetapvideodownload;
 import android.view.View;
 import android.widget.TextView;
 
+import com.phantom.onetapvideodownload.Video.Video;
+
 import co.dift.ui.SwipeToAction;
 
-public class UrlViewHolder extends SwipeToAction.ViewHolder<Url> {
+public class UrlViewHolder extends SwipeToAction.ViewHolder<Video> {
     private TextView mUrlView;
     private TextView mMetadataView;
 

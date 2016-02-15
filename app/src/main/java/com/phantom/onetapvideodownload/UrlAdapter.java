@@ -5,12 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.phantom.onetapvideodownload.Video.Video;
+
 public class UrlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private UrlList mUrlList;
+    private VideoList mVideoList;
 
-    public UrlAdapter(UrlList urlList) {
-        this.mUrlList = urlList;
+    public UrlAdapter(VideoList urlList) {
+        this.mVideoList = urlList;
     }
 
     @Override
@@ -20,7 +22,7 @@ public class UrlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return mUrlList.size();
+        return mVideoList.size();
     }
 
     @Override
@@ -33,10 +35,10 @@ public class UrlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        Url item = mUrlList.getUrl(position);
+        Video video = mVideoList.getVideo(position);
         UrlViewHolder vh = (UrlViewHolder) holder;
-        vh.setUrlText(item.getUrl());
-        vh.setMetadataText(item.getMetadata());
-        vh.data = item;
+        vh.setUrlText(video.getUrl());
+        vh.setMetadataText(video.getTitle());
+        vh.data = video;
     }
 }

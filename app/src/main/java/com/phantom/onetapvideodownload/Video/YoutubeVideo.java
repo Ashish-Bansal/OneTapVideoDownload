@@ -1,15 +1,16 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.Video;
 
 import android.support.v4.util.Pair;
 import android.support.v4.util.SparseArrayCompat;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
+import com.phantom.onetapvideodownload.Global;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class YoutubeVideo {
-    private String mTitle;
+public class YoutubeVideo implements Video {
+    private String mTitle, mParam;
+    private long mDatabaseId = -1;
     public static List<Pair<Integer, String>> itagMapping = new ArrayList<>();
 
     static {
@@ -35,8 +36,9 @@ public class YoutubeVideo {
 
     private SparseArrayCompat<Format> mFormatList = new SparseArrayCompat<>();
 
-    public YoutubeVideo(String title) {
+    public YoutubeVideo(String title, String param) {
         mTitle = title;
+        mParam = param;
     }
 
     public void addFormat(String videoUrl, int itag) {
@@ -44,7 +46,7 @@ public class YoutubeVideo {
         format.url = videoUrl;
         format.itag = itag;
         format.dashAudio = false;
-        for(Pair p : itagMapping) {
+        for (Pair p : itagMapping) {
             if (p.first == itag && p.second.toString().contains("kbit")) {
                 format.dashAudio = true;
             }
@@ -52,12 +54,32 @@ public class YoutubeVideo {
         mFormatList.put(itag, format);
     }
 
+    @Override
     public String getTitle() {
         return mTitle;
     }
 
+    @Override
+    public String getUrl() {
+        return getBestVideoFormat().url;
+    }
+
+    @Override
+    public long getDatabaseId() {
+        return mDatabaseId;
+    }
+
+    @Override
+    public void setDatabaseId(long databaseId) {
+        mDatabaseId = databaseId;
+    }
+
+    public String getParam() {
+        return mParam;
+    }
+
     public String getFormatDescription(int itag) {
-        for(Pair p : itagMapping) {
+        for (Pair p : itagMapping) {
             if (p.first == itag) {
                 return p.second.toString();
             }
@@ -76,33 +98,16 @@ public class YoutubeVideo {
     }
 
     public boolean urlsForbidden() {
-        if (mFormatList.size() <= 0) {
-            return false;
-        }
-
-        URL url;
-        HttpURLConnection urlConnection;
-        try {
-            url = new URL(mFormatList.get(0).url);
-            urlConnection = (HttpURLConnection) url.openConnection();
-            int responseCode = urlConnection.getResponseCode();
-            if (responseCode/100 == 2) {
-                return false;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return true;
+        return mFormatList.size() <= 0 && Global.isValidUrl(mFormatList.get(0).url);
     }
 
     public Format getBestVideoFormat() {
-        for(Pair p : itagMapping) {
+        for (Pair p : itagMapping) {
             if (p.second.toString().contains("kbit")) {
                 continue;
             }
 
-            Format format = mFormatList.get((int)p.first);
+            Format format = mFormatList.get((int) p.first);
             if (format != null) {
                 return format;
             }
@@ -111,16 +116,27 @@ public class YoutubeVideo {
     }
 
     public Format getBestAudioFormat() {
-        for(Pair p : itagMapping) {
+        for (Pair p : itagMapping) {
             if (!p.second.toString().contains("kbit")) {
                 continue;
             }
 
-            Format format = mFormatList.get((int)p.first);
+            Format format = mFormatList.get((int) p.first);
             if (format != null) {
                 return format;
             }
         }
         return null;
+    }
+
+    public ArrayList<Format> getAllFormats() {
+        ArrayList<Format> formats = new ArrayList<>();
+        for (Pair p : itagMapping) {
+            Format format = mFormatList.get((int) p.first);
+            if (format != null) {
+                formats.add(format);
+            }
+        }
+        return formats;
     }
 }

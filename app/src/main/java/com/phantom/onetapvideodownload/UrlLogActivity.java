@@ -20,13 +20,14 @@ import android.widget.TextView;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.phantom.onetapvideodownload.Video.Video;
 
-import java.util.Vector;
+import java.util.ArrayList;
 
 import co.dift.ui.SwipeToAction;
 
 public class UrlLogActivity extends AppCompatActivity {
-    private UrlList mUrlList;
+    private VideoList mVideoList;
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
@@ -40,7 +41,7 @@ public class UrlLogActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_url_log);
 
-        mUrlList = UrlList.getUrlListSingleton(this);
+        mVideoList = VideoList.getVideoListSingleton(this);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -64,20 +65,20 @@ public class UrlLogActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        mUrlAdapter = new UrlAdapter(mUrlList);
+        mUrlAdapter = new UrlAdapter(mVideoList);
         mRecyclerView.setAdapter(mUrlAdapter);
 
 
         mEmptyView = (TextView) findViewById(R.id.empty_view);
         evaluateVisibility();
-        mSwipeToAction = new SwipeToAction(mRecyclerView, new SwipeToAction.SwipeListener<Url>() {
+        mSwipeToAction = new SwipeToAction(mRecyclerView, new SwipeToAction.SwipeListener<Video>() {
             @Override
-            public boolean swipeLeft(final Url url) {
-                removeUrl(url);
-                displaySnackbar(url.getUrl() + " removed", "Undo", new View.OnClickListener() {
+            public boolean swipeLeft(final Video video) {
+                removeVideo(video);
+                displaySnackbar(video.getUrl() + " removed", "Undo", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        addUrl(url);
+                        addVideo(video);
                         mUrlAdapter.notifyDataSetChanged();
                     }
                 });
@@ -85,7 +86,7 @@ public class UrlLogActivity extends AppCompatActivity {
             }
 
             @Override
-            public boolean swipeRight(Url itemData) {
+            public boolean swipeRight(Video itemData) {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
                 Uri copyUri = Uri.parse(itemData.getUrl());
                 ClipData clip = ClipData.newUri(getContentResolver(), "URI", copyUri);
@@ -95,8 +96,8 @@ public class UrlLogActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onClick(final Url itemData) {
-                displaySnackbar("Filename : " + itemData.getFilename(), "Open", new View.OnClickListener() {
+            public void onClick(final Video itemData) {
+                displaySnackbar("Filename : " + itemData.getTitle(), "Open", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(itemData.getUrl()));
@@ -106,7 +107,7 @@ public class UrlLogActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onLongClick(Url itemData) {
+            public void onLongClick(Video itemData) {
             }
         });
 
@@ -136,27 +137,27 @@ public class UrlLogActivity extends AppCompatActivity {
         snack.show();
     }
 
-    private int removeUrl(Url url) {
-        int position = UrlList.getUrlListSingleton(this).removeUrl(url);
-        mUrlAdapter.notifyItemRemoved(position);
+    private Video removeVideo(Video video) {
+        VideoList.getVideoListSingleton(this).removeVideo(video);
+        mUrlAdapter.notifyDataSetChanged();
         evaluateVisibility();
-        return position;
+        return video;
     }
 
     private void reload() {
-        mUrlList.reload();
+        mVideoList.reloadVideos();
         mUrlAdapter.notifyDataSetChanged();
         evaluateVisibility();
     }
 
-    private void addUrl(Url url) {
-        mUrlList.addUrl(url);
+    private void addVideo(Video video) {
+        mVideoList.addVideo(video);
         mUrlAdapter.notifyDataSetChanged();
         evaluateVisibility();
     }
 
     private void evaluateVisibility() {
-        if (mUrlList.isEmpty()) {
+        if (mVideoList.isEmpty()) {
             mRecyclerView.setVisibility(View.GONE);
             mEmptyView.setVisibility(View.VISIBLE);
         } else {
@@ -176,21 +177,21 @@ public class UrlLogActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_clear_urls :
-                mUrlList.clearLocalList();
-                mUrlList.loadSavedUrls();
+            case R.id.action_clear_videos :
+                mVideoList.clearLocalList();
+                mVideoList.loadSavedVideos();
 
-                final Vector<Url> urlList = mUrlList.getUrlList();
+                final ArrayList<Video> videoList = mVideoList.getVideoList();
 
-                mUrlList.clearLocalList();
-                mUrlList.clearSavedList();
+                mVideoList.clearLocalList();
+                mVideoList.clearSavedVideos();
 
                 mUrlAdapter.notifyDataSetChanged();
                 displaySnackbar("URL List cleared", "Undo", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        for(Url u : urlList) {
-                            mUrlList.addUrl(u);
+                        for(Video video : videoList) {
+                            mVideoList.addVideo(video);
                         }
                         mUrlAdapter.notifyDataSetChanged();
                     }
