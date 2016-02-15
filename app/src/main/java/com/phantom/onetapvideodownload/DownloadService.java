@@ -100,6 +100,10 @@ public class DownloadService extends IntentService {
         }
 
         String filename = video.getTitle();
+        if (filename.isEmpty()) {
+            filename = "videoplayback.mp4";
+        }
+
         DownloadManager dm;
         dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
         Request request = new Request(Uri.parse(video.getUrl()));
