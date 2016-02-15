@@ -15,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.NotificationCompat;
 
 import com.phantom.onetapvideodownload.Video.Video;
+import com.phantom.onetapvideodownload.Video.YoutubeVideo;
 
 import java.io.File;
 
@@ -22,7 +23,8 @@ public class DownloadService extends IntentService {
     private static final String PACKAGE_NAME = "com.phantom.onetapvideodownload";
     private static final String CLASS_NAME = "com.phantom.onetapvideodownload.DownloadService";
     private static final String ACTION_DOWNLOAD = "com.phantom.onetapvideodownload.action.download";
-    private static final String EXTRA_VIDEO_ID = "com.phantom.onetapvideodownload.extra.url";
+    private static final String EXTRA_VIDEO_ID = "com.phantom.onetapvideodownload.extra.video_id";
+    private static final String EXTRA_VIDEO_ITAG = "com.phantom.onetapvideodownload.extra.itag";
     private static final int STORAGE_PERMISSION_NOTIFICATION_ID = 100;
 
     public static Intent getActionDownload(long videoId) {
@@ -106,6 +108,10 @@ public class DownloadService extends IntentService {
         String filename = video.getTitle();
         if (filename.isEmpty()) {
             filename = "videoplayback.mp4";
+        }
+
+        if (video instanceof YoutubeVideo) {
+            filename += ".mp4";
         }
 
         DownloadManager dm;
