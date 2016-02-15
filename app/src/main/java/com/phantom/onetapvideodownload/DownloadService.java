@@ -14,19 +14,21 @@ import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.NotificationCompat;
 
+import com.phantom.onetapvideodownload.Video.Video;
+
 import java.io.File;
 
 public class DownloadService extends IntentService {
     private static final String PACKAGE_NAME = "com.phantom.onetapvideodownload";
     private static final String CLASS_NAME = "com.phantom.onetapvideodownload.DownloadService";
     private static final String ACTION_DOWNLOAD = "com.phantom.onetapvideodownload.action.download";
-    private static final String EXTRA_URL = "com.phantom.onetapvideodownload.extra.url";
+    private static final String EXTRA_VIDEO_ID = "com.phantom.onetapvideodownload.extra.url";
     private static final int STORAGE_PERMISSION_NOTIFICATION_ID = 100;
 
-    public static Intent getActionDownload(String url) {
+    public static Intent getActionDownload(long videoId) {
         Intent intent = new Intent(ACTION_DOWNLOAD);
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
-        intent.putExtra(EXTRA_URL, url);
+        intent.putExtra(EXTRA_VIDEO_ID, videoId);
         return intent;
     }
 
@@ -40,8 +42,12 @@ public class DownloadService extends IntentService {
             final String action = intent.getAction();
             System.out.println(action);
             if (ACTION_DOWNLOAD.equals(action)) {
-                final String url = intent.getStringExtra(EXTRA_URL);
-                handleActionDownload(url);
+                final long videoId = intent.getLongExtra(EXTRA_VIDEO_ID, -1);
+                if (videoId == -1) {
+                    return;
+                }
+
+                handleActionDownload(videoId);
             }
         }
     }
@@ -86,17 +92,19 @@ public class DownloadService extends IntentService {
         notificationmanager.notify(STORAGE_PERMISSION_NOTIFICATION_ID, mBuilder.build());
     }
 
-    private void handleActionDownload(String url) {
+    private void handleActionDownload(long id) {
+        DatabaseHandler databaseHandler = DatabaseHandler.getDatabase(this);
+        Video video = databaseHandler.getVideo(id);
         if (!checkPermissionGranted(AppPermissions.External_Storage_Permission)) {
             requestPermission(AppPermissions.External_Storage_Permission);
         }
 
-        String filename = Global.getFilenameFromUrl(url);
+        String filename = video.getTitle();
         DownloadManager dm;
         dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-        Request request = new Request(Uri.parse(url));
+        Request request = new Request(Uri.parse(video.getUrl()));
         request.setTitle(filename);
-        request.setDescription(url);
+        request.setDescription(video.getUrl());
         request.allowScanningByMediaScanner();
 
         File downloadDirectory = new File(Environment.getExternalStoragePublicDirectory(

@@ -89,11 +89,7 @@ public class IpcService extends IntentService {
         }
     }
 
-    private void showNotification(String url) {
-        showNotification(url, Global.getFilenameFromUrl(url));
-    }
-
-    private void showNotification(String url, String title) {
+    private void showNotification(String url, String title, long videoId) {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
         mBuilder.setSmallIcon(R.drawable.one_tap_small);
         mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.one_tap_large));
@@ -117,7 +113,7 @@ public class IpcService extends IntentService {
             notificationId.set(possibleId);
         }
 
-        Intent downloadIntent = DownloadService.getActionDownload(url);
+        Intent downloadIntent = DownloadService.getActionDownload(videoId);
         PendingIntent downloadPendingIntent = PendingIntent.getService(this,
                 possibleId,
                 downloadIntent,
@@ -158,18 +154,15 @@ public class IpcService extends IntentService {
         }, delayInSeconds*1000);
     }
 
-    private void logUrl(Video video) {
+    private long saveUrlToDatabase(Video video) {
         DatabaseHandler databaseHandler = DatabaseHandler.getDatabase(this);
-        databaseHandler.addOrUpdateVideo(video);
+        return databaseHandler.addOrUpdateVideo(video);
     }
 
     private void handleActionSaveBrowserVideo(Video video) {
+        long id = saveUrlToDatabase(video);
         if (CheckPreferences.notificationsEnabled(this)) {
-            showNotification(video.getUrl());
-        }
-
-        if (CheckPreferences.loggingEnabled(this)) {
-            logUrl(video);
+            showNotification(video.getUrl(), Global.getFilenameFromUrl(video.getUrl()), id);
         }
     }
 
@@ -193,12 +186,12 @@ public class IpcService extends IntentService {
                         video.addFormat(videoFormat.getUrl(), Integer.parseInt(p.first.toString()));
                     }
 
+                    long id = saveUrlToDatabase(video);
                     if (CheckPreferences.notificationsEnabled(context)) {
-                        showNotification(video.getBestVideoFormat().url, videoTitle);
+                        showNotification(video.getBestVideoFormat().url, videoTitle, id);
                     }
 
                     if (CheckPreferences.loggingEnabled(context)) {
-                        logUrl(video);
                     }
 
                     Log.e(LOG_TAG, video.getBestAudioFormat().url);

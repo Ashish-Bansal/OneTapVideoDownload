@@ -13,6 +13,17 @@ public class CustomPreferenceFragment extends XpPreferenceFragment {
         bindPreferenceSummaryToValue(findPreference("pref_notification_count"));
         bindPreferenceSummaryToValue(findPreference("pref_notification_dismiss_time"));
         bindPreferenceSummaryToValue(findPreference("pref_vibrate_amount"));
+        findPreference("pref_url_logging").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object o) {
+                if (preference.getKey().equals("pref_url_logging")) {
+                    DatabaseHandler databaseHandler = DatabaseHandler.getDatabase(getContext());
+                    databaseHandler.clearDatabase();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     private static Preference.OnPreferenceChangeListener sBindPreferenceSummaryToValueListener = new Preference.OnPreferenceChangeListener() {
