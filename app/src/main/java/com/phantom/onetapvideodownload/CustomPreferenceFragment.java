@@ -16,12 +16,9 @@ public class CustomPreferenceFragment extends XpPreferenceFragment {
         findPreference("pref_url_logging").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object o) {
-                if (preference.getKey().equals("pref_url_logging")) {
-                    DatabaseHandler databaseHandler = DatabaseHandler.getDatabase(getContext());
-                    databaseHandler.clearDatabase();
-                    return true;
-                }
-                return false;
+                DatabaseHandler databaseHandler = DatabaseHandler.getDatabase(getContext());
+                databaseHandler.clearDatabase();
+                return true;
             }
         });
     }
