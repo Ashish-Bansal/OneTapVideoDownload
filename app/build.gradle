@@ -34,7 +34,6 @@ android {
 
 dependencies {
     provided fileTree(dir: 'libs', include: ['XposedBridgeApi-20150213.jar'])
-    compile fileTree(dir: 'libs', include: ['youtubeExtractor.jar'])
     repositories {
         mavenCentral()
     }
@@ -44,6 +43,9 @@ dependencies {
     compile 'co.dift.ui.swipetoaction:library:1.1'
     compile 'net.xpece.android:support-preference:0.5.3'
     compile 'com.google.android.gms:play-services-analytics:8.4.0'
+    compile('com.github.HaarigerHarald:android-youtubeExtractor:v1.3.0') {
+        transitive = true
+    }
 }
 
 apply plugin: 'com.google.gms.google-services'
