@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Environment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.NotificationCompat;
 
@@ -130,10 +129,8 @@ public class DownloadService extends IntentService {
         request.setDescription(video.getUrl());
         request.allowScanningByMediaScanner();
 
-        File downloadDirectory = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DOWNLOADS), filename);
-
-        request.setDestinationUri(Uri.fromFile(downloadDirectory));
+        File filePath = new File(CheckPreferences.getDownloadLocation(this), filename);
+        request.setDestinationUri(Uri.fromFile(filePath));
         dm.enqueue(request);
     }
 }

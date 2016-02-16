@@ -191,9 +191,6 @@ public class IpcService extends IntentService {
                         showNotification(video.getBestVideoFormat().url, videoTitle, id);
                     }
 
-                    if (CheckPreferences.loggingEnabled(context)) {
-                    }
-
                     Log.e(LOG_TAG, video.getBestAudioFormat().url);
                     Log.e(LOG_TAG, video.getBestVideoFormat().url);
                 } else {

@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -22,14 +23,18 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import net.xpece.android.support.preference.Fixes;
 
-public class MainActivity extends AppCompatActivity {
+import java.io.File;
+
+public class MainActivity extends AppCompatActivity implements FolderChooserDialog.FolderCallback {
     private Toolbar toolbar;
     private Tracker mTracker;
+    private CustomPreferenceFragment mCustomPreferenceFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportFragmentManager().beginTransaction().add(R.id.content_frame, new CustomPreferenceFragment(), "Preferences").commit();
+        mCustomPreferenceFragment = new CustomPreferenceFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.content_frame, mCustomPreferenceFragment, "Preferences").commit();
 
         AnalyticsApplication application = (AnalyticsApplication) getApplication();
         mTracker = application.getDefaultTracker();
@@ -159,6 +165,16 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_LONG).show();
                 }
             }
+        }
+    }
+
+    @Override
+    public void onFolderSelection(@NonNull File directory) {
+        if(directory.canWrite()) {
+            CheckPreferences.setDownloadLocation(this, directory.getPath());
+            mCustomPreferenceFragment.updateDownloadLocationPreference();
+        } else {
+            Toast.makeText(this, "No write permission on selected directory", Toast.LENGTH_SHORT).show();
         }
     }
 }

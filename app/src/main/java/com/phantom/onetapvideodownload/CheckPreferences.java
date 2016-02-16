@@ -2,10 +2,15 @@ package com.phantom.onetapvideodownload;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.v7.preference.Preference;
 
+import java.io.File;
+
 public class CheckPreferences {
+    private static final String PREFS_NAME = "application_settings";
+
     public static boolean loggingEnabled(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getBoolean("pref_url_logging", true);
@@ -51,4 +56,18 @@ public class CheckPreferences {
         return Integer.parseInt(prefs.getString("pref_vibrate_amount", "200"));
     }
 
+    public static void setDownloadLocation(Context context, String location) {
+        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("pref_download_location", location);
+        editor.apply();
+    }
+
+    public static String getDownloadLocation(Context context) {
+        File downloadDirectory = Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DOWNLOADS);
+
+        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
+        return settings.getString("pref_download_location", downloadDirectory.toString());
+    }
 }

@@ -2,6 +2,13 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <PreferenceCategory android:title="@string/pref_download_header">
+        <Preference
+            android:title="@string/prefs_download_location_title"
+            android:key="pref_download_location">
+        </Preference>
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/pref_url_logging_header">
         <SwitchPreference
             android:title="@string/pref_url_logging_title"
