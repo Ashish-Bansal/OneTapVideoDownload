@@ -4,4 +4,5 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="item_height">80dp</dimen>
     <dimen name="item_padding">16dp</dimen>
+    <dimen name="tab_height">48dp</dimen>
 </resources>

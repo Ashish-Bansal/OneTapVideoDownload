@@ -7,7 +7,7 @@
     <!-- this view reveals when swipe right -->
     <RelativeLayout
         android:tag="reveal-right"
-        android:background="@color/accent"
+        android:background="@color/dark_primary"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -17,7 +17,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
-            android:tint="@color/icons"
+            android:tint="@color/white"
             android:src="@drawable/copy"/>
     </RelativeLayout>
 
@@ -34,7 +34,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:tint="@color/icons"
+            android:tint="@color/white"
             android:src="@drawable/delete"/>
     </RelativeLayout>
 
@@ -42,7 +42,7 @@
     <!-- this is the item front view -->
     <RelativeLayout
         android:tag="front"
-        android:background="@color/item_background"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="@dimen/item_padding">
@@ -65,7 +65,7 @@
 
 
     <!-- just a divider -->
-    <View android:background="@color/divider"
+    <View android:background="@color/grey"
         android:layout_width="fill_parent"
         android:layout_height="0.5dp" />
 

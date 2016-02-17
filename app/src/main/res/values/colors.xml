@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="primary">#2d2d2d</color>
-    <color name="accent">#512DA8</color>
-    <color name="divider">#CCC</color>
-    <color name="icons">#FFF</color>
-    <color name="item_background">#FFF</color>
-    <color name="action_bar_light">#4527A0</color>
-    <color name="action_bar_dark">#311B92</color>
-    <color name="snackbar">#512DA8</color>
 
+    //Color pallets of Deep Purple
+    <color name="purple_50">#EDE7F6</color>
+    <color name="purple_100">#D1C4E9</color>
+    <color name="purple_200">#B39DDB</color>
+    <color name="purple_300">#9575CD</color>
+    <color name="purple_400">#7E57C2</color>
+    <color name="purple_500">#673AB7</color>
+    <color name="purple_600">#5E35B1</color>
+    <color name="purple_700">#512DA8</color>
+    <color name="purple_800">#4527A0</color>
+    <color name="purple_900">#311B92</color>
+
+    //Color pallets of Indigo
+    <color name="indigo_50">#E8EAF6</color>
+    <color name="indigo_100">#C5CAE9</color>
+    <color name="indigo_200">#9FA8DA</color>
+    <color name="indigo_300">#7986CB</color>
+    <color name="indigo_400">#5C6BC0</color>
+    <color name="indigo_500">#3F51B5</color>
+    <color name="indigo_600">#3949AB</color>
+    <color name="indigo_700">#303F9F</color>
+    <color name="indigo_800">#283593</color>
+    <color name="indigo_900">#1A237E</color>
+
+    <color name="accent">@color/indigo_700</color>
+    <color name="primary">@color/purple_700</color>
+    <color name="dark_primary">@color/purple_800</color>
+    <color name="grey">#CCC</color>
+    <color name="white">#FFF</color>
+    <color name="amber">#FFC107</color>
     <color name="highlight">#311B92</color>
 </resources>

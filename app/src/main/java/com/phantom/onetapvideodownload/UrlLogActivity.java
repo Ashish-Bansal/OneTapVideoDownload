@@ -130,7 +130,7 @@ public class UrlLogActivity extends AppCompatActivity {
                 .setAction(actionName, action);
 
         View v = snack.getView();
-        v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.snackbar));
+        v.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.dark_primary));
         ((TextView) v.findViewById(android.support.design.R.id.snackbar_text)).setTextColor(Color.WHITE);
         ((TextView) v.findViewById(android.support.design.R.id.snackbar_action)).setTextColor(Color.BLACK);
 
