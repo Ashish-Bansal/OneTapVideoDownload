@@ -21,7 +21,7 @@ public class ViewPagerFragmentParent extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.view_pager_fragment_parent, container, false);
+        View view = inflater.inflate(R.layout.fragment_view_pager_parent, container, false);
 
         PagerAdapter pagerAdapter = new NavigationAdapter(getChildFragmentManager());
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);

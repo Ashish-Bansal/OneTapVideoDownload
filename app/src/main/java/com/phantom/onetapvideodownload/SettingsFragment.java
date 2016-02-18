@@ -19,7 +19,7 @@ public class SettingsFragment extends XpPreferenceFragment {
 
     @Override
     public void onCreatePreferences2(final Bundle savedInstanceState, final String rootKey) {
-        addPreferencesFromResource(R.xml.preferences);
+        addPreferencesFromResource(R.xml.fragment_preferences);
         preferenceList.add(findPreference("pref_notification_count"));
         preferenceList.add(findPreference("pref_notification_dismiss_time"));
         preferenceList.add(findPreference("pref_vibrate_amount"));
