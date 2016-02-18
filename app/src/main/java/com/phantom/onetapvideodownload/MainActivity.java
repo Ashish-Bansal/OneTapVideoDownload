@@ -13,6 +13,8 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +36,6 @@ import java.io.File;
 public class MainActivity extends AppCompatActivity implements FolderChooserDialog.FolderCallback {
     private Toolbar toolbar;
     private Tracker mTracker;
-    private CustomPreferenceFragment mCustomPreferenceFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +46,15 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mCustomPreferenceFragment = new CustomPreferenceFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.content_frame, mCustomPreferenceFragment, "Preferences").commit();
+        FragmentManager fm = getSupportFragmentManager();
+        if (fm.findFragmentByTag(ViewPagerFragmentParent.FRAGMENT_TAG) == null) {
+            FragmentTransaction ft = fm.beginTransaction();
+            ft.add(R.id.content_frame, new ViewPagerFragmentParent(),
+                    ViewPagerFragmentParent.FRAGMENT_TAG);
+            ft.commit();
+            fm.executePendingTransactions();
+        }
+
         AnalyticsApplication application = (AnalyticsApplication) getApplication();
         mTracker = application.getDefaultTracker();
 
@@ -171,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     public void onFolderSelection(@NonNull File directory) {
         if(directory.canWrite()) {
             CheckPreferences.setDownloadLocation(this, directory.getPath());
-            mCustomPreferenceFragment.updateDownloadLocationPreference();
+            CustomPreferenceFragment.updatePreferenceSummary();
         } else {
             Toast.makeText(this, "No write permission on selected directory", Toast.LENGTH_SHORT).show();
         }
