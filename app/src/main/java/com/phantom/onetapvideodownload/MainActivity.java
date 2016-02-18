@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     public void onFolderSelection(@NonNull File directory) {
         if(directory.canWrite()) {
             CheckPreferences.setDownloadLocation(this, directory.getPath());
-            CustomPreferenceFragment.updatePreferenceSummary();
+            SettingsFragment.updatePreferenceSummary();
         } else {
             Toast.makeText(this, "No write permission on selected directory", Toast.LENGTH_SHORT).show();
         }

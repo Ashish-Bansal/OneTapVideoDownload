@@ -14,7 +14,7 @@ import net.xpece.android.support.preference.SwitchPreference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomPreferenceFragment extends XpPreferenceFragment {
+public class SettingsFragment extends XpPreferenceFragment {
     private static List<Preference> preferenceList = new ArrayList<>();
 
     @Override

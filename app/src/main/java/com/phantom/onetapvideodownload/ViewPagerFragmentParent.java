@@ -50,11 +50,11 @@ public class ViewPagerFragmentParent extends Fragment {
             if (fragmentList.size() <= position) {
                 switch (position) {
                     case 0:
-                        f = new CustomPreferenceFragment();
+                        f = new SettingsFragment();
                     case 1:
-                        f = new CustomPreferenceFragment();
+                        f = new SettingsFragment();
                     default:
-                        f = new CustomPreferenceFragment();
+                        f = new SettingsFragment();
                 }
                 fragmentList.add(position, f);
             }
