@@ -1,9 +1,9 @@
 package com.phantom.onetapvideodownload.downloader;
 
 import android.annotation.TargetApi;
-import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
@@ -23,10 +23,11 @@ import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DownloadManager extends IntentService {
+public class DownloadManager extends Service {
     private static final String PACKAGE_NAME = "com.phantom.onetapvideodownload";
     private static final String CLASS_NAME = "com.phantom.onetapvideodownload.downloader.DownloadManager";
     private static final String ACTION_DOWNLOAD = "com.phantom.onetapvideodownload.action.download";
+    private static final String ACTION_START = "com.phantom.onetapvideodownload.action.start";
     private static final String EXTRA_DOWNLOAD_ID = "com.phantom.onetapvideodownload.extra.download_id";
     private static final int STORAGE_PERMISSION_NOTIFICATION_ID = 100;
     private static List<Pair<Long, DownloadHandler>> mDownloadHandlers = new ArrayList<>();
@@ -65,8 +66,10 @@ public class DownloadManager extends IntentService {
         return intent;
     }
 
-    public DownloadManager() {
-        super("DownloadService");
+    public static Intent getActionStartService() {
+        Intent intent = new Intent(ACTION_START);
+        intent.setClassName(PACKAGE_NAME, CLASS_NAME);
+        return intent;
     }
 
     public Integer getDownloadCount() {
@@ -84,19 +87,21 @@ public class DownloadManager extends IntentService {
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {
             final String action = intent.getAction();
             System.out.println(action);
             if (ACTION_DOWNLOAD.equals(action)) {
                 final long videoId = intent.getLongExtra(EXTRA_DOWNLOAD_ID, -1);
                 if (videoId == -1) {
-                    return;
+                    return START_REDELIVER_INTENT;
                 }
 
                 handleActionDownload(videoId);
             }
         }
+
+        return START_REDELIVER_INTENT;
     }
 
     @TargetApi(23)

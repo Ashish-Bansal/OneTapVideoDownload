@@ -16,13 +16,14 @@ import com.phantom.onetapvideodownload.downloader.DownloadManager;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 
 public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-        implements DownloadManager.ServiceCallbacks{
+        implements DownloadManager.ServiceCallbacks {
     private DownloadManager mDownloadManager;
     private boolean mBounded;
     private Context mContext;
 
     public DownloadAdapter(Context context) {
         mContext = context;
+        context.startService(DownloadManager.getActionStartService());
         Intent mIntent = new Intent(context, DownloadManager.class);
         context.bindService(mIntent, mConnection, context.BIND_AUTO_CREATE);
     }
