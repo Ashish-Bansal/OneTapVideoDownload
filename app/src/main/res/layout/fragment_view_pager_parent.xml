@@ -4,18 +4,21 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
+    <!--
+        Padding for ViewPager must be set outside the ViewPager itself
+        because with padding, EdgeEffect of ViewPager become strange.
+        -->
     <FrameLayout
         android:id="@+id/pager_wrapper"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/tab_height">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
-            android:paddingTop="@dimen/tab_height">
-        </android.support.v4.view.ViewPager>
+            android:background="@color/white"/>
     </FrameLayout>
 
     <com.google.samples.apps.iosched.ui.widget.SlidingTabLayout
