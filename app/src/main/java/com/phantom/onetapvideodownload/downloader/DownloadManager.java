@@ -38,6 +38,16 @@ public class DownloadManager extends IntentService {
     }
 
     @Override
+    public void onCreate () {
+        DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(this);
+        List<DownloadInfo> downloadInfos = downloadDatabase.getAllDownloads();
+        for(DownloadInfo downloadInfo : downloadInfos) {
+            DownloadHandler downloadHandler = new DownloadHandler(this, downloadInfo);
+            mDownloadHandlers.add(Pair.create(downloadInfo.getDatabaseId(), downloadHandler));
+        }
+    }
+
+    @Override
     public IBinder onBind(Intent intent) {
         return mBinder;
     }
