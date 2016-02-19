@@ -1,49 +1,76 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.downloader;
 
 import android.annotation.TargetApi;
-import android.app.DownloadManager;
-import android.app.DownloadManager.Request;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
+import android.os.Binder;
+import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.NotificationCompat;
+import android.util.Log;
 
-import com.phantom.onetapvideodownload.Video.Video;
-import com.phantom.onetapvideodownload.Video.YoutubeVideo;
+import com.phantom.onetapvideodownload.AppPermissions;
+import com.phantom.onetapvideodownload.MainActivity;
+import com.phantom.onetapvideodownload.R;
+import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
+import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 
-import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
-public class DownloadService extends IntentService {
+public class DownloadManager extends IntentService {
     private static final String PACKAGE_NAME = "com.phantom.onetapvideodownload";
-    private static final String CLASS_NAME = "com.phantom.onetapvideodownload.DownloadService";
-    private static final String ACTION_BROWSER_DOWNLOAD = "com.phantom.onetapvideodownload.action.browser_download";
-    private static final String ACTION_YOUTUBE_DOWNLOAD = "com.phantom.onetapvideodownload.action.youtube_download";
-    private static final String EXTRA_VIDEO_ID = "com.phantom.onetapvideodownload.extra.video_id";
-    private static final String EXTRA_VIDEO_ITAG = "com.phantom.onetapvideodownload.extra.itag";
+    private static final String CLASS_NAME = "com.phantom.onetapvideodownload.downloader.DownloadManager";
+    private static final String ACTION_DOWNLOAD = "com.phantom.onetapvideodownload.action.download";
+    private static final String EXTRA_DOWNLOAD_ID = "com.phantom.onetapvideodownload.extra.download_id";
     private static final int STORAGE_PERMISSION_NOTIFICATION_ID = 100;
+    private static List<Pair<Long, DownloadHandler>> mDownloadHandlers = new ArrayList<>();
+    private final IBinder mBinder = new LocalBinder();
+    private static List<ServiceCallbacks> serviceCallbacks = new ArrayList<>();
+    private final String TAG = "DownloadManager";
+    public interface ServiceCallbacks {
+        void onDownloadAdded();
+    }
 
-    public static Intent getActionBrowserVideoDownload(long videoId) {
-        Intent intent = new Intent(ACTION_BROWSER_DOWNLOAD);
+    @Override
+    public IBinder onBind(Intent intent) {
+        return mBinder;
+    }
+
+    public class LocalBinder extends Binder {
+        public DownloadManager getServiceInstance() {
+            return DownloadManager.this;
+        }
+    }
+
+    public static Intent getActionVideoDownload(long videoId) {
+        Intent intent = new Intent(ACTION_DOWNLOAD);
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
-        intent.putExtra(EXTRA_VIDEO_ID, videoId);
+        intent.putExtra(EXTRA_DOWNLOAD_ID, videoId);
         return intent;
     }
 
-    public static Intent getActionBrowserVideoDownload(long videoId, int itag) {
-        Intent intent = new Intent(ACTION_YOUTUBE_DOWNLOAD);
-        intent.setClassName(PACKAGE_NAME, CLASS_NAME);
-        intent.putExtra(EXTRA_VIDEO_ID, videoId);
-        intent.putExtra(EXTRA_VIDEO_ITAG, itag);
-        return intent;
-    }
-
-    public DownloadService() {
+    public DownloadManager() {
         super("DownloadService");
+    }
+
+    public Integer getDownloadCount() {
+        return mDownloadHandlers.size();
+    }
+
+    public DownloadInfo getDownloadInfo(int position) {
+        assert(position < mDownloadHandlers.size());
+        return mDownloadHandlers.get(position).second.getDownloadInfo();
+    }
+
+    public void registerCallbacks(ServiceCallbacks object) {
+        Log.e(TAG, "Registering Callback " + object.getClass().getName());
+        serviceCallbacks.add(object);
     }
 
     @Override
@@ -51,8 +78,8 @@ public class DownloadService extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             System.out.println(action);
-            if (ACTION_BROWSER_DOWNLOAD.equals(action)) {
-                final long videoId = intent.getLongExtra(EXTRA_VIDEO_ID, -1);
+            if (ACTION_DOWNLOAD.equals(action)) {
+                final long videoId = intent.getLongExtra(EXTRA_DOWNLOAD_ID, -1);
                 if (videoId == -1) {
                     return;
                 }
@@ -103,34 +130,21 @@ public class DownloadService extends IntentService {
     }
 
     private void handleActionDownload(long id) {
-        DatabaseHandler databaseHandler = DatabaseHandler.getDatabase(this);
-        Video video = databaseHandler.getVideo(id);
-        if (video == null) {
-            return;
-        }
-
-        if (!checkPermissionGranted(AppPermissions.External_Storage_Permission)) {
+        DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(this);
+        DownloadInfo downloadInfo = downloadDatabase.getDownload(id);
+        DownloadHandler downloadHandler = new DownloadHandler(this, downloadInfo);
+        mDownloadHandlers.add(Pair.create(id, downloadHandler));
+        if (checkPermissionGranted(AppPermissions.External_Storage_Permission)) {
+            downloadHandler.startDownload();
+        } else {
             requestPermission(AppPermissions.External_Storage_Permission);
         }
 
-        String filename = video.getTitle();
-        if (filename.isEmpty()) {
-            filename = "videoplayback.mp4";
+        Log.e(TAG, "ServiceCallback Size : " + serviceCallbacks.size());
+        for(ServiceCallbacks sc : serviceCallbacks) {
+            Log.e(TAG, "Calling onDownloadAdded callback method " + sc.getClass().getName());
+            sc.onDownloadAdded();
         }
-
-        if (video instanceof YoutubeVideo) {
-            filename += ".mp4";
-        }
-
-        DownloadManager dm;
-        dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-        Request request = new Request(Uri.parse(video.getUrl()));
-        request.setTitle(filename);
-        request.setDescription(video.getUrl());
-        request.allowScanningByMediaScanner();
-
-        File filePath = new File(CheckPreferences.getDownloadLocation(this), filename);
-        request.setDestinationUri(Uri.fromFile(filePath));
-        dm.enqueue(request);
     }
+
 }

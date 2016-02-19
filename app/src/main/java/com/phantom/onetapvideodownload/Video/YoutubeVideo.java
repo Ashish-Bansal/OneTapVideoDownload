@@ -103,8 +103,8 @@ public class YoutubeVideo implements Video {
         return "No Description Found";
     }
 
-    public String getVideoUrl(int index) {
-        Format format = mFormatList.get(index);
+    public String getVideoUrl(int itag) {
+        Format format = mFormatList.get(itag);
         if (format == null) {
             return "";
         }

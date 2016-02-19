@@ -18,6 +18,10 @@ import android.util.SparseArray;
 import com.phantom.onetapvideodownload.Video.BrowserVideo;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
+import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
+import com.phantom.onetapvideodownload.downloader.DownloadManager;
+import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
+import com.phantom.onetapvideodownload.downloader.downloadinfo.BrowserDownloadInfo;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -113,7 +117,15 @@ public class IpcService extends IntentService {
             notificationId.set(possibleId);
         }
 
-        Intent downloadIntent = DownloadService.getActionBrowserVideoDownload(videoId);
+        VideoDatabase videoDatabase = VideoDatabase.getDatabase(this);
+        Video video = videoDatabase.getVideo(videoId);
+        BrowserDownloadInfo browserDownloadInfo = new BrowserDownloadInfo(video.getTitle()
+                , video.getUrl()
+                , CheckPreferences.getDownloadLocation(this) + "/" + Global.getFilenameFromUrl(video.getUrl()));
+
+        DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(this);
+        long downloadId = downloadDatabase.addDownload(browserDownloadInfo);
+        Intent downloadIntent = DownloadManager.getActionVideoDownload(downloadId);
         PendingIntent downloadPendingIntent = PendingIntent.getService(this,
                 possibleId,
                 downloadIntent,
@@ -155,8 +167,8 @@ public class IpcService extends IntentService {
     }
 
     private long saveUrlToDatabase(Video video) {
-        DatabaseHandler databaseHandler = DatabaseHandler.getDatabase(this);
-        return databaseHandler.addOrUpdateVideo(video);
+        VideoDatabase videoDatabase = VideoDatabase.getDatabase(this);
+        return videoDatabase.addOrUpdateVideo(video);
     }
 
     private void handleActionSaveBrowserVideo(Video video) {

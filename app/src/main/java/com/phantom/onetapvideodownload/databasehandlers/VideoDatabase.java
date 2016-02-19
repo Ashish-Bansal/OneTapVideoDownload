@@ -1,4 +1,4 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.databasehandlers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -14,12 +14,12 @@ import com.phantom.onetapvideodownload.Video.YoutubeVideo;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHandler extends SQLiteOpenHelper {
+public class VideoDatabase extends SQLiteOpenHelper {
     private static final int VIDEO_TYPE_BROWSER = 0;
     private static final int VIDEO_TYPE_YOUTUBE = 1;
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "VideoManager";
+    private static final String DATABASE_NAME = "VideoDatabase";
 
     private static final String TABLE_VIDEO_LIST = "video_list";
     private static final String TABLE_BROWSER_VIDEO_LIST = "browser_video_list";
@@ -33,17 +33,17 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_VIDEO_ITAG = "itag";
     private static final String KEY_PARAM = "param";
 
-    private static DatabaseHandler mDatabaseHandler;
+    private static VideoDatabase mVideoDatabase;
 
-    static DatabaseHandler getDatabase(Context context) {
-        if (mDatabaseHandler == null) {
-            mDatabaseHandler = new DatabaseHandler(context);
+    public static VideoDatabase getDatabase(Context context) {
+        if (mVideoDatabase == null) {
+            mVideoDatabase = new VideoDatabase(context);
         }
 
-        return mDatabaseHandler;
+        return mVideoDatabase;
     }
 
-    private DatabaseHandler(Context context) {
+    private VideoDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 

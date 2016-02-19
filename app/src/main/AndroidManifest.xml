@@ -68,7 +68,7 @@
             android:name=".IpcService"
             android:exported="true"></service>
         <service
-            android:name=".DownloadService"
+            android:name=".downloader.DownloadManager"
             android:exported="false"></service>
 
         <activity android:name=".XposedNotFoundActivity"></activity>

@@ -50,11 +50,13 @@ public class ViewPagerFragmentParent extends Fragment {
             if (fragmentList.size() <= position) {
                 switch (position) {
                     case 0:
-                        f = new SettingsFragment();
+                        f = new DownloadsFragment();
+                        break;
                     case 1:
                         f = new SettingsFragment();
+                        break;
                     default:
-                        f = new SettingsFragment();
+                        f = new DownloadsFragment();
                 }
                 fragmentList.add(position, f);
             }

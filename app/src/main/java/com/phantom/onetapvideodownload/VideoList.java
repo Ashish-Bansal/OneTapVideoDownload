@@ -3,6 +3,7 @@ package com.phantom.onetapvideodownload;
 import android.content.Context;
 
 import com.phantom.onetapvideodownload.Video.Video;
+import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,7 +18,7 @@ public class VideoList {
     public static VideoList mUrlList;
     List<Video> mList = new ArrayList<>();
     private static Context mContext;
-    private static DatabaseHandler mDatabaseHandler;
+    private static VideoDatabase mVideoDatabase;
 
     public static VideoList getVideoListSingleton(Context context) {
         if (mUrlList != null) {
@@ -26,7 +27,7 @@ public class VideoList {
 
         mUrlList = new VideoList();
         mContext = context;
-        mDatabaseHandler = DatabaseHandler.getDatabase(context);
+        mVideoDatabase = VideoDatabase.getDatabase(context);
         mUrlList.loadSavedVideos();
 
         return mUrlList;
@@ -42,13 +43,13 @@ public class VideoList {
     }
 
     public void addVideo(Video video) {
-        long videoId = mDatabaseHandler.addOrUpdateVideo(video);
+        long videoId = mVideoDatabase.addOrUpdateVideo(video);
         video.setDatabaseId(videoId);
         sortList();
     }
 
     public void removeVideo(Video video) {
-        mDatabaseHandler.deleteVideo(video.getDatabaseId());
+        mVideoDatabase.deleteVideo(video.getDatabaseId());
         mList.remove(video);
     }
 
@@ -66,11 +67,11 @@ public class VideoList {
     }
 
     public void clearSavedVideos() {
-        mDatabaseHandler.clearDatabase();
+        mVideoDatabase.clearDatabase();
     }
 
     public void loadSavedVideos() {
-        mList = mDatabaseHandler.getAllVideos();
+        mList = mVideoDatabase.getAllVideos();
     }
 
     public ArrayList<Video> getVideoList() {

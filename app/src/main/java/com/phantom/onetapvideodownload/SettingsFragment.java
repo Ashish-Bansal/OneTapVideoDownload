@@ -7,6 +7,7 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.XpPreferenceFragment;
 
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
+import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
 
 import net.xpece.android.support.preference.ListPreference;
 import net.xpece.android.support.preference.SwitchPreference;
@@ -55,8 +56,8 @@ public class SettingsFragment extends XpPreferenceFragment {
                 preference.setSummary(summary);
             } else if (preference.getKey().equals("pref_url_logging")) {
                 Context context = preference.getContext();
-                DatabaseHandler databaseHandler = DatabaseHandler.getDatabase(context);
-                databaseHandler.clearDatabase();
+                VideoDatabase videoDatabase = VideoDatabase.getDatabase(context);
+                videoDatabase.clearDatabase();
             } else if (preference instanceof SwitchPreference) {
                 //Do something
             } else {
