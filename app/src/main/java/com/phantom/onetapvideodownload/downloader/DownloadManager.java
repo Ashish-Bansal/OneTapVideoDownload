@@ -152,6 +152,10 @@ public class DownloadManager extends IntentService {
 
         Log.e(TAG, "ServiceCallback Size : " + serviceCallbacks.size());
         for(ServiceCallbacks sc : serviceCallbacks) {
+            if (sc == null) {
+                continue;
+            }
+
             Log.e(TAG, "Calling onDownloadAdded callback method " + sc.getClass().getName());
             sc.onDownloadAdded();
         }
