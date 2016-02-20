@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,7 +63,6 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return 0;
         }
 
-        Log.e("SIZE", mDownloadManager.getDownloadCount() + "");
         return mDownloadManager.getDownloadCount();
     }
 
@@ -82,7 +80,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         DownloadViewHolder vh = (DownloadViewHolder) holder;
         vh.setDownloadTitle(downloadInfo.getTitle());
         vh.setDownloadUrl(downloadInfo.getUrl());
-        vh.data = downloadInfo;
+        vh.setDownloadInfo(downloadInfo);
     }
 
     @Override

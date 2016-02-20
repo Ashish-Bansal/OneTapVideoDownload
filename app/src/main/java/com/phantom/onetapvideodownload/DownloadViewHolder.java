@@ -12,7 +12,7 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
     private ImageView mApplicationImageView;
     private TextView mDownloadTitle;
     private TextView mDownloadUrl;
-    public DownloadInfo data;
+    private DownloadInfo mDownloadInfo;
 
     public DownloadViewHolder(View v) {
         super(v);
@@ -31,5 +31,9 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
 
     public void setImageForView(Drawable icon) {
         mApplicationImageView.setImageDrawable(icon);
+    }
+
+    public void setDownloadInfo(DownloadInfo downloadInfo) {
+        mDownloadInfo = downloadInfo;
     }
 }
