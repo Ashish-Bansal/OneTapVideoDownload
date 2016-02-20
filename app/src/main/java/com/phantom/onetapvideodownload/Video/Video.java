@@ -1,6 +1,8 @@
 package com.phantom.onetapvideodownload.Video;
 
-public interface Video {
+import java.io.Serializable;
+
+public interface Video extends Serializable{
     String getUrl();
     String getTitle();
     long getDatabaseId();

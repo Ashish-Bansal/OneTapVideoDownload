@@ -18,10 +18,7 @@ import android.util.SparseArray;
 import com.phantom.onetapvideodownload.Video.BrowserVideo;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
-import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
-import com.phantom.onetapvideodownload.downloader.DownloadManager;
 import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
-import com.phantom.onetapvideodownload.downloader.downloadinfo.BrowserDownloadInfo;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -31,7 +28,6 @@ import at.huber.youtubeExtractor.YouTubeUriExtractor;
 import at.huber.youtubeExtractor.YtFile;
 
 public class IpcService extends IntentService {
-    public static final String PREFS_NAME = "SavedUrls";
     private static final String PACKAGE_NAME = "com.phantom.onetapvideodownload";
     private static final String CLASS_NAME = "com.phantom.onetapvideodownload.IpcService";
     private static final String ACTION_SAVE_BROWSER_VIDEO = "com.phantom.onetapvideodownload.action.saveurl";
@@ -119,14 +115,11 @@ public class IpcService extends IntentService {
 
         VideoDatabase videoDatabase = VideoDatabase.getDatabase(this);
         Video video = videoDatabase.getVideo(videoId);
-        BrowserDownloadInfo browserDownloadInfo = new BrowserDownloadInfo(video.getTitle()
-                , video.getUrl()
-                , CheckPreferences.getDownloadLocation(this) + "/" + Global.getFilenameFromUrl(video.getUrl()));
 
-        DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(this);
-        long downloadId = downloadDatabase.addDownload(browserDownloadInfo);
-        Intent downloadIntent = DownloadManager.getActionVideoDownload(downloadId);
-        PendingIntent downloadPendingIntent = PendingIntent.getService(this,
+        Intent downloadIntent = new Intent(this, MainActivity.class);
+        downloadIntent.putExtra("video", video);
+
+        PendingIntent downloadPendingIntent = PendingIntent.getActivity(this,
                 possibleId,
                 downloadIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
@@ -147,12 +140,7 @@ public class IpcService extends IntentService {
                 PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.addAction(R.drawable.browser, "Open", openPendingIntent);
 
-        Intent urlLogIntent = new Intent(this, UrlLogActivity.class);
-        PendingIntent urlLogPendingIntent = PendingIntent.getActivity(this,
-                possibleId,
-                urlLogIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.setContentIntent(urlLogPendingIntent);
+        mBuilder.setContentIntent(downloadPendingIntent);
 
         final NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
