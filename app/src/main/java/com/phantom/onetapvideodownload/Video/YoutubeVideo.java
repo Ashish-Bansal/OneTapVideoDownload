@@ -1,10 +1,14 @@
 package com.phantom.onetapvideodownload.Video;
 
 import android.support.v4.util.Pair;
-import android.support.v4.util.SparseArrayCompat;
+import android.view.View;
 
 import com.phantom.onetapvideodownload.Global;
+import com.phantom.onetapvideodownload.R;
+import com.phantom.onetapvideodownload.downloader.DownloadOptionItem;
+import com.phantom.onetapvideodownload.utils.SerializableSparseArray;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,13 +47,13 @@ public class YoutubeVideo implements Video {
         itagExtensionMapping.add(Pair.create(249, "webm"));
     }
 
-    public class Format {
+    public class Format implements Serializable {
         public int itag;
         public String url;
         public boolean dashAudio;
     }
 
-    private SparseArrayCompat<Format> mFormatList = new SparseArrayCompat<>();
+    private SerializableSparseArray<Format> mFormatList = new SerializableSparseArray<>();
 
     public YoutubeVideo(String title, String param) {
         mTitle = title;
