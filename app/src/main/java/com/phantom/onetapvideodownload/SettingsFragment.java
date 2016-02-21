@@ -1,13 +1,11 @@
 package com.phantom.onetapvideodownload;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.XpPreferenceFragment;
 
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
-import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
 
 import net.xpece.android.support.preference.ListPreference;
 import net.xpece.android.support.preference.SwitchPreference;
@@ -25,7 +23,6 @@ public class SettingsFragment extends XpPreferenceFragment {
         preferenceList.add(findPreference("pref_notification_dismiss_time"));
         preferenceList.add(findPreference("pref_vibrate_amount"));
         preferenceList.add(findPreference("pref_download_location"));
-        preferenceList.add(findPreference("pref_url_logging"));
 
         for (Preference p : preferenceList) {
             updatePreferenceSummary(p);
@@ -54,10 +51,6 @@ public class SettingsFragment extends XpPreferenceFragment {
 
                 CharSequence summary = index >= 0 ? listPreference.getEntries()[index] : null;
                 preference.setSummary(summary);
-            } else if (preference.getKey().equals("pref_url_logging")) {
-                Context context = preference.getContext();
-                VideoDatabase videoDatabase = VideoDatabase.getDatabase(context);
-                videoDatabase.clearDatabase();
             } else if (preference instanceof SwitchPreference) {
                 //Do something
             } else {
