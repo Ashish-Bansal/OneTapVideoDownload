@@ -70,7 +70,7 @@ public class ProxyDownloadManager extends IntentService {
         VideoDatabase videoDatabase = VideoDatabase.getDatabase(this);
         Video video = videoDatabase.getVideo(videoId);
         if(video == null) {
-            Log.e(TAG, "Video not found in database");
+            Log.e(TAG, "Video not found in database. Video ID: " + videoId);
             return;
         }
 
@@ -88,7 +88,7 @@ public class ProxyDownloadManager extends IntentService {
         VideoDatabase videoDatabase = VideoDatabase.getDatabase(this);
         YoutubeVideo video = (YoutubeVideo)videoDatabase.getVideo(videoId);
         if(video == null) {
-            Log.e(TAG, "Video not found in database");
+            Log.e(TAG, "Video not found in database. Video ID: " + videoId);
             return;
         }
 
