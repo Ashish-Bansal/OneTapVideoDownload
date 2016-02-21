@@ -70,9 +70,6 @@
         <service
             android:name=".downloader.DownloadManager"
             android:exported="false" />
-
-
-        <activity android:name=".XposedNotFoundActivity" />
         <service
             android:name=".downloader.ProxyDownloadManager"
             android:exported="false" />
