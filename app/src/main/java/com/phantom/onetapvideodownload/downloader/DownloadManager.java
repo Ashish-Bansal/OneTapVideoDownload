@@ -59,10 +59,10 @@ public class DownloadManager extends Service {
         }
     }
 
-    public static Intent getActionVideoDownload(long videoId) {
+    public static Intent getActionVideoDownload(long downloadId) {
         Intent intent = new Intent(ACTION_DOWNLOAD);
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
-        intent.putExtra(EXTRA_DOWNLOAD_ID, videoId);
+        intent.putExtra(EXTRA_DOWNLOAD_ID, downloadId);
         return intent;
     }
 
@@ -92,12 +92,12 @@ public class DownloadManager extends Service {
             final String action = intent.getAction();
             System.out.println(action);
             if (ACTION_DOWNLOAD.equals(action)) {
-                final long videoId = intent.getLongExtra(EXTRA_DOWNLOAD_ID, -1);
-                if (videoId == -1) {
+                final long downloadId = intent.getLongExtra(EXTRA_DOWNLOAD_ID, -1);
+                if (downloadId == -1) {
                     return START_REDELIVER_INTENT;
                 }
 
-                handleActionDownload(videoId);
+                handleActionDownload(downloadId);
             }
         }
 
