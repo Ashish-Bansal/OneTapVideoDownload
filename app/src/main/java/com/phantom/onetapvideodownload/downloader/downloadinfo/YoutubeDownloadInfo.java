@@ -1,12 +1,12 @@
 package com.phantom.onetapvideodownload.downloader.downloadinfo;
 
 public class YoutubeDownloadInfo implements DownloadInfo {
-    private String mParam, mVideoUrl, mDownloadLocation, mTitle;
+    private String mParam, mVideoUrl, mDownloadLocation, mFilename;
     private int mItag;
     private long mDatabaseId = -1;
 
-    public YoutubeDownloadInfo(String title, String url, String downloadPath, String param, int itag) {
-        mTitle = title;
+    public YoutubeDownloadInfo(String filename, String url, String downloadPath, String param, int itag) {
+        mFilename = filename;
         mItag = itag;
         mParam = param;
         mDownloadLocation = downloadPath;
@@ -14,8 +14,8 @@ public class YoutubeDownloadInfo implements DownloadInfo {
     }
 
     @Override
-    public String getTitle() {
-        return mTitle;
+    public String getFilename() {
+        return mFilename;
     }
 
     @Override

@@ -78,7 +78,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         DownloadInfo downloadInfo = mDownloadManager.getDownloadInfo(position);
         DownloadViewHolder vh = (DownloadViewHolder) holder;
-        vh.setDownloadTitle(downloadInfo.getTitle());
+        vh.setDownloadTitle(downloadInfo.getFilename());
         vh.setDownloadUrl(downloadInfo.getUrl());
         vh.setDownloadInfo(downloadInfo);
     }

@@ -59,14 +59,14 @@ public class DownloadDatabase extends SQLiteOpenHelper {
                 + KEY_VIDEO_ID + " INTEGER,"
                 + KEY_URL + " TEXT,"
                 + KEY_DOWNLOAD_LOCATION + " TEXT,"
-                + KEY_TITLE + " TEXT" + ")";
+                + KEY_FILENAME + " TEXT" + ")";
 
         String youtubeDownloadListTable = "CREATE TABLE " + TABLE_YOUTUBE_DOWNLOAD_LIST + "("
                 + KEY_PARAM + " TEXT, "
                 + KEY_VIDEO_ID + " INTEGER,"
                 + KEY_VIDEO_ITAG + " INTEGER,"
                 + KEY_URL + " TEXT,"
-                + KEY_TITLE + " TEXT,"
+                + KEY_FILENAME + " TEXT,"
                 + KEY_DOWNLOAD_LOCATION + " TEXT,"
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT)";
 
@@ -101,7 +101,7 @@ public class DownloadDatabase extends SQLiteOpenHelper {
             downloadId = db.insert(TABLE_VIDEO_DOWNLOAD_LIST, null, videoListValues);
             assert(downloadId != -1);
 
-            values.put(KEY_TITLE, download.getTitle());
+            values.put(KEY_FILENAME, download.getFilename());
             values.put(KEY_URL, download.getUrl());
             values.put(KEY_VIDEO_ID, downloadId);
             values.put(KEY_DOWNLOAD_LOCATION, download.getDownloadLocation());
@@ -113,7 +113,7 @@ public class DownloadDatabase extends SQLiteOpenHelper {
             downloadId = db.insert(TABLE_VIDEO_DOWNLOAD_LIST, null, downloadListValues);
             assert(downloadId != -1);
 
-            values.put(KEY_TITLE, download.getTitle());
+            values.put(KEY_FILENAME, download.getFilename());
             values.put(KEY_VIDEO_ID, downloadId);
             values.put(KEY_DOWNLOAD_LOCATION, download.getDownloadLocation());
             values.put(KEY_URL, download.getUrl());

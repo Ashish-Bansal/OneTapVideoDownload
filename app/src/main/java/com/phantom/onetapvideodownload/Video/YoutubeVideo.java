@@ -55,7 +55,8 @@ public class YoutubeVideo implements Video {
 
     private SerializableSparseArray<Format> mFormatList = new SerializableSparseArray<>();
 
-    public YoutubeVideo(String title, String param) {
+    public YoutubeVideo(Context context, String title, String param) {
+        mContext = context;
         mTitle = title;
         mParam = param;
     }
