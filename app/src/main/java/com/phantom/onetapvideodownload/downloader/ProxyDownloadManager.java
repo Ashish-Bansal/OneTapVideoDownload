@@ -92,7 +92,7 @@ public class ProxyDownloadManager extends IntentService {
             return;
         }
 
-        filename += YoutubeVideo.getExtensionForItag(itag);
+        filename += '.' + YoutubeVideo.getExtensionForItag(itag);
         YoutubeDownloadInfo youtubeDownloadInfo = new YoutubeDownloadInfo(this,
                 filename,
                 video.getVideoUrl(itag),
