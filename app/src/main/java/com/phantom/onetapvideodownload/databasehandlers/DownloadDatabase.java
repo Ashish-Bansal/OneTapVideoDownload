@@ -33,6 +33,9 @@ public class DownloadDatabase extends SQLiteOpenHelper {
     private static final String KEY_VIDEO_ITAG = "itag";
     private static final String KEY_PARAM = "param";
     private static final String KEY_DOWNLOAD_LOCATION = "download_path";
+    private static final String KEY_STATUS = "download_status";
+    private static final String KEY_CONTENT_LENGTH = "content_length";
+    private static final String KEY_DOWNLOADED_LENGTH = "downloaded_length";
 
     private static DownloadDatabase mDownloadDatabase;
     private Context mContext;
@@ -61,7 +64,10 @@ public class DownloadDatabase extends SQLiteOpenHelper {
                 + KEY_VIDEO_ID + " INTEGER,"
                 + KEY_URL + " TEXT,"
                 + KEY_DOWNLOAD_LOCATION + " TEXT,"
-                + KEY_FILENAME + " TEXT" + ")";
+                + KEY_FILENAME + " TEXT,"
+                + KEY_STATUS + " INTEGER,"
+                + KEY_CONTENT_LENGTH + " INTEGER,"
+                + KEY_DOWNLOADED_LENGTH + " INTEGER" + ")";
 
         String youtubeDownloadListTable = "CREATE TABLE " + TABLE_YOUTUBE_DOWNLOAD_LIST + "("
                 + KEY_PARAM + " TEXT, "
@@ -70,7 +76,10 @@ public class DownloadDatabase extends SQLiteOpenHelper {
                 + KEY_URL + " TEXT,"
                 + KEY_FILENAME + " TEXT,"
                 + KEY_DOWNLOAD_LOCATION + " TEXT,"
-                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT)";
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + KEY_STATUS + " INTEGER,"
+                + KEY_CONTENT_LENGTH + " INTEGER,"
+                + KEY_DOWNLOADED_LENGTH + " INTEGER" + ")";
 
         db.execSQL(downloadListTable);
         db.execSQL(browserDownloadListTable);
@@ -102,11 +111,13 @@ public class DownloadDatabase extends SQLiteOpenHelper {
             videoListValues.put(KEY_TYPE, DOWNLOAD_TYPE_BROWSER);
             downloadId = db.insert(TABLE_VIDEO_DOWNLOAD_LIST, null, videoListValues);
             assert(downloadId != -1);
-
             values.put(KEY_FILENAME, download.getFilename());
             values.put(KEY_URL, download.getUrl());
             values.put(KEY_VIDEO_ID, downloadId);
             values.put(KEY_DOWNLOAD_LOCATION, download.getDownloadLocation());
+            values.put(KEY_STATUS, download.getStatus().ordinal());
+            values.put(KEY_CONTENT_LENGTH, download.getContentLength());
+            values.put(KEY_DOWNLOADED_LENGTH, download.getDownloadedLength());
             db.insert(TABLE_BROWSER_DOWNLOAD_LIST, null, values);
         } else if (download instanceof YoutubeDownloadInfo) {
             ContentValues downloadListValues = new ContentValues();
@@ -119,6 +130,9 @@ public class DownloadDatabase extends SQLiteOpenHelper {
             values.put(KEY_VIDEO_ID, downloadId);
             values.put(KEY_DOWNLOAD_LOCATION, download.getDownloadLocation());
             values.put(KEY_URL, download.getUrl());
+            values.put(KEY_STATUS, download.getStatus().ordinal());
+            values.put(KEY_CONTENT_LENGTH, download.getContentLength());
+            values.put(KEY_DOWNLOADED_LENGTH, download.getDownloadedLength());
 
             YoutubeDownloadInfo youtubeDownloadInfo = (YoutubeDownloadInfo)download;
             values.put(KEY_PARAM, youtubeDownloadInfo.getParam());
@@ -149,8 +163,15 @@ public class DownloadDatabase extends SQLiteOpenHelper {
                     String url = downloadQueryCursor.getString(2);
                     String downloadPath = downloadQueryCursor.getString(3);
                     String title = downloadQueryCursor.getString(4);
+                    Integer status = downloadQueryCursor.getInt(5);
+                    Long contentLength = downloadQueryCursor.getLong(6);
+                    Long downloadedLength = downloadQueryCursor.getLong(7);
+
                     DownloadInfo downloadInfo = new BrowserDownloadInfo(mContext, title, url, downloadPath);
                     downloadInfo.setDatabaseId(downloadId);
+                    downloadInfo.setStatus(DownloadInfo.Status.values()[status]);
+                    downloadInfo.setContentLength(contentLength);
+                    downloadInfo.setDownloadedLength(downloadedLength);
                     downloadQueryCursor.close();
                     return downloadInfo;
                 }
@@ -165,8 +186,15 @@ public class DownloadDatabase extends SQLiteOpenHelper {
                     String url = downloadQueryCursor.getString(3);
                     String title = downloadQueryCursor.getString(4);
                     String downloadPath = downloadQueryCursor.getString(5);
+                    Integer status = downloadQueryCursor.getInt(7);
+                    Long contentLength = downloadQueryCursor.getLong(8);
+                    Long downloadedLength = downloadQueryCursor.getLong(9);
+
                     DownloadInfo downloadInfo = new YoutubeDownloadInfo(mContext, title, url, downloadPath, param, itag);
                     downloadInfo.setDatabaseId(downloadId);
+                    downloadInfo.setStatus(DownloadInfo.Status.values()[status]);
+                    downloadInfo.setContentLength(contentLength);
+                    downloadInfo.setDownloadedLength(downloadedLength);
                     downloadQueryCursor.close();
                     return downloadInfo;
                 }
