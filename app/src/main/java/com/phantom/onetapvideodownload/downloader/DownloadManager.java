@@ -24,6 +24,7 @@ import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class DownloadManager extends Service {
@@ -44,6 +45,7 @@ public class DownloadManager extends Service {
 
     public interface ServiceCallbacks {
         void onDownloadAdded();
+        void onDownloadInfoUpdated();
     }
 
     @Override
@@ -166,25 +168,24 @@ public class DownloadManager extends Service {
         }
 
         Log.e(TAG, "ServiceCallback Size : " + serviceCallbacks.size());
-        for (ServiceCallbacks sc : serviceCallbacks) {
-            if (sc == null) {
-                continue;
-            }
 
+        serviceCallbacks.removeAll(Collections.singleton(null));
+        for (ServiceCallbacks sc : serviceCallbacks) {
             Log.e(TAG, "Calling onDownloadAdded callback method " + sc.getClass().getName());
             sc.onDownloadAdded();
         }
 
         showNotification();
-        startNotificationUpdateThread();
+        startUiUpdateThread();
     }
 
-    public void startNotificationUpdateThread() {
+    public void startUiUpdateThread() {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 while (getDownloadCountByStatus(DownloadInfo.Status.Downloading) != 0) {
                     updateNotification();
+                    emitOnDownloadInfoUpdated();
                     try {
                         Thread.sleep(NOTIFICATION_UPDATE_WAIT_TIME);
                     } catch (InterruptedException e) {
@@ -192,9 +193,19 @@ public class DownloadManager extends Service {
                         e.printStackTrace();
                     }
                 }
+
                 updateNotification();
+                emitOnDownloadInfoUpdated();
             }
         }).start();
+    }
+
+    private void emitOnDownloadInfoUpdated() {
+        serviceCallbacks.removeAll(Collections.singleton(null));
+        for (ServiceCallbacks sc : serviceCallbacks) {
+            Log.e(TAG, "Calling onDownloadAdded callback method " + sc.getClass().getName());
+            sc.onDownloadInfoUpdated();
+        }
     }
 
     public void showNotification() {
