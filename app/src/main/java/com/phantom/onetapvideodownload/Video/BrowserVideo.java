@@ -73,7 +73,7 @@ public class BrowserVideo implements Video {
         options.add(new DownloadOptionItem(DownloadOptionIds.Filename,
                 R.drawable.file,
                 R.string.filename,
-                getTitle(),
+                Global.getValidatedFilename(getTitle()),
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -86,7 +86,7 @@ public class BrowserVideo implements Video {
                                 .input("", filenameOptionItem.getOptionValue(), new MaterialDialog.InputCallback() {
                                     @Override
                                     public void onInput(MaterialDialog dialog, CharSequence input) {
-                                        filenameOptionItem.setOptionValue(input.toString());
+                                        filenameOptionItem.setOptionValue(Global.getValidatedFilename(input.toString()));
                                         downloadOptionAdapter.setOptionItem(filenameOptionItem);
                                     }
                                 }).show();

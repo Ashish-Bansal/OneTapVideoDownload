@@ -32,4 +32,16 @@ public class Global {
 
         return false;
     }
+
+    public static String getValidatedFilename(String filename) {
+        StringBuilder filenameBuilder = new StringBuilder(filename);
+        for(int i = 0; i < filename.length(); i++) {
+            char j = filename.charAt(i);
+            String reservedChars = "?:\"*|/\\<>";
+            if(reservedChars.indexOf(j) != -1) {
+                filenameBuilder.setCharAt(i, ' ');
+            }
+        }
+        return filenameBuilder.toString().trim();
+    }
 }
