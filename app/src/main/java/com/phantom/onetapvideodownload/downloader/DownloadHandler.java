@@ -27,29 +27,22 @@ import okhttp3.Response;
 public class DownloadHandler {
     private Context mContext;
     private DownloadInfo mDownloadInfo;
-    NotificationCompat.Builder mBuilder;
-    private NotificationManager mNotifyManager;
-    private Integer mNotificationId, mProgress = 0;
-    private long mContentLength = 0, mDownloadedLength = 0;
-    private static AtomicInteger newNotificationId = new AtomicInteger();
     private final static String TAG = "DownloadHandler";
-    private static long mLastNotifcationUpdateTime = System.currentTimeMillis();
+    private NotificationCompat.Builder mBuilder;
+    private NotificationManager mNotifyManager;
+    private final static AtomicInteger mNotificationId = new AtomicInteger(150);
 
     DownloadHandler(Context context, DownloadInfo downloadInfo) {
         mContext = context;
         mDownloadInfo = downloadInfo;
-        mNotificationId = newNotificationId.getAndIncrement();
     }
 
     public void startDownload() {
-        showNotification();
         File filePath = new File(mDownloadInfo.getDownloadLocation());
         downloadFile(mDownloadInfo.getUrl(), filePath);
         mDownloadInfo.setStatus(DownloadInfo.Status.Downloading);
-    }
-
-    public DownloadInfo getDownloadInfo() {
-        return mDownloadInfo;
+        mNotifyManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        mBuilder = new NotificationCompat.Builder(mContext);
     }
 
     private boolean isNetworkAvailable() {
@@ -77,24 +70,20 @@ public class DownloadHandler {
                 public void onResponse(Call call, Response response) {
                     try {
                         InputStream in = response.body().byteStream();
-                        mContentLength = response.body().contentLength();
+                        mDownloadInfo.setContentLength(response.body().contentLength());
                         if (response.isSuccessful()) {
                             Log.v(TAG, file.getAbsolutePath());
                             BufferedOutputStream bw = new BufferedOutputStream(new FileOutputStream(file));
                             byte data[] = new byte[1024 * 4];
                             int count;
                             while ((count = in.read(data)) != -1) {
-                                mDownloadedLength += count;
                                 bw.write(data, 0, count);
-                                long currentTime = System.currentTimeMillis();
-                                if (currentTime - mLastNotifcationUpdateTime > 2500L) {
-                                    mProgress = (int) (mDownloadedLength * 100 / mContentLength);
-                                    updateNotification(mProgress);
-                                }
+                                mDownloadInfo.addDownloadedLength(count);
                             }
                             bw.close();
                             in.close();
                             mDownloadInfo.setStatus(DownloadInfo.Status.Completed);
+                            showNotification();
                         } else {
                             mDownloadInfo.setStatus(DownloadInfo.Status.WriteFailed);
                         }
@@ -108,28 +97,37 @@ public class DownloadHandler {
         }
     }
 
-    public void showNotification() {
-        mNotifyManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        mBuilder = new NotificationCompat.Builder(mContext);
-        mBuilder.setSmallIcon(R.drawable.download);
-        mBuilder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher));
-        mBuilder.setContentTitle(mContext.getResources().getString(R.string.app_name));
-        mBuilder.setContentText("CONTENT");
-        mBuilder.setAutoCancel(false);
-        mBuilder.setOngoing(true);
-        mBuilder.setOnlyAlertOnce(false);
-        mBuilder.setProgress(100, 0, false);
-        mNotifyManager.notify(mNotificationId, mBuilder.build());
+    public Integer getProgress() {
+        return mDownloadInfo.getProgress();
     }
 
-    public void updateNotification(int progress) {
-        mLastNotifcationUpdateTime = System.currentTimeMillis();
-        if (progress == 100) {
-            mBuilder.setContentText("Download complete").setProgress(0, 0, false);
-        } else {
-            mBuilder.setProgress(100, progress, false);
-        }
+    public DownloadInfo.Status getStatus() {
+        return mDownloadInfo.getStatus();
+    }
 
-        mNotifyManager.notify(mNotificationId, mBuilder.build());
+    public long getContentLength() {
+        return mDownloadInfo.getContentLength();
+    }
+
+    public String getFilename() {
+        return mDownloadInfo.getFilename();
+    }
+
+    public String getUrl() {
+        return mDownloadInfo.getUrl();
+    }
+
+    private void showNotification() {
+        mBuilder.setSmallIcon(R.drawable.download);
+        mBuilder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher));
+        mBuilder.setContentTitle(getFilename());
+        mBuilder.setContentText(getNotificationContent());
+        mBuilder.setAutoCancel(false);
+        mBuilder.setOnlyAlertOnce(false);
+        mNotifyManager.notify(mNotificationId.getAndIncrement(), mBuilder.build());
+    }
+
+    private String getNotificationContent() {
+        return "Download Finished";
     }
 }

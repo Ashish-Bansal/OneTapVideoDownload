@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.phantom.onetapvideodownload.downloader.DownloadManager;
-import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 
 public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements DownloadManager.ServiceCallbacks {
@@ -76,11 +75,9 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        DownloadInfo downloadInfo = mDownloadManager.getDownloadInfo(position);
         DownloadViewHolder vh = (DownloadViewHolder) holder;
-        vh.setDownloadTitle(downloadInfo.getFilename());
-        vh.setDownloadUrl(downloadInfo.getUrl());
-        vh.setDownloadInfo(downloadInfo);
+        vh.setDownloadTitle(mDownloadManager.getFilename(position));
+        vh.setDownloadUrl(mDownloadManager.getUrl(position));
     }
 
     @Override

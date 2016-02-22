@@ -19,6 +19,12 @@ public interface DownloadInfo {
     String getDownloadLocation();
     long getDatabaseId();
     void setDatabaseId(long databaseId);
-    int getStatusCode();
+    Status getStatus();
     void setStatus(Status status);
+    long getContentLength();
+    void setContentLength(long contentLength);
+    long getDownloadedLength();
+    void setDownloadedLength(long downloadedLength);
+    void addDownloadedLength(long additionValue);
+    Integer getProgress();
 }

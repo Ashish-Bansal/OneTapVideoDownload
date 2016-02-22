@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
@@ -34,6 +35,10 @@ public class DownloadManager extends Service {
     private final IBinder mBinder = new LocalBinder();
     private static List<ServiceCallbacks> serviceCallbacks = new ArrayList<>();
     private final String TAG = "DownloadManager";
+    private NotificationCompat.Builder mBuilder;
+    private NotificationManager mNotifyManager;
+    private final static Integer mNotificationId = 20;
+    private final static Long NOTIFICATION_UPDATE_WAIT_TIME = 2500L;
     public interface ServiceCallbacks {
         void onDownloadAdded();
     }
@@ -46,6 +51,9 @@ public class DownloadManager extends Service {
             DownloadHandler downloadHandler = new DownloadHandler(this, downloadInfo);
             mDownloadHandlers.add(Pair.create(downloadInfo.getDatabaseId(), downloadHandler));
         }
+
+        mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mBuilder = new NotificationCompat.Builder(this);
     }
 
     @Override
@@ -74,11 +82,6 @@ public class DownloadManager extends Service {
 
     public Integer getDownloadCount() {
         return mDownloadHandlers.size();
-    }
-
-    public DownloadInfo getDownloadInfo(int position) {
-        assert(position < mDownloadHandlers.size());
-        return mDownloadHandlers.get(position).second.getDownloadInfo();
     }
 
     public void registerCallbacks(ServiceCallbacks object) {
@@ -164,6 +167,121 @@ public class DownloadManager extends Service {
             Log.e(TAG, "Calling onDownloadAdded callback method " + sc.getClass().getName());
             sc.onDownloadAdded();
         }
+
+        showNotification();
+        startNotificationUpdateThread();
     }
 
+    public void startNotificationUpdateThread() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (getDownloadCountByStatus(DownloadInfo.Status.Downloading) != 0) {
+                    updateNotification();
+                    try {
+                        Thread.sleep(NOTIFICATION_UPDATE_WAIT_TIME);
+                    } catch (InterruptedException e){
+                        Log.e(TAG, "Notification Update Thread Interrupted Exception");
+                        e.printStackTrace();
+                    }
+                }
+                updateNotification();
+            }
+        }).start();
+    }
+
+    public void showNotification() {
+        mBuilder.setSmallIcon(R.drawable.download);
+        mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+        mBuilder.setContentTitle(getResources().getString(R.string.app_name));
+        mBuilder.setContentText(getNotificationContent());
+        mBuilder.setAutoCancel(false);
+        mBuilder.setOngoing(true);
+        mBuilder.setOnlyAlertOnce(false);
+        mBuilder.setProgress(100, 0, false);
+        mNotifyManager.notify(mNotificationId, mBuilder.build());
+    }
+
+    public synchronized void updateNotification() {
+        int progress = getDownloadsAverageProgress();
+        if (progress == 100) {
+            mNotifyManager.cancel(mNotificationId);
+        } else {
+            mBuilder.setContentText(getNotificationContent());
+            mBuilder.setProgress(100, progress, false);
+            mNotifyManager.notify(mNotificationId, mBuilder.build());
+        }
+    }
+
+    public int getDownloadCountByStatus(DownloadInfo.Status status) {
+        Integer count = 0;
+        for(Pair<Long, DownloadHandler> p : mDownloadHandlers) {
+            if (p.second.getStatus() == status) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public String getNotificationContent() {
+        return "Downloading " + getDownloadCountByStatus(DownloadInfo.Status.Downloading) + " Files"
+                + " : " + getDownloadsAverageProgress() + "%";
+    }
+
+    public int getDownloadsAverageProgress() {
+        int downloadCount = 0, progressSum = 0;
+        for(Pair<Long, DownloadHandler> p : mDownloadHandlers) {
+            if (p.second.getStatus() == DownloadInfo.Status.Downloading) {
+                progressSum += p.second.getProgress();
+                downloadCount++;
+            }
+        }
+
+        if (downloadCount == 0) {
+            return 100;
+        }
+
+        return progressSum/downloadCount;
+
+    }
+
+    public int getDownloadProgress(long id) {
+        DownloadHandler downloadHandler;
+        for(Pair<Long, DownloadHandler> p : mDownloadHandlers) {
+            if (p.first == id) {
+                downloadHandler = p.second;
+                return downloadHandler.getProgress();
+            }
+        }
+
+        return -1;
+    }
+
+    public long getContentLength(long id) {
+        DownloadHandler downloadHandler;
+        for(Pair<Long, DownloadHandler> p : mDownloadHandlers) {
+            if (p.first == id) {
+                downloadHandler = p.second;
+                return downloadHandler.getContentLength();
+            }
+        }
+
+        return -1;
+    }
+
+    public String getFilename(int index) {
+        if (index >= mDownloadHandlers.size()) {
+            Log.e(TAG, "Requested index is larger that available downloads size.");
+        }
+
+        return mDownloadHandlers.get(index).second.getFilename();
+    }
+
+    public String getUrl(int index) {
+        if (index >= mDownloadHandlers.size()) {
+            Log.e(TAG, "Requested index is larger that available downloads size.");
+        }
+
+        return mDownloadHandlers.get(index).second.getUrl();
+    }
 }

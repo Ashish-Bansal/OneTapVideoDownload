@@ -6,13 +6,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
-
 public class DownloadViewHolder extends RecyclerView.ViewHolder {
     private ImageView mApplicationImageView;
     private TextView mDownloadTitle;
     private TextView mDownloadUrl;
-    private DownloadInfo mDownloadInfo;
 
     public DownloadViewHolder(View v) {
         super(v);
@@ -31,9 +28,5 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
 
     public void setImageForView(Drawable icon) {
         mApplicationImageView.setImageDrawable(icon);
-    }
-
-    public void setDownloadInfo(DownloadInfo downloadInfo) {
-        mDownloadInfo = downloadInfo;
     }
 }
