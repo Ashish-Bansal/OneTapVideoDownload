@@ -34,10 +34,12 @@ public class VideoDatabase extends SQLiteOpenHelper {
     private static final String KEY_PARAM = "param";
 
     private static VideoDatabase mVideoDatabase;
+    private Context mContext;
 
     public static VideoDatabase getDatabase(Context context) {
         if (mVideoDatabase == null) {
             mVideoDatabase = new VideoDatabase(context);
+            mVideoDatabase.mContext = context;
         }
 
         return mVideoDatabase;
@@ -147,7 +149,7 @@ public class VideoDatabase extends SQLiteOpenHelper {
                 if (videoQueryCursor.moveToFirst()) {
                     String url = videoQueryCursor.getString(2);
                     String title = videoQueryCursor.getString(3);
-                    Video video = new BrowserVideo(url, title);
+                    Video video = new BrowserVideo(mContext, url, title);
                     video.setDatabaseId(videoId);
                     videoQueryCursor.close();
                     return video;
@@ -160,7 +162,7 @@ public class VideoDatabase extends SQLiteOpenHelper {
                 if (videoQueryCursor.moveToFirst()) {
                     String title = videoQueryCursor.getString(4);
                     String param = videoQueryCursor.getString(0);
-                    YoutubeVideo youtubeVideo = new YoutubeVideo(title, param);
+                    YoutubeVideo youtubeVideo = new YoutubeVideo(mContext, title, param);
                     youtubeVideo.setDatabaseId(videoId);
                     do {
                         int itag = videoQueryCursor.getInt(2);

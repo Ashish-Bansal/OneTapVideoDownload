@@ -1,11 +1,14 @@
 package com.phantom.onetapvideodownload.downloader.downloadinfo;
 
+import android.content.Context;
 public class BrowserDownloadInfo implements DownloadInfo {
     private String mVideoUrl, mDownloadLocation, mFilename;
     private long mDatabaseId = -1;
     private Status mStatus;
+    private Context mContext;
 
-    public BrowserDownloadInfo(String filename, String url, String downloadPath) {
+    public BrowserDownloadInfo(Context context, String filename, String url, String downloadPath) {
+        mContext = context;
         mFilename = filename;
         mDownloadLocation = downloadPath;
         mVideoUrl = url;

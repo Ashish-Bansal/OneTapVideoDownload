@@ -1,12 +1,15 @@
 package com.phantom.onetapvideodownload.downloader.downloadinfo;
 
+import android.content.Context;
 public class YoutubeDownloadInfo implements DownloadInfo {
     private String mParam, mVideoUrl, mDownloadLocation, mFilename;
     private int mItag;
     private long mDatabaseId = -1;
     private Status mStatus;
+    private Context mContext;
 
-    public YoutubeDownloadInfo(String filename, String url, String downloadPath, String param, int itag) {
+    public YoutubeDownloadInfo(Context context, String filename, String url, String downloadPath, String param, int itag) {
+        mContext = context;
         mFilename = filename;
         mItag = itag;
         mParam = param;
@@ -47,6 +50,8 @@ public class YoutubeDownloadInfo implements DownloadInfo {
     public String getDownloadLocation() {
         return mDownloadLocation;
     }
+
+    @Override
 
     @Override
     public int getStatusCode() {

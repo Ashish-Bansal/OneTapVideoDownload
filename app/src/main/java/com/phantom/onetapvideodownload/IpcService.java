@@ -80,7 +80,7 @@ public class IpcService extends IntentService {
             Log.e("IpcService", action);
             if (ACTION_SAVE_BROWSER_VIDEO.equals(action)) {
                 String url = intent.getStringExtra(EXTRA_URL);
-                Video video = new BrowserVideo(url);
+                Video video = new BrowserVideo(this, url);
                 handleActionSaveBrowserVideo(video);
             } else if (ACTION_SAVE_YOUTUBE_VIDEO.equals(action)) {
                 final String paramString = intent.getStringExtra(EXTRA_PARAM_STRING);
@@ -177,7 +177,7 @@ public class IpcService extends IntentService {
             @Override
             public void onUrisAvailable(String videoId, String videoTitle, SparseArray<YtFile> ytFiles) {
                 if (ytFiles != null) {
-                    YoutubeVideo video = new YoutubeVideo(videoTitle, videoId);
+                    YoutubeVideo video = new YoutubeVideo(getApplicationContext(), videoTitle, videoId);
                     for(Pair p : YoutubeVideo.itagQualityMapping) {
                         YtFile videoFormat = ytFiles.get(Integer.parseInt(p.first.toString()));
                         if (videoFormat == null) {

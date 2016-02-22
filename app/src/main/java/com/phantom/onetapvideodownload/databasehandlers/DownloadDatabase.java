@@ -35,10 +35,12 @@ public class DownloadDatabase extends SQLiteOpenHelper {
     private static final String KEY_DOWNLOAD_LOCATION = "download_path";
 
     private static DownloadDatabase mDownloadDatabase;
+    private Context mContext;
 
     public static DownloadDatabase getDatabase(Context context) {
         if (mDownloadDatabase == null) {
             mDownloadDatabase = new DownloadDatabase(context);
+            mDownloadDatabase.mContext = context;
         }
 
         return mDownloadDatabase;
@@ -147,7 +149,7 @@ public class DownloadDatabase extends SQLiteOpenHelper {
                     String url = downloadQueryCursor.getString(2);
                     String downloadPath = downloadQueryCursor.getString(3);
                     String title = downloadQueryCursor.getString(4);
-                    DownloadInfo downloadInfo = new BrowserDownloadInfo(title, url, downloadPath);
+                    DownloadInfo downloadInfo = new BrowserDownloadInfo(mContext, title, url, downloadPath);
                     downloadInfo.setDatabaseId(downloadId);
                     downloadQueryCursor.close();
                     return downloadInfo;
@@ -163,7 +165,7 @@ public class DownloadDatabase extends SQLiteOpenHelper {
                     String url = downloadQueryCursor.getString(3);
                     String title = downloadQueryCursor.getString(4);
                     String downloadPath = downloadQueryCursor.getString(5);
-                    DownloadInfo downloadInfo = new YoutubeDownloadInfo(title, url, downloadPath, param, itag);
+                    DownloadInfo downloadInfo = new YoutubeDownloadInfo(mContext, title, url, downloadPath, param, itag);
                     downloadInfo.setDatabaseId(downloadId);
                     downloadQueryCursor.close();
                     return downloadInfo;

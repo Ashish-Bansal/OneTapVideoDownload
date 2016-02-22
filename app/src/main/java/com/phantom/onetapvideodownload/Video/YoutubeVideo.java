@@ -1,5 +1,6 @@
 package com.phantom.onetapvideodownload.Video;
 
+import android.content.Context;
 import android.support.v4.util.Pair;
 import android.view.View;
 
@@ -17,6 +18,7 @@ public class YoutubeVideo implements Video {
     private long mDatabaseId = -1;
     public static List<Pair<Integer, String>> itagQualityMapping = new ArrayList<>();
     public static List<Pair<Integer, String>> itagExtensionMapping = new ArrayList<>();
+    private Context mContext;
 
     static {
         itagQualityMapping.add(Pair.create(22, "MP4 - 720p"));
@@ -158,5 +160,10 @@ public class YoutubeVideo implements Video {
             }
         }
         return formats;
+    }
+
+    @Override
+    public void setContext(Context context) {
+        mContext = context;
     }
 }
