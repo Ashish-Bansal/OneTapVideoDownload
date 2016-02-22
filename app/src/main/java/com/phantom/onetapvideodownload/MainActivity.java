@@ -18,24 +18,37 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.phantom.onetapvideodownload.Video.Video;
+import com.phantom.onetapvideodownload.Video.YoutubeVideo;
+import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
+import com.phantom.onetapvideodownload.downloader.ProxyDownloadManager;
 
 import net.xpece.android.support.preference.Fixes;
 
 import java.io.File;
 
 public class MainActivity extends AppCompatActivity implements FolderChooserDialog.FolderCallback {
+    private final static String TAG = "MainActivity";
     private Toolbar toolbar;
     private Tracker mTracker;
+    private MaterialDialogIds folderChooserDialogId;
+    private static RecyclerView mDownloadDialogRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +66,69 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
                     ViewPagerFragmentParent.FRAGMENT_TAG);
             ft.commit();
             fm.executePendingTransactions();
+        }
+
+        Intent intent = getIntent();
+        final long videoId = intent.getLongExtra("videoId", -1);
+        if (videoId != -1) {
+            VideoDatabase videoDatabase = VideoDatabase.getDatabase(this);
+            final Video video = videoDatabase.getVideo(videoId);
+            video.setContext(this);
+            final MaterialDialog dialog = new MaterialDialog.Builder(this)
+                    .customView(R.layout.dialog_download_file, false)
+                    .canceledOnTouchOutside(false)
+                    .backgroundColorRes(R.color.dialog_background)
+                    .show();
+
+            View dialogView = dialog.getCustomView();
+            mDownloadDialogRecyclerView = (RecyclerView)dialogView.findViewById(R.id.download_option_list);
+
+            // For wrapping content on RecyclerView
+            LinearLayoutManager layoutManager = new org.solovyev.android.views.llm.LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+            mDownloadDialogRecyclerView.setLayoutManager(layoutManager);
+            mDownloadDialogRecyclerView.setHasFixedSize(true);
+            mDownloadDialogRecyclerView.setAdapter(new DownloadOptionAdapter(this, video.getOptions()));
+
+            ImageView closeButton = (ImageView)dialogView.findViewById(R.id.close);
+            assert(closeButton != null);
+            closeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+
+            Button startDownloadButton = (Button)dialogView.findViewById(R.id.start_download);
+            Button downloadLaterButton = (Button) dialogView.findViewById(R.id.download_later);
+
+            startDownloadButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    DownloadOptionAdapter downloadOptionAdapter = getDownloadOptionAdapter();
+                    String filename = downloadOptionAdapter.getOptionItem(DownloadOptionIds.Filename).getOptionValue();
+                    String downloadLocation = downloadOptionAdapter.getOptionItem(DownloadOptionIds.DownloadLocation).getOptionValue();
+
+                    if (video instanceof YoutubeVideo) {
+                        Integer itag = YoutubeVideo.getItagForDescription(downloadOptionAdapter.getOptionItem(DownloadOptionIds.Format).getOptionValue());
+                        if (itag == -1) {
+                            Log.e(TAG, "getItagForDescription returned NULL");
+                        }
+
+                        ProxyDownloadManager.startActionYoutubeDownload(getApplicationContext(), videoId, filename, downloadLocation, itag);
+                    } else {
+                        ProxyDownloadManager.startActionDownload(getApplicationContext(), videoId, filename, downloadLocation);
+                    }
+                }
+            });
+
+            downloadLaterButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
         }
 
         AnalyticsApplication application = (AnalyticsApplication) getApplication();
@@ -177,11 +253,32 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
 
     @Override
     public void onFolderSelection(@NonNull File directory) {
-        if(directory.canWrite()) {
-            CheckPreferences.setDownloadLocation(this, directory.getPath());
-            SettingsFragment.updatePreferenceSummary();
-        } else {
-            Toast.makeText(this, "No write permission on selected directory", Toast.LENGTH_SHORT).show();
+        switch(folderChooserDialogId) {
+            case DefaultDownloadLocation:
+                if(directory.canWrite()) {
+                    CheckPreferences.setDownloadLocation(this, directory.getPath());
+                    SettingsFragment.updatePreferenceSummary();
+                } else {
+                    Toast.makeText(this, "No write permission on selected directory", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case VideoDownloadLocation:
+                if(directory.canWrite()) {
+                    DownloadOptionAdapter downloadOptionAdapter =
+                            (DownloadOptionAdapter) mDownloadDialogRecyclerView.getAdapter();
+                    downloadOptionAdapter.setDownloadLocation(directory.getPath());
+                    SettingsFragment.updatePreferenceSummary();
+                } else {
+                    Toast.makeText(this, "No write permission on selected directory", Toast.LENGTH_SHORT).show();
+                }
         }
+    }
+
+    public void setFolderChooserDialogId(MaterialDialogIds id) {
+        folderChooserDialogId = id;
+    }
+
+    public static DownloadOptionAdapter getDownloadOptionAdapter() {
+        return (DownloadOptionAdapter)mDownloadDialogRecyclerView.getAdapter();
     }
 }

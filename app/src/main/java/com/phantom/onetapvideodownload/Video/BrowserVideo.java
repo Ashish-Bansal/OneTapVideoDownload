@@ -1,7 +1,19 @@
 package com.phantom.onetapvideodownload.Video;
 
 import android.content.Context;
+import android.text.InputType;
+import android.view.View;
+
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.phantom.onetapvideodownload.DownloadOptionAdapter;
+import com.phantom.onetapvideodownload.DownloadOptionIds;
 import com.phantom.onetapvideodownload.Global;
+import com.phantom.onetapvideodownload.MainActivity;
+import com.phantom.onetapvideodownload.R;
+import com.phantom.onetapvideodownload.downloader.DownloadOptionItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BrowserVideo implements Video {
     private String mTitle, mUrl;
@@ -55,4 +67,33 @@ public class BrowserVideo implements Video {
         mContext = context;
     }
 
+    @Override
+    public List<DownloadOptionItem> getOptions() {
+        List<DownloadOptionItem> options = new ArrayList<>();
+        options.add(new DownloadOptionItem(DownloadOptionIds.Filename,
+                R.drawable.file,
+                R.string.filename,
+                getTitle(),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final DownloadOptionAdapter downloadOptionAdapter =
+                                MainActivity.getDownloadOptionAdapter();
+                        final DownloadOptionItem filenameOptionItem = downloadOptionAdapter.getOptionItem(DownloadOptionIds.Filename);
+                        new MaterialDialog.Builder(mContext)
+                                .title(R.string.enter_filename)
+                                .inputType(InputType.TYPE_CLASS_TEXT)
+                                .input("", filenameOptionItem.getOptionValue(), new MaterialDialog.InputCallback() {
+                                    @Override
+                                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                                        filenameOptionItem.setOptionValue(input.toString());
+                                        downloadOptionAdapter.setOptionItem(filenameOptionItem);
+                                    }
+                                }).show();
+                    }
+                }
+        ));
+
+        return options;
+    }
 }

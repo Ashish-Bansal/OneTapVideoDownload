@@ -32,4 +32,8 @@
     <color name="white">#FFF</color>
     <color name="amber">#FFC107</color>
     <color name="highlight">#311B92</color>
+
+    <color name="dialog_background">#AA512DA8</color>
+    <color name="transparent">#00000000</color>
+
 </resources>

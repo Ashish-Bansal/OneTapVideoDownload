@@ -113,11 +113,8 @@ public class IpcService extends IntentService {
             notificationId.set(possibleId);
         }
 
-        VideoDatabase videoDatabase = VideoDatabase.getDatabase(this);
-        Video video = videoDatabase.getVideo(videoId);
-
         Intent downloadIntent = new Intent(this, MainActivity.class);
-        downloadIntent.putExtra("video", video);
+        downloadIntent.putExtra("videoId", videoId);
 
         PendingIntent downloadPendingIntent = PendingIntent.getActivity(this,
                 possibleId,

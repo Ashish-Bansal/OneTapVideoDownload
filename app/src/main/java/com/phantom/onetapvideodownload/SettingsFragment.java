@@ -32,7 +32,9 @@ public class SettingsFragment extends XpPreferenceFragment {
         findPreference("pref_download_location").setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                new FolderChooserDialog.Builder((MainActivity) getActivity())
+                MainActivity mainActivity = ((MainActivity)getActivity());
+                mainActivity.setFolderChooserDialogId(MaterialDialogIds.DefaultDownloadLocation);
+                new FolderChooserDialog.Builder(mainActivity)
                         .chooseButton(R.string.md_choose_label)
                         .initialPath(Environment.getExternalStorageDirectory().getPath())
                         .show();

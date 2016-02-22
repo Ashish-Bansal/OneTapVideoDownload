@@ -1,12 +1,16 @@
 package com.phantom.onetapvideodownload.Video;
 
-import java.io.Serializable;
 import android.content.Context;
 
-public interface Video extends Serializable{
+import com.phantom.onetapvideodownload.downloader.DownloadOptionItem;
+
+import java.util.List;
+
+public interface Video {
     String getUrl();
     String getTitle();
     long getDatabaseId();
     void setDatabaseId(long databaseId);
+    List<DownloadOptionItem> getOptions();
     void setContext(Context context);
 }

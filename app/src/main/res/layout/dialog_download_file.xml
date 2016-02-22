@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/dialog_background"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:maxHeight="5sp"
+        android:maxWidth="5sp"
+        android:padding="10sp"
+        android:src="@drawable/close" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/download_option_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/close"
+        android:divider="@null"
+        android:dividerHeight="0dp" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/download_option_list"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:padding="20sp">
+
+        <Button
+            android:id="@+id/download_later"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:background="@color/transparent"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:text="@string/download_later" />
+
+        <Button
+            android:id="@+id/start_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/download_later"
+            android:layout_toRightOf="@+id/download_later"
+            android:padding="10sp"
+            android:background="@color/transparent"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:text="@string/start_download" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5sp">
+
+        <ImageView
+            android:id="@+id/option_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="15sp"
+            android:maxWidth="40sp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/option_image"
+        android:layout_toRightOf="@+id/option_image">
+
+        <TextView
+            android:id="@+id/option_label"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/option_value"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/option_label"
+            android:textColor="@color/white"
+            android:textSize="12sp"/>
+    </RelativeLayout>
+</RelativeLayout>

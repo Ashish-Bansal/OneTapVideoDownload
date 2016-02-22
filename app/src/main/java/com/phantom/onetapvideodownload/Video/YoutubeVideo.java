@@ -2,14 +2,18 @@ package com.phantom.onetapvideodownload.Video;
 
 import android.content.Context;
 import android.support.v4.util.Pair;
+import android.support.v4.util.SparseArrayCompat;
+import android.text.InputType;
 import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.phantom.onetapvideodownload.DownloadOptionAdapter;
+import com.phantom.onetapvideodownload.DownloadOptionIds;
 import com.phantom.onetapvideodownload.Global;
+import com.phantom.onetapvideodownload.MainActivity;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.DownloadOptionItem;
-import com.phantom.onetapvideodownload.utils.SerializableSparseArray;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,13 +53,13 @@ public class YoutubeVideo implements Video {
         itagExtensionMapping.add(Pair.create(249, "webm"));
     }
 
-    public class Format implements Serializable {
+    public class Format {
         public int itag;
         public String url;
         public boolean dashAudio;
     }
 
-    private SerializableSparseArray<Format> mFormatList = new SerializableSparseArray<>();
+    private SparseArrayCompat<Format> mFormatList = new SparseArrayCompat<>();
 
     public YoutubeVideo(Context context, String title, String param) {
         mContext = context;
@@ -100,14 +104,24 @@ public class YoutubeVideo implements Video {
         return mParam;
     }
 
-    public String getFormatDescription(int itag) {
+    public static String getFormatDescription(int itag) {
         for (Pair p : itagQualityMapping) {
             if (p.first == itag) {
                 return p.second.toString();
             }
         }
 
-        return "No Description Found";
+        return "";
+    }
+
+    public static Integer getItagForDescription(String description) {
+        for (Pair p : itagQualityMapping) {
+            if (p.second == description) {
+                return (Integer)p.first;
+            }
+        }
+
+        return -1;
     }
 
     public String getVideoUrl(int itag) {
@@ -162,8 +176,85 @@ public class YoutubeVideo implements Video {
         return formats;
     }
 
+    public static String getExtensionForItag(Integer itag) {
+        for (Pair p : itagExtensionMapping) {
+            if (p.first == itag) {
+                return p.second.toString();
+            }
+        }
+
+        return "";
+    }
+
     @Override
     public void setContext(Context context) {
         mContext = context;
+    }
+
+    @Override
+    public List<DownloadOptionItem> getOptions() {
+        List<DownloadOptionItem> options = new ArrayList<>();
+        options.add(new DownloadOptionItem(DownloadOptionIds.Filename,
+                R.drawable.file,
+                R.string.filename,
+                getTitle(),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final DownloadOptionAdapter downloadOptionAdapter =
+                                MainActivity.getDownloadOptionAdapter();
+                        final DownloadOptionItem filenameOptionItem = downloadOptionAdapter.getOptionItem(DownloadOptionIds.Filename);
+                                new MaterialDialog.Builder(mContext)
+                                .title(R.string.enter_filename)
+                                .inputType(InputType.TYPE_CLASS_TEXT)
+                                .input("", filenameOptionItem.getOptionValue(), new MaterialDialog.InputCallback() {
+                                    @Override
+                                    public void onInput(MaterialDialog dialog, CharSequence input) {
+                                        filenameOptionItem.setOptionValue(input.toString());
+                                        downloadOptionAdapter.setOptionItem(filenameOptionItem);
+                                    }
+                                }).show();
+                    }
+                }
+        ));
+
+        options.add(new DownloadOptionItem(DownloadOptionIds.Format,
+                R.drawable.quality,
+                R.string.video_quality,
+                getFormatDescription(getBestVideoFormat().itag),
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ArrayList<Format> formatArrayList = getAllFormats();
+                        List<String> displayStrings = new ArrayList<>();
+                        for(Format f : formatArrayList) {
+                            int itag = f.itag;
+                            String formatDescription = getFormatDescription(itag);
+                            if (formatDescription.isEmpty()) {
+                                continue;
+                            }
+
+                            displayStrings.add(formatDescription);
+                        }
+
+                        new MaterialDialog.Builder(mContext)
+                                .title(R.string.video_quality)
+                                .items(displayStrings)
+                                .itemsCallback(new MaterialDialog.ListCallback() {
+                                    @Override
+                                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                                        DownloadOptionAdapter downloadOptionAdapter =
+                                                MainActivity.getDownloadOptionAdapter();
+                                        DownloadOptionItem formatOptionItem = downloadOptionAdapter.getOptionItem(DownloadOptionIds.Format);
+                                        formatOptionItem.setOptionValue(text.toString());
+                                        downloadOptionAdapter.setOptionItem(formatOptionItem);
+                                    }
+                                })
+                                .show();
+                    }
+                }
+        ));
+
+        return options;
     }
 }
