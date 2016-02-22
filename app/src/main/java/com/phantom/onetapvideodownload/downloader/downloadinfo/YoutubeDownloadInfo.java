@@ -4,6 +4,7 @@ public class YoutubeDownloadInfo implements DownloadInfo {
     private String mParam, mVideoUrl, mDownloadLocation, mFilename;
     private int mItag;
     private long mDatabaseId = -1;
+    private Status mStatus;
 
     public YoutubeDownloadInfo(String filename, String url, String downloadPath, String param, int itag) {
         mFilename = filename;
@@ -11,6 +12,7 @@ public class YoutubeDownloadInfo implements DownloadInfo {
         mParam = param;
         mDownloadLocation = downloadPath;
         mVideoUrl = url;
+        mStatus = Status.Stopped;
     }
 
     @Override
@@ -44,5 +46,10 @@ public class YoutubeDownloadInfo implements DownloadInfo {
     @Override
     public String getDownloadLocation() {
         return mDownloadLocation;
+    }
+
+    @Override
+    public int getStatusCode() {
+        return mStatus.getStatus();
     }
 }

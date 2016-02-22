@@ -3,11 +3,13 @@ package com.phantom.onetapvideodownload.downloader.downloadinfo;
 public class BrowserDownloadInfo implements DownloadInfo {
     private String mVideoUrl, mDownloadLocation, mFilename;
     private long mDatabaseId = -1;
+    private Status mStatus;
 
     public BrowserDownloadInfo(String filename, String url, String downloadPath) {
         mFilename = filename;
         mDownloadLocation = downloadPath;
         mVideoUrl = url;
+        mStatus = Status.Stopped;
     }
 
     @Override
@@ -35,4 +37,9 @@ public class BrowserDownloadInfo implements DownloadInfo {
         return mDownloadLocation;
     }
 
+
+    @Override
+    public int getStatusCode() {
+        return mStatus.getStatus();
+    }
 }
