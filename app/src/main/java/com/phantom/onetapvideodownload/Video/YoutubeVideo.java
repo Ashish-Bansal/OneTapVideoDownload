@@ -31,8 +31,8 @@ public class YoutubeVideo implements Video {
         itagQualityMapping.add(Pair.create(36, "3GB - 240p"));
         itagQualityMapping.add(Pair.create(5, "FLV - 240p"));
         itagQualityMapping.add(Pair.create(17, "3GP - 144p"));
-        itagQualityMapping.add(Pair.create(141, "M4A - 256 kbit/s"));
-        itagQualityMapping.add(Pair.create(140, "M4A - 128 kbit/s"));
+        itagQualityMapping.add(Pair.create(141, "M4A - 256 kbit/s (Audio)"));
+        itagQualityMapping.add(Pair.create(140, "M4A - 128 kbit/s (Audio)"));
         itagQualityMapping.add(Pair.create(251, "WebM - 160 kbit/s"));
         itagQualityMapping.add(Pair.create(171, "WebM - 128 kbit/s"));
         itagQualityMapping.add(Pair.create(250, "WebM - 64 kbit/s"));
