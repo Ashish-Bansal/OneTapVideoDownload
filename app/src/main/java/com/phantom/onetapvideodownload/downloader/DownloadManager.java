@@ -15,6 +15,7 @@ import android.support.v4.util.Pair;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.phantom.onetapvideodownload.AppPermissions;
 import com.phantom.onetapvideodownload.MainActivity;
 import com.phantom.onetapvideodownload.R;
@@ -22,6 +23,7 @@ import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class DownloadManager extends Service {
@@ -39,15 +41,16 @@ public class DownloadManager extends Service {
     private NotificationManager mNotifyManager;
     private final static Integer mNotificationId = 20;
     private final static Long NOTIFICATION_UPDATE_WAIT_TIME = 2500L;
+
     public interface ServiceCallbacks {
         void onDownloadAdded();
     }
 
     @Override
-    public void onCreate () {
+    public void onCreate() {
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(this);
         List<DownloadInfo> downloadInfos = downloadDatabase.getAllDownloads();
-        for(DownloadInfo downloadInfo : downloadInfos) {
+        for (DownloadInfo downloadInfo : downloadInfos) {
             DownloadHandler downloadHandler = new DownloadHandler(this, downloadInfo);
             mDownloadHandlers.add(Pair.create(downloadInfo.getDatabaseId(), downloadHandler));
         }
@@ -110,7 +113,7 @@ public class DownloadManager extends Service {
     @TargetApi(23)
     public boolean checkPermissionGranted(AppPermissions permission) {
         int currentApiVersion = android.os.Build.VERSION.SDK_INT;
-        if (currentApiVersion > android.os.Build.VERSION_CODES.LOLLIPOP){
+        if (currentApiVersion > android.os.Build.VERSION_CODES.LOLLIPOP) {
             if (ContextCompat.checkSelfPermission(this, permission.getPermissionName())
                     != PackageManager.PERMISSION_GRANTED) {
                 return false;
@@ -159,7 +162,7 @@ public class DownloadManager extends Service {
         }
 
         Log.e(TAG, "ServiceCallback Size : " + serviceCallbacks.size());
-        for(ServiceCallbacks sc : serviceCallbacks) {
+        for (ServiceCallbacks sc : serviceCallbacks) {
             if (sc == null) {
                 continue;
             }
@@ -180,7 +183,7 @@ public class DownloadManager extends Service {
                     updateNotification();
                     try {
                         Thread.sleep(NOTIFICATION_UPDATE_WAIT_TIME);
-                    } catch (InterruptedException e){
+                    } catch (InterruptedException e) {
                         Log.e(TAG, "Notification Update Thread Interrupted Exception");
                         e.printStackTrace();
                     }
@@ -215,7 +218,7 @@ public class DownloadManager extends Service {
 
     public int getDownloadCountByStatus(DownloadInfo.Status status) {
         Integer count = 0;
-        for(Pair<Long, DownloadHandler> p : mDownloadHandlers) {
+        for (Pair<Long, DownloadHandler> p : mDownloadHandlers) {
             if (p.second.getStatus() == status) {
                 count++;
             }
@@ -230,7 +233,7 @@ public class DownloadManager extends Service {
 
     public int getDownloadsAverageProgress() {
         int downloadCount = 0, progressSum = 0;
-        for(Pair<Long, DownloadHandler> p : mDownloadHandlers) {
+        for (Pair<Long, DownloadHandler> p : mDownloadHandlers) {
             if (p.second.getStatus() == DownloadInfo.Status.Downloading) {
                 progressSum += p.second.getProgress();
                 downloadCount++;
@@ -241,13 +244,13 @@ public class DownloadManager extends Service {
             return 100;
         }
 
-        return progressSum/downloadCount;
+        return progressSum / downloadCount;
 
     }
 
     public int getDownloadProgress(long id) {
         DownloadHandler downloadHandler;
-        for(Pair<Long, DownloadHandler> p : mDownloadHandlers) {
+        for (Pair<Long, DownloadHandler> p : mDownloadHandlers) {
             if (p.first == id) {
                 downloadHandler = p.second;
                 return downloadHandler.getProgress();
@@ -259,7 +262,7 @@ public class DownloadManager extends Service {
 
     public long getContentLength(long id) {
         DownloadHandler downloadHandler;
-        for(Pair<Long, DownloadHandler> p : mDownloadHandlers) {
+        for (Pair<Long, DownloadHandler> p : mDownloadHandlers) {
             if (p.first == id) {
                 downloadHandler = p.second;
                 return downloadHandler.getContentLength();
@@ -283,5 +286,13 @@ public class DownloadManager extends Service {
         }
 
         return mDownloadHandlers.get(index).second.getUrl();
+    }
+
+    public Collection<String> getOptions(int index) {
+        return mDownloadHandlers.get(index).second.getOptions();
+    }
+
+    public MaterialDialog.ListCallback getOptionCallback(int index) {
+        return mDownloadHandlers.get(index).second.getOptionCallback();
     }
 }

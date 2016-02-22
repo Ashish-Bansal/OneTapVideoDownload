@@ -39,6 +39,14 @@
     <string name="pref_notification_headsup_summary">Show Heads up notification along with normal notification \n (Requires Android version >= v5)</string>
     <string name="pref_download_header">Download Options</string>
     <string name="prefs_download_location_title">Choose Download Directory</string>
+    <string name="open">Open</string>
+    <string name="share">Share</string>
+    <string name="download_in_other_resolution">Download in other resolution</string>
+    <string name="remove_from_list">Remove from list</string>
+    <string name="delete_from_storage">Delete from storage</string>
+    <string name="details">Details</string>
+    <string name="resume">Resume</string>
+    <string name="pause">Pause</string>
     <string name="filename">Filename</string>
     <string name="enter_filename">Enter Filename</string>
     <string name="video_quality">Video Quality</string>

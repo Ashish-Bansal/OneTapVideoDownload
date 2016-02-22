@@ -1,18 +1,27 @@
 package com.phantom.onetapvideodownload;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
+import java.util.Collection;
+
 public class DownloadViewHolder extends RecyclerView.ViewHolder {
     private ImageView mApplicationImageView;
     private TextView mDownloadTitle;
     private TextView mDownloadUrl;
+    private Context mContext;
+    private View mView;
 
     public DownloadViewHolder(View v) {
         super(v);
+        mView = v;
+        mContext = v.getContext();
         mApplicationImageView = (ImageView)itemView.findViewById(R.id.application_icon);
         mDownloadTitle = (TextView)itemView.findViewById(R.id.download_title);
         mDownloadUrl = (TextView)itemView.findViewById(R.id.download_url);
@@ -28,5 +37,17 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
 
     public void setImageForView(Drawable icon) {
         mApplicationImageView.setImageDrawable(icon);
+    }
+
+    public void setOnClickListener(final Collection<String> options, final MaterialDialog.ListCallback callback) {
+        mView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MaterialDialog.Builder(mContext)
+                        .items(options)
+                        .itemsCallback(callback)
+                        .show();
+            }
+        });
     }
 }

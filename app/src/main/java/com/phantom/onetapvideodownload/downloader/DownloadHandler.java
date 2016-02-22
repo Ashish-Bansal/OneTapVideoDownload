@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 
@@ -16,6 +17,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import okhttp3.Call;
@@ -138,5 +140,13 @@ public class DownloadHandler {
 
     private String getNotificationContent() {
         return "Download Finished";
+    }
+
+    public Collection<String> getOptions() {
+        return mDownloadInfo.getOptions();
+    }
+
+    public MaterialDialog.ListCallback getOptionCallback() {
+        return mDownloadInfo.getOptionCallback();
     }
 }

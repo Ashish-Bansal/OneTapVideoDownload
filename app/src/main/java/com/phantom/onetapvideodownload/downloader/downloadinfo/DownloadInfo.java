@@ -1,5 +1,9 @@
 package com.phantom.onetapvideodownload.downloader.downloadinfo;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+
+import java.util.Collection;
+
 public interface DownloadInfo {
     enum Status {
         Stopped(0), Completed(1), Downloading(2), NetworkProblem(3), NetworkNotAvailable(4),
@@ -14,6 +18,7 @@ public interface DownloadInfo {
             return status;
         }
     }
+
     String getUrl();
     String getFilename();
     String getDownloadLocation();
@@ -28,4 +33,6 @@ public interface DownloadInfo {
     void addDownloadedLength(long additionValue);
     Integer getProgress();
     void writeToDatabase();
+    Collection<String> getOptions();
+    MaterialDialog.ListCallback getOptionCallback();
 }

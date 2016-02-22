@@ -2,8 +2,15 @@ package com.phantom.onetapvideodownload.downloader.downloadinfo;
 
 import android.content.Context;
 import android.util.Log;
+import android.view.View;
 
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class BrowserDownloadInfo implements DownloadInfo {
     private final static String TAG = "BrowserDownloadInfo";
@@ -90,5 +97,73 @@ public class BrowserDownloadInfo implements DownloadInfo {
     public void writeToDatabase() {
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(mContext);
         downloadDatabase.addOrUpdateDownload(this);
+    }
+
+    @Override
+    public Collection<String> getOptions() {
+        List<String> options = new ArrayList<>();
+        switch (mStatus) {
+            case Completed:
+                options.add(mContext.getResources().getString(R.string.open));
+                options.add(mContext.getResources().getString(R.string.share));
+                options.add(mContext.getResources().getString(R.string.remove_from_list));
+                options.add(mContext.getResources().getString(R.string.delete_from_storage));
+                options.add(mContext.getResources().getString(R.string.details));
+                break;
+            case Stopped:
+                options.add(mContext.getResources().getString(R.string.resume));
+                options.add(mContext.getResources().getString(R.string.remove_from_list));
+                options.add(mContext.getResources().getString(R.string.delete_from_storage));
+                options.add(mContext.getResources().getString(R.string.details));
+                break;
+            case Downloading:
+                options.add(mContext.getResources().getString(R.string.pause));
+                options.add(mContext.getResources().getString(R.string.details));
+                break;
+        }
+        return options;
+    }
+
+    int findIdByString(String string) {
+        if (mContext.getResources().getString(R.string.open).equals(string)) {
+            return R.string.open;
+        } else if(mContext.getResources().getString(R.string.share).equals(string)) {
+            return R.string.share;
+        } else if(mContext.getResources().getString(R.string.resume).equals(string)) {
+            return R.string.resume;
+        } else if(mContext.getResources().getString(R.string.remove_from_list).equals(string)) {
+            return R.string.remove_from_list;
+        } else if(mContext.getResources().getString(R.string.delete_from_storage).equals(string)) {
+            return R.string.delete_from_storage;
+        } else if(mContext.getResources().getString(R.string.pause).equals(string)) {
+            return R.string.pause;
+        } else if(mContext.getResources().getString(R.string.details).equals(string)) {
+            return R.string.details;
+        } else {
+            return -1;
+        }
+    }
+
+    @Override
+    public MaterialDialog.ListCallback getOptionCallback() {
+        return new MaterialDialog.ListCallback() {
+            @Override
+            public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                int resId = findIdByString((String) text);
+                if (resId == -1) {
+                    return;
+                }
+
+                switch (resId) {
+                    case R.string.open:
+                    case R.string.share:
+                    case R.string.resume:
+                    case R.string.remove_from_list:
+                    case R.string.delete_from_storage:
+                    case R.string.pause:
+                    case R.string.details:
+                }
+            }
+        };
     }
 }
