@@ -31,6 +31,7 @@ public class DownloadHandler {
     private NotificationCompat.Builder mBuilder;
     private NotificationManager mNotifyManager;
     private final static AtomicInteger mNotificationId = new AtomicInteger(150);
+    private static long lastWriteTime = System.currentTimeMillis();
 
     DownloadHandler(Context context, DownloadInfo downloadInfo) {
         mContext = context;
@@ -79,13 +80,20 @@ public class DownloadHandler {
                             while ((count = in.read(data)) != -1) {
                                 bw.write(data, 0, count);
                                 mDownloadInfo.addDownloadedLength(count);
+                                long currentTime = System.currentTimeMillis();
+                                if (currentTime - lastWriteTime > 8000L) {
+                                    mDownloadInfo.writeToDatabase();
+                                    lastWriteTime = currentTime;
+                                }
                             }
                             bw.close();
                             in.close();
                             mDownloadInfo.setStatus(DownloadInfo.Status.Completed);
+                            mDownloadInfo.writeToDatabase();
                             showNotification();
                         } else {
                             mDownloadInfo.setStatus(DownloadInfo.Status.WriteFailed);
+                            mDownloadInfo.writeToDatabase();
                         }
                     } catch (IOException e) {
                         Log.e("DownloadService", "expection is ", e);
@@ -94,6 +102,7 @@ public class DownloadHandler {
             });
         } else {
             mDownloadInfo.setStatus(DownloadInfo.Status.NetworkNotAvailable);
+            mDownloadInfo.writeToDatabase();
         }
     }
 

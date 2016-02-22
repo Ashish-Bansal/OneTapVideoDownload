@@ -3,6 +3,8 @@ package com.phantom.onetapvideodownload.downloader.downloadinfo;
 import android.content.Context;
 import android.util.Log;
 
+import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
+
 public class BrowserDownloadInfo implements DownloadInfo {
     private final static String TAG = "BrowserDownloadInfo";
     private String mVideoUrl, mDownloadLocation, mFilename;
@@ -82,5 +84,11 @@ public class BrowserDownloadInfo implements DownloadInfo {
     @Override
     public Integer getProgress() {
         return (int)((mDownloadedLength*100)/mContentLength);
+    }
+
+    @Override
+    public void writeToDatabase() {
+        DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(mContext);
+        downloadDatabase.addOrUpdateDownload(this);
     }
 }

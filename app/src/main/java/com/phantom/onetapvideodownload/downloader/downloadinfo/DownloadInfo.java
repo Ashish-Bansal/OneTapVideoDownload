@@ -27,4 +27,5 @@ public interface DownloadInfo {
     void setDownloadedLength(long downloadedLength);
     void addDownloadedLength(long additionValue);
     Integer getProgress();
+    void writeToDatabase();
 }
