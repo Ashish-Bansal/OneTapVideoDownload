@@ -104,10 +104,10 @@ public class YoutubeVideo implements Video {
         return mParam;
     }
 
-    public static String getFormatDescription(int itag) {
-        for (Pair p : itagQualityMapping) {
-            if (p.first == itag) {
-                return p.second.toString();
+    public static String getFormatDescription(Integer itag) {
+        for (Pair<Integer, String> p : itagQualityMapping) {
+            if (p.first.equals(itag)) {
+                return p.second;
             }
         }
 
@@ -115,9 +115,9 @@ public class YoutubeVideo implements Video {
     }
 
     public static Integer getItagForDescription(String description) {
-        for (Pair p : itagQualityMapping) {
-            if (p.second == description) {
-                return (Integer)p.first;
+        for (Pair<Integer, String> p : itagQualityMapping) {
+            if (p.second.equals(description)) {
+                return p.first;
             }
         }
 
@@ -138,12 +138,12 @@ public class YoutubeVideo implements Video {
     }
 
     public Format getBestVideoFormat() {
-        for (Pair p : itagQualityMapping) {
-            if (p.second.toString().contains("kbit")) {
+        for (Pair<Integer, String> p : itagQualityMapping) {
+            if (p.second.contains("kbit")) {
                 continue;
             }
 
-            Format format = mFormatList.get((int) p.first);
+            Format format = mFormatList.get(p.first);
             if (format != null) {
                 return format;
             }
@@ -152,12 +152,12 @@ public class YoutubeVideo implements Video {
     }
 
     public Format getBestAudioFormat() {
-        for (Pair p : itagQualityMapping) {
-            if (!p.second.toString().contains("kbit")) {
+        for (Pair<Integer, String> p : itagQualityMapping) {
+            if (!p.second.contains("kbit")) {
                 continue;
             }
 
-            Format format = mFormatList.get((int) p.first);
+            Format format = mFormatList.get(p.first);
             if (format != null) {
                 return format;
             }
@@ -167,8 +167,8 @@ public class YoutubeVideo implements Video {
 
     public ArrayList<Format> getAllFormats() {
         ArrayList<Format> formats = new ArrayList<>();
-        for (Pair p : itagQualityMapping) {
-            Format format = mFormatList.get((int) p.first);
+        for (Pair<Integer, String> p : itagQualityMapping) {
+            Format format = mFormatList.get(p.first);
             if (format != null) {
                 formats.add(format);
             }
@@ -177,9 +177,9 @@ public class YoutubeVideo implements Video {
     }
 
     public static String getExtensionForItag(Integer itag) {
-        for (Pair p : itagExtensionMapping) {
-            if (p.first == itag) {
-                return p.second.toString();
+        for (Pair<Integer, String> p : itagExtensionMapping) {
+            if (p.first.equals(itag)) {
+                return p.second;
             }
         }
 
