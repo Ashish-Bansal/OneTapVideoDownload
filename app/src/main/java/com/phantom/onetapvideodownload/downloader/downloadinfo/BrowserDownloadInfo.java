@@ -40,9 +40,13 @@ public class BrowserDownloadInfo implements DownloadInfo {
         return mDownloadLocation;
     }
 
-
     @Override
     public int getStatusCode() {
         return mStatus.getStatus();
+    }
+
+    @Override
+    public void setStatus(Status status) {
+        mStatus = status;
     }
 }

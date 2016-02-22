@@ -31,6 +31,7 @@ public class DownloadHandler {
     public void startDownload() {
         File filePath = new File(mDownloadInfo.getDownloadLocation());
         downloadFile(mDownloadInfo.getUrl(), filePath);
+        mDownloadInfo.setStatus(DownloadInfo.Status.Downloading);
     }
 
     public DownloadInfo getDownloadInfo() {
@@ -55,7 +56,7 @@ public class DownloadHandler {
             call.enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-//                    "There are network problems"
+                    mDownloadInfo.setStatus(DownloadInfo.Status.NetworkProblem);
                 }
 
                 @Override
@@ -72,17 +73,17 @@ public class DownloadHandler {
                             }
                             bw.close();
                             in.close();
+                            mDownloadInfo.setStatus(DownloadInfo.Status.Completed);
                         } else {
-//                            alertUser();
+                            mDownloadInfo.setStatus(DownloadInfo.Status.WriteFailed);
                         }
-                    }
-                    catch (IOException e) {
+                    } catch (IOException e) {
                         Log.e("DownloadService", "expection is ", e);
                     }
                 }
             });
         } else{
-//            Toast.makeText(this,"The network is unavailable",Toast.LENGTH_LONG).show();
+            mDownloadInfo.setStatus(DownloadInfo.Status.NetworkNotAvailable);
         }
     }
 }

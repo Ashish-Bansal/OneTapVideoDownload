@@ -52,9 +52,12 @@ public class YoutubeDownloadInfo implements DownloadInfo {
     }
 
     @Override
-
-    @Override
     public int getStatusCode() {
         return mStatus.getStatus();
+    }
+
+    @Override
+    public void setStatus(Status status) {
+        mStatus = status;
     }
 }
