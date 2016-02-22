@@ -1,7 +1,10 @@
 package com.phantom.onetapvideodownload.downloader.downloadinfo;
 
 import android.content.Context;
+import android.util.Log;
+
 public class BrowserDownloadInfo implements DownloadInfo {
+    private final static String TAG = "BrowserDownloadInfo";
     private String mVideoUrl, mDownloadLocation, mFilename;
     private long mDatabaseId = -1;
     private Status mStatus;
@@ -47,6 +50,7 @@ public class BrowserDownloadInfo implements DownloadInfo {
 
     @Override
     public void setStatus(Status status) {
+        Log.e(TAG, "Download Status changed from " + mStatus.name() + " to " + status.name());
         mStatus = status;
     }
 }

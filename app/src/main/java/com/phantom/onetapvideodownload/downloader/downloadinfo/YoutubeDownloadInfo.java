@@ -1,7 +1,10 @@
 package com.phantom.onetapvideodownload.downloader.downloadinfo;
 
 import android.content.Context;
+import android.util.Log;
+
 public class YoutubeDownloadInfo implements DownloadInfo {
+    private final static String TAG = "YoutubeDownloadInfo";
     private String mParam, mVideoUrl, mDownloadLocation, mFilename;
     private int mItag;
     private long mDatabaseId = -1;
@@ -58,6 +61,7 @@ public class YoutubeDownloadInfo implements DownloadInfo {
 
     @Override
     public void setStatus(Status status) {
+        Log.e(TAG, "Download Status changed from " + mStatus.name() + " to " + status.name());
         mStatus = status;
     }
 }
