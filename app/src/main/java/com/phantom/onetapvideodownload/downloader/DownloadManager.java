@@ -153,6 +153,10 @@ public class DownloadManager extends Service {
     private void handleActionDownload(long id) {
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(this);
         DownloadInfo downloadInfo = downloadDatabase.getDownload(id);
+        if (downloadInfo == null) {
+            Log.e(TAG, "Download Info null in handleActionDownload for id : " + id);
+            return;
+        }
         DownloadHandler downloadHandler = new DownloadHandler(this, downloadInfo);
         mDownloadHandlers.add(Pair.create(id, downloadHandler));
         if (checkPermissionGranted(AppPermissions.External_Storage_Permission)) {
