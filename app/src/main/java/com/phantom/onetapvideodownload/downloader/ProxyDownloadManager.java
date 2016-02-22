@@ -77,7 +77,7 @@ public class ProxyDownloadManager extends IntentService {
         BrowserDownloadInfo browserDownloadInfo = new BrowserDownloadInfo(this,
                 filename,
                 video.getUrl(),
-                downloadLocation);
+                new File(downloadLocation, filename).getAbsolutePath());
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(this);
         long downloadId = downloadDatabase.addDownload(browserDownloadInfo);
         Intent downloadManagerService = DownloadManager.getActionVideoDownload(downloadId);
@@ -96,7 +96,7 @@ public class ProxyDownloadManager extends IntentService {
         YoutubeDownloadInfo youtubeDownloadInfo = new YoutubeDownloadInfo(this,
                 filename,
                 video.getVideoUrl(itag),
-                new File(downloadLocation, filename).getPath(),
+                new File(downloadLocation, filename).getAbsolutePath(),
                 video.getParam(),
                 itag);
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(this);
