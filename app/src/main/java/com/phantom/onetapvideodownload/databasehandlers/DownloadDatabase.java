@@ -29,7 +29,7 @@ public class DownloadDatabase extends SQLiteOpenHelper {
     private static final String KEY_TYPE = "type";
     private static final String KEY_URL = "url";
     private static final String KEY_VIDEO_ID = "video_id";
-    private static final String KEY_TITLE = "title";
+    private static final String KEY_FILENAME = "filename";
     private static final String KEY_VIDEO_ITAG = "itag";
     private static final String KEY_PARAM = "param";
     private static final String KEY_DOWNLOAD_LOCATION = "download_path";
