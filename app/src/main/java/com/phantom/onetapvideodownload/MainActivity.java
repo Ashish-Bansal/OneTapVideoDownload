@@ -81,11 +81,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     @Override
     protected void onResume() {
         super.onResume();
-
         checkAndRequestPermission(AppPermissions.External_Storage_Permission);
-
-        mTracker.setScreenName("Class~" + getClass().getName());
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void displaySnackbar(String text, String actionName, View.OnClickListener action) {
