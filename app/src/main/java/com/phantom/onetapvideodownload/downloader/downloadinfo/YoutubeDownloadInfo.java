@@ -1,6 +1,8 @@
 package com.phantom.onetapvideodownload.downloader.downloadinfo;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 
@@ -8,6 +10,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -171,6 +174,12 @@ public class YoutubeDownloadInfo implements DownloadInfo {
 
                 switch (resId) {
                     case R.string.open:
+                        Intent openIntent = new Intent();
+                        openIntent.setAction(android.content.Intent.ACTION_VIEW);
+                        openIntent.setDataAndType(Uri.fromFile(new File(getDownloadLocation())), "video/*");
+                        openIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        mContext.startActivity(openIntent);
+                        break;
                     case R.string.share:
                     case R.string.download_in_other_resolution:
                     case R.string.resume:
