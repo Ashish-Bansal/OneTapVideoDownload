@@ -269,6 +269,7 @@ public class YoutubeDownloadInfo implements DownloadInfo, Invokable<Video, Integ
             Intent downloadIntent = new Intent(mContext, MainActivity.class);
             downloadIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             downloadIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            downloadIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             downloadIntent.putExtra("videoId", id);
             mContext.startActivity(downloadIntent);
         } else {

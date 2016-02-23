@@ -68,11 +68,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
             fm.executePendingTransactions();
         }
 
-        Intent intent = getIntent();
-        long videoId = intent.getLongExtra("videoId", -1);
-        if (videoId != -1) {
-            showVideoDownloadDialog(videoId);
-        }
+        checkForDownloadDialog(getIntent());
 
         AnalyticsApplication application = (AnalyticsApplication) getApplication();
         mTracker = application.getDefaultTracker();
@@ -284,5 +280,17 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
                 dialog.dismiss();
             }
         });
+    }
+
+    private void checkForDownloadDialog(Intent intent) {
+        long videoId = intent.getLongExtra("videoId", -1);
+        if (videoId != -1) {
+            showVideoDownloadDialog(videoId);
+        }
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        checkForDownloadDialog(intent);
     }
 }
