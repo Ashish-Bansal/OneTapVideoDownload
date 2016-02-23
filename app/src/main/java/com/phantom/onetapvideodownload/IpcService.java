@@ -10,24 +10,20 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
-import android.support.v4.util.Pair;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
-import android.util.SparseArray;
 
 import com.phantom.onetapvideodownload.Video.BrowserVideo;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
 import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
+import com.phantom.onetapvideodownload.utils.Invokable;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import at.huber.youtubeExtractor.YouTubeUriExtractor;
-import at.huber.youtubeExtractor.YtFile;
-
-public class IpcService extends IntentService {
+public class IpcService extends IntentService implements Invokable<Video, Integer> {
     private static final String PACKAGE_NAME = "com.phantom.onetapvideodownload";
     private static final String CLASS_NAME = "com.phantom.onetapvideodownload.IpcService";
     private static final String ACTION_SAVE_BROWSER_VIDEO = "com.phantom.onetapvideodownload.action.saveurl";
@@ -35,7 +31,6 @@ public class IpcService extends IntentService {
     private static final String EXTRA_URL = "com.phantom.onetapvideodownload.extra.url";
     private static final String EXTRA_PARAM_STRING = "com.phantom.onetapvideodownload.extra.url";
     private static final String EXTRA_METADATA = "com.phantom.onetapvideodownload.extra.metadata";
-    private static final String YOUTUBE_URL_PREFIX = "http://youtube.com/watch?v=";
     private static final String LOG_TAG = "IpcService";
     private static final AtomicInteger notificationId = new AtomicInteger();
     private Handler mHandler = new Handler();
@@ -169,35 +164,18 @@ public class IpcService extends IntentService {
             Log.e(LOG_TAG, "Notifications and Logging is disabled");
             return;
         }
+        YoutubeParserProxy.startParsing(this, paramString, this);
+    }
 
-        YouTubeUriExtractor youtubeExtractor = new YouTubeUriExtractor(this) {
-            @Override
-            public void onUrisAvailable(String videoId, String videoTitle, SparseArray<YtFile> ytFiles) {
-                if (ytFiles != null) {
-                    YoutubeVideo video = new YoutubeVideo(getApplicationContext(), videoTitle, videoId);
-                    for(Pair p : YoutubeVideo.itagQualityMapping) {
-                        YtFile videoFormat = ytFiles.get(Integer.parseInt(p.first.toString()));
-                        if (videoFormat == null) {
-                            continue;
-                        }
-                        video.addFormat(videoFormat.getUrl(), Integer.parseInt(p.first.toString()));
-                    }
-
-                    long id = saveUrlToDatabase(video);
-                    if (CheckPreferences.notificationsEnabled(context)) {
-                        showNotification(video.getBestVideoFormat().url, videoTitle, id);
-                    }
-
-                    Log.e(LOG_TAG, video.getBestAudioFormat().url);
-                    Log.e(LOG_TAG, video.getBestVideoFormat().url);
-                } else {
-                    Log.e(LOG_TAG, "URLs are empty");
-                }
+    @Override
+    public Integer invoke(Video video) {
+        YoutubeVideo youtubeVideo = (YoutubeVideo)video;
+        if (video != null) {
+            long id = saveUrlToDatabase(youtubeVideo);
+            if (CheckPreferences.notificationsEnabled(this)) {
+                showNotification(youtubeVideo.getBestVideoFormat().url, youtubeVideo.getTitle(), id);
             }
-        };
-
-        Log.e(LOG_TAG, YOUTUBE_URL_PREFIX + paramString);
-        youtubeExtractor.setParseDashManifest(true);
-        youtubeExtractor.execute(YOUTUBE_URL_PREFIX + paramString);
+        }
+        return 0;
     }
 }
