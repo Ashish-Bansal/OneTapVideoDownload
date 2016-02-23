@@ -1,14 +1,12 @@
 package com.phantom.onetapvideodownload;
 
 import android.net.Uri;
-import android.webkit.MimeTypeMap;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Global {
-    // Get MP4 mime for video because it's supported by most of the players
-    public static String VIDEO_MIME = MimeTypeMap.getSingleton().getMimeTypeFromExtension(".MP4");
+    public static String VIDEO_MIME = "video/*";
     public static String getFilenameFromUrl(String url) {
         Uri uri = Uri.parse(url);
         return uri.getLastPathSegment();
