@@ -1,9 +1,11 @@
 package com.phantom.onetapvideodownload.downloader.downloadinfo;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.phantom.onetapvideodownload.Global;
 import com.phantom.onetapvideodownload.R;
@@ -181,10 +183,36 @@ public class YoutubeDownloadInfo implements DownloadInfo {
                     case R.string.resume:
                     case R.string.remove_from_list:
                     case R.string.delete_from_storage:
+                        // Used Activity context instead of ApplicationContext
+                        new MaterialDialog.Builder(dialog.getContext())
+                                .title(R.string.delete_confirmation)
+                                .content(R.string.delete_confirmation_content)
+                                .positiveText(R.string.yes)
+                                .negativeText(R.string.no)
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        Global.deleteFile(mContext, getDownloadLocation());
+                                        removeDatabaseEntry();
+                                    }
+                                })
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .show();
+                        break;
                     case R.string.pause:
                     case R.string.details:
                 }
             }
         };
+    }
+
+    private void removeDatabaseEntry() {
+        DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(mContext);
+        downloadDatabase.deleteDownload(getDatabaseId());
     }
 }

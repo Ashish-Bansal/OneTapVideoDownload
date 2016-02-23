@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
+import android.widget.Toast;
 
 import java.io.File;
 import java.net.HttpURLConnection;
@@ -66,5 +67,17 @@ public class Global {
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         context.startActivity(shareIntent);
+    }
+
+    public static void deleteFile(Context context, String fileLocation) {
+        File file = new File(fileLocation);
+        boolean result = file.delete();
+        if (result) {
+            Toast.makeText(context, R.string.file_deleted_successfully,
+                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, R.string.unable_to_delete_file,
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 }

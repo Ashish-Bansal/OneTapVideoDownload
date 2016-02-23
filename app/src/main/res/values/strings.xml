@@ -53,6 +53,12 @@
     <string name="download_location">Download Directory</string>
     <string name="download_later">Download Later</string>
     <string name="start_download">Start Download</string>
+    <string name="unable_to_delete_file">Unable to delete file</string>
+    <string name="file_deleted_successfully">File deleted successfully</string>
+    <string name="delete_confirmation">Delete Confirmation</string>
+    <string name="delete_confirmation_content">Are you sure you want to delete the download from the storage ?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
