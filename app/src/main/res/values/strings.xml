@@ -59,6 +59,8 @@
     <string name="delete_confirmation_content">Are you sure you want to delete the download from the storage ?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="remove_from_list_confirmation">Remove Confirmation</string>
+    <string name="remove_from_list_confirmation_content">Are you sure you want to remove the download from the list ?</string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>

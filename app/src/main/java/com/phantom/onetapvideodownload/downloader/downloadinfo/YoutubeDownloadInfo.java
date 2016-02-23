@@ -182,6 +182,26 @@ public class YoutubeDownloadInfo implements DownloadInfo {
                     case R.string.download_in_other_resolution:
                     case R.string.resume:
                     case R.string.remove_from_list:
+                        // Used Activity context instead of ApplicationContext
+                        new MaterialDialog.Builder(dialog.getContext())
+                                .title(R.string.remove_from_list_confirmation)
+                                .content(R.string.remove_from_list_confirmation_content)
+                                .positiveText(R.string.yes)
+                                .negativeText(R.string.no)
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        removeDatabaseEntry();
+                                    }
+                                })
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .show();
+                        break;
                     case R.string.delete_from_storage:
                         // Used Activity context instead of ApplicationContext
                         new MaterialDialog.Builder(dialog.getContext())
