@@ -1,27 +1,36 @@
 package com.phantom.onetapvideodownload.downloader.downloadinfo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.phantom.onetapvideodownload.Global;
+import com.phantom.onetapvideodownload.MainActivity;
 import com.phantom.onetapvideodownload.R;
+import com.phantom.onetapvideodownload.Video.Video;
+import com.phantom.onetapvideodownload.Video.YoutubeVideo;
+import com.phantom.onetapvideodownload.YoutubeParserProxy;
 import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
+import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
+import com.phantom.onetapvideodownload.utils.Invokable;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class YoutubeDownloadInfo implements DownloadInfo {
+public class YoutubeDownloadInfo implements DownloadInfo, Invokable<Video, Integer> {
     private final static String TAG = "YoutubeDownloadInfo";
     private String mParam, mVideoUrl, mDownloadLocation, mFilename;
     private int mItag;
     private long mDatabaseId = -1, mContentLength = -1, mDownloadedLength = -1;
     private Status mStatus;
     private Context mContext;
+    private MaterialDialog mProgressDialog;
 
     public YoutubeDownloadInfo(Context context, String filename, String url, String downloadPath, String param, int itag) {
         mContext = context;
@@ -180,6 +189,13 @@ public class YoutubeDownloadInfo implements DownloadInfo {
                         Global.startFileShareIntent(mContext, getDownloadLocation());
                         break;
                     case R.string.download_in_other_resolution:
+                        mProgressDialog =  new MaterialDialog.Builder(dialog.getContext())
+                                .title(R.string.progress_dialog)
+                                .content(R.string.please_wait)
+                                .progress(true, 0)
+                                .show();
+                        YoutubeParserProxy.startParsing(mContext, mParam, YoutubeDownloadInfo.this);
+                        break;
                     case R.string.resume:
                     case R.string.remove_from_list:
                         // Used Activity context instead of ApplicationContext
@@ -234,5 +250,30 @@ public class YoutubeDownloadInfo implements DownloadInfo {
     private void removeDatabaseEntry() {
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(mContext);
         downloadDatabase.deleteDownload(getDatabaseId());
+    }
+
+    private long saveVideoToDatabase(Video video) {
+        VideoDatabase videoDatabase = VideoDatabase.getDatabase(mContext);
+        return videoDatabase.addOrUpdateVideo(video);
+    }
+
+    @Override
+    public Integer invoke(Video video) {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+
+        YoutubeVideo youtubeVideo = (YoutubeVideo)video;
+        if (video != null) {
+            long id = saveVideoToDatabase(youtubeVideo);
+            Intent downloadIntent = new Intent(mContext, MainActivity.class);
+            downloadIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            downloadIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            downloadIntent.putExtra("videoId", id);
+            mContext.startActivity(downloadIntent);
+        } else {
+            Toast.makeText(mContext, R.string.unable_to_fetch, Toast.LENGTH_LONG).show();
+        }
+        return 0;
     }
 }

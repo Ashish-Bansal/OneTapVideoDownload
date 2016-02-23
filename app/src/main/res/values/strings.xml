@@ -61,6 +61,9 @@
     <string name="no">No</string>
     <string name="remove_from_list_confirmation">Remove Confirmation</string>
     <string name="remove_from_list_confirmation_content">Are you sure you want to remove the download from the list ?</string>
+    <string name="progress_dialog">Fetching Download Links</string>
+    <string name="please_wait">Please wait&#8230;</string>
+    <string name="unable_to_fetch">Unable to fetch links, Please try again</string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
