@@ -134,7 +134,7 @@ public class YoutubeVideo implements Video {
     }
 
     public boolean urlsForbidden() {
-        return mFormatList.size() <= 0 && Global.isValidUrl(mFormatList.get(0).url);
+        return mFormatList.size() <= 0 && Global.isResourceAvailable(mFormatList.get(0).url);
     }
 
     public Format getBestVideoFormat() {

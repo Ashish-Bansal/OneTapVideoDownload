@@ -17,7 +17,7 @@ public class Global {
         return uri.getLastPathSegment();
     }
 
-    public static boolean isValidUrl(String urlString) {
+    public static boolean isResourceAvailable(String urlString) {
         URL url;
         HttpURLConnection urlConnection;
         try {
