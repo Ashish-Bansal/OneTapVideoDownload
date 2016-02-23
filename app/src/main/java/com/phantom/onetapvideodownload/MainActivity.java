@@ -69,66 +69,9 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         }
 
         Intent intent = getIntent();
-        final long videoId = intent.getLongExtra("videoId", -1);
+        long videoId = intent.getLongExtra("videoId", -1);
         if (videoId != -1) {
-            VideoDatabase videoDatabase = VideoDatabase.getDatabase(this);
-            final Video video = videoDatabase.getVideo(videoId);
-            video.setContext(this);
-            final MaterialDialog dialog = new MaterialDialog.Builder(this)
-                    .customView(R.layout.dialog_download_file, false)
-                    .canceledOnTouchOutside(false)
-                    .backgroundColorRes(R.color.dialog_background)
-                    .show();
-
-            View dialogView = dialog.getCustomView();
-            mDownloadDialogRecyclerView = (RecyclerView)dialogView.findViewById(R.id.download_option_list);
-
-            // For wrapping content on RecyclerView
-            LinearLayoutManager layoutManager = new org.solovyev.android.views.llm.LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-            mDownloadDialogRecyclerView.setLayoutManager(layoutManager);
-            mDownloadDialogRecyclerView.setHasFixedSize(true);
-            mDownloadDialogRecyclerView.setAdapter(new DownloadOptionAdapter(this, video.getOptions()));
-
-            ImageView closeButton = (ImageView)dialogView.findViewById(R.id.close);
-            assert(closeButton != null);
-            closeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
-
-
-            Button startDownloadButton = (Button)dialogView.findViewById(R.id.start_download);
-            Button downloadLaterButton = (Button) dialogView.findViewById(R.id.download_later);
-
-            startDownloadButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                    DownloadOptionAdapter downloadOptionAdapter = getDownloadOptionAdapter();
-                    String filename = downloadOptionAdapter.getOptionItem(DownloadOptionIds.Filename).getOptionValue();
-                    String downloadLocation = downloadOptionAdapter.getOptionItem(DownloadOptionIds.DownloadLocation).getOptionValue();
-
-                    if (video instanceof YoutubeVideo) {
-                        Integer itag = YoutubeVideo.getItagForDescription(downloadOptionAdapter.getOptionItem(DownloadOptionIds.Format).getOptionValue());
-                        if (itag == -1) {
-                            Log.e(TAG, "getItagForDescription returned NULL");
-                        }
-
-                        ProxyDownloadManager.startActionYoutubeDownload(getApplicationContext(), videoId, filename, downloadLocation, itag);
-                    } else {
-                        ProxyDownloadManager.startActionDownload(getApplicationContext(), videoId, filename, downloadLocation);
-                    }
-                }
-            });
-
-            downloadLaterButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialog.dismiss();
-                }
-            });
+            showVideoDownloadDialog(videoId);
         }
 
         AnalyticsApplication application = (AnalyticsApplication) getApplication();
@@ -280,5 +223,66 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
 
     public static DownloadOptionAdapter getDownloadOptionAdapter() {
         return (DownloadOptionAdapter)mDownloadDialogRecyclerView.getAdapter();
+    }
+
+    private void showVideoDownloadDialog(final long videoId) {
+        VideoDatabase videoDatabase = VideoDatabase.getDatabase(this);
+        final Video video = videoDatabase.getVideo(videoId);
+        video.setContext(this);
+
+        final MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .customView(R.layout.dialog_download_file, false)
+                .canceledOnTouchOutside(false)
+                .backgroundColorRes(R.color.dialog_background)
+                .show();
+
+        View dialogView = dialog.getCustomView();
+        mDownloadDialogRecyclerView = (RecyclerView)dialogView.findViewById(R.id.download_option_list);
+
+        // For wrapping content on RecyclerView
+        LinearLayoutManager layoutManager = new org.solovyev.android.views.llm.LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        mDownloadDialogRecyclerView.setLayoutManager(layoutManager);
+        mDownloadDialogRecyclerView.setHasFixedSize(true);
+        mDownloadDialogRecyclerView.setAdapter(new DownloadOptionAdapter(this, video.getOptions()));
+
+        ImageView closeButton = (ImageView)dialogView.findViewById(R.id.close);
+        assert(closeButton != null);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        Button startDownloadButton = (Button)dialogView.findViewById(R.id.start_download);
+        Button downloadLaterButton = (Button) dialogView.findViewById(R.id.download_later);
+
+        startDownloadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                DownloadOptionAdapter downloadOptionAdapter = getDownloadOptionAdapter();
+                String filename = downloadOptionAdapter.getOptionItem(DownloadOptionIds.Filename).getOptionValue();
+                String downloadLocation = downloadOptionAdapter.getOptionItem(DownloadOptionIds.DownloadLocation).getOptionValue();
+
+                if (video instanceof YoutubeVideo) {
+                    Integer itag = YoutubeVideo.getItagForDescription(downloadOptionAdapter.getOptionItem(DownloadOptionIds.Format).getOptionValue());
+                    if (itag == -1) {
+                        Log.e(TAG, "getItagForDescription returned NULL");
+                    }
+
+                    ProxyDownloadManager.startActionYoutubeDownload(getApplicationContext(), videoId, filename, downloadLocation, itag);
+                } else {
+                    ProxyDownloadManager.startActionDownload(getApplicationContext(), videoId, filename, downloadLocation);
+                }
+            }
+        });
+
+        downloadLaterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 }
