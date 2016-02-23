@@ -133,7 +133,7 @@ public class YoutubeVideo implements Video {
         return format.url;
     }
 
-    public boolean urlsForbidden() {
+    public boolean isResourceAvailable() {
         return mFormatList.size() <= 0 && Global.isResourceAvailable(mFormatList.get(0).url);
     }
 

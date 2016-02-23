@@ -13,4 +13,5 @@ public interface Video {
     void setDatabaseId(long databaseId);
     List<DownloadOptionItem> getOptions();
     void setContext(Context context);
+    boolean isResourceAvailable();
 }

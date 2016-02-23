@@ -96,4 +96,8 @@ public class BrowserVideo implements Video {
 
         return options;
     }
+
+    public boolean isResourceAvailable() {
+        return Global.isResourceAvailable(mUrl);
+    }
 }
