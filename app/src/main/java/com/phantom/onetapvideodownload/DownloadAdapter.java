@@ -79,6 +79,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         vh.setDownloadTitle(mDownloadManager.getFilename(position));
         vh.setDownloadUrl(mDownloadManager.getUrl(position));
         vh.setOnClickListener(mDownloadManager.getOptions(position), mDownloadManager.getOptionCallback(position));
+        vh.setImageForView(mDownloadManager.getPackageDrawable(position));
     }
 
     @Override

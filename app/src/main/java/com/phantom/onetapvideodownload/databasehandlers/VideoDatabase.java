@@ -32,6 +32,7 @@ public class VideoDatabase extends SQLiteOpenHelper {
     private static final String KEY_TITLE = "title";
     private static final String KEY_VIDEO_ITAG = "itag";
     private static final String KEY_PARAM = "param";
+    private static final String KEY_PACKAGE_NAME = "package_name";
 
     private static VideoDatabase mVideoDatabase;
     private Context mContext;
@@ -53,13 +54,14 @@ public class VideoDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String urlListTable = "CREATE TABLE " + TABLE_VIDEO_LIST + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + KEY_TYPE + " INTEGER )";
+                + KEY_TYPE + " INTEGER)";
 
         String generalVideoList = "CREATE TABLE " + TABLE_BROWSER_VIDEO_LIST + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + KEY_VIDEO_ID + " INTEGER,"
                 + KEY_URL + " TEXT,"
-                + KEY_TITLE + " TEXT" + ")";
+                + KEY_TITLE + " TEXT,"
+                + KEY_PACKAGE_NAME + " TEXT )";
 
         String youtubeVideoList = "CREATE TABLE " + TABLE_YOUTUBE_VIDEO_LIST + "("
                 + KEY_PARAM + " TEXT, "
@@ -67,7 +69,8 @@ public class VideoDatabase extends SQLiteOpenHelper {
                 + KEY_VIDEO_ITAG + " INTEGER,"
                 + KEY_URL + " TEXT,"
                 + KEY_TITLE + " TEXT,"
-                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT)";
+                + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + KEY_PACKAGE_NAME + " TEXT )";
 
         db.execSQL(urlListTable);
         db.execSQL(generalVideoList);
@@ -105,6 +108,7 @@ public class VideoDatabase extends SQLiteOpenHelper {
             values.put(KEY_TITLE, video.getTitle());
             values.put(KEY_URL, video.getUrl());
             values.put(KEY_VIDEO_ID, videoId);
+            values.put(KEY_PACKAGE_NAME, video.getPackageName());
             db.insert(TABLE_BROWSER_VIDEO_LIST, null, values);
         } else if (video instanceof YoutubeVideo) {
             ContentValues videoListValues = new ContentValues();
@@ -117,6 +121,7 @@ public class VideoDatabase extends SQLiteOpenHelper {
             values.put(KEY_TITLE, youtubeVideo.getTitle());
             values.put(KEY_VIDEO_ID, videoId);
             values.put(KEY_PARAM, youtubeVideo.getParam());
+            values.put(KEY_PACKAGE_NAME, video.getPackageName());
 
             List<YoutubeVideo.Format> formats = youtubeVideo.getAllFormats();
             for(YoutubeVideo.Format format : formats) {
@@ -149,8 +154,10 @@ public class VideoDatabase extends SQLiteOpenHelper {
                 if (videoQueryCursor.moveToFirst()) {
                     String url = videoQueryCursor.getString(2);
                     String title = videoQueryCursor.getString(3);
+                    String packageName = videoQueryCursor.getString(4);
                     Video video = new BrowserVideo(mContext, url, title);
                     video.setDatabaseId(videoId);
+                    video.setPackageName(packageName);
                     videoQueryCursor.close();
                     return video;
                 }
@@ -162,8 +169,10 @@ public class VideoDatabase extends SQLiteOpenHelper {
                 if (videoQueryCursor.moveToFirst()) {
                     String title = videoQueryCursor.getString(4);
                     String param = videoQueryCursor.getString(0);
+                    String packageName = videoQueryCursor.getString(6);
                     YoutubeVideo youtubeVideo = new YoutubeVideo(mContext, title, param);
                     youtubeVideo.setDatabaseId(videoId);
+                    youtubeVideo.setPackageName(packageName);
                     do {
                         int itag = videoQueryCursor.getInt(2);
                         String url = videoQueryCursor.getString(3);

@@ -7,6 +7,8 @@ import com.phantom.onetapvideodownload.downloader.DownloadOptionItem;
 import java.util.List;
 
 public interface Video {
+    String getPackageName();
+    void setPackageName(String packageName);
     String getUrl();
     String getTitle();
     long getDatabaseId();

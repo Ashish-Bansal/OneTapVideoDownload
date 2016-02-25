@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
@@ -309,5 +310,13 @@ public class DownloadManager extends Service {
 
     public MaterialDialog.ListCallback getOptionCallback(int index) {
         return mDownloadHandlers.get(index).second.getOptionCallback();
+    }
+
+    public Drawable getPackageDrawable(int index) {
+        if (index >= mDownloadHandlers.size()) {
+            Log.e(TAG, "Requested index is larger that available downloads size.");
+        }
+
+        return mDownloadHandlers.get(index).second.getPackageDrawable();
     }
 }

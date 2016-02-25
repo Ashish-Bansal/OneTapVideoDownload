@@ -36,6 +36,7 @@ public class DownloadDatabase extends SQLiteOpenHelper {
     private static final String KEY_STATUS = "download_status";
     private static final String KEY_CONTENT_LENGTH = "content_length";
     private static final String KEY_DOWNLOADED_LENGTH = "downloaded_length";
+    private static final String KEY_PACKAGE_NAME = "package_name";
 
     private static DownloadDatabase mDownloadDatabase;
     private Context mContext;
@@ -67,7 +68,8 @@ public class DownloadDatabase extends SQLiteOpenHelper {
                 + KEY_FILENAME + " TEXT,"
                 + KEY_STATUS + " INTEGER,"
                 + KEY_CONTENT_LENGTH + " INTEGER,"
-                + KEY_DOWNLOADED_LENGTH + " INTEGER" + ")";
+                + KEY_DOWNLOADED_LENGTH + " INTEGER,"
+                + KEY_PACKAGE_NAME + " TEXT )";
 
         String youtubeDownloadListTable = "CREATE TABLE " + TABLE_YOUTUBE_DOWNLOAD_LIST + "("
                 + KEY_PARAM + " TEXT, "
@@ -79,7 +81,8 @@ public class DownloadDatabase extends SQLiteOpenHelper {
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + KEY_STATUS + " INTEGER,"
                 + KEY_CONTENT_LENGTH + " INTEGER,"
-                + KEY_DOWNLOADED_LENGTH + " INTEGER" + ")";
+                + KEY_DOWNLOADED_LENGTH + " INTEGER,"
+                + KEY_PACKAGE_NAME + " TEXT )";
 
         db.execSQL(downloadListTable);
         db.execSQL(browserDownloadListTable);
@@ -118,6 +121,7 @@ public class DownloadDatabase extends SQLiteOpenHelper {
             values.put(KEY_STATUS, download.getStatus().ordinal());
             values.put(KEY_CONTENT_LENGTH, download.getContentLength());
             values.put(KEY_DOWNLOADED_LENGTH, download.getDownloadedLength());
+            values.put(KEY_PACKAGE_NAME, download.getPackageName());
             db.insert(TABLE_BROWSER_DOWNLOAD_LIST, null, values);
         } else if (download instanceof YoutubeDownloadInfo) {
             ContentValues downloadListValues = new ContentValues();
@@ -133,6 +137,7 @@ public class DownloadDatabase extends SQLiteOpenHelper {
             values.put(KEY_STATUS, download.getStatus().ordinal());
             values.put(KEY_CONTENT_LENGTH, download.getContentLength());
             values.put(KEY_DOWNLOADED_LENGTH, download.getDownloadedLength());
+            values.put(KEY_PACKAGE_NAME, download.getPackageName());
 
             YoutubeDownloadInfo youtubeDownloadInfo = (YoutubeDownloadInfo)download;
             values.put(KEY_PARAM, youtubeDownloadInfo.getParam());
@@ -166,12 +171,14 @@ public class DownloadDatabase extends SQLiteOpenHelper {
                     Integer status = downloadQueryCursor.getInt(5);
                     Long contentLength = downloadQueryCursor.getLong(6);
                     Long downloadedLength = downloadQueryCursor.getLong(7);
+                    String packageName = downloadQueryCursor.getString(8);
 
                     DownloadInfo downloadInfo = new BrowserDownloadInfo(mContext, title, url, downloadPath);
                     downloadInfo.setDatabaseId(downloadId);
                     downloadInfo.setStatus(DownloadInfo.Status.values()[status]);
                     downloadInfo.setContentLength(contentLength);
                     downloadInfo.setDownloadedLength(downloadedLength);
+                    downloadInfo.setPackageName(packageName);
                     downloadQueryCursor.close();
                     return downloadInfo;
                 }
@@ -189,12 +196,14 @@ public class DownloadDatabase extends SQLiteOpenHelper {
                     Integer status = downloadQueryCursor.getInt(7);
                     Long contentLength = downloadQueryCursor.getLong(8);
                     Long downloadedLength = downloadQueryCursor.getLong(9);
+                    String packageName = downloadQueryCursor.getString(10);
 
                     DownloadInfo downloadInfo = new YoutubeDownloadInfo(mContext, title, url, downloadPath, param, itag);
                     downloadInfo.setDatabaseId(downloadId);
                     downloadInfo.setStatus(DownloadInfo.Status.values()[status]);
                     downloadInfo.setContentLength(contentLength);
                     downloadInfo.setDownloadedLength(downloadedLength);
+                    downloadInfo.setPackageName(packageName);
                     downloadQueryCursor.close();
                     return downloadInfo;
                 }

@@ -25,7 +25,7 @@ import java.util.List;
 
 public class YoutubeDownloadInfo implements DownloadInfo, Invokable<Video, Integer> {
     private final static String TAG = "YoutubeDownloadInfo";
-    private String mParam, mVideoUrl, mDownloadLocation, mFilename;
+    private String mParam, mVideoUrl, mDownloadLocation, mFilename, mPackageName;
     private int mItag;
     private long mDatabaseId = -1, mContentLength = -1, mDownloadedLength = -1;
     private Status mStatus;
@@ -276,5 +276,15 @@ public class YoutubeDownloadInfo implements DownloadInfo, Invokable<Video, Integ
             Toast.makeText(mContext, R.string.unable_to_fetch, Toast.LENGTH_LONG).show();
         }
         return 0;
+    }
+
+    @Override
+    public String getPackageName() {
+        return mPackageName;
+    }
+
+    @Override
+    public void setPackageName(String packageName) {
+        mPackageName = packageName;
     }
 }

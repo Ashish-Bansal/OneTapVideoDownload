@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BrowserVideo implements Video {
-    private String mTitle, mUrl;
+    private String mTitle, mUrl, mPackageName;
     private long mDatabaseId = -1;
     private Context mContext;
 
@@ -99,5 +99,15 @@ public class BrowserVideo implements Video {
 
     public boolean isResourceAvailable() {
         return Global.isResourceAvailable(mUrl);
+    }
+
+    @Override
+    public String getPackageName() {
+        return mPackageName;
+    }
+
+    @Override
+    public void setPackageName(String packageName) {
+        mPackageName = packageName;
     }
 }

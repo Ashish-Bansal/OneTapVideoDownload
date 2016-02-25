@@ -30,15 +30,17 @@ public class IpcService extends IntentService implements Invokable<Video, Intege
     private static final String ACTION_SAVE_YOUTUBE_VIDEO = "com.phantom.onetapvideodownload.action.saveyoutubeurl";
     private static final String EXTRA_URL = "com.phantom.onetapvideodownload.extra.url";
     private static final String EXTRA_PARAM_STRING = "com.phantom.onetapvideodownload.extra.url";
+    private static final String EXTRA_PACKAGE_NAME = "com.phantom.onetapvideodownload.extra.package_name";
     private static final String EXTRA_METADATA = "com.phantom.onetapvideodownload.extra.metadata";
-    private static final String LOG_TAG = "IpcService";
+    private static final String TAG = "IpcService";
     private static final AtomicInteger notificationId = new AtomicInteger();
     private Handler mHandler = new Handler();
 
-    public static void startSaveUrlAction(Context context, Uri uri) {
+    public static void startSaveUrlAction(Context context, Uri uri, String packageName) {
         Intent intent = new Intent(ACTION_SAVE_BROWSER_VIDEO);
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent.putExtra(EXTRA_URL, uri.toString());
+        intent.putExtra(EXTRA_PACKAGE_NAME, packageName);
 
         Calendar cal = Calendar.getInstance();
         intent.putExtra(EXTRA_METADATA, DateFormat.getDateTimeInstance().format(cal.getTime()));
@@ -53,17 +55,6 @@ public class IpcService extends IntentService implements Invokable<Video, Intege
         context.startService(intent);
     }
 
-    public static void startSaveUrlAction(Context context, String url) {
-        Intent intent = new Intent(ACTION_SAVE_BROWSER_VIDEO);
-        intent.setClassName(PACKAGE_NAME, CLASS_NAME);
-        intent.putExtra(EXTRA_URL, url);
-
-        Calendar cal = Calendar.getInstance();
-        intent.putExtra(EXTRA_METADATA, DateFormat.getDateTimeInstance().format(cal.getTime()));
-
-        context.startService(intent);
-    }
-
     public IpcService() {
         super("IpcService");
     }
@@ -75,7 +66,13 @@ public class IpcService extends IntentService implements Invokable<Video, Intege
             Log.e("IpcService", action);
             if (ACTION_SAVE_BROWSER_VIDEO.equals(action)) {
                 String url = intent.getStringExtra(EXTRA_URL);
+                String packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME);
                 Video video = new BrowserVideo(this, url);
+                if (packageName != null) {
+                    video.setPackageName(packageName);
+                } else {
+                    Log.e(TAG, "Package name is invalid");
+                }
                 handleActionSaveBrowserVideo(video);
             } else if (ACTION_SAVE_YOUTUBE_VIDEO.equals(action)) {
                 final String paramString = intent.getStringExtra(EXTRA_PARAM_STRING);
@@ -161,7 +158,7 @@ public class IpcService extends IntentService implements Invokable<Video, Intege
     private void handleActionSaveYoutubeVideo(String paramString) {
         final Context context = this;
         if (!CheckPreferences.notificationsEnabled(context) && !CheckPreferences.loggingEnabled(context)) {
-            Log.e(LOG_TAG, "Notifications and Logging is disabled");
+            Log.e(TAG, "Notifications and Logging is disabled");
             return;
         }
         YoutubeParserProxy.startParsing(this, paramString, this);
@@ -169,8 +166,9 @@ public class IpcService extends IntentService implements Invokable<Video, Intege
 
     @Override
     public Integer invoke(Video video) {
-        YoutubeVideo youtubeVideo = (YoutubeVideo)video;
         if (video != null) {
+            YoutubeVideo youtubeVideo = (YoutubeVideo)video;
+            youtubeVideo.setPackageName("com.google.android.youtube");
             long id = saveUrlToDatabase(youtubeVideo);
             if (CheckPreferences.notificationsEnabled(this)) {
                 showNotification(youtubeVideo.getBestVideoFormat().url, youtubeVideo.getTitle(), id);

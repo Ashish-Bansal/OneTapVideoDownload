@@ -25,10 +25,11 @@ public class MediaPlayerHook implements IXposedHookLoadPackage {
         XC_MethodHook methodHook = new XC_MethodHook() {
             protected void beforeHookedMethod(XC_MethodHook.MethodHookParam hookParams) throws Throwable {
                 Context context = (Context) hookParams.args[0];
+                String packageName = context.getPackageName();
                 Uri uri = (Uri) hookParams.args[1];
                 if (uri.toString().startsWith("http")) {
                     XposedBridge.log(uri.toString());
-                    IpcService.startSaveUrlAction(context, uri);
+                    IpcService.startSaveUrlAction(context, uri, packageName);
                 }
             }
         };

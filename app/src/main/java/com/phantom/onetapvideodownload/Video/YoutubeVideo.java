@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class YoutubeVideo implements Video {
-    private String mTitle, mParam;
+    private String mTitle, mParam, mPackageName;
     private long mDatabaseId = -1;
     public static List<Pair<Integer, String>> itagQualityMapping = new ArrayList<>();
     public static List<Pair<Integer, String>> itagExtensionMapping = new ArrayList<>();
@@ -256,5 +256,15 @@ public class YoutubeVideo implements Video {
         ));
 
         return options;
+    }
+
+    @Override
+    public String getPackageName() {
+        return mPackageName;
+    }
+
+    @Override
+    public void setPackageName(String packageName) {
+        mPackageName = packageName;
     }
 }

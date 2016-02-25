@@ -35,4 +35,6 @@ public interface DownloadInfo {
     void writeToDatabase();
     Collection<String> getOptions();
     MaterialDialog.ListCallback getOptionCallback();
+    String getPackageName();
+    void setPackageName(String packageName);
 }

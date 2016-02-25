@@ -17,7 +17,7 @@ import java.util.List;
 
 public class BrowserDownloadInfo implements DownloadInfo {
     private final static String TAG = "BrowserDownloadInfo";
-    private String mVideoUrl, mDownloadLocation, mFilename;
+    private String mVideoUrl, mDownloadLocation, mFilename, mPackageName;
     private long mDatabaseId = -1, mContentLength = -1, mDownloadedLength = -1;
     private Status mStatus;
     private Context mContext;
@@ -218,5 +218,15 @@ public class BrowserDownloadInfo implements DownloadInfo {
     private void removeDatabaseEntry() {
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(mContext);
         downloadDatabase.deleteDownload(getDatabaseId());
+    }
+
+    @Override
+    public String getPackageName() {
+        return mPackageName;
+    }
+
+    @Override
+    public void setPackageName(String packageName) {
+        mPackageName = packageName;
     }
 }

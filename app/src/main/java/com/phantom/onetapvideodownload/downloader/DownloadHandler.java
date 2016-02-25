@@ -2,7 +2,9 @@ package com.phantom.onetapvideodownload.downloader;
 
 import android.app.NotificationManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.NotificationCompat;
@@ -126,6 +128,15 @@ public class DownloadHandler {
 
     public String getUrl() {
         return mDownloadInfo.getUrl();
+    }
+
+    public Drawable getPackageDrawable() {
+        try {
+            Drawable d = mContext.getPackageManager().getApplicationIcon(mDownloadInfo.getPackageName());
+            return d;
+        } catch (PackageManager.NameNotFoundException e) {
+            return null;
+        }
     }
 
     private void showNotification() {
