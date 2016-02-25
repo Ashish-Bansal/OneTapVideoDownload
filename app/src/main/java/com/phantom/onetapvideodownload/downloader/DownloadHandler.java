@@ -94,6 +94,8 @@ public class DownloadHandler {
                             in.close();
                             mDownloadInfo.setStatus(DownloadInfo.Status.Completed);
                             mDownloadInfo.writeToDatabase();
+                            DownloadManager downloadManager = (DownloadManager) mContext;
+                            downloadManager.updateUi();
                             showNotification();
                         } else {
                             mDownloadInfo.setStatus(DownloadInfo.Status.WriteFailed);

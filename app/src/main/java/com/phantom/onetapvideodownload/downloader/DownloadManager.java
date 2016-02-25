@@ -195,13 +195,17 @@ public class DownloadManager extends Service {
                     }
                 }
 
-                updateNotification();
-                emitOnDownloadInfoUpdated();
+                updateUi();
             }
         }).start();
     }
 
-    private void emitOnDownloadInfoUpdated() {
+    public void updateUi() {
+        updateNotification();
+        emitOnDownloadInfoUpdated();
+    }
+
+    private synchronized void emitOnDownloadInfoUpdated() {
         serviceCallbacks.removeAll(Collections.singleton(null));
         for (ServiceCallbacks sc : serviceCallbacks) {
             Log.e(TAG, "Calling onDownloadAdded callback method " + sc.getClass().getName());
@@ -209,7 +213,7 @@ public class DownloadManager extends Service {
         }
     }
 
-    public void showNotification() {
+    private synchronized void showNotification() {
         mBuilder.setSmallIcon(R.drawable.download);
         mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
         mBuilder.setContentTitle(getResources().getString(R.string.app_name));
@@ -221,7 +225,7 @@ public class DownloadManager extends Service {
         mNotifyManager.notify(mNotificationId, mBuilder.build());
     }
 
-    public synchronized void updateNotification() {
+    private synchronized void updateNotification() {
         int progress = getDownloadsAverageProgress();
         if (progress == 100) {
             mNotifyManager.cancel(mNotificationId);
