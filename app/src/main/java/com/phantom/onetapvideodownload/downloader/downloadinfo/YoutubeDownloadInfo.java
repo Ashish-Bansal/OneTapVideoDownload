@@ -196,7 +196,8 @@ public class YoutubeDownloadInfo implements DownloadInfo, Invokable<Video, Integ
                                 .show();
                         YoutubeParserProxy.startParsing(mContext, mParam, YoutubeDownloadInfo.this);
                         break;
-                    case R.string.resume:
+                    // ToDo: Implement the resume and pause functionality
+                    // case R.string.resume:
                     case R.string.remove_from_list:
                         // Used Activity context instead of ApplicationContext
                         new MaterialDialog.Builder(dialog.getContext())
@@ -240,8 +241,10 @@ public class YoutubeDownloadInfo implements DownloadInfo, Invokable<Video, Integ
                                 })
                                 .show();
                         break;
-                    case R.string.pause:
-                    case R.string.details:
+                    // ToDo: Implement the resume and pause functionality
+                    // case R.string.pause:
+                    // ToDo: Implement the resume and pause functionality
+                    // case R.string.details:
                 }
             }
         };

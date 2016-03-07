@@ -164,7 +164,8 @@ public class BrowserDownloadInfo implements DownloadInfo {
                     case R.string.share:
                         Global.startFileShareIntent(mContext, getDownloadLocation());
                         break;
-                    case R.string.resume:
+                    // ToDo: Implement the resume and pause functionality
+                    // case R.string.resume:
                     case R.string.remove_from_list:
                         // Used Activity context instead of ApplicationContext
                         new MaterialDialog.Builder(dialog.getContext())
@@ -208,8 +209,10 @@ public class BrowserDownloadInfo implements DownloadInfo {
                                 })
                                 .show();
                         break;
-                    case R.string.pause:
-                    case R.string.details:
+                    // ToDo: Implement the resume and pause functionality
+                    // case R.string.pause:
+                    // ToDo: Implement the resume and pause functionality
+                    // case R.string.details:
                 }
             }
         };
