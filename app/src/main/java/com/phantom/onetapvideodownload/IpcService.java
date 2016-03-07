@@ -67,6 +67,10 @@ public class IpcService extends IntentService implements Invokable<Video, Intege
             if (ACTION_SAVE_BROWSER_VIDEO.equals(action)) {
                 String url = intent.getStringExtra(EXTRA_URL);
                 String packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME);
+                if (url == null || url.isEmpty() || Global.getFilenameFromUrl(url) == null) {
+                    return;
+                }
+
                 Video video = new BrowserVideo(this, url);
                 if (packageName != null) {
                     video.setPackageName(packageName);
