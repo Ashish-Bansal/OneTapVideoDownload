@@ -224,9 +224,10 @@ public class VideoDatabase extends SQLiteOpenHelper {
         String countQuery = "SELECT  * FROM " + TABLE_VIDEO_LIST;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
+        int videoCount = cursor.getCount();
         cursor.close();
 
-        return cursor.getCount();
+        return videoCount;
     }
 
     public long alreadyExists(Video video) {

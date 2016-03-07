@@ -250,9 +250,10 @@ public class DownloadDatabase extends SQLiteOpenHelper {
         String countQuery = "SELECT  * FROM " + TABLE_VIDEO_DOWNLOAD_LIST;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
+        int downloadCount = cursor.getCount();
         cursor.close();
 
-        return cursor.getCount();
+        return downloadCount;
     }
 
     public long downloadAlreadyExists(DownloadInfo download) {
