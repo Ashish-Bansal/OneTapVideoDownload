@@ -2,14 +2,11 @@ package com.phantom.onetapvideodownload.downloader.downloadinfo;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.phantom.onetapvideodownload.Global;
 import com.phantom.onetapvideodownload.MainActivity;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.Video.Video;
@@ -23,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class YoutubeDownloadInfo implements DownloadInfo, Invokable<Video, Integer> {
+public class YoutubeDownloadInfo extends DownloadInfo implements Invokable<Video, Integer> {
     private final static String TAG = "YoutubeDownloadInfo";
     private String mParam, mVideoUrl, mDownloadLocation, mFilename, mPackageName;
     private int mItag;
@@ -181,13 +178,9 @@ public class YoutubeDownloadInfo implements DownloadInfo, Invokable<Video, Integ
                     return;
                 }
 
+                // Used Activity context instead of ApplicationContext
+                handleGenericOptionClicks(dialog.getContext(), resId);
                 switch (resId) {
-                    case R.string.open:
-                        Global.startOpenIntent(mContext, getDownloadLocation());
-                        break;
-                    case R.string.share:
-                        Global.startFileShareIntent(mContext, getDownloadLocation());
-                        break;
                     case R.string.download_in_other_resolution:
                         mProgressDialog =  new MaterialDialog.Builder(dialog.getContext())
                                 .title(R.string.progress_dialog)
@@ -198,49 +191,6 @@ public class YoutubeDownloadInfo implements DownloadInfo, Invokable<Video, Integ
                         break;
                     // ToDo: Implement the resume and pause functionality
                     // case R.string.resume:
-                    case R.string.remove_from_list:
-                        // Used Activity context instead of ApplicationContext
-                        new MaterialDialog.Builder(dialog.getContext())
-                                .title(R.string.remove_from_list_confirmation)
-                                .content(R.string.remove_from_list_confirmation_content)
-                                .positiveText(R.string.yes)
-                                .negativeText(R.string.no)
-                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        removeDatabaseEntry();
-                                    }
-                                })
-                                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .show();
-                        break;
-                    case R.string.delete_from_storage:
-                        // Used Activity context instead of ApplicationContext
-                        new MaterialDialog.Builder(dialog.getContext())
-                                .title(R.string.delete_confirmation)
-                                .content(R.string.delete_confirmation_content)
-                                .positiveText(R.string.yes)
-                                .negativeText(R.string.no)
-                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        Global.deleteFile(mContext, getDownloadLocation());
-                                        removeDatabaseEntry();
-                                    }
-                                })
-                                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .show();
-                        break;
                     // ToDo: Implement the resume and pause functionality
                     // case R.string.pause:
                     // ToDo: Implement the resume and pause functionality
@@ -250,7 +200,7 @@ public class YoutubeDownloadInfo implements DownloadInfo, Invokable<Video, Integ
         };
     }
 
-    private void removeDatabaseEntry() {
+    public void removeDatabaseEntry() {
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(mContext);
         downloadDatabase.deleteDownload(getDatabaseId());
     }

@@ -1,13 +1,10 @@
 package com.phantom.onetapvideodownload.downloader.downloadinfo;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 
-import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.phantom.onetapvideodownload.Global;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
 
@@ -15,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public class BrowserDownloadInfo implements DownloadInfo {
+public class BrowserDownloadInfo extends DownloadInfo {
     private final static String TAG = "BrowserDownloadInfo";
     private String mVideoUrl, mDownloadLocation, mFilename, mPackageName;
     private long mDatabaseId = -1, mContentLength = -1, mDownloadedLength = -1;
@@ -157,58 +154,11 @@ public class BrowserDownloadInfo implements DownloadInfo {
                     return;
                 }
 
+                // Used Activity context instead of ApplicationContext
+                handleGenericOptionClicks(dialog.getContext(), resId);
                 switch (resId) {
-                    case R.string.open:
-                        Global.startOpenIntent(mContext, getDownloadLocation());
-                        break;
-                    case R.string.share:
-                        Global.startFileShareIntent(mContext, getDownloadLocation());
-                        break;
                     // ToDo: Implement the resume and pause functionality
                     // case R.string.resume:
-                    case R.string.remove_from_list:
-                        // Used Activity context instead of ApplicationContext
-                        new MaterialDialog.Builder(dialog.getContext())
-                                .title(R.string.remove_from_list_confirmation)
-                                .content(R.string.remove_from_list_confirmation_content)
-                                .positiveText(R.string.yes)
-                                .negativeText(R.string.no)
-                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        removeDatabaseEntry();
-                                    }
-                                })
-                                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .show();
-                        break;
-                    case R.string.delete_from_storage:
-                        // Used Activity context instead of ApplicationContext
-                        new MaterialDialog.Builder(dialog.getContext())
-                                .title(R.string.delete_confirmation)
-                                .content(R.string.delete_confirmation_content)
-                                .positiveText(R.string.yes)
-                                .negativeText(R.string.no)
-                                .onPositive(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        Global.deleteFile(mContext, getDownloadLocation());
-                                        removeDatabaseEntry();
-                                    }
-                                })
-                                .onNegative(new MaterialDialog.SingleButtonCallback() {
-                                    @Override
-                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .show();
-                        break;
                     // ToDo: Implement the resume and pause functionality
                     // case R.string.pause:
                     // ToDo: Implement the resume and pause functionality
@@ -218,7 +168,8 @@ public class BrowserDownloadInfo implements DownloadInfo {
         };
     }
 
-    private void removeDatabaseEntry() {
+    @Override
+    public void removeDatabaseEntry() {
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(mContext);
         downloadDatabase.deleteDownload(getDatabaseId());
     }
