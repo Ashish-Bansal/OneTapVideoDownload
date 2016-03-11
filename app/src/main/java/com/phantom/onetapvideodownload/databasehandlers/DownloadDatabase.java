@@ -194,6 +194,10 @@ public class DownloadDatabase extends SQLiteOpenHelper {
                     String title = downloadQueryCursor.getString(4);
                     String downloadPath = downloadQueryCursor.getString(5);
                     Integer status = downloadQueryCursor.getInt(7);
+                    if (DownloadInfo.Status.Downloading == DownloadInfo.Status.values()[status]) {
+                        status = DownloadInfo.Status.Stopped.ordinal();
+                    }
+
                     Long contentLength = downloadQueryCursor.getLong(8);
                     Long downloadedLength = downloadQueryCursor.getLong(9);
                     String packageName = downloadQueryCursor.getString(10);
