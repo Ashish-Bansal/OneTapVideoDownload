@@ -155,14 +155,15 @@ public class BrowserDownloadInfo extends DownloadInfo {
                 }
 
                 // Used Activity context instead of ApplicationContext
-                handleGenericOptionClicks(dialog.getContext(), resId);
-                switch (resId) {
-                    // ToDo: Implement the resume and pause functionality
-                    // case R.string.resume:
-                    // ToDo: Implement the resume and pause functionality
-                    // case R.string.pause:
-                    // ToDo: Implement the resume and pause functionality
-                    // case R.string.details:
+                if (!handleGenericOptionClicks(dialog.getContext(), resId)) {
+                    switch (resId) {
+                        // ToDo: Implement the resume and pause functionality
+                        // case R.string.resume:
+                        // ToDo: Implement the resume and pause functionality
+                        // case R.string.pause:
+                        // ToDo: Implement the resume and pause functionality
+                        // case R.string.details:
+                    }
                 }
             }
         };

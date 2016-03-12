@@ -179,22 +179,23 @@ public class YoutubeDownloadInfo extends DownloadInfo implements Invokable<Video
                 }
 
                 // Used Activity context instead of ApplicationContext
-                handleGenericOptionClicks(dialog.getContext(), resId);
-                switch (resId) {
-                    case R.string.download_in_other_resolution:
-                        mProgressDialog =  new MaterialDialog.Builder(dialog.getContext())
-                                .title(R.string.progress_dialog)
-                                .content(R.string.please_wait)
-                                .progress(true, 0)
-                                .show();
-                        YoutubeParserProxy.startParsing(mContext, mParam, YoutubeDownloadInfo.this);
-                        break;
-                    // ToDo: Implement the resume and pause functionality
-                    // case R.string.resume:
-                    // ToDo: Implement the resume and pause functionality
-                    // case R.string.pause:
-                    // ToDo: Implement the resume and pause functionality
-                    // case R.string.details:
+                if (!handleGenericOptionClicks(dialog.getContext(), resId)) {
+                    switch (resId) {
+                        case R.string.download_in_other_resolution:
+                            mProgressDialog = new MaterialDialog.Builder(dialog.getContext())
+                                    .title(R.string.progress_dialog)
+                                    .content(R.string.please_wait)
+                                    .progress(true, 0)
+                                    .show();
+                            YoutubeParserProxy.startParsing(mContext, mParam, YoutubeDownloadInfo.this);
+                            break;
+                        // ToDo: Implement the resume and pause functionality
+                        // case R.string.resume:
+                        // ToDo: Implement the resume and pause functionality
+                        // case R.string.pause:
+                        // ToDo: Implement the resume and pause functionality
+                        // case R.string.details:
+                    }
                 }
             }
         };
