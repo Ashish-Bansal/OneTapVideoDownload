@@ -36,6 +36,7 @@ public class DownloadHandler {
     private NotificationManager mNotifyManager;
     private final static AtomicInteger mNotificationId = new AtomicInteger(150);
     private static long lastWriteTime = System.currentTimeMillis();
+    private Call mCall;
 
     DownloadHandler(Context context, DownloadInfo downloadInfo) {
         mContext = context;
@@ -67,8 +68,8 @@ public class DownloadHandler {
                     .url(url)
                     .addHeader("Range", "bytes=" + getDownloadedLength() + "-")
                     .build();
-            Call call = Client.newCall(request);
-            call.enqueue(new Callback() {
+            mCall = Client.newCall(request);
+            mCall.enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     mDownloadInfo.setStatus(DownloadInfo.Status.NetworkProblem);
@@ -123,6 +124,10 @@ public class DownloadHandler {
         return mDownloadInfo.getStatus();
     }
 
+    public void setStatus(DownloadInfo.Status status) {
+        mDownloadInfo.setStatus(status);
+    }
+
     public long getContentLength() {
         return mDownloadInfo.getContentLength();
     }
@@ -172,5 +177,12 @@ public class DownloadHandler {
 
     public boolean started() {
         return getDownloadedLength() != 0;
+    }
+
+    public void stopDownload() {
+        setStatus(DownloadInfo.Status.Stopped);
+        if (mCall != null) {
+            mCall.cancel();
+        }
     }
 }
