@@ -74,6 +74,7 @@ public class DownloadHandler {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     mDownloadInfo.setStatus(DownloadInfo.Status.NetworkProblem);
+                    mDownloadInfo.writeToDatabase();
                 }
 
                 @Override
@@ -103,11 +104,12 @@ public class DownloadHandler {
                             downloadManager.updateUi();
                             showNotification();
                         } else {
-                            mDownloadInfo.setStatus(DownloadInfo.Status.WriteFailed);
-                            mDownloadInfo.writeToDatabase();
+                            Log.v(TAG, "Status Code : " + response.code());
                         }
                     } catch (IOException e) {
-                        Log.e("DownloadService", "expection is ", e);
+                        Log.e("DownloadService", "Exception : ", e);
+                        mDownloadInfo.setStatus(DownloadInfo.Status.WriteFailed);
+                        mDownloadInfo.writeToDatabase();
                     }
                 }
             });
