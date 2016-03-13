@@ -43,11 +43,10 @@ public abstract class DownloadInfo {
     public abstract void writeToDatabase();
     public abstract void removeDatabaseEntry();
     public abstract Collection<String> getOptions();
-    public abstract MaterialDialog.ListCallback getOptionCallback();
     public abstract String getPackageName();
     public abstract void setPackageName(String packageName);
 
-    List<String> getGenericOptions(Context context, Status status) {
+    List<String> getOptions(Context context, Status status) {
         List<String> options = new ArrayList<>();
         switch (status) {
             case Completed:
@@ -72,7 +71,7 @@ public abstract class DownloadInfo {
         return options;
     }
 
-    boolean handleGenericOptionClicks(final Context context, int resourceId) {
+    public boolean handleOptionClicks(final Context context, int resourceId) {
         switch (resourceId) {
             case R.string.open:
                 Global.startOpenIntent(context, getDownloadLocation());
@@ -123,6 +122,26 @@ public abstract class DownloadInfo {
                 return true;
             default:
                 return false;
+        }
+    }
+
+    public int findIdByString(Context context, String string) {
+        if (context.getResources().getString(R.string.open).equals(string)) {
+            return R.string.open;
+        } else if(context.getResources().getString(R.string.share).equals(string)) {
+            return R.string.share;
+        } else if(context.getResources().getString(R.string.resume).equals(string)) {
+            return R.string.resume;
+        } else if(context.getResources().getString(R.string.remove_from_list).equals(string)) {
+            return R.string.remove_from_list;
+        } else if(context.getResources().getString(R.string.delete_from_storage).equals(string)) {
+            return R.string.delete_from_storage;
+        } else if(context.getResources().getString(R.string.pause).equals(string)) {
+            return R.string.pause;
+        } else if(context.getResources().getString(R.string.details).equals(string)) {
+            return R.string.details;
+        } else {
+            return -1;
         }
     }
 }

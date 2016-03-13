@@ -2,10 +2,7 @@ package com.phantom.onetapvideodownload.downloader.downloadinfo;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 
-import com.afollestad.materialdialogs.MaterialDialog;
-import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
 
 import java.util.Collection;
@@ -99,52 +96,12 @@ public class BrowserDownloadInfo extends DownloadInfo {
 
     @Override
     public Collection<String> getOptions() {
-        return getGenericOptions(mContext, mStatus);
-    }
-
-    int findIdByString(String string) {
-        if (mContext.getResources().getString(R.string.open).equals(string)) {
-            return R.string.open;
-        } else if(mContext.getResources().getString(R.string.share).equals(string)) {
-            return R.string.share;
-        } else if(mContext.getResources().getString(R.string.resume).equals(string)) {
-            return R.string.resume;
-        } else if(mContext.getResources().getString(R.string.remove_from_list).equals(string)) {
-            return R.string.remove_from_list;
-        } else if(mContext.getResources().getString(R.string.delete_from_storage).equals(string)) {
-            return R.string.delete_from_storage;
-        } else if(mContext.getResources().getString(R.string.pause).equals(string)) {
-            return R.string.pause;
-        } else if(mContext.getResources().getString(R.string.details).equals(string)) {
-            return R.string.details;
-        } else {
-            return -1;
-        }
+        return super.getOptions(mContext, mStatus);
     }
 
     @Override
-    public MaterialDialog.ListCallback getOptionCallback() {
-        return new MaterialDialog.ListCallback() {
-            @Override
-            public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                int resId = findIdByString((String) text);
-                if (resId == -1) {
-                    return;
-                }
-
-                // Used Activity context instead of ApplicationContext
-                if (!handleGenericOptionClicks(dialog.getContext(), resId)) {
-                    switch (resId) {
-                        // ToDo: Implement the resume and pause functionality
-                        // case R.string.resume:
-                        // ToDo: Implement the resume and pause functionality
-                        // case R.string.pause:
-                        // ToDo: Implement the resume and pause functionality
-                        // case R.string.details:
-                    }
-                }
-            }
-        };
+    public boolean handleOptionClicks(Context context, int resId) {
+        return super.handleOptionClicks(context, resId);
     }
 
     @Override
@@ -161,5 +118,10 @@ public class BrowserDownloadInfo extends DownloadInfo {
     @Override
     public void setPackageName(String packageName) {
         mPackageName = packageName;
+    }
+
+    @Override
+    public int findIdByString(Context context, String string) {
+        return super.findIdByString(context, string);
     }
 }

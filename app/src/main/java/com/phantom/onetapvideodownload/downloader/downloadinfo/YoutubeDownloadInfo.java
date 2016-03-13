@@ -3,7 +3,6 @@ package com.phantom.onetapvideodownload.downloader.downloadinfo;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -16,7 +15,6 @@ import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
 import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
 import com.phantom.onetapvideodownload.utils.Invokable;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -121,7 +119,7 @@ public class YoutubeDownloadInfo extends DownloadInfo implements Invokable<Video
 
     @Override
     public Collection<String> getOptions() {
-        List<String> options = new ArrayList<>(getGenericOptions(mContext, mStatus));
+        List<String> options = super.getOptions(mContext, mStatus);
         switch (mStatus) {
             case Completed:
                 options.add(mContext.getResources().getString(R.string.download_in_other_resolution));
@@ -133,59 +131,40 @@ public class YoutubeDownloadInfo extends DownloadInfo implements Invokable<Video
         return options;
     }
 
-    int findIdByString(String string) {
-        if (mContext.getResources().getString(R.string.open).equals(string)) {
-            return R.string.open;
-        } else if(mContext.getResources().getString(R.string.share).equals(string)) {
-            return R.string.share;
-        } else if(mContext.getResources().getString(R.string.download_in_other_resolution).equals(string)) {
+    @Override
+    public int findIdByString(Context context, String string) {
+        int resourceId = super.findIdByString(context, string);
+        if (resourceId != -1) {
+            return resourceId;
+        }
+
+        if(mContext.getResources().getString(R.string.download_in_other_resolution).equals(string)) {
             return R.string.download_in_other_resolution;
-        } else if(mContext.getResources().getString(R.string.resume).equals(string)) {
-            return R.string.resume;
-        } else if(mContext.getResources().getString(R.string.remove_from_list).equals(string)) {
-            return R.string.remove_from_list;
-        } else if(mContext.getResources().getString(R.string.delete_from_storage).equals(string)) {
-            return R.string.delete_from_storage;
-        } else if(mContext.getResources().getString(R.string.pause).equals(string)) {
-            return R.string.pause;
-        } else if(mContext.getResources().getString(R.string.details).equals(string)) {
-            return R.string.details;
         } else {
             return -1;
         }
     }
 
     @Override
-    public MaterialDialog.ListCallback getOptionCallback() {
-        return new MaterialDialog.ListCallback() {
-            @Override
-            public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                int resId = findIdByString((String) text);
-                if (resId == -1) {
-                    return;
-                }
+    public boolean handleOptionClicks(Context context, int resId) {
+        if (super.handleOptionClicks(context, resId)) {
+            return true;
+        }
 
-                // Used Activity context instead of ApplicationContext
-                if (!handleGenericOptionClicks(dialog.getContext(), resId)) {
-                    switch (resId) {
-                        case R.string.download_in_other_resolution:
-                            mProgressDialog = new MaterialDialog.Builder(dialog.getContext())
-                                    .title(R.string.progress_dialog)
-                                    .content(R.string.please_wait)
-                                    .progress(true, 0)
-                                    .show();
-                            YoutubeParserProxy.startParsing(mContext, mParam, YoutubeDownloadInfo.this);
-                            break;
-                        // ToDo: Implement the resume and pause functionality
-                        // case R.string.resume:
-                        // ToDo: Implement the resume and pause functionality
-                        // case R.string.pause:
-                        // ToDo: Implement the resume and pause functionality
-                        // case R.string.details:
-                    }
-                }
-            }
-        };
+        switch (resId) {
+            case R.string.download_in_other_resolution:
+                mProgressDialog = new MaterialDialog.Builder(context)
+                        .title(R.string.progress_dialog)
+                        .content(R.string.please_wait)
+                        .progress(true, 0)
+                        .show();
+                YoutubeParserProxy.startParsing(mContext, mParam, YoutubeDownloadInfo.this);
+                return true;
+            // ToDo: Implement the resume and pause functionality
+            // case R.string.details:
+        }
+
+        return false;
     }
 
     public void removeDatabaseEntry() {
