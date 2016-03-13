@@ -49,7 +49,7 @@ public class DownloadHandler {
     public void startDownload() {
         File filePath = new File(mDownloadInfo.getDownloadLocation());
         downloadFile(mDownloadInfo.getUrl(), filePath);
-        mDownloadInfo.setStatus(DownloadInfo.Status.Downloading);
+        setStatus(DownloadInfo.Status.Downloading);
     }
 
     private boolean isNetworkAvailable() {
@@ -73,8 +73,8 @@ public class DownloadHandler {
             mCall.enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    mDownloadInfo.setStatus(DownloadInfo.Status.NetworkProblem);
-                    mDownloadInfo.writeToDatabase();
+                    setStatus(DownloadInfo.Status.NetworkProblem);
+                    writeToDatabase();
                 }
 
                 @Override
@@ -92,14 +92,14 @@ public class DownloadHandler {
                                 mDownloadInfo.addDownloadedLength(count);
                                 long currentTime = System.currentTimeMillis();
                                 if (currentTime - lastWriteTime > 8000L) {
-                                    mDownloadInfo.writeToDatabase();
+                                    writeToDatabase();
                                     lastWriteTime = currentTime;
                                 }
                             }
                             bw.close();
                             in.close();
-                            mDownloadInfo.setStatus(DownloadInfo.Status.Completed);
-                            mDownloadInfo.writeToDatabase();
+                            setStatus(DownloadInfo.Status.Completed);
+                            writeToDatabase();
                             DownloadManager downloadManager = (DownloadManager) mContext;
                             downloadManager.updateUi();
                             showNotification();
@@ -112,8 +112,8 @@ public class DownloadHandler {
                 }
             });
         } else {
-            mDownloadInfo.setStatus(DownloadInfo.Status.NetworkNotAvailable);
-            mDownloadInfo.writeToDatabase();
+            setStatus(DownloadInfo.Status.NetworkNotAvailable);
+            writeToDatabase();
         }
     }
 
@@ -208,5 +208,9 @@ public class DownloadHandler {
         if (mCall != null) {
             mCall.cancel();
         }
+    }
+
+    public void writeToDatabase() {
+        mDownloadInfo.writeToDatabase();
     }
 }
