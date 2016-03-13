@@ -183,10 +183,12 @@ public class DownloadHandler {
                 // Used Activity context instead of ApplicationContext
                 if (!mDownloadInfo.handleOptionClicks(context, resId)) {
                     switch (resId) {
-                        // ToDo: Implement the resume and pause functionality
-                        // case R.string.resume:
-                        // ToDo: Implement the resume and pause functionality
-                        // case R.string.pause:
+                        case R.string.resume:
+                            startDownload();
+                            break;
+                        case R.string.pause:
+                            stopDownload();
+                            break;
                         // ToDo: Implement the resume and pause functionality
                         // case R.string.details:
                     }
