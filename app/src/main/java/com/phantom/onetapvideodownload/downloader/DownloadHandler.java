@@ -41,14 +41,14 @@ public class DownloadHandler {
     DownloadHandler(Context context, DownloadInfo downloadInfo) {
         mContext = context;
         mDownloadInfo = downloadInfo;
+        mNotifyManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
+        mBuilder = new NotificationCompat.Builder(mContext);
     }
 
     public void startDownload() {
         File filePath = new File(mDownloadInfo.getDownloadLocation());
         downloadFile(mDownloadInfo.getUrl(), filePath);
         mDownloadInfo.setStatus(DownloadInfo.Status.Downloading);
-        mNotifyManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        mBuilder = new NotificationCompat.Builder(mContext);
     }
 
     private boolean isNetworkAvailable() {
