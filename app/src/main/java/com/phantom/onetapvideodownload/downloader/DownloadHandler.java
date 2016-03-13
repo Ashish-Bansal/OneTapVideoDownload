@@ -63,7 +63,10 @@ public class DownloadHandler {
     private void downloadFile(String url, final File file) {
         if (isNetworkAvailable()) {
             OkHttpClient Client = new OkHttpClient();
-            Request request = new Request.Builder().url(url).build();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .addHeader("Range", "bytes=" + getDownloadedLength() + "-")
+                    .build();
             Call call = Client.newCall(request);
             call.enqueue(new Callback() {
                 @Override
@@ -78,7 +81,7 @@ public class DownloadHandler {
                         mDownloadInfo.setContentLength(response.body().contentLength());
                         if (response.isSuccessful()) {
                             Log.v(TAG, file.getAbsolutePath());
-                            BufferedOutputStream bw = new BufferedOutputStream(new FileOutputStream(file));
+                            BufferedOutputStream bw = new BufferedOutputStream(new FileOutputStream(file, started()));
                             byte data[] = new byte[1024 * 4];
                             int count;
                             while ((count = in.read(data)) != -1) {
@@ -161,5 +164,13 @@ public class DownloadHandler {
 
     public MaterialDialog.ListCallback getOptionCallback() {
         return mDownloadInfo.getOptionCallback();
+    }
+
+    public long getDownloadedLength() {
+        return mDownloadInfo.getDownloadedLength();
+    }
+
+    public boolean started() {
+        return getDownloadedLength() != 0;
     }
 }
