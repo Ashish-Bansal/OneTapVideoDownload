@@ -108,8 +108,6 @@ public class DownloadHandler {
                         }
                     } catch (IOException e) {
                         Log.e("DownloadService", "Exception : ", e);
-                        mDownloadInfo.setStatus(DownloadInfo.Status.WriteFailed);
-                        mDownloadInfo.writeToDatabase();
                     }
                 }
             });
