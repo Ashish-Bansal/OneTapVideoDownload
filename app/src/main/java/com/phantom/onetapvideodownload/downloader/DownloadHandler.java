@@ -108,6 +108,7 @@ public class DownloadHandler {
                         }
                     } catch (IOException e) {
                         Log.e("DownloadService", "Exception : ", e);
+                        writeToDatabase();
                     }
                 }
             });
@@ -205,6 +206,7 @@ public class DownloadHandler {
 
     public void stopDownload() {
         setStatus(DownloadInfo.Status.Stopped);
+        writeToDatabase();
         if (mCall != null) {
             mCall.cancel();
         }
