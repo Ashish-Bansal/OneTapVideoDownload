@@ -9,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.phantom.onetapvideodownload.downloader.DownloadManager;
 
@@ -28,14 +27,12 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceDisconnected(ComponentName name) {
-            Toast.makeText(mContext, "Download Service is disconnected", Toast.LENGTH_LONG).show();
             mBounded = false;
             mDownloadManager = null;
             notifyDataSetChanged();
         }
 
         public void onServiceConnected(ComponentName name, IBinder service) {
-            Toast.makeText(mContext, "Download Service is connected", Toast.LENGTH_LONG).show();
             mBounded = true;
             DownloadManager.LocalBinder mLocalBinder = (DownloadManager.LocalBinder)service;
             mDownloadManager = mLocalBinder.getServiceInstance();
