@@ -8,7 +8,9 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.phantom.onetapvideodownload.Global;
 import com.phantom.onetapvideodownload.R;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public abstract class DownloadInfo {
     public enum Status {
@@ -44,6 +46,31 @@ public abstract class DownloadInfo {
     public abstract MaterialDialog.ListCallback getOptionCallback();
     public abstract String getPackageName();
     public abstract void setPackageName(String packageName);
+
+    List<String> getGenericOptions(Context context, Status status) {
+        List<String> options = new ArrayList<>();
+        switch (status) {
+            case Completed:
+                options.add(context.getResources().getString(R.string.open));
+                options.add(context.getResources().getString(R.string.share));
+                options.add(context.getResources().getString(R.string.remove_from_list));
+                options.add(context.getResources().getString(R.string.delete_from_storage));
+                options.add(context.getResources().getString(R.string.details));
+                break;
+            case Stopped:
+                options.add(context.getResources().getString(R.string.resume));
+                options.add(context.getResources().getString(R.string.remove_from_list));
+                options.add(context.getResources().getString(R.string.delete_from_storage));
+                options.add(context.getResources().getString(R.string.details));
+                break;
+            case Downloading:
+                options.add(context.getResources().getString(R.string.pause));
+                options.add(context.getResources().getString(R.string.details));
+                break;
+        }
+
+        return options;
+    }
 
     boolean handleGenericOptionClicks(final Context context, int resourceId) {
         switch (resourceId) {

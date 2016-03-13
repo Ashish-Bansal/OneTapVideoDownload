@@ -121,26 +121,13 @@ public class YoutubeDownloadInfo extends DownloadInfo implements Invokable<Video
 
     @Override
     public Collection<String> getOptions() {
-        List<String> options = new ArrayList<>();
+        List<String> options = new ArrayList<>(getGenericOptions(mContext, mStatus));
         switch (mStatus) {
             case Completed:
-                options.add(mContext.getResources().getString(R.string.open));
-                options.add(mContext.getResources().getString(R.string.share));
                 options.add(mContext.getResources().getString(R.string.download_in_other_resolution));
-                options.add(mContext.getResources().getString(R.string.remove_from_list));
-                options.add(mContext.getResources().getString(R.string.delete_from_storage));
-                options.add(mContext.getResources().getString(R.string.details));
                 break;
             case Stopped:
-                options.add(mContext.getResources().getString(R.string.resume));
                 options.add(mContext.getResources().getString(R.string.download_in_other_resolution));
-                options.add(mContext.getResources().getString(R.string.remove_from_list));
-                options.add(mContext.getResources().getString(R.string.delete_from_storage));
-                options.add(mContext.getResources().getString(R.string.details));
-                break;
-            case Downloading:
-                options.add(mContext.getResources().getString(R.string.pause));
-                options.add(mContext.getResources().getString(R.string.details));
                 break;
         }
         return options;
