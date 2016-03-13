@@ -22,7 +22,7 @@ public class YoutubeDownloadInfo extends DownloadInfo implements Invokable<Video
     private final static String TAG = "YoutubeDownloadInfo";
     private String mParam, mVideoUrl, mDownloadLocation, mFilename, mPackageName;
     private int mItag;
-    private long mDatabaseId = -1, mContentLength = -1, mDownloadedLength = -1;
+    private long mDatabaseId = -1, mContentLength = -1, mDownloadedLength = 0;
     private Status mStatus;
     private Context mContext;
     private MaterialDialog mProgressDialog;

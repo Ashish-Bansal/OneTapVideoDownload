@@ -10,7 +10,7 @@ import java.util.Collection;
 public class BrowserDownloadInfo extends DownloadInfo {
     private final static String TAG = "BrowserDownloadInfo";
     private String mVideoUrl, mDownloadLocation, mFilename, mPackageName;
-    private long mDatabaseId = -1, mContentLength = -1, mDownloadedLength = -1;
+    private long mDatabaseId = -1, mContentLength = -1, mDownloadedLength = 0;
     private Status mStatus;
     private Context mContext;
 
