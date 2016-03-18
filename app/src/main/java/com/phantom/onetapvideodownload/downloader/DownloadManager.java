@@ -32,6 +32,7 @@ public class DownloadManager extends Service {
     private static final String PACKAGE_NAME = "com.phantom.onetapvideodownload";
     private static final String CLASS_NAME = "com.phantom.onetapvideodownload.downloader.DownloadManager";
     private static final String ACTION_DOWNLOAD = "com.phantom.onetapvideodownload.action.download";
+    private static final String ACTION_UPDATE_UI = "com.phantom.onetapvideodownload.action.update_ui";
     private static final String ACTION_START = "com.phantom.onetapvideodownload.action.start";
     private static final String EXTRA_DOWNLOAD_ID = "com.phantom.onetapvideodownload.extra.download_id";
     private static final int STORAGE_PERMISSION_NOTIFICATION_ID = 100;
@@ -43,6 +44,7 @@ public class DownloadManager extends Service {
     private NotificationManager mNotifyManager;
     private final static Integer mNotificationId = 20;
     private final static Long NOTIFICATION_UPDATE_WAIT_TIME = 2500L;
+    private Thread mUiUpdateThread;
 
     public interface ServiceCallbacks {
         void onDownloadAdded();
@@ -86,6 +88,12 @@ public class DownloadManager extends Service {
         return intent;
     }
 
+    public static Intent getActionUpdateUi() {
+        Intent intent = new Intent(ACTION_UPDATE_UI);
+        intent.setClassName(PACKAGE_NAME, CLASS_NAME);
+        return intent;
+    }
+
     public Integer getDownloadCount() {
         return mDownloadHandlers.size();
     }
@@ -107,6 +115,8 @@ public class DownloadManager extends Service {
                 }
 
                 handleActionDownload(downloadId);
+            } else if (ACTION_UPDATE_UI.equals(action)) {
+                startUiUpdateThread();
             }
         }
 
@@ -181,23 +191,26 @@ public class DownloadManager extends Service {
     }
 
     public void startUiUpdateThread() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (getDownloadCountByStatus(DownloadInfo.Status.Downloading) != 0) {
-                    updateNotification();
-                    emitOnDownloadInfoUpdated();
-                    try {
-                        Thread.sleep(NOTIFICATION_UPDATE_WAIT_TIME);
-                    } catch (InterruptedException e) {
-                        Log.e(TAG, "Notification Update Thread Interrupted Exception");
-                        e.printStackTrace();
+        if (mUiUpdateThread == null || !mUiUpdateThread.isAlive()) {
+            mUiUpdateThread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (getDownloadCountByStatus(DownloadInfo.Status.Downloading) != 0) {
+                        updateNotification();
+                        emitOnDownloadInfoUpdated();
+                        try {
+                            Thread.sleep(NOTIFICATION_UPDATE_WAIT_TIME);
+                        } catch (InterruptedException e) {
+                            Log.e(TAG, "Notification Update Thread Interrupted Exception");
+                            e.printStackTrace();
+                        }
                     }
-                }
 
-                updateUi();
-            }
-        }).start();
+                    updateUi();
+                }
+            });
+            mUiUpdateThread.start();
+        }
     }
 
     public void updateUi() {

@@ -50,6 +50,7 @@ public class DownloadHandler {
         File filePath = new File(mDownloadInfo.getDownloadLocation());
         downloadFile(mDownloadInfo.getUrl(), filePath);
         setStatus(DownloadInfo.Status.Downloading);
+        mContext.startService(DownloadManager.getActionUpdateUi());
     }
 
     private boolean isNetworkAvailable() {
