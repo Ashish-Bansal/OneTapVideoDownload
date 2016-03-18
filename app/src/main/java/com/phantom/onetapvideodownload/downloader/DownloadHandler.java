@@ -80,21 +80,20 @@ public class DownloadHandler {
 
                 @Override
                 public void onResponse(Call call, Response response) {
+                    BufferedOutputStream bufferedOutputStream = null;
+
                     try {
-                        InputStream in = response.body().byteStream();
-
+                        InputStream inputStream = response.body().byteStream();
                         if (response.isSuccessful()) {
-                            Log.v(TAG, file.getAbsolutePath());
-
                             if (!started()) {
                                 mDownloadInfo.setContentLength(response.body().contentLength());
                             }
 
-                            BufferedOutputStream bw = new BufferedOutputStream(new FileOutputStream(file, started()));
+                            bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file, started()));
                             byte data[] = new byte[1024 * 4];
                             int count;
-                            while ((count = in.read(data)) != -1) {
-                                bw.write(data, 0, count);
+                            while ((count = inputStream.read(data)) != -1) {
+                                bufferedOutputStream.write(data, 0, count);
                                 mDownloadInfo.addDownloadedLength(count);
                                 long currentTime = System.currentTimeMillis();
                                 if (currentTime - lastWriteTime > 8000L) {
@@ -102,8 +101,9 @@ public class DownloadHandler {
                                     lastWriteTime = currentTime;
                                 }
                             }
-                            bw.close();
-                            in.close();
+
+                            bufferedOutputStream.close();
+                            inputStream.close();
                             setStatus(DownloadInfo.Status.Completed);
                             writeToDatabase();
                             DownloadManager downloadManager = (DownloadManager) mContext;
@@ -114,6 +114,14 @@ public class DownloadHandler {
                         }
                     } catch (IOException e) {
                         Log.e("DownloadService", "Exception : ", e);
+                        try {
+                            if (bufferedOutputStream != null) {
+                                bufferedOutputStream.close();
+                            }
+                        } catch (IOException ioException) {
+                                ioException.printStackTrace();
+                        }
+                    } finally {
                         writeToDatabase();
                     }
                 }
