@@ -82,9 +82,14 @@ public class DownloadHandler {
                 public void onResponse(Call call, Response response) {
                     try {
                         InputStream in = response.body().byteStream();
-                        mDownloadInfo.setContentLength(response.body().contentLength());
+
                         if (response.isSuccessful()) {
                             Log.v(TAG, file.getAbsolutePath());
+
+                            if (!started()) {
+                                mDownloadInfo.setContentLength(response.body().contentLength());
+                            }
+
                             BufferedOutputStream bw = new BufferedOutputStream(new FileOutputStream(file, started()));
                             byte data[] = new byte[1024 * 4];
                             int count;
