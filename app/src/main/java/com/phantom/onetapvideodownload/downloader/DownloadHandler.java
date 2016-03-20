@@ -1,7 +1,9 @@
 package com.phantom.onetapvideodownload.downloader;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -12,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.phantom.onetapvideodownload.MainActivity;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 
@@ -170,8 +173,16 @@ public class DownloadHandler {
         mBuilder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher));
         mBuilder.setContentTitle(getFilename());
         mBuilder.setContentText(getNotificationContent());
-        mBuilder.setAutoCancel(false);
+        mBuilder.setAutoCancel(true);
         mBuilder.setOnlyAlertOnce(false);
+
+        Intent intent = new Intent(mContext, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(mContext,
+                mNotificationId.get(),
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mBuilder.setContentIntent(pendingIntent);
         mNotifyManager.notify(mNotificationId.getAndIncrement(), mBuilder.build());
     }
 
