@@ -11,9 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
-import android.view.View;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.phantom.onetapvideodownload.MainActivity;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
@@ -194,31 +192,30 @@ public class DownloadHandler {
         return mDownloadInfo.getOptions();
     }
 
-    public MaterialDialog.ListCallback getOptionCallback() {
-        return new MaterialDialog.ListCallback() {
-            @Override
-            public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                Context context = dialog.getContext();
-                int resId = mDownloadInfo.findIdByString(context, (String) text);
-                if (resId == -1) {
-                    return;
-                }
+    public int findIdByString(Context context, String string) {
+        return mDownloadInfo.findIdByString(context, string);
+    }
 
-                // Used Activity context instead of ApplicationContext
-                if (!mDownloadInfo.handleOptionClicks(context, resId)) {
-                    switch (resId) {
-                        case R.string.resume:
-                            startDownload();
-                            break;
-                        case R.string.pause:
-                            stopDownload();
-                            break;
-                        // ToDo: Implement the resume and pause functionality
-                        // case R.string.details:
-                    }
-                }
+    public boolean handleOptionClicks(Context context, int resId) {
+        // Used Activity context instead of ApplicationContext
+        boolean success = mDownloadInfo.handleOptionClicks(context, resId);
+        if (!success) {
+            success = true;
+            switch (resId) {
+                case R.string.resume:
+                    startDownload();
+                    break;
+                case R.string.pause:
+                    stopDownload();
+                    break;
+                // ToDo: Implement the resume and pause functionality
+                // case R.string.details:
+                default:
+                    success = false;
             }
-        };
+        }
+
+        return success;
     }
 
     public long getDownloadedLength() {

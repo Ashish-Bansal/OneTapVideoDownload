@@ -15,6 +15,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.phantom.onetapvideodownload.AppPermissions;
@@ -322,7 +323,19 @@ public class DownloadManager extends Service {
     }
 
     public MaterialDialog.ListCallback getOptionCallback(int index) {
-        return mDownloadHandlers.get(index).second.getOptionCallback();
+        final DownloadHandler downloadHandler = mDownloadHandlers.get(index).second;
+        return new MaterialDialog.ListCallback() {
+            @Override
+            public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
+                Context context = dialog.getContext();
+                int resId = downloadHandler.findIdByString(context, (String) text);
+                if (resId == -1) {
+                    return;
+                }
+
+                boolean success = downloadHandler.handleOptionClicks(context, resId);
+            }
+        };
     }
 
     public Drawable getPackageDrawable(int index) {
