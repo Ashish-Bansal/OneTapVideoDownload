@@ -91,6 +91,16 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     @Override
+    public void onDownloadRemoved() {
+        ((MainActivity)mContext).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
     public void onDownloadInfoUpdated() {
         ((MainActivity)mContext).runOnUiThread(new Runnable() {
             @Override
