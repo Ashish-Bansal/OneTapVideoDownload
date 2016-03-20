@@ -11,9 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.phantom.onetapvideodownload.downloader.DownloadManager;
+import com.phantom.onetapvideodownload.utils.OnDownloadChangeListener;
 
 public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-        implements DownloadManager.ServiceCallbacks {
+        implements OnDownloadChangeListener {
     private DownloadManager mDownloadManager;
     private boolean mBounded;
     private Context mContext;
@@ -36,7 +37,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             mBounded = true;
             DownloadManager.LocalBinder mLocalBinder = (DownloadManager.LocalBinder)service;
             mDownloadManager = mLocalBinder.getServiceInstance();
-            mDownloadManager.registerCallbacks(DownloadAdapter.this);
+            mDownloadManager.addOnDownloadChangeListener(DownloadAdapter.this);
             notifyDataSetChanged();
         }
     };

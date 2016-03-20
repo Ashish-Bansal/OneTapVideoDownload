@@ -22,6 +22,7 @@ import com.phantom.onetapvideodownload.MainActivity;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
+import com.phantom.onetapvideodownload.utils.OnDownloadChangeListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -38,18 +39,13 @@ public class DownloadManager extends Service {
     private static final int STORAGE_PERMISSION_NOTIFICATION_ID = 100;
     private static List<Pair<Long, DownloadHandler>> mDownloadHandlers = new ArrayList<>();
     private final IBinder mBinder = new LocalBinder();
-    private static List<ServiceCallbacks> serviceCallbacks = new ArrayList<>();
+    private static List<OnDownloadChangeListener> onDownloadChangeListeners = new ArrayList<>();
     private final String TAG = "DownloadManager";
     private NotificationCompat.Builder mBuilder;
     private NotificationManager mNotifyManager;
     private final static Integer mNotificationId = 20;
     private final static Long NOTIFICATION_UPDATE_WAIT_TIME = 2500L;
     private Thread mUiUpdateThread;
-
-    public interface ServiceCallbacks {
-        void onDownloadAdded();
-        void onDownloadInfoUpdated();
-    }
 
     @Override
     public void onCreate() {
@@ -98,9 +94,9 @@ public class DownloadManager extends Service {
         return mDownloadHandlers.size();
     }
 
-    public void registerCallbacks(ServiceCallbacks object) {
-        Log.e(TAG, "Registering Callback " + object.getClass().getName());
-        serviceCallbacks.add(object);
+    public void addOnDownloadChangeListener(OnDownloadChangeListener object) {
+        Log.e(TAG, "Registering DownloadChangeListener " + object.getClass().getName());
+        onDownloadChangeListeners.add(object);
     }
 
     @Override
@@ -178,12 +174,12 @@ public class DownloadManager extends Service {
             requestPermission(AppPermissions.External_Storage_Permission);
         }
 
-        Log.e(TAG, "ServiceCallback Size : " + serviceCallbacks.size());
+        Log.e(TAG, "onDownloadChangeListeners Size : " + onDownloadChangeListeners.size());
 
-        serviceCallbacks.removeAll(Collections.singleton(null));
-        for (ServiceCallbacks sc : serviceCallbacks) {
-            Log.e(TAG, "Calling onDownloadAdded callback method " + sc.getClass().getName());
-            sc.onDownloadAdded();
+        onDownloadChangeListeners.removeAll(Collections.singleton(null));
+        for (OnDownloadChangeListener onDownloadChangeListener : onDownloadChangeListeners) {
+            Log.e(TAG, "Calling onDownloadAdded callback method " + onDownloadChangeListener.getClass().getName());
+            onDownloadChangeListener.onDownloadAdded();
         }
 
         showNotification();
@@ -219,10 +215,10 @@ public class DownloadManager extends Service {
     }
 
     private synchronized void emitOnDownloadInfoUpdated() {
-        serviceCallbacks.removeAll(Collections.singleton(null));
-        for (ServiceCallbacks sc : serviceCallbacks) {
-            Log.e(TAG, "Calling onDownloadAdded callback method " + sc.getClass().getName());
-            sc.onDownloadInfoUpdated();
+        onDownloadChangeListeners.removeAll(Collections.singleton(null));
+        for (OnDownloadChangeListener onDownloadChangeListener : onDownloadChangeListeners) {
+            Log.e(TAG, "Calling onDownloadAdded callback method " + onDownloadChangeListener.getClass().getName());
+            onDownloadChangeListener.onDownloadInfoUpdated();
         }
     }
 
