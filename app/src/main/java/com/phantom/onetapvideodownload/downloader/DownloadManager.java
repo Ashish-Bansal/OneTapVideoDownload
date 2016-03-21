@@ -218,7 +218,7 @@ public class DownloadManager extends Service {
     private synchronized void emitOnDownloadInfoUpdated() {
         onDownloadChangeListeners.removeAll(Collections.singleton(null));
         for (OnDownloadChangeListener onDownloadChangeListener : onDownloadChangeListeners) {
-            Log.e(TAG, "Calling onDownloadAdded callback method " + onDownloadChangeListener.getClass().getName());
+            Log.e(TAG, "Calling onDownloadInfoUpdated callback method " + onDownloadChangeListener.getClass().getName());
             onDownloadChangeListener.onDownloadInfoUpdated();
         }
     }
@@ -322,7 +322,7 @@ public class DownloadManager extends Service {
         return mDownloadHandlers.get(index).second.getOptions();
     }
 
-    public MaterialDialog.ListCallback getOptionCallback(int index) {
+    public MaterialDialog.ListCallback getOptionCallback(final int index) {
         final DownloadHandler downloadHandler = mDownloadHandlers.get(index).second;
         return new MaterialDialog.ListCallback() {
             @Override
@@ -333,7 +333,11 @@ public class DownloadManager extends Service {
                     return;
                 }
 
-                boolean success = downloadHandler.handleOptionClicks(context, resId);
+                downloadHandler.handleOptionClicks(context, resId);
+                if (resId == R.string.remove_from_list || resId == R.string.delete_from_storage) {
+                    mDownloadHandlers.remove(index);
+                    emitOnDownloadInfoUpdated();
+                }
             }
         };
     }
