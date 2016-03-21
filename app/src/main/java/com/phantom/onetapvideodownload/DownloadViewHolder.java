@@ -11,12 +11,15 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.util.Collection;
 
+import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
+
 public class DownloadViewHolder extends RecyclerView.ViewHolder {
     private ImageView mApplicationImageView;
     private TextView mDownloadTitle;
     private TextView mDownloadUrl;
     private Context mContext;
     private View mView;
+    private MaterialProgressBar mProgressBar;
 
     public DownloadViewHolder(View v) {
         super(v);
@@ -25,6 +28,7 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
         mApplicationImageView = (ImageView)itemView.findViewById(R.id.application_icon);
         mDownloadTitle = (TextView)itemView.findViewById(R.id.download_title);
         mDownloadUrl = (TextView)itemView.findViewById(R.id.download_url);
+        mProgressBar = (MaterialProgressBar) itemView.findViewById(R.id.download_progress);
     }
 
     public void setDownloadTitle(String title) {
@@ -49,5 +53,21 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
                         .show();
             }
         });
+    }
+
+    public void setProgressBarVisibility(boolean visibility) {
+        if (visibility) {
+            mProgressBar.setVisibility(View.VISIBLE);
+        } else {
+            mProgressBar.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public void setProgressBarState(boolean indeterminate) {
+        mProgressBar.setIndeterminate(indeterminate);
+    }
+
+    public void setProgress(int progress) {
+        mProgressBar.setProgress(progress);
     }
 }
