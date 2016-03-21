@@ -1,10 +1,12 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.utils;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
 import android.widget.Toast;
+
+import com.phantom.onetapvideodownload.R;
 
 import java.io.File;
 import java.net.HttpURLConnection;

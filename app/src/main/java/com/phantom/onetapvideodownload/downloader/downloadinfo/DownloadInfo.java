@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.phantom.onetapvideodownload.Global;
+import com.phantom.onetapvideodownload.utils.Global;
 import com.phantom.onetapvideodownload.R;
 
 import java.util.ArrayList;
