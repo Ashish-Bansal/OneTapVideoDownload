@@ -1,6 +1,7 @@
 package com.phantom.onetapvideodownload.downloader;
 
 import android.annotation.TargetApi;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -37,15 +38,16 @@ public class DownloadManager extends Service {
     private static final String ACTION_UPDATE_UI = "com.phantom.onetapvideodownload.action.update_ui";
     private static final String ACTION_START = "com.phantom.onetapvideodownload.action.start";
     private static final String EXTRA_DOWNLOAD_ID = "com.phantom.onetapvideodownload.extra.download_id";
-    private static final int STORAGE_PERMISSION_NOTIFICATION_ID = 100;
-    private static List<Pair<Long, DownloadHandler>> mDownloadHandlers = new ArrayList<>();
+    private final int STORAGE_PERMISSION_NOTIFICATION_ID = 100;
+    private List<Pair<Long, DownloadHandler>> mDownloadHandlers = new ArrayList<>();
     private final IBinder mBinder = new LocalBinder();
-    private static List<OnDownloadChangeListener> onDownloadChangeListeners = new ArrayList<>();
+    private List<OnDownloadChangeListener> onDownloadChangeListeners = new ArrayList<>();
     private final String TAG = "DownloadManager";
     private NotificationCompat.Builder mBuilder;
     private NotificationManager mNotifyManager;
-    private final static Integer mNotificationId = 20;
-    private final static Long NOTIFICATION_UPDATE_WAIT_TIME = 2500L;
+    private Notification mNotification;
+    private final Integer mNotificationId = 20;
+    private final Long NOTIFICATION_UPDATE_WAIT_TIME = 2500L;
     private Thread mUiUpdateThread;
 
     @Override
@@ -113,6 +115,7 @@ public class DownloadManager extends Service {
 
                 handleActionDownload(downloadId);
             } else if (ACTION_UPDATE_UI.equals(action)) {
+                showNotification();
                 startUiUpdateThread();
             }
         }
@@ -232,17 +235,21 @@ public class DownloadManager extends Service {
         mBuilder.setOngoing(true);
         mBuilder.setOnlyAlertOnce(false);
         mBuilder.setProgress(100, 0, false);
-        mNotifyManager.notify(mNotificationId, mBuilder.build());
+        mNotification = mBuilder.build();
+        mNotifyManager.notify(mNotificationId, mNotification);
+        startForeground(mNotificationId, mNotification);
     }
 
     private synchronized void updateNotification() {
         int progress = getDownloadsAverageProgress();
         if (progress == 100) {
             mNotifyManager.cancel(mNotificationId);
+            stopForeground(true);
         } else {
             mBuilder.setContentText(getNotificationContent());
             mBuilder.setProgress(100, progress, false);
-            mNotifyManager.notify(mNotificationId, mBuilder.build());
+            mNotification = mBuilder.build();
+            mNotifyManager.notify(mNotificationId, mNotification);
         }
     }
 
