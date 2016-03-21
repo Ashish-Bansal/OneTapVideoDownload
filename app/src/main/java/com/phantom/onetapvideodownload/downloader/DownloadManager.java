@@ -278,28 +278,28 @@ public class DownloadManager extends Service {
 
     }
 
-    public int getDownloadProgress(long id) {
-        DownloadHandler downloadHandler;
-        for (Pair<Long, DownloadHandler> p : mDownloadHandlers) {
-            if (p.first == id) {
-                downloadHandler = p.second;
-                return downloadHandler.getProgress();
-            }
+    public int getDownloadProgress(int index) {
+        if (index >= mDownloadHandlers.size()) {
+            Log.e(TAG, "Requested index is larger that available downloads size.");
         }
 
-        return -1;
+        return mDownloadHandlers.get(index).second.getProgress();
     }
 
-    public long getContentLength(long id) {
-        DownloadHandler downloadHandler;
-        for (Pair<Long, DownloadHandler> p : mDownloadHandlers) {
-            if (p.first == id) {
-                downloadHandler = p.second;
-                return downloadHandler.getContentLength();
-            }
+    public DownloadInfo.Status getStatus(int index) {
+        if (index >= mDownloadHandlers.size()) {
+            Log.e(TAG, "Requested index is larger that available downloads size.");
         }
 
-        return -1;
+        return mDownloadHandlers.get(index).second.getStatus();
+    }
+
+    public long getContentLength(int index) {
+        if (index >= mDownloadHandlers.size()) {
+            Log.e(TAG, "Requested index is larger that available downloads size.");
+        }
+
+        return mDownloadHandlers.get(index).second.getContentLength();
     }
 
     public String getFilename(int index) {

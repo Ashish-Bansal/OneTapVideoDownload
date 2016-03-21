@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.phantom.onetapvideodownload.downloader.DownloadManager;
+import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 import com.phantom.onetapvideodownload.utils.OnDownloadChangeListener;
 
 public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
@@ -78,6 +79,19 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         vh.setDownloadUrl(mDownloadManager.getUrl(position));
         vh.setOnClickListener(mDownloadManager.getOptions(position), mDownloadManager.getOptionCallback(position));
         vh.setImageForView(mDownloadManager.getPackageDrawable(position));
+
+        if (mDownloadManager.getStatus(position) == DownloadInfo.Status.Downloading) {
+            vh.setProgressBarVisibility(true);
+            vh.setProgress(mDownloadManager.getDownloadProgress(position));
+        } else {
+            vh.setProgressBarVisibility(false);
+        }
+
+        if (mDownloadManager.getDownloadProgress(position) == 0) {
+            vh.setProgressBarState(true);
+        } else {
+            vh.setProgressBarState(false);
+        }
     }
 
     @Override
