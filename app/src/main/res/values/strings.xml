@@ -7,11 +7,11 @@
     <string name="prefs_open_url_log">Open URL Log</string>
     <string name="no_data_available">URL Log Empty</string>
     <string name="pref_url_logging_title">Enable URL logging</string>
-    <string name="pref_url_logging_summary">Show Call Interface when clicking call button</string>
+    <string name="pref_url_logging_summary">Log URLs to view them later on</string>
     <string name="pref_url_logging_header">URL Logging</string>
     <string name="pref_notification_header">Notification Settings</string>
     <string name="pref_notification_enable_title">Enable Notifications</string>
-    <string name="pref_notification_enable_summary">Show URL Notifications</string>
+    <string name="pref_notification_enable_summary">Notifications for videos being streamed</string>
     <string name="pref_notification_count_title">Maximum No. of Notifications</string>
     <string name="pref_notification_dismiss_time_title">Notification Dismiss Time</string>
     <string name="xposed_not_found_title">Xposed Framework not found</string>
@@ -36,7 +36,7 @@
     <string name="pref_notification_vibrate_amount_title">Vibration amount</string>
     <string name="default_vibrate_amount">200</string>
     <string name="pref_notification_headsup_title">Enable Heads up notification</string>
-    <string name="pref_notification_headsup_summary">Show Heads up notification along with normal notification \n (Requires Android version >= v5)</string>
+    <string name="pref_notification_headsup_summary">Heads up notification along with normal notification</string>
     <string name="pref_download_header">Download Options</string>
     <string name="prefs_download_location_title">Choose Download Directory</string>
     <string name="open">Open</string>
