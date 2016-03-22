@@ -7,5 +7,5 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:textAllCaps="false"
-    android:textColor="@color/white"
+    android:textColor="@color/tab_text"
     android:textSize="14sp" />

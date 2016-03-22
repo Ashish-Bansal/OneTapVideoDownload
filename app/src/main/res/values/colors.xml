@@ -14,10 +14,12 @@
 
     <color name="primary">@color/indigo_500</color>
     <color name="accent">@color/primary</color>
+    <color name="blue_accent">#448AFF</color>
+
     <color name="dark_primary">@color/indigo_700</color>
     <color name="grey">#CCC</color>
     <color name="white">#FFF</color>
-    <color name="highlight">@color/accent</color>
+    <color name="highlight">@color/blue_accent</color>
 
     <color name="dialog_background">#961a237e</color>
     <color name="transparent">#00000000</color>
