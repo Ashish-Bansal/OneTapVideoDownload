@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 
+import java.net.URLDecoder;
 import java.util.Collection;
 
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
@@ -36,7 +37,13 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setDownloadUrl(String url) {
-        mDownloadUrl.setText(url);
+        try {
+            mDownloadUrl.setText(URLDecoder.decode(url, "UTF-8").replace("%20", " "));
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            mDownloadUrl.setText(url.replace("%20", " "));
+        }
     }
 
     public void setImageForView(Drawable icon) {
