@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.phantom.onetapvideodownload.downloader.DownloadManager;
 import com.phantom.onetapvideodownload.utils.Global;
 import com.phantom.onetapvideodownload.R;
 
@@ -80,45 +81,16 @@ public abstract class DownloadInfo {
                 Global.startFileShareIntent(context, getDownloadLocation());
                 return true;
             case R.string.delete_from_storage:
-                new MaterialDialog.Builder(context)
-                        .title(R.string.delete_confirmation)
-                        .content(R.string.delete_confirmation_content)
-                        .positiveText(R.string.yes)
-                        .negativeText(R.string.no)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                Global.deleteFile(context, getDownloadLocation());
-                                removeDatabaseEntry();
-                            }
-                        })
-                        .onNegative(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .show();
+                confirmDeleteFromStorage(context);
                 return true;
             case R.string.remove_from_list:
-                new MaterialDialog.Builder(context)
-                        .title(R.string.remove_from_list_confirmation)
-                        .content(R.string.remove_from_list_confirmation_content)
-                        .positiveText(R.string.yes)
-                        .negativeText(R.string.no)
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                removeDatabaseEntry();
-                            }
-                        })
-                        .onNegative(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .show();
+                confirmRemoveFromList(context);
+                return true;
+            case R.string.resume:
+                context.startService(DownloadManager.getActionResumeDownload(getDatabaseId()));
+                return true;
+            case R.string.pause:
+                context.startService(DownloadManager.getActionStopDownload(getDatabaseId()));
                 return true;
             default:
                 return false;
@@ -144,4 +116,51 @@ public abstract class DownloadInfo {
             return -1;
         }
     }
+
+    public void confirmDeleteFromStorage(final Context context) {
+        new MaterialDialog.Builder(context)
+                .title(R.string.delete_confirmation)
+                .content(R.string.delete_confirmation_content)
+                .positiveText(R.string.yes)
+                .negativeText(R.string.no)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        context.startService(DownloadManager.getActionDeleteDownload(getDatabaseId()));
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    public void confirmRemoveFromList(final Context context) {
+        new MaterialDialog.Builder(context)
+                .title(R.string.remove_from_list_confirmation)
+                .content(R.string.remove_from_list_confirmation_content)
+                .positiveText(R.string.yes)
+                .negativeText(R.string.no)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        context.startService(DownloadManager.getActionRemoveDownload(getDatabaseId()));
+                    }
+                })
+                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                    @Override
+                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
+
+    public void deleteDownloadFromStorage(Context context) {
+        Global.deleteFile(context, getDownloadLocation());
+    }
+
 }

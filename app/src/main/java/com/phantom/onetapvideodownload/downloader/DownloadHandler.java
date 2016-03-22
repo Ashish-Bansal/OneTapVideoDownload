@@ -198,24 +198,7 @@ public class DownloadHandler {
 
     public boolean handleOptionClicks(Context context, int resId) {
         // Used Activity context instead of ApplicationContext
-        boolean success = mDownloadInfo.handleOptionClicks(context, resId);
-        if (!success) {
-            success = true;
-            switch (resId) {
-                case R.string.resume:
-                    startDownload();
-                    break;
-                case R.string.pause:
-                    stopDownload();
-                    break;
-                // ToDo: Implement the resume and pause functionality
-                // case R.string.details:
-                default:
-                    success = false;
-            }
-        }
-
-        return success;
+        return mDownloadInfo.handleOptionClicks(context, resId);
     }
 
     public long getDownloadedLength() {
@@ -236,5 +219,18 @@ public class DownloadHandler {
 
     public void writeToDatabase() {
         mDownloadInfo.writeToDatabase();
+    }
+
+    public long getDatabaseId() {
+        return mDownloadInfo.getDatabaseId();
+    }
+
+    public void removeDownloadFromList() {
+        mDownloadInfo.removeDatabaseEntry();
+    }
+
+    public void deleteDownloadFromStorage() {
+        mDownloadInfo.removeDatabaseEntry();
+        mDownloadInfo.deleteDownloadFromStorage(mContext);
     }
 }
