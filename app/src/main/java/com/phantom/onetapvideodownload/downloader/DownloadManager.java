@@ -142,7 +142,7 @@ public class DownloadManager extends Service {
             if (ACTION_DOWNLOAD.equals(action)) {
                 final long downloadId = intent.getLongExtra(EXTRA_DOWNLOAD_ID, -1);
                 if (downloadId == -1) {
-                    return START_REDELIVER_INTENT;
+                    return START_STICKY;
                 }
 
                 handleActionDownload(downloadId);
@@ -152,35 +152,35 @@ public class DownloadManager extends Service {
             } else if(ACTION_RESUME_DOWNLOAD.equals(action)) {
                 final long downloadId = intent.getLongExtra(EXTRA_DOWNLOAD_ID, -1);
                 if (downloadId == -1) {
-                    return START_REDELIVER_INTENT;
+                    return START_STICKY;
                 }
 
                 handleActionStartDownload(downloadId);
             } else if(ACTION_STOP_DOWNLOAD.equals(action)) {
                 final long downloadId = intent.getLongExtra(EXTRA_DOWNLOAD_ID, -1);
                 if (downloadId == -1) {
-                    return START_REDELIVER_INTENT;
+                    return START_STICKY;
                 }
 
                 handleActionStopDownload(downloadId);
             } else if(ACTION_DELETE_DOWNLOAD.equals(action)) {
                 final long downloadId = intent.getLongExtra(EXTRA_DOWNLOAD_ID, -1);
                 if (downloadId == -1) {
-                    return START_REDELIVER_INTENT;
+                    return START_STICKY;
                 }
 
                 handleActionDeleteDownload(downloadId);
             } else if(ACTION_REMOVE_DOWNLOAD.equals(action)) {
                 final long downloadId = intent.getLongExtra(EXTRA_DOWNLOAD_ID, -1);
                 if (downloadId == -1) {
-                    return START_REDELIVER_INTENT;
+                    return START_STICKY;
                 }
 
                 handleActionRemoveDownload(downloadId);
             }
         }
 
-        return START_REDELIVER_INTENT;
+        return START_STICKY;
     }
 
     @TargetApi(23)
