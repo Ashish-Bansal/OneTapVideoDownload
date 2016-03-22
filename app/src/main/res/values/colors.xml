@@ -1,18 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    //Color pallets of Deep Purple
-    <color name="purple_50">#EDE7F6</color>
-    <color name="purple_100">#D1C4E9</color>
-    <color name="purple_200">#B39DDB</color>
-    <color name="purple_300">#9575CD</color>
-    <color name="purple_400">#7E57C2</color>
-    <color name="purple_500">#673AB7</color>
-    <color name="purple_600">#5E35B1</color>
-    <color name="purple_700">#512DA8</color>
-    <color name="purple_800">#4527A0</color>
-    <color name="purple_900">#311B92</color>
-
     //Color pallets of Indigo
     <color name="indigo_50">#E8EAF6</color>
     <color name="indigo_100">#C5CAE9</color>
@@ -25,15 +12,14 @@
     <color name="indigo_800">#283593</color>
     <color name="indigo_900">#1A237E</color>
 
-    <color name="accent">@color/indigo_700</color>
-    <color name="primary">@color/purple_700</color>
-    <color name="dark_primary">@color/purple_800</color>
+    <color name="primary">@color/indigo_500</color>
+    <color name="accent">@color/primary</color>
+    <color name="dark_primary">@color/indigo_700</color>
     <color name="grey">#CCC</color>
     <color name="white">#FFF</color>
-    <color name="amber">#FFC107</color>
-    <color name="highlight">#311B92</color>
+    <color name="highlight">@color/accent</color>
 
-    <color name="dialog_background">#AA512DA8</color>
+    <color name="dialog_background">#d21a237e</color>
     <color name="transparent">#00000000</color>
 
 </resources>

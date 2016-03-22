@@ -29,7 +29,7 @@ public class ViewPagerFragmentParent extends Fragment {
 
         SlidingTabLayout slidingTabLayout = (SlidingTabLayout) view.findViewById(R.id.sliding_tabs);
         slidingTabLayout.setCustomTabView(R.layout.tab_indicator, android.R.id.text1);
-        slidingTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(getActivity(), R.color.amber));
+        slidingTabLayout.setSelectedIndicatorColors(ContextCompat.getColor(getActivity(), R.color.highlight));
         slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
         return view;
