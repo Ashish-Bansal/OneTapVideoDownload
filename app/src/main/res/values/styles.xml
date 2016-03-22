@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -13,6 +13,7 @@
         <item name="preferenceTint">@color/accent_state_list</item>
 
         <item name="colorAccent">@color/accent</item>
+        <item name="android:navigationBarColor" tools:targetApi="21">@color/primary</item>
     </style>
 
     <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog">
