@@ -19,7 +19,7 @@
     <color name="white">#FFF</color>
     <color name="highlight">@color/accent</color>
 
-    <color name="dialog_background">#d21a237e</color>
+    <color name="dialog_background">#961a237e</color>
     <color name="transparent">#00000000</color>
 
 </resources>
