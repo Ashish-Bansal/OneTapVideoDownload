@@ -292,8 +292,35 @@ public class DownloadDatabase extends SQLiteOpenHelper {
     }
 
     public long updateDownload(long id, DownloadInfo downloadInfo) {
-        deleteDownload(id);
-        return addDownload(downloadInfo);
+        if (downloadExistsById(id)) {
+            SQLiteDatabase db = this.getWritableDatabase();
+            if (downloadInfo instanceof BrowserDownloadInfo) {
+                ContentValues values = getContentValuesForBrowserVideo(downloadInfo, id);
+                db.update(TABLE_BROWSER_DOWNLOAD_LIST, values, KEY_ID + "=" + id, null);
+            } else if (downloadInfo instanceof YoutubeDownloadInfo) {
+                ContentValues values = getContentValuesForYoutubeVideo(downloadInfo, id);
+                db.update(TABLE_YOUTUBE_DOWNLOAD_LIST, values, KEY_ID + "=" + id, null);
+            }
+        } else {
+            return -1;
+        }
+
+        return id;
+    }
+
+    public boolean downloadExistsById(long id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selectQuery = "SELECT * FROM " + TABLE_VIDEO_DOWNLOAD_LIST
+                + " WHERE " + KEY_ID + "=" + id;
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.getCount() > 0) {
+            cursor.close();
+            return true;
+        }
+
+        return false;
     }
 
     public int getCategory(long downloadId) {
