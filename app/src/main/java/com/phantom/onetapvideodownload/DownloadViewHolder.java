@@ -11,13 +11,13 @@ import com.afollestad.materialdialogs.MaterialDialog;
 
 import java.net.URLDecoder;
 import java.util.Collection;
+import java.util.Locale;
 
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 public class DownloadViewHolder extends RecyclerView.ViewHolder {
     private ImageView mApplicationImageView;
-    private TextView mDownloadTitle;
-    private TextView mDownloadUrl;
+    private TextView mDownloadTitle, mDownloadUrl, mPercentageTextView;
     private Context mContext;
     private View mView;
     private MaterialProgressBar mIndeterminateProgressBar;
@@ -30,6 +30,7 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
         mApplicationImageView = (ImageView)itemView.findViewById(R.id.application_icon);
         mDownloadTitle = (TextView)itemView.findViewById(R.id.download_title);
         mDownloadUrl = (TextView)itemView.findViewById(R.id.download_url);
+        mPercentageTextView = (TextView)itemView.findViewById(R.id.percentage);
         mProgressBar = (MaterialProgressBar) itemView.findViewById(R.id.download_progress);
         mIndeterminateProgressBar = (MaterialProgressBar) itemView.findViewById(R.id.indeterminate_progress_bar);
     }
@@ -83,5 +84,10 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
 
     public void setProgress(int progress) {
         mProgressBar.setProgress(progress);
+        try {
+            mPercentageTextView.setText(String.format(Locale.getDefault(), "%d%%", progress));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

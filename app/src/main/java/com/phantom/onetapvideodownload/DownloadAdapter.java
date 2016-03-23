@@ -87,10 +87,11 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 vh.setProgressBarState(true, false);
             }
 
-            vh.setProgress(mDownloadManager.getDownloadProgress(position));
         } else {
             vh.setProgressBarState(false, false);
         }
+
+        vh.setProgress(mDownloadManager.getDownloadProgress(position));
     }
 
     @Override
