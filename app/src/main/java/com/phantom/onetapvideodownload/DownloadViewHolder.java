@@ -5,9 +5,11 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 
 import java.net.URLDecoder;
 import java.util.Collection;
@@ -16,12 +18,13 @@ import java.util.Locale;
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
 public class DownloadViewHolder extends RecyclerView.ViewHolder {
-    private ImageView mApplicationImageView;
+    private ImageView mApplicationImageView, mStatusStopped, mStatusCompleted;
     private TextView mDownloadTitle, mDownloadUrl, mPercentageTextView;
     private Context mContext;
     private View mView;
     private MaterialProgressBar mIndeterminateProgressBar;
     private MaterialProgressBar mProgressBar;
+    private RelativeLayout mStatusDownloading;
 
     public DownloadViewHolder(View v) {
         super(v);
@@ -33,6 +36,9 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
         mPercentageTextView = (TextView)itemView.findViewById(R.id.percentage);
         mProgressBar = (MaterialProgressBar) itemView.findViewById(R.id.download_progress);
         mIndeterminateProgressBar = (MaterialProgressBar) itemView.findViewById(R.id.indeterminate_progress_bar);
+        mStatusStopped = (ImageView) itemView.findViewById(R.id.status_stopped);
+        mStatusCompleted = (ImageView) itemView.findViewById(R.id.status_completed);
+        mStatusDownloading = (RelativeLayout) itemView.findViewById(R.id.status_downloading);
     }
 
     public void setDownloadTitle(String title) {
@@ -88,6 +94,22 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
             mPercentageTextView.setText(String.format(Locale.getDefault(), "%d%%", progress));
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void setStatus(DownloadInfo.Status status) {
+        if (status == DownloadInfo.Status.Downloading) {
+            mStatusDownloading.setVisibility(View.VISIBLE);
+            mStatusStopped.setVisibility(View.GONE);
+            mStatusCompleted.setVisibility(View.GONE);
+        } else if (status == DownloadInfo.Status.Completed) {
+            mStatusCompleted.setVisibility(View.VISIBLE);
+            mStatusDownloading.setVisibility(View.GONE);
+            mStatusStopped.setVisibility(View.GONE);
+        } else if (status == DownloadInfo.Status.Stopped) {
+            mStatusStopped.setVisibility(View.VISIBLE);
+            mStatusDownloading.setVisibility(View.GONE);
+            mStatusCompleted.setVisibility(View.GONE);
         }
     }
 }

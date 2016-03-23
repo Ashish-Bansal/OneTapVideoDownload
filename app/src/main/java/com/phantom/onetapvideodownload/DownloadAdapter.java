@@ -79,7 +79,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         vh.setDownloadUrl(mDownloadManager.getUrl(position));
         vh.setOnClickListener(mDownloadManager.getOptions(position), mDownloadManager.getOptionCallback(position));
         vh.setImageForView(mDownloadManager.getPackageDrawable(position));
-
+        vh.setStatus(mDownloadManager.getStatus(position));
         if (mDownloadManager.getStatus(position) == DownloadInfo.Status.Downloading) {
             if (mDownloadManager.getDownloadProgress(position) == 0) {
                 vh.setProgressBarState(true, true);
@@ -89,6 +89,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         } else {
             vh.setProgressBarState(false, false);
+
         }
 
         vh.setProgress(mDownloadManager.getDownloadProgress(position));

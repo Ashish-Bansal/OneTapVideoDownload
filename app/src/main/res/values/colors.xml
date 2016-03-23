@@ -24,4 +24,7 @@
     <color name="dialog_background">#961a237e</color>
     <color name="transparent">#00000000</color>
 
+    <color name="stopped">#EF3333</color>
+    <color name="completed">#2ECC71</color>
+
 </resources>

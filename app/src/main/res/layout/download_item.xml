@@ -54,30 +54,52 @@
 
             </LinearLayout>
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/status_layout"
-                android:layout_width="30sp"
-                android:layout_height="30sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true">
 
-                <com.phantom.onetapvideodownload.SquareView
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/percentage_background"/>
+                <RelativeLayout
+                    android:id="@+id/status_downloading"
+                    android:layout_width="30sp"
+                    android:layout_height="30sp"
+                    android:visibility="gone">
 
-                <TextView
-                    android:id="@+id/percentage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:ellipsize="end"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    <com.phantom.onetapvideodownload.SquareView
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/percentage_background"/>
 
-            </RelativeLayout>
+                    <TextView
+                        android:id="@+id/percentage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:ellipsize="end"
+                        android:textColor="@color/white"
+                        android:textSize="12sp" />
 
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/status_stopped"
+                    android:layout_width="35sp"
+                    android:layout_height="35sp"
+                    android:src="@drawable/download_stopped_icon"
+                    android:visibility="gone"
+                    android:tint="@color/stopped" />
+
+                <ImageView
+                    android:id="@+id/status_completed"
+                    android:layout_width="35sp"
+                    android:layout_height="35sp"
+                    android:src="@drawable/download_completed_icon"
+                    android:visibility="gone"
+                    android:tint="@color/completed"/>
+            </LinearLayout>
         </RelativeLayout>
 
         <me.zhanghai.android.materialprogressbar.MaterialProgressBar
