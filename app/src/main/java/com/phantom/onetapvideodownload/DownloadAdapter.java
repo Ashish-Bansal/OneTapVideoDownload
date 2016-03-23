@@ -81,16 +81,15 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         vh.setImageForView(mDownloadManager.getPackageDrawable(position));
 
         if (mDownloadManager.getStatus(position) == DownloadInfo.Status.Downloading) {
-            vh.setProgressBarVisibility(true);
+            if (mDownloadManager.getDownloadProgress(position) == 0) {
+                vh.setProgressBarState(true, true);
+            } else {
+                vh.setProgressBarState(true, false);
+            }
+
             vh.setProgress(mDownloadManager.getDownloadProgress(position));
         } else {
-            vh.setProgressBarVisibility(false);
-        }
-
-        if (mDownloadManager.getDownloadProgress(position) == 0) {
-            vh.setProgressBarState(true);
-        } else {
-            vh.setProgressBarState(false);
+            vh.setProgressBarState(false, false);
         }
     }
 

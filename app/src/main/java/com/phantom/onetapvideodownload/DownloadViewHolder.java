@@ -20,6 +20,7 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
     private TextView mDownloadUrl;
     private Context mContext;
     private View mView;
+    private MaterialProgressBar mIndeterminateProgressBar;
     private MaterialProgressBar mProgressBar;
 
     public DownloadViewHolder(View v) {
@@ -30,6 +31,7 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
         mDownloadTitle = (TextView)itemView.findViewById(R.id.download_title);
         mDownloadUrl = (TextView)itemView.findViewById(R.id.download_url);
         mProgressBar = (MaterialProgressBar) itemView.findViewById(R.id.download_progress);
+        mIndeterminateProgressBar = (MaterialProgressBar) itemView.findViewById(R.id.indeterminate_progress_bar);
     }
 
     public void setDownloadTitle(String title) {
@@ -62,16 +64,21 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public void setProgressBarVisibility(boolean visibility) {
+    public void setProgressBarState(boolean visibility, boolean indeterminate) {
         if (visibility) {
-            mProgressBar.setVisibility(View.VISIBLE);
+            if (indeterminate) {
+                mProgressBar.setVisibility(View.INVISIBLE);
+                mIndeterminateProgressBar.setVisibility(View.VISIBLE);
+            } else {
+                mIndeterminateProgressBar.setVisibility(View.INVISIBLE);
+                mProgressBar.setVisibility(View.VISIBLE);
+            }
         } else {
             mProgressBar.setVisibility(View.INVISIBLE);
+            mIndeterminateProgressBar.setVisibility(View.INVISIBLE);
         }
-    }
-
-    public void setProgressBarState(boolean indeterminate) {
-        mProgressBar.setIndeterminate(indeterminate);
+        mProgressBar.postInvalidate();
+        mIndeterminateProgressBar.postInvalidate();
     }
 
     public void setProgress(int progress) {

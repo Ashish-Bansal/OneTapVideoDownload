@@ -55,10 +55,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
+            android:visibility="invisible"
+            android:indeterminate="false"
+            app:mpb_progressStyle="horizontal"
+            app:mpb_showTrack="true"
+            app:mpb_useIntrinsicPadding="false" />
+
+        <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+            android:id="@+id/indeterminate_progress_bar"
+            style="@style/Widget.MaterialProgressBar.ProgressBar.Horizontal.NoPadding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
             android:indeterminate="true"
             android:visibility="invisible"
             app:mpb_progressStyle="horizontal"
-            app:mpb_showTrack="false"
+            app:mpb_showTrack="true"
             app:mpb_useIntrinsicPadding="false" />
     </android.support.v7.widget.CardView>
 
