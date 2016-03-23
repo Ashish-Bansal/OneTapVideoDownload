@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
 
                     ProxyDownloadManager.startActionYoutubeDownload(getApplicationContext(), videoId, filename, downloadLocation, itag);
                 } else {
-                    ProxyDownloadManager.startActionDownload(getApplicationContext(), videoId, filename, downloadLocation);
+                    ProxyDownloadManager.startActionBrowserDownload(getApplicationContext(), videoId, filename, downloadLocation);
                 }
             }
         });
@@ -274,6 +274,20 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                DownloadOptionAdapter downloadOptionAdapter = getDownloadOptionAdapter();
+                String filename = downloadOptionAdapter.getOptionItem(DownloadOptionIds.Filename).getOptionValue();
+                String downloadLocation = downloadOptionAdapter.getOptionItem(DownloadOptionIds.DownloadLocation).getOptionValue();
+
+                if (video instanceof YoutubeVideo) {
+                    Integer itag = YoutubeVideo.getItagForDescription(downloadOptionAdapter.getOptionItem(DownloadOptionIds.Format).getOptionValue());
+                    if (itag == -1) {
+                        Log.e(TAG, "getItagForDescription returned NULL");
+                    }
+
+                    ProxyDownloadManager.startActionYoutubeInserted(getApplicationContext(), videoId, filename, downloadLocation, itag);
+                } else {
+                    ProxyDownloadManager.startActionBrowserInserted(getApplicationContext(), videoId, filename, downloadLocation);
+                }
             }
         });
     }

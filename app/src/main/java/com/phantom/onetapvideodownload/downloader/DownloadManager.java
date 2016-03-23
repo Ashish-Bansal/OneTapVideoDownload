@@ -34,9 +34,10 @@ import java.util.List;
 public class DownloadManager extends Service {
     private static final String PACKAGE_NAME = "com.phantom.onetapvideodownload";
     private static final String CLASS_NAME = "com.phantom.onetapvideodownload.downloader.DownloadManager";
-    private static final String ACTION_DOWNLOAD = "com.phantom.onetapvideodownload.action.download";
+    private static final String ACTION_START_DOWNLOAD = "com.phantom.onetapvideodownload.action.start_download";
+    private static final String ACTION_DOWNLOAD_INSERTED = "com.phantom.onetapvideodownload.action.download_inserted";
     private static final String ACTION_UPDATE_UI = "com.phantom.onetapvideodownload.action.update_ui";
-    private static final String ACTION_START = "com.phantom.onetapvideodownload.action.start";
+    private static final String ACTION_START_SERVICE = "com.phantom.onetapvideodownload.action.start";
     private static final String ACTION_REMOVE_DOWNLOAD = "com.phantom.onetapvideodownload.action.remove";
     private static final String ACTION_RESUME_DOWNLOAD = "com.phantom.onetapvideodownload.action.resume";
     private static final String ACTION_STOP_DOWNLOAD = "com.phantom.onetapvideodownload.action.stop";
@@ -79,14 +80,21 @@ public class DownloadManager extends Service {
     }
 
     public static Intent getActionVideoDownload(long downloadId) {
-        Intent intent = new Intent(ACTION_DOWNLOAD);
+        Intent intent = new Intent(ACTION_START_DOWNLOAD);
+        intent.setClassName(PACKAGE_NAME, CLASS_NAME);
+        intent.putExtra(EXTRA_DOWNLOAD_ID, downloadId);
+        return intent;
+    }
+
+    public static Intent getActionVideoInserted(long downloadId) {
+        Intent intent = new Intent(ACTION_DOWNLOAD_INSERTED);
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent.putExtra(EXTRA_DOWNLOAD_ID, downloadId);
         return intent;
     }
 
     public static Intent getActionStartService() {
-        Intent intent = new Intent(ACTION_START);
+        Intent intent = new Intent(ACTION_START_SERVICE);
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
         return intent;
     }
@@ -139,13 +147,29 @@ public class DownloadManager extends Service {
         if (intent != null) {
             final String action = intent.getAction();
             System.out.println(action);
-            if (ACTION_DOWNLOAD.equals(action)) {
+            if (ACTION_START_DOWNLOAD.equals(action)) {
                 final long downloadId = intent.getLongExtra(EXTRA_DOWNLOAD_ID, -1);
                 if (downloadId == -1) {
                     return START_STICKY;
                 }
 
-                handleActionDownload(downloadId);
+                handleActionDownloadInserted(downloadId);
+                if (checkPermissionGranted(AppPermissions.External_Storage_Permission)) {
+                    int index = getDownloadByDatabaseId(downloadId);
+                    if (index == -1) throw new AssertionError("Index should not be -1");
+                    DownloadHandler downloadHandler = mDownloadHandlers.get(index).second;
+                    downloadHandler.startDownload();
+                }
+
+                showNotification();
+                startUiUpdateThread();
+            } else if (ACTION_DOWNLOAD_INSERTED.equals(action)) {
+                final long downloadId = intent.getLongExtra(EXTRA_DOWNLOAD_ID, -1);
+                if (downloadId == -1) {
+                    return START_STICKY;
+                }
+
+                handleActionDownloadInserted(downloadId);
             } else if (ACTION_UPDATE_UI.equals(action)) {
                 showNotification();
                 startUiUpdateThread();
@@ -155,7 +179,7 @@ public class DownloadManager extends Service {
                     return START_STICKY;
                 }
 
-                handleActionStartDownload(downloadId);
+                handleActionResumeDownload(downloadId);
             } else if(ACTION_STOP_DOWNLOAD.equals(action)) {
                 final long downloadId = intent.getLongExtra(EXTRA_DOWNLOAD_ID, -1);
                 if (downloadId == -1) {
@@ -223,18 +247,17 @@ public class DownloadManager extends Service {
         notificationmanager.notify(STORAGE_PERMISSION_NOTIFICATION_ID, mBuilder.build());
     }
 
-    private void handleActionDownload(long id) {
+    private void handleActionDownloadInserted(long id) {
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(this);
         DownloadInfo downloadInfo = downloadDatabase.getDownload(id);
         if (downloadInfo == null) {
             Log.e(TAG, "Download Info null in handleActionDownload for id : " + id);
             return;
         }
+
         DownloadHandler downloadHandler = new DownloadHandler(this, downloadInfo);
         mDownloadHandlers.add(Pair.create(id, downloadHandler));
-        if (checkPermissionGranted(AppPermissions.External_Storage_Permission)) {
-            downloadHandler.startDownload();
-        } else {
+        if (!checkPermissionGranted(AppPermissions.External_Storage_Permission)) {
             requestPermission(AppPermissions.External_Storage_Permission);
         }
 
@@ -245,9 +268,6 @@ public class DownloadManager extends Service {
             Log.e(TAG, "Calling onDownloadAdded callback method " + onDownloadChangeListener.getClass().getName());
             onDownloadChangeListener.onDownloadAdded();
         }
-
-        showNotification();
-        startUiUpdateThread();
     }
 
     private void handleActionRemoveDownload(long id) {
@@ -272,7 +292,7 @@ public class DownloadManager extends Service {
         removeDownloadHandler(index);
     }
 
-    private void handleActionStartDownload(long id) {
+    private void handleActionResumeDownload(long id) {
         int index = getDownloadByDatabaseId(id);
         if (index == -1) {
             return;

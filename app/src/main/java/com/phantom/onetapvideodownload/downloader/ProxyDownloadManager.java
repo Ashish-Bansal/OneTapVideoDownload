@@ -17,6 +17,7 @@ import java.io.File;
 public class ProxyDownloadManager extends IntentService {
     private static final String TAG = "ProxyDownloadManager";
     private static final String ACTION_INSERT_DOWNLOAD = "com.phantom.onetapvideodownload.downloader.action.insert_download";
+    private static final String ACTION_START_DOWNLOAD = "com.phantom.onetapvideodownload.downloader.action.start_download";
 
     private static final String EXTRA_VIDEO_ID = "com.phantom.onetapvideodownload.downloader.extra.video_id";
     private static final String EXTRA_FILENAME = "com.phantom.onetapvideodownload.downloader.extra.filename";
@@ -30,6 +31,27 @@ public class ProxyDownloadManager extends IntentService {
     public static void startActionYoutubeDownload(Context context, long videoId, String filename,
                                                   String downloadLocation, int itag) {
         Intent intent = new Intent(context, ProxyDownloadManager.class);
+        intent.setAction(ACTION_START_DOWNLOAD);
+        intent.putExtra(EXTRA_VIDEO_ID, videoId);
+        intent.putExtra(EXTRA_FILENAME, filename);
+        intent.putExtra(EXTRA_DOWNLOAD_LOCATION, downloadLocation);
+        intent.putExtra(EXTRA_VIDEO_ITAG, itag);
+        context.startService(intent);
+    }
+
+    public static void startActionBrowserDownload(Context context, long videoId, String filename,
+                                                  String downloadLocation) {
+        Intent intent = new Intent(context, ProxyDownloadManager.class);
+        intent.setAction(ACTION_START_DOWNLOAD);
+        intent.putExtra(EXTRA_VIDEO_ID, videoId);
+        intent.putExtra(EXTRA_FILENAME, filename);
+        intent.putExtra(EXTRA_DOWNLOAD_LOCATION, downloadLocation);
+        context.startService(intent);
+    }
+
+    public static void startActionYoutubeInserted(Context context, long videoId, String filename,
+                                                  String downloadLocation, int itag) {
+        Intent intent = new Intent(context, ProxyDownloadManager.class);
         intent.setAction(ACTION_INSERT_DOWNLOAD);
         intent.putExtra(EXTRA_VIDEO_ID, videoId);
         intent.putExtra(EXTRA_FILENAME, filename);
@@ -38,8 +60,8 @@ public class ProxyDownloadManager extends IntentService {
         context.startService(intent);
     }
 
-    public static void startActionDownload(Context context, long videoId, String filename,
-                                           String downloadLocation) {
+    public static void startActionBrowserInserted(Context context, long videoId, String filename,
+                                                  String downloadLocation) {
         Intent intent = new Intent(context, ProxyDownloadManager.class);
         intent.setAction(ACTION_INSERT_DOWNLOAD);
         intent.putExtra(EXTRA_VIDEO_ID, videoId);
@@ -52,26 +74,39 @@ public class ProxyDownloadManager extends IntentService {
     protected void onHandleIntent(Intent intent) {
         if (intent != null) {
             final String action = intent.getAction();
-            if (ACTION_INSERT_DOWNLOAD.equals(action)) {
+            if (ACTION_INSERT_DOWNLOAD.equals(action) || ACTION_START_DOWNLOAD.equals(action)) {
                 long videoId = intent.getLongExtra(EXTRA_VIDEO_ID, -1);
                 int itag = intent.getIntExtra(EXTRA_VIDEO_ITAG, -1);
                 String downloadLocation = intent.getStringExtra(EXTRA_DOWNLOAD_LOCATION);
                 String filename = intent.getStringExtra(EXTRA_FILENAME);
+                long downloadId = -1;
                 if (itag == -1) {
-                    downloadBrowserVideo(videoId, filename, downloadLocation);
+                    downloadId = insertBrowserVideo(videoId, filename, downloadLocation);
                 } else {
-                    downloadYoutubeVideo(videoId, filename, downloadLocation, itag);
+                    downloadId = insertYoutubeVideo(videoId, filename, downloadLocation, itag);
+                }
+
+                if (downloadId == -1) {
+                    return;
+                }
+
+                if (ACTION_INSERT_DOWNLOAD.equals(action)) {
+                    Intent downloadManagerService = DownloadManager.getActionVideoInserted(downloadId);
+                    startService(downloadManagerService);
+                } else if (ACTION_START_DOWNLOAD.equals(action)) {
+                    Intent downloadManagerService = DownloadManager.getActionVideoDownload(downloadId);
+                    startService(downloadManagerService);
                 }
             }
         }
     }
 
-    private void downloadBrowserVideo(long videoId, String filename, String downloadLocation) {
+    private long insertBrowserVideo(long videoId, String filename, String downloadLocation) {
         VideoDatabase videoDatabase = VideoDatabase.getDatabase(this);
         Video video = videoDatabase.getVideo(videoId);
         if(video == null) {
             Log.e(TAG, "Video not found in database. Video ID: " + videoId);
-            return;
+            return -1;
         }
 
         BrowserDownloadInfo browserDownloadInfo = new BrowserDownloadInfo(this,
@@ -81,17 +116,15 @@ public class ProxyDownloadManager extends IntentService {
 
         browserDownloadInfo.setPackageName(video.getPackageName());
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(this);
-        long downloadId = downloadDatabase.addDownload(browserDownloadInfo);
-        Intent downloadManagerService = DownloadManager.getActionVideoDownload(downloadId);
-        startService(downloadManagerService);
+        return downloadDatabase.addDownload(browserDownloadInfo);
     }
 
-    private void downloadYoutubeVideo(long videoId, String filename, String downloadLocation, int itag) {
+    private long insertYoutubeVideo(long videoId, String filename, String downloadLocation, int itag) {
         VideoDatabase videoDatabase = VideoDatabase.getDatabase(this);
         YoutubeVideo video = (YoutubeVideo)videoDatabase.getVideo(videoId);
         if(video == null) {
             Log.e(TAG, "Video not found in database. Video ID: " + videoId);
-            return;
+            return -1;
         }
 
         filename += '.' + YoutubeVideo.getExtensionForItag(itag);
@@ -105,7 +138,6 @@ public class ProxyDownloadManager extends IntentService {
         youtubeDownloadInfo.setPackageName(video.getPackageName());
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(this);
         long downloadId = downloadDatabase.addDownload(youtubeDownloadInfo);
-        Intent downloadManagerService = DownloadManager.getActionVideoDownload(downloadId);
-        startService(downloadManagerService);
+        return downloadId;
     }
 }
