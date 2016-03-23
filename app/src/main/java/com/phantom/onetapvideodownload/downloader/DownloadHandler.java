@@ -210,11 +210,11 @@ public class DownloadHandler {
     }
 
     public void stopDownload() {
-        setStatus(DownloadInfo.Status.Stopped);
-        writeToDatabase();
         if (mCall != null) {
             mCall.cancel();
         }
+        setStatus(DownloadInfo.Status.Stopped);
+        writeToDatabase();
     }
 
     public void writeToDatabase() {
