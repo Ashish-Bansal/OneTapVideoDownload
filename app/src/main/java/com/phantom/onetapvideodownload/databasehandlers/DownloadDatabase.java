@@ -107,21 +107,13 @@ public class DownloadDatabase extends SQLiteOpenHelper {
     public long addDownload(DownloadInfo download) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
         long downloadId = -1;
         if (download instanceof BrowserDownloadInfo) {
             ContentValues videoListValues = new ContentValues();
             videoListValues.put(KEY_TYPE, DOWNLOAD_TYPE_BROWSER);
             downloadId = db.insert(TABLE_VIDEO_DOWNLOAD_LIST, null, videoListValues);
             assert(downloadId != -1);
-            values.put(KEY_FILENAME, download.getFilename());
-            values.put(KEY_URL, download.getUrl());
-            values.put(KEY_VIDEO_ID, downloadId);
-            values.put(KEY_DOWNLOAD_LOCATION, download.getDownloadLocation());
-            values.put(KEY_STATUS, download.getStatus().ordinal());
-            values.put(KEY_CONTENT_LENGTH, download.getContentLength());
-            values.put(KEY_DOWNLOADED_LENGTH, download.getDownloadedLength());
-            values.put(KEY_PACKAGE_NAME, download.getPackageName());
+            ContentValues values = getContentValuesForBrowserVideo(download, downloadId);
             db.insert(TABLE_BROWSER_DOWNLOAD_LIST, null, values);
         } else if (download instanceof YoutubeDownloadInfo) {
             ContentValues downloadListValues = new ContentValues();
@@ -129,24 +121,42 @@ public class DownloadDatabase extends SQLiteOpenHelper {
             db.insert(TABLE_VIDEO_DOWNLOAD_LIST, null, downloadListValues);
             downloadId = db.insert(TABLE_VIDEO_DOWNLOAD_LIST, null, downloadListValues);
             assert(downloadId != -1);
-
-            values.put(KEY_FILENAME, download.getFilename());
-            values.put(KEY_VIDEO_ID, downloadId);
-            values.put(KEY_DOWNLOAD_LOCATION, download.getDownloadLocation());
-            values.put(KEY_URL, download.getUrl());
-            values.put(KEY_STATUS, download.getStatus().ordinal());
-            values.put(KEY_CONTENT_LENGTH, download.getContentLength());
-            values.put(KEY_DOWNLOADED_LENGTH, download.getDownloadedLength());
-            values.put(KEY_PACKAGE_NAME, download.getPackageName());
-
-            YoutubeDownloadInfo youtubeDownloadInfo = (YoutubeDownloadInfo)download;
-            values.put(KEY_PARAM, youtubeDownloadInfo.getParam());
-            values.put(KEY_VIDEO_ITAG, youtubeDownloadInfo.getItag());
+            ContentValues values = getContentValuesForYoutubeVideo(download, downloadId);
             db.insert(TABLE_YOUTUBE_DOWNLOAD_LIST, null, values);
         }
 
         db.close();
         return downloadId;
+    }
+
+    public ContentValues getContentValuesForBrowserVideo(DownloadInfo downloadInfo, long downloadId) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_FILENAME, downloadInfo.getFilename());
+        values.put(KEY_VIDEO_ID, downloadId);
+        values.put(KEY_DOWNLOAD_LOCATION, downloadInfo.getDownloadLocation());
+        values.put(KEY_URL, downloadInfo.getUrl());
+        values.put(KEY_STATUS, downloadInfo.getStatus().ordinal());
+        values.put(KEY_CONTENT_LENGTH, downloadInfo.getContentLength());
+        values.put(KEY_DOWNLOADED_LENGTH, downloadInfo.getDownloadedLength());
+        values.put(KEY_PACKAGE_NAME, downloadInfo.getPackageName());
+        return values;
+    }
+
+    public ContentValues getContentValuesForYoutubeVideo(DownloadInfo downloadInfo, long downloadId) {
+        ContentValues values = new ContentValues();
+        values.put(KEY_FILENAME, downloadInfo.getFilename());
+        values.put(KEY_URL, downloadInfo.getUrl());
+        values.put(KEY_VIDEO_ID, downloadId);
+        values.put(KEY_DOWNLOAD_LOCATION, downloadInfo.getDownloadLocation());
+        values.put(KEY_STATUS, downloadInfo.getStatus().ordinal());
+        values.put(KEY_CONTENT_LENGTH, downloadInfo.getContentLength());
+        values.put(KEY_DOWNLOADED_LENGTH, downloadInfo.getDownloadedLength());
+        values.put(KEY_PACKAGE_NAME, downloadInfo.getPackageName());
+
+        YoutubeDownloadInfo youtubeDownloadInfo = (YoutubeDownloadInfo)downloadInfo;
+        values.put(KEY_PARAM, youtubeDownloadInfo.getParam());
+        values.put(KEY_VIDEO_ITAG, youtubeDownloadInfo.getItag());
+        return values;
     }
 
     public DownloadInfo getDownload(long downloadId) {
