@@ -11,6 +11,7 @@ import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.DownloadManager;
 import com.phantom.onetapvideodownload.utils.Global;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -122,7 +123,8 @@ public abstract class DownloadInfo {
                     downloadedSize.setText(Global.getHumanReadableSize(getDownloadedLength()));
 
                     TextView downloadLocation = (TextView)materialDialogView.findViewById(R.id.download_location);
-                    downloadLocation.setText(getDownloadLocation());
+                    File file = new File(getDownloadLocation());
+                    downloadLocation.setText(file.getParent());
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
