@@ -1,0 +1,117 @@
+<resources>
+    <string name="action_settings">Настройки</string>
+    <string name="action_clear_videos">Очистить список URL</string>
+    <string name="url_log">URL журнал</string>
+    <string name="prefs_open_url_log">Открыть URL журнал</string>
+    <string name="no_data_available">URL журнал пуст</string>
+    <string name="pref_url_logging_title">Включить ведение журнала URL</string>
+    <string name="pref_url_logging_summary">Логирование URLs чтобы просмотреть их позже</string>
+    <string name="pref_url_logging_header">URL логирование</string>
+    <string name="pref_notification_header">Настройки уведомлений</string>
+    <string name="pref_notification_enable_title">Включить уведомления</string>
+    <string name="pref_notification_enable_summary">Уведомления для потоковой передачи видео</string>
+    <string name="pref_notification_count_title">Максимальное количество уведомлений</string>
+    <string name="pref_notification_dismiss_time_title">Отклонить время уведомления</string>
+    <string name="xposed_not_found_title">Xposed Framework не найден</string>
+    <string name="xposed_not_found_description">Вам нужны рут права и Xposed Framework, чтобы использовать это приложение</string>
+    <string name="module_not_enabled_title">Модуль не включен или требуется перезагрузка</string>
+    <string name="module_not_enabled_description">Вам нужно включить этот модуль в Xposed Installer. Если вы уже включили его, перезагрузите устройство.</string>
+    <string name="notification_dismiss_time">15</string>
+    <string name="notification_count">1</string>
+    <string name="permission_accepted">One Tap Video Download : Разрешение на запись получено</string>
+    <string name="permission_denied">One Tap Video Download : В разрешении на запись отказано</string>
+    <string name="accept_write_permission_title">Включить разрешение на запись для сохранения</string>
+    <string name="accept_write_permission_description">Вы должны дать разрешение на запись для того, чтобы сохранить видео в память телефона.
+        \n \n Шаги для предоставления разрешения :
+        \n 1. Нажмите продолжить
+        \n 2. Выберите разрешения
+        \n 3. Включите разрешение сохранения
+        \n 4. Перезапустите приложение
+    </string>
+
+    <string name="pref_notification_vibrate_title">Вибрация при уведомлении</string>
+    <string name="pref_notification_vibrate_summary">Вибрация устройства, когда выполняется потоковая передача видео</string>
+    <string name="pref_notification_vibrate_amount_title">Количество вибраций</string>
+    <string name="default_vibrate_amount">200</string>
+    <string name="pref_notification_headsup_title">Включить Heads up уведомления</string>
+    <string name="pref_notification_headsup_summary">Heads up уведомление наряду с обычным уведомлением</string>
+    <string name="pref_download_header">Параметры загрузки</string>
+    <string name="prefs_download_location_title">Выберите каталог для загрузки</string>
+    <string name="open">Открыть</string>
+    <string name="share">Поделиться</string>
+    <string name="download_in_other_resolution">Скачать в другом разрешении</string>
+    <string name="remove_from_list">Убрать из списка</string>
+    <string name="delete_from_storage">Удалить из хранилища</string>
+    <string name="details">Детали</string>
+    <string name="resume">Возобновить</string>
+    <string name="pause">Пауза</string>
+    <string name="filename">Имя файла</string>
+    <string name="enter_filename">Введите имя файла</string>
+    <string name="video_quality">Качество видео</string>
+    <string name="download_location">Директория загрузки</string>
+    <string name="download_later">Загрузить позже</string>
+    <string name="start_download">Начало загрузки</string>
+    <string name="unable_to_delete_file">Не удается удалить файл</string>
+    <string name="file_deleted_successfully">Файл успешно удалён</string>
+    <string name="delete_confirmation">Подтверждение удаления</string>
+    <string name="delete_confirmation_content">Вы уверены, что вы хотите удалить загрузки из хранилища?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="remove_from_list_confirmation">Подтверждение удаления</string>
+    <string name="remove_from_list_confirmation_content">Вы уверены, что хотите удалить загрузку из списка?</string>
+    <string name="progress_dialog">Получение ссылки для скачивания</string>
+    <string name="please_wait">Пожалуйста подождите&#8230;</string>
+    <string name="unable_to_fetch">Не удалось получить ссылки, пожалуйста попробуйте еще раз</string>
+
+    <string name="total_size">Общий размер</string>
+    <string name="downloaded_size">Размер загруженного</string>
+    <string name="okay">OK</string>
+    <string name="unknown_file_size">Неизвестный размер файла</string>
+
+    <string-array name="pref_notification_count_titles">
+        <item>1 Уведомление</item>
+        <item>2 Уведомления</item>
+        <item>3 Уведомления</item>
+        <item>4 Уведомления</item>
+        <item>5 Уведомлений</item>
+    </string-array>
+    <string-array name="pref_notification_count_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="pref_notification_dismiss_time_titles">
+        <item>10 Секунд</item>
+        <item>15 Секунд</item>
+        <item>20 Секунд</item>
+        <item>30 Секунд</item>
+        <item>1 Минута</item>
+        <item>3 Минуты</item>
+    </string-array>
+    <string-array name="pref_notification_dismiss_time_values">
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+    </string-array>
+
+    <string-array name="pref_vibrate_amount_titles">
+        <item>100 Миллисекунд</item>
+        <item>200 Миллисекунд</item>
+        <item>300 Миллисекунд</item>
+        <item>400 Миллисекунд</item>
+        <item>500 Миллисекунд</item>
+    </string-array>
+    <string-array name="pref_vibrate_amount_values">
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+        <item>400</item>
+        <item>500</item>
+    </string-array>
+</resources>
