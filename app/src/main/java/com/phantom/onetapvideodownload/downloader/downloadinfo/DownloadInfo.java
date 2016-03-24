@@ -102,6 +102,7 @@ public abstract class DownloadInfo {
                         .title(R.string.details)
                         .customView(R.layout.dialog_download_details, true)
                         .positiveText(R.string.okay)
+                        .positiveColorRes(R.color.primary)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
