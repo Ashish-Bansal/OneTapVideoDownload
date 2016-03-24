@@ -68,6 +68,7 @@
     <string name="total_size">Total Size</string>
     <string name="downloaded_size">Downloaded Size</string>
     <string name="okay">Okay</string>
+    <string name="unknown_file_size">Unknown File Size</string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>

@@ -118,7 +118,12 @@ public abstract class DownloadInfo {
                     filename.setText(getFilename());
 
                     TextView totalSize = (TextView)materialDialogView.findViewById(R.id.total_size);
-                    totalSize.setText(Global.getHumanReadableSize(getContentLength()));
+                    long fileSize = getContentLength();
+                    if (fileSize <= 0) {
+                        totalSize.setText(context.getResources().getString(R.string.unknown_file_size));
+                    } else {
+                        totalSize.setText(Global.getHumanReadableSize(fileSize));
+                    }
 
                     TextView downloadedSize = (TextView)materialDialogView.findViewById(R.id.downloaded_size);
                     downloadedSize.setText(Global.getHumanReadableSize(getDownloadedLength()));
