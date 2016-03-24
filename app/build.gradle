@@ -61,6 +61,7 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.1.1'
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.4@aar'
     compile 'org.solovyev.android.views:linear-layout-manager:0.5@aar'
+    compile 'com.anjlab.android.iab.v3:library:1.0.+'
 }
 
 apply plugin: 'com.google.gms.google-services'

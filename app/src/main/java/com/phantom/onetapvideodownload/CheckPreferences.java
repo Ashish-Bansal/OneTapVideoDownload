@@ -81,4 +81,16 @@ public class CheckPreferences {
         SharedPreferences settings = android.support.v7.preference.PreferenceManager.getDefaultSharedPreferences(context);
         return settings.getString("pref_download_location", downloadDirectory.toString());
     }
+
+    public static Boolean getDonationStatus(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getBoolean("donation_status", false);
+    }
+
+    public static void setDonationStatus(Context context, Boolean donationStatus) {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("donation_status", donationStatus);
+        editor.apply();
+    }
 }
