@@ -11,6 +11,7 @@ import com.phantom.onetapvideodownload.R;
 import java.io.File;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Locale;
 
 public class Global {
     public static String VIDEO_MIME = "video/*";
@@ -81,5 +82,15 @@ public class Global {
             Toast.makeText(context, R.string.unable_to_delete_file,
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public static String getHumanReadableSize(long bytes) {
+        if (bytes < 1000) {
+            return bytes + " B";
+        }
+
+        int exp = (int) (Math.log(bytes) / Math.log(1000));
+        String pre = "KMGTPE".charAt(exp-1) + "";
+        return String.format(Locale.getDefault(), "%.1f %sB", bytes / Math.pow(1000, exp), pre);
     }
 }

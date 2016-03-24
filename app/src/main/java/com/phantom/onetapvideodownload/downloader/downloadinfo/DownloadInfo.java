@@ -2,12 +2,14 @@ package com.phantom.onetapvideodownload.downloader.downloadinfo;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.view.View;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.DownloadManager;
 import com.phantom.onetapvideodownload.utils.Global;
-import com.phantom.onetapvideodownload.R;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -91,6 +93,39 @@ public abstract class DownloadInfo {
                 return true;
             case R.string.pause:
                 context.startService(DownloadManager.getActionStopDownload(getDatabaseId()));
+                return true;
+            case R.string.details:
+                MaterialDialog materialDialog = new MaterialDialog.Builder(context)
+                        .title(R.string.details)
+                        .customView(R.layout.dialog_download_details, true)
+                        .positiveText(R.string.okay)
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .build();
+
+                View materialDialogView = materialDialog.getCustomView();
+
+                try {
+                    TextView filename = (TextView)materialDialogView.findViewById(R.id.filename);
+                    filename.setText(getFilename());
+
+                    TextView totalSize = (TextView)materialDialogView.findViewById(R.id.total_size);
+                    totalSize.setText(Global.getHumanReadableSize(getContentLength()));
+
+                    TextView downloadedSize = (TextView)materialDialogView.findViewById(R.id.downloaded_size);
+                    downloadedSize.setText(Global.getHumanReadableSize(getDownloadedLength()));
+
+                    TextView downloadLocation = (TextView)materialDialogView.findViewById(R.id.download_location);
+                    downloadLocation.setText(getDownloadLocation());
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                }
+
+                materialDialog.show();
                 return true;
             default:
                 return false;

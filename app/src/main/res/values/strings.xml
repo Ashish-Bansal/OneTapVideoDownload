@@ -65,6 +65,10 @@
     <string name="please_wait">Please wait&#8230;</string>
     <string name="unable_to_fetch">Unable to fetch links, Please try again</string>
 
+    <string name="total_size">Total Size</string>
+    <string name="downloaded_size">Downloaded Size</string>
+    <string name="okay">Okay</string>
+
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
         <item>2 Notifications</item>

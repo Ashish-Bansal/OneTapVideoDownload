@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/filename"
+        android:textColor="#80000000"
+        android:textSize="@dimen/title" />
+
+    <TextView
+        android:id="@+id/filename"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="#000000"
+        android:textSize="@dimen/entry" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="@string/total_size"
+        android:textColor="#80000000"
+        android:textSize="@dimen/title" />
+
+    <TextView
+        android:id="@+id/total_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="#000000"
+        android:textSize="@dimen/entry" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="@string/downloaded_size"
+        android:textColor="#80000000"
+        android:textSize="@dimen/title" />
+
+    <TextView
+        android:id="@+id/downloaded_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="#000000"
+        android:textSize="@dimen/entry" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="@string/download_location"
+        android:textColor="#80000000"
+        android:textSize="@dimen/title" />
+
+
+    <TextView
+        android:id="@+id/download_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:textColor="#80000000"
+        android:textSize="@dimen/entry" />
+</LinearLayout>
