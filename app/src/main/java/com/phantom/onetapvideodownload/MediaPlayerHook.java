@@ -7,21 +7,13 @@ import java.util.Map;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XC_MethodReplacement;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class MediaPlayerHook implements IXposedHookLoadPackage {
-    private String packageName = "com.phantom.onetapvideodownload";
-
     @Override
     public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
-        if (lpparam.packageName.equals(packageName)) {
-            XposedBridge.log("OneTapVideoDownload : Self hooking.");
-            XposedHelpers.findAndHookMethod(packageName + ".MainActivity", lpparam.classLoader, "isModuleEnabled", XC_MethodReplacement.returnConstant(true));
-        }
-
         XC_MethodHook methodHook = new XC_MethodHook() {
             protected void beforeHookedMethod(XC_MethodHook.MethodHookParam hookParams) throws Throwable {
                 Context context = (Context) hookParams.args[0];
@@ -40,5 +32,4 @@ public class MediaPlayerHook implements IXposedHookLoadPackage {
         Object[] objects = new Object[] { Context.class, Uri.class, Map.class, methodHook};
         XposedHelpers.findAndHookMethod(mediaPlayerClass, "setDataSource", objects);
     }
-
 }
