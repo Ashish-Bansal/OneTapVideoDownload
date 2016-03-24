@@ -59,7 +59,9 @@ public abstract class DownloadInfo {
                 options.add(context.getResources().getString(R.string.delete_from_storage));
                 options.add(context.getResources().getString(R.string.details));
                 break;
-            case Stopped:
+            case Stopped :
+            case NetworkNotAvailable :
+            case NetworkProblem:
                 options.add(context.getResources().getString(R.string.resume));
                 options.add(context.getResources().getString(R.string.remove_from_list));
                 options.add(context.getResources().getString(R.string.delete_from_storage));

@@ -106,7 +106,9 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
             mStatusCompleted.setVisibility(View.VISIBLE);
             mStatusDownloading.setVisibility(View.GONE);
             mStatusStopped.setVisibility(View.GONE);
-        } else if (status == DownloadInfo.Status.Stopped) {
+        } else if (status == DownloadInfo.Status.Stopped
+                || status == DownloadInfo.Status.NetworkProblem
+                || status == DownloadInfo.Status.NetworkNotAvailable) {
             mStatusStopped.setVisibility(View.VISIBLE);
             mStatusDownloading.setVisibility(View.GONE);
             mStatusCompleted.setVisibility(View.GONE);
