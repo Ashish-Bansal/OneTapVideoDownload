@@ -39,6 +39,7 @@ public class DownloadHandler {
     private final static AtomicInteger mNotificationId = new AtomicInteger(150);
     private static long lastWriteTime = System.currentTimeMillis();
     private Call mCall;
+    private final static String tempFileExtension = ".otvd";
 
     DownloadHandler(Context context, DownloadInfo downloadInfo) {
         mContext = context;
@@ -48,7 +49,7 @@ public class DownloadHandler {
     }
 
     public void startDownload() {
-        File filePath = new File(mDownloadInfo.getDownloadLocation());
+        File filePath = new File(mDownloadInfo.getDownloadLocation() + tempFileExtension);
         downloadFile(mDownloadInfo.getUrl(), filePath);
         setStatus(DownloadInfo.Status.Downloading);
         mContext.startService(DownloadManager.getActionUpdateUi());
@@ -71,6 +72,7 @@ public class DownloadHandler {
                     .url(url)
                     .addHeader("Range", "bytes=" + getDownloadedLength() + "-")
                     .build();
+
             mCall = Client.newCall(request);
             mCall.enqueue(new Callback() {
                 @Override
@@ -105,6 +107,11 @@ public class DownloadHandler {
 
                             bufferedOutputStream.close();
                             inputStream.close();
+
+                            String tempFile = file.getAbsolutePath();
+                            File originalFile = new File(tempFile.substring(0, tempFile.length() - tempFileExtension.length()));
+                            file.renameTo(originalFile);
+
                             setStatus(DownloadInfo.Status.Completed);
                             writeToDatabase();
                             DownloadManager downloadManager = (DownloadManager) mContext;
