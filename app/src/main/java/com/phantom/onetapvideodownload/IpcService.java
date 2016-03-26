@@ -34,21 +34,20 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class IpcService extends Service implements Invokable<Video, Integer> {
     private static final String PACKAGE_NAME = "com.phantom.onetapvideodownload";
-    private static final String CLASS_NAME = "com.phantom.onetapvideodownload.IpcService";
-    private static final String ACTION_SAVE_BROWSER_VIDEO = "com.phantom.onetapvideodownload.action.saveurl";
-    private static final String ACTION_SAVE_YOUTUBE_VIDEO = "com.phantom.onetapvideodownload.action.saveyoutubeurl";
-    private static final String EXTRA_URL = "com.phantom.onetapvideodownload.extra.url";
-    private static final String EXTRA_PARAM_STRING = "com.phantom.onetapvideodownload.extra.url";
-    private static final String EXTRA_PACKAGE_NAME = "com.phantom.onetapvideodownload.extra.package_name";
-    private static final String EXTRA_METADATA = "com.phantom.onetapvideodownload.extra.metadata";
+    private static final String CLASS_NAME = PACKAGE_NAME + ".IpcService";
+    private static final String ACTION_SAVE_BROWSER_VIDEO = PACKAGE_NAME + ".action.saveurl";
+    private static final String ACTION_SAVE_YOUTUBE_VIDEO = PACKAGE_NAME + ".action.saveyoutubeurl";
     private static final String TAG = "IpcService";
-    private static final AtomicInteger notificationId = new AtomicInteger();
-    private Handler mHandler = new Handler();
-
     private static final String SOCKET_ADDRESS_NAME = PACKAGE_NAME;
 
-    private final IBinder mBinder = new LocalBinder();
+    public static final String EXTRA_URL = PACKAGE_NAME + ".extra.url";
+    public static final String EXTRA_PARAM_STRING = PACKAGE_NAME + ".extra.url";
+    public static final String EXTRA_PACKAGE_NAME = PACKAGE_NAME + ".extra.package_name";
+    public static final String EXTRA_METADATA = PACKAGE_NAME + ".extra.metadata";
 
+    private Handler mHandler = new Handler();
+    private final IBinder mBinder = new LocalBinder();
+    private static final AtomicInteger notificationId = new AtomicInteger();
     private static LocalServerSocket mLocalServerSocket;
 
     public static void startSaveUrlAction(Context context, Uri uri, String packageName) {
