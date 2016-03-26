@@ -26,7 +26,7 @@ import com.phantom.onetapvideodownload.utils.Invokable;
 
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -79,9 +79,9 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
                     while(true) {
                         try {
                             LocalSocket localSocket = mLocalServerSocket.accept();
-                            ByteArrayOutputStream byteArrayOutputStream =
-                                    (ByteArrayOutputStream) localSocket.getOutputStream();
-                            JSONObject json = new JSONObject(byteArrayOutputStream.toString());
+                            ByteArrayInputStream byteArrayInputStream =
+                                    (ByteArrayInputStream) localSocket.getInputStream();
+                            JSONObject json = new JSONObject(byteArrayInputStream.toString());
                             String packageName = (String)json.get(EXTRA_PACKAGE_NAME);
                             String videoUrl = (String)json.get(EXTRA_URL);
                             startSaveUrlAction(getApplicationContext(), Uri.parse(videoUrl), packageName);
