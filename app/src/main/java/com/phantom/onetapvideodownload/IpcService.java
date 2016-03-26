@@ -7,6 +7,8 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.net.LocalServerSocket;
+import android.net.LocalSocket;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
@@ -22,6 +24,10 @@ import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
 import com.phantom.onetapvideodownload.utils.Global;
 import com.phantom.onetapvideodownload.utils.Invokable;
 
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -38,7 +44,12 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     private static final String TAG = "IpcService";
     private static final AtomicInteger notificationId = new AtomicInteger();
     private Handler mHandler = new Handler();
+
+    private static final String SOCKET_ADDRESS_NAME = PACKAGE_NAME;
+
     private final IBinder mBinder = new LocalBinder();
+
+    private static LocalServerSocket mLocalServerSocket;
 
     public static void startSaveUrlAction(Context context, Uri uri, String packageName) {
         Intent intent = new Intent(ACTION_SAVE_BROWSER_VIDEO);
@@ -57,6 +68,33 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent.putExtra(EXTRA_PARAM_STRING, paramString);
         context.startService(intent);
+    }
+
+    @Override
+    public void onCreate() {
+        try {
+            mLocalServerSocket = new LocalServerSocket(SOCKET_ADDRESS_NAME);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while(true) {
+                        try {
+                            LocalSocket localSocket = mLocalServerSocket.accept();
+                            ByteArrayOutputStream byteArrayOutputStream =
+                                    (ByteArrayOutputStream) localSocket.getOutputStream();
+                            JSONObject json = new JSONObject(byteArrayOutputStream.toString());
+                            String packageName = (String)json.get(EXTRA_PACKAGE_NAME);
+                            String videoUrl = (String)json.get(EXTRA_URL);
+                            startSaveUrlAction(getApplicationContext(), Uri.parse(videoUrl), packageName);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }).start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
