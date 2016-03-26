@@ -1,15 +1,17 @@
 package com.phantom.onetapvideodownload;
 
-import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
+import android.os.IBinder;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
@@ -24,7 +26,7 @@ import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class IpcService extends IntentService implements Invokable<Video, Integer> {
+public class IpcService extends Service implements Invokable<Video, Integer> {
     private static final String PACKAGE_NAME = "com.phantom.onetapvideodownload";
     private static final String CLASS_NAME = "com.phantom.onetapvideodownload.IpcService";
     private static final String ACTION_SAVE_BROWSER_VIDEO = "com.phantom.onetapvideodownload.action.saveurl";
@@ -36,6 +38,7 @@ public class IpcService extends IntentService implements Invokable<Video, Intege
     private static final String TAG = "IpcService";
     private static final AtomicInteger notificationId = new AtomicInteger();
     private Handler mHandler = new Handler();
+    private final IBinder mBinder = new LocalBinder();
 
     public static void startSaveUrlAction(Context context, Uri uri, String packageName) {
         Intent intent = new Intent(ACTION_SAVE_BROWSER_VIDEO);
@@ -56,12 +59,19 @@ public class IpcService extends IntentService implements Invokable<Video, Intege
         context.startService(intent);
     }
 
-    public IpcService() {
-        super("IpcService");
+    @Override
+    public IBinder onBind(Intent intent) {
+        return mBinder;
+    }
+
+    public class LocalBinder extends Binder {
+        public IpcService getServiceInstance() {
+            return IpcService.this;
+        }
     }
 
     @Override
-    protected void onHandleIntent(Intent intent) {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {
             final String action = intent.getAction();
             Log.e("IpcService", action);
@@ -69,7 +79,7 @@ public class IpcService extends IntentService implements Invokable<Video, Intege
                 String url = intent.getStringExtra(EXTRA_URL);
                 String packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME);
                 if (url == null || url.isEmpty() || Global.getFilenameFromUrl(url) == null) {
-                    return;
+                    return START_STICKY;
                 }
 
                 Video video = new BrowserVideo(this, url);
@@ -84,6 +94,8 @@ public class IpcService extends IntentService implements Invokable<Video, Intege
                 handleActionSaveYoutubeVideo(paramString);
             }
         }
+
+        return START_STICKY;
     }
 
     private void showNotification(String url, String title, long videoId) {
