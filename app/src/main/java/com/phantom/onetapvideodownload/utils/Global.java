@@ -39,6 +39,25 @@ public class Global {
         return false;
     }
 
+    public static String getResourceMime(String urlString) {
+        URL url;
+        HttpURLConnection urlConnection;
+        try {
+            url = new URL(urlString);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            int responseCode = urlConnection.getResponseCode();
+
+            // HttpURLConnection will follow up to five HTTP redirects.
+            if (responseCode/100 == 2) {
+                return urlConnection.getHeaderField("Content-Type");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public static String getValidatedFilename(String filename) {
         StringBuilder filenameBuilder = new StringBuilder(filename);
         for(int i = 0; i < filename.length(); i++) {
