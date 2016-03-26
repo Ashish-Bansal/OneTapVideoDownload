@@ -38,12 +38,12 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     private static final String ACTION_SAVE_BROWSER_VIDEO = PACKAGE_NAME + ".action.saveurl";
     private static final String ACTION_SAVE_YOUTUBE_VIDEO = PACKAGE_NAME + ".action.saveyoutubeurl";
     private static final String TAG = "IpcService";
-    private static final String SOCKET_ADDRESS_NAME = PACKAGE_NAME;
 
     public static final String EXTRA_URL = PACKAGE_NAME + ".extra.url";
     public static final String EXTRA_PARAM_STRING = PACKAGE_NAME + ".extra.url";
     public static final String EXTRA_PACKAGE_NAME = PACKAGE_NAME + ".extra.package_name";
     public static final String EXTRA_METADATA = PACKAGE_NAME + ".extra.metadata";
+    public static final String SOCKET_ADDRESS_NAME = PACKAGE_NAME;
 
     private Handler mHandler = new Handler();
     private final IBinder mBinder = new LocalBinder();
