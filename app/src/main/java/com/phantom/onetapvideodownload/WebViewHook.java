@@ -1,10 +1,5 @@
 package com.phantom.onetapvideodownload;
 
-import android.net.LocalSocket;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.lang.reflect.Field;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -17,20 +12,6 @@ import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
 public class WebViewHook implements IXposedHookLoadPackage {
-    private final static LocalSocket mLocalSocket = new LocalSocket();
-    private final static int socketTimeoutTime = 1;
-
-    public String getJson(String packageName, String url) {
-        JSONObject json = new JSONObject();
-        try {
-            json.put(IpcService.EXTRA_PACKAGE_NAME, packageName);
-            json.put(IpcService.EXTRA_URL, url);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return json.toString();
-    }
 
     @Override
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
@@ -52,6 +33,7 @@ public class WebViewHook implements IXposedHookLoadPackage {
                     Field urlField = webViewAwWebResourceRequest.getField("url");
                     String url = (String) urlField.get(hookParams.args[0]);
                     log(lpparam.packageName + " URL : " + url);
+                    IpcService.inspectMediaUri(url, lpparam.packageName);
                 }
             };
 
@@ -69,13 +51,8 @@ public class WebViewHook implements IXposedHookLoadPackage {
 //                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 //                    String url = (String) param.args[0];
 //                    String packageName = lpparam.packageName;
-//                    String json = getJson(packageName, url);
-//                    log(url);
-//                    mLocalSocket.connect(new LocalSocketAddress(IpcService.SOCKET_ADDRESS_NAME), socketTimeoutTime);
-//                    OutputStream outputStream = mLocalSocket.getOutputStream();
-//                    outputStream.write(json.getBytes(Charset.forName("UTF-8")));
-//                    outputStream.close();
-//                    mLocalSocket.close();
+//                    log(lpparam.packageName + " URL : " + url);
+//                    IpcService.inspectMediaUri(url, lpparam.packageName);
 //                }
 //            });
 //        } catch (Exception e) {

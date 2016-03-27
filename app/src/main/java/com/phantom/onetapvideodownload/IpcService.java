@@ -49,6 +49,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     private final IBinder mBinder = new LocalBinder();
     private static final AtomicInteger notificationId = new AtomicInteger();
     private static LocalServerSocket mLocalServerSocket;
+    private static UriMediaChecker mUriMediaChecker;
 
     public static void startSaveUrlAction(Context context, Uri uri, String packageName) {
         Intent intent = new Intent(ACTION_SAVE_BROWSER_VIDEO);
@@ -69,9 +70,14 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
         context.startService(intent);
     }
 
+    public static void inspectMediaUri(String uri, String packageName) {
+        mUriMediaChecker.addUri(uri, packageName);
+    }
+
     @Override
     public void onCreate() {
         try {
+            mUriMediaChecker = new UriMediaChecker(SOCKET_ADDRESS_NAME);
             mLocalServerSocket = new LocalServerSocket(SOCKET_ADDRESS_NAME);
             new Thread(new Runnable() {
                 @Override
