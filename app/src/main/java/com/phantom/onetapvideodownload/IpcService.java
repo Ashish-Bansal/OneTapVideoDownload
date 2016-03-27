@@ -76,7 +76,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    while(true) {
+                    while(!Thread.interrupted()) {
                         try {
                             LocalSocket localSocket = mLocalServerSocket.accept();
                             ByteArrayInputStream byteArrayInputStream =
