@@ -56,7 +56,7 @@ public class UriMediaChecker {
         public void run() {
             String url = mUriInfo.getUrl();
             for (String suffix : nonMediaSuffixList) {
-                if (url.endsWith(suffix)) {
+                if (Global.getFilenameFromUrl(url).endsWith(suffix)) {
                     return;
                 }
             }
