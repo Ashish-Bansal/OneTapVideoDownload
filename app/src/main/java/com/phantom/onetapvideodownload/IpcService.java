@@ -71,11 +71,24 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     }
 
     public static void inspectMediaUri(String uri, String packageName) {
-        mUriMediaChecker.addUri(uri, packageName);
+        if (mUriMediaChecker != null) {
+            mUriMediaChecker.addUri(uri, packageName);
+        }
     }
 
     @Override
-    public void onCreate() {
+    public IBinder onBind(Intent intent) {
+        return mBinder;
+    }
+
+    public class LocalBinder extends Binder {
+        public IpcService getServiceInstance() {
+            return IpcService.this;
+        }
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
         try {
             mUriMediaChecker = new UriMediaChecker(SOCKET_ADDRESS_NAME);
             mLocalServerSocket = new LocalServerSocket(SOCKET_ADDRESS_NAME);
@@ -100,21 +113,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        return mBinder;
-    }
-
-    public class LocalBinder extends Binder {
-        public IpcService getServiceInstance() {
-            return IpcService.this;
-        }
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
         if (intent != null) {
             final String action = intent.getAction();
             Log.e("IpcService", action);
