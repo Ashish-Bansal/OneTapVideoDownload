@@ -13,6 +13,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Locale;
 
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 public class Global {
     public static String VIDEO_MIME = "video/*";
     public static String getFilenameFromUrl(String url) {
@@ -111,5 +115,23 @@ public class Global {
         int exp = (int) (Math.log(bytes) / Math.log(1000));
         String pre = "KMGTPE".charAt(exp-1) + "";
         return String.format(Locale.getDefault(), "%.1f %sB", bytes / Math.pow(1000, exp), pre);
+    }
+
+    public static String getResponseBody(String url) {
+        try {
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+
+            OkHttpClient client = new OkHttpClient();
+            Response response = client.newCall(request).execute();
+            if (response.body().contentLength() < 3*1000*1000L) {
+                return response.body().string();
+            } else {
+                throw new IllegalArgumentException("Body content size is very large");
+            }
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

@@ -43,9 +43,19 @@ public class MediaChecker {
             return mUrl;
         }
 
+        public void setUrl(String url) {
+            mUrl = url;
+        }
+
         public String getPackageName() {
             return mPackageName;
         }
+    }
+
+    public static synchronized List<AbstractUriChecker> getWebsiteSpecificUriCheckers() {
+        List<AbstractUriChecker> websiteSpecificUriCheckers = new ArrayList<>();
+        websiteSpecificUriCheckers.add(new VimeoUriChecker());
+        return websiteSpecificUriCheckers;
     }
 
     class UriMediaCheckThread implements Runnable {
@@ -56,6 +66,15 @@ public class MediaChecker {
 
         public void run() {
             String url = mUriInfo.getUrl();
+            for (AbstractUriChecker uriChecker : getWebsiteSpecificUriCheckers()) {
+                String directUrl = uriChecker.checkUrl(url);
+                if (directUrl != null) {
+                    mUriInfo.setUrl(directUrl);
+                    writeUriInfoToSocket(mUriInfo);
+                    return;
+                }
+            }
+
             for (String suffix : nonMediaSuffixList) {
                 if (Global.getFilenameFromUrl(url).endsWith(suffix)) {
                     return;
