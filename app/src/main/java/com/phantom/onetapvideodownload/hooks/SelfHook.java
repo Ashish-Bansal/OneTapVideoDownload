@@ -13,7 +13,7 @@ public class SelfHook implements IXposedHookLoadPackage {
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
         if (lpparam.packageName.equals(packageName)) {
             XposedBridge.log("OneTapVideoDownload : Self hooking.");
-            XposedHelpers.findAndHookMethod(packageName + ".MainActivity", lpparam.classLoader, "isModuleEnabled", XC_MethodReplacement.returnConstant(true));
+            XposedHelpers.findAndHookMethod(packageName + ".ui.MainActivity", lpparam.classLoader, "isModuleEnabled", XC_MethodReplacement.returnConstant(true));
         }
     }
 }
