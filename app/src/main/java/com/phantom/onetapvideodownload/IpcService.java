@@ -17,6 +17,7 @@ import android.os.IBinder;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
+import com.phantom.onetapvideodownload.UriMediaChecker.MediaChecker;
 import com.phantom.onetapvideodownload.Video.BrowserVideo;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
@@ -49,7 +50,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     private final IBinder mBinder = new LocalBinder();
     private static final AtomicInteger notificationId = new AtomicInteger();
     private static LocalServerSocket mLocalServerSocket;
-    private static UriMediaChecker mUriMediaChecker;
+    private static MediaChecker mMediaChecker;
     private static Boolean instantiateObjects;
 
     public static void startSaveUrlAction(Context context, Uri uri, String packageName) {
@@ -72,8 +73,8 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     }
 
     public static void inspectMediaUri(String uri, String packageName) {
-        if (mUriMediaChecker != null) {
-            mUriMediaChecker.addUri(uri, packageName);
+        if (mMediaChecker != null) {
+            mMediaChecker.addUri(uri, packageName);
         }
     }
 
@@ -94,7 +95,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
             instantiateObjects = Boolean.FALSE;
 
             try {
-                mUriMediaChecker = new UriMediaChecker(SOCKET_ADDRESS_NAME);
+                mMediaChecker = new MediaChecker(SOCKET_ADDRESS_NAME);
                 mLocalServerSocket = new LocalServerSocket(SOCKET_ADDRESS_NAME);
                 new Thread(new Runnable() {
                     @Override

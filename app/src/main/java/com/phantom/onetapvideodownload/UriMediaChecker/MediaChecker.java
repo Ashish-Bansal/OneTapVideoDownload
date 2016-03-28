@@ -1,8 +1,9 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.UriMediaChecker;
 
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
 
+import com.phantom.onetapvideodownload.IpcService;
 import com.phantom.onetapvideodownload.utils.Global;
 
 import org.json.JSONException;
@@ -16,7 +17,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class UriMediaChecker {
+public class MediaChecker {
     private final Integer THREAD_POOL_SIZE = 4;
     private ExecutorService mExecutorService;
     private static List<String> nonMediaSuffixList =  new ArrayList<>();
@@ -68,7 +69,7 @@ public class UriMediaChecker {
         }
     }
 
-    UriMediaChecker(String serverSocketAddress) {
+    public MediaChecker(String serverSocketAddress) {
         mExecutorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
         mServerSocketAddress = serverSocketAddress;
         mLocalSocket = new LocalSocket();
