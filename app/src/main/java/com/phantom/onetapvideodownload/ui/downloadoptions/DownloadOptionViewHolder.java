@@ -1,4 +1,4 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.ui.downloadoptions;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.phantom.onetapvideodownload.R;
 
 public class DownloadOptionViewHolder extends RecyclerView.ViewHolder {
     private TextView mOptionLabel, mOptionValue;

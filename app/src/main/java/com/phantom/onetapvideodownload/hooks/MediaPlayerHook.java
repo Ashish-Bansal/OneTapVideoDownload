@@ -1,7 +1,10 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.hooks;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
+
+import com.phantom.onetapvideodownload.IpcService;
 
 import java.util.Map;
 
@@ -17,6 +20,9 @@ public class MediaPlayerHook implements IXposedHookLoadPackage {
         XC_MethodHook methodHook = new XC_MethodHook() {
             protected void beforeHookedMethod(XC_MethodHook.MethodHookParam hookParams) throws Throwable {
                 Context context = (Context) hookParams.args[0];
+                Intent intent = new Intent(context, IpcService.class);
+                context.startService(intent);
+
                 String packageName = context.getPackageName();
                 Uri uri = (Uri) hookParams.args[1];
                 if (uri.toString().startsWith("http")) {

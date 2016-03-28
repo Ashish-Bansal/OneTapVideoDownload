@@ -1,4 +1,4 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.ui.downloads;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.phantom.onetapvideodownload.R;
 
 public class DownloadsFragment extends Fragment {
     private RecyclerView mRecyclerView;

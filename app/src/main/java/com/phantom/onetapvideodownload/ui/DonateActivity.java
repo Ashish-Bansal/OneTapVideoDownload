@@ -1,4 +1,4 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import android.widget.Button;
 
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
+import com.phantom.onetapvideodownload.R;
+import com.phantom.onetapvideodownload.utils.CheckPreferences;
 
 public class DonateActivity extends AppCompatActivity implements BillingProcessor.IBillingHandler {
     private BillingProcessor mBillingProcessor;

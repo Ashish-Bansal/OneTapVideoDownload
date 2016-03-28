@@ -1,4 +1,4 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.ui.downloads;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.phantom.onetapvideodownload.ui.MainActivity;
+import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.DownloadManager;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 import com.phantom.onetapvideodownload.utils.OnDownloadChangeListener;

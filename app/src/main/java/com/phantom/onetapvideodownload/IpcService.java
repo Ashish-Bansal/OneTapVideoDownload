@@ -22,8 +22,11 @@ import com.phantom.onetapvideodownload.Video.BrowserVideo;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
 import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
+import com.phantom.onetapvideodownload.ui.MainActivity;
+import com.phantom.onetapvideodownload.utils.CheckPreferences;
 import com.phantom.onetapvideodownload.utils.Global;
 import com.phantom.onetapvideodownload.utils.Invokable;
+import com.phantom.onetapvideodownload.utils.YoutubeParserProxy;
 
 import org.json.JSONObject;
 

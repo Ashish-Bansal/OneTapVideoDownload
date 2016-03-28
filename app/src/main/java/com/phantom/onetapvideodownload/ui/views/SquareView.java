@@ -1,4 +1,4 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.ui.views;
 
 import android.content.Context;
 import android.util.AttributeSet;

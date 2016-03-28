@@ -1,4 +1,4 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.utils.enums;
 
 public enum MaterialDialogIds {
     DefaultDownloadLocation(0), VideoDownloadLocation(1);

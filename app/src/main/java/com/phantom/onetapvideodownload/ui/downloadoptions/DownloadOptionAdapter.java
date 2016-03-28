@@ -1,4 +1,4 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.ui.downloadoptions;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
+import com.phantom.onetapvideodownload.ui.MainActivity;
+import com.phantom.onetapvideodownload.utils.enums.MaterialDialogIds;
+import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.DownloadOptionItem;
+import com.phantom.onetapvideodownload.utils.CheckPreferences;
 
 import java.util.ArrayList;
 import java.util.List;

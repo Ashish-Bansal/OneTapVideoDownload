@@ -1,4 +1,4 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.utils;
 
 import android.app.Activity;
 import android.content.Context;
@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
+
+import com.phantom.onetapvideodownload.R;
 
 public class XposedChecker {
     private static Context mContext;

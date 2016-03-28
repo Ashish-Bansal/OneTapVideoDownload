@@ -1,10 +1,11 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.ui.urllog;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.Video.Video;
 
 public class UrlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

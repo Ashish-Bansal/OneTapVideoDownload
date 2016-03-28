@@ -19,8 +19,8 @@ import android.util.Log;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.phantom.onetapvideodownload.AppPermissions;
-import com.phantom.onetapvideodownload.MainActivity;
+import com.phantom.onetapvideodownload.utils.enums.AppPermissions;
+import com.phantom.onetapvideodownload.ui.MainActivity;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;

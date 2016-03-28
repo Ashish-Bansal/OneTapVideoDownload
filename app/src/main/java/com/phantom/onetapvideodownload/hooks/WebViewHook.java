@@ -1,4 +1,6 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.hooks;
+
+import com.phantom.onetapvideodownload.IpcService;
 
 import java.lang.reflect.Field;
 

@@ -1,4 +1,4 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.ui.urllog;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -20,6 +20,8 @@ import android.widget.TextView;
 
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.phantom.onetapvideodownload.AnalyticsApplication;
+import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.Video.Video;
 
 import java.util.ArrayList;

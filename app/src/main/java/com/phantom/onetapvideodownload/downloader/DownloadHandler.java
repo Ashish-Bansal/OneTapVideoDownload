@@ -12,7 +12,7 @@ import android.net.NetworkInfo;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
-import com.phantom.onetapvideodownload.MainActivity;
+import com.phantom.onetapvideodownload.ui.MainActivity;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 

@@ -1,4 +1,4 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.ui;
 
 import android.Manifest;
 import android.annotation.TargetApi;
@@ -34,10 +34,19 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.phantom.onetapvideodownload.AnalyticsApplication;
+import com.phantom.onetapvideodownload.utils.enums.AppPermissions;
+import com.phantom.onetapvideodownload.IpcService;
+import com.phantom.onetapvideodownload.utils.enums.MaterialDialogIds;
+import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
 import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
 import com.phantom.onetapvideodownload.downloader.ProxyDownloadManager;
+import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionAdapter;
+import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionIds;
+import com.phantom.onetapvideodownload.utils.CheckPreferences;
+import com.phantom.onetapvideodownload.utils.XposedChecker;
 
 import net.xpece.android.support.preference.Fixes;
 

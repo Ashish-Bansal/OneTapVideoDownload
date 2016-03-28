@@ -1,4 +1,4 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.ui.downloads;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 
 import java.net.URLDecoder;

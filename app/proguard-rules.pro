@@ -25,7 +25,7 @@
 -dontwarn **
 -microedition
 
--keep class com.phantom.onetapvideodownload.MediaPlayerHook { *; }
--keep class com.phantom.onetapvideodownload.MainActivity { *; }
+-keep class com.phantom.onetapvideodownload.hooks.MediaPlayerHook { *; }
+-keep class com.phantom.onetapvideodownload.ui.MainActivity { *; }
 -keep class de.robv.** { *; }
 -keep class com.evgenii.jsevaluator.**  { *; }

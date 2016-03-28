@@ -1,8 +1,9 @@
-package com.phantom.onetapvideodownload;
+package com.phantom.onetapvideodownload.ui.urllog;
 
 import android.view.View;
 import android.widget.TextView;
 
+import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.Video.Video;
 
 import co.dift.ui.SwipeToAction;
