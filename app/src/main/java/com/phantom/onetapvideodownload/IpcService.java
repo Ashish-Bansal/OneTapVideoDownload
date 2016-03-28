@@ -114,7 +114,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
             e.printStackTrace();
         }
 
-        if (intent != null) {
+        if (intent != null && intent.getAction() != null) {
             final String action = intent.getAction();
             Log.e("IpcService", action);
             if (ACTION_SAVE_BROWSER_VIDEO.equals(action)) {
