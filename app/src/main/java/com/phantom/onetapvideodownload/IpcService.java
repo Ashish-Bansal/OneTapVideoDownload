@@ -50,6 +50,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     private static final AtomicInteger notificationId = new AtomicInteger();
     private static LocalServerSocket mLocalServerSocket;
     private static UriMediaChecker mUriMediaChecker;
+    private static Boolean instantiateObjects;
 
     public static void startSaveUrlAction(Context context, Uri uri, String packageName) {
         Intent intent = new Intent(ACTION_SAVE_BROWSER_VIDEO);
@@ -89,29 +90,33 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        try {
-            mUriMediaChecker = new UriMediaChecker(SOCKET_ADDRESS_NAME);
-            mLocalServerSocket = new LocalServerSocket(SOCKET_ADDRESS_NAME);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while(!Thread.interrupted()) {
-                        try {
-                            LocalSocket localSocket = mLocalServerSocket.accept();
-                            ByteArrayInputStream byteArrayInputStream =
-                                    (ByteArrayInputStream) localSocket.getInputStream();
-                            JSONObject json = new JSONObject(byteArrayInputStream.toString());
-                            String packageName = (String)json.get(EXTRA_PACKAGE_NAME);
-                            String videoUrl = (String)json.get(EXTRA_URL);
-                            startSaveUrlAction(getApplicationContext(), Uri.parse(videoUrl), packageName);
-                        } catch (Exception e) {
-                            e.printStackTrace();
+        if (instantiateObjects == null) {
+            instantiateObjects = Boolean.FALSE;
+
+            try {
+                mUriMediaChecker = new UriMediaChecker(SOCKET_ADDRESS_NAME);
+                mLocalServerSocket = new LocalServerSocket(SOCKET_ADDRESS_NAME);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (!Thread.interrupted()) {
+                            try {
+                                LocalSocket localSocket = mLocalServerSocket.accept();
+                                ByteArrayInputStream byteArrayInputStream =
+                                        (ByteArrayInputStream) localSocket.getInputStream();
+                                JSONObject json = new JSONObject(byteArrayInputStream.toString());
+                                String packageName = (String) json.get(EXTRA_PACKAGE_NAME);
+                                String videoUrl = (String) json.get(EXTRA_URL);
+                                startSaveUrlAction(getApplicationContext(), Uri.parse(videoUrl), packageName);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
-                }
-            }).start();
-        } catch (IOException e) {
-            e.printStackTrace();
+                }).start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         if (intent != null && intent.getAction() != null) {
