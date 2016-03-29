@@ -35,9 +35,6 @@ import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.phantom.onetapvideodownload.AnalyticsApplication;
-import com.phantom.onetapvideodownload.utils.enums.AppPermissions;
-import com.phantom.onetapvideodownload.IpcService;
-import com.phantom.onetapvideodownload.utils.enums.MaterialDialogIds;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
@@ -47,6 +44,8 @@ import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionAdapter;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionIds;
 import com.phantom.onetapvideodownload.utils.CheckPreferences;
 import com.phantom.onetapvideodownload.utils.XposedChecker;
+import com.phantom.onetapvideodownload.utils.enums.AppPermissions;
+import com.phantom.onetapvideodownload.utils.enums.MaterialDialogIds;
 
 import net.xpece.android.support.preference.Fixes;
 
@@ -85,9 +84,6 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         mTracker.setScreenName("Activity~" + getClass().getName());
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         checkXposedInstallation();
-
-        Intent ipcServiceIntent = new Intent(this, IpcService.class);
-        startService(ipcServiceIntent);
     }
 
     @Override
