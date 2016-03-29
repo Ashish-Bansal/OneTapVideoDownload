@@ -1,5 +1,6 @@
 package com.phantom.onetapvideodownload.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -25,7 +26,7 @@ public class ViewPagerFragmentParent extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_pager_parent, container, false);
 
-        PagerAdapter pagerAdapter = new NavigationAdapter(getChildFragmentManager());
+        PagerAdapter pagerAdapter = new NavigationAdapter(view.getContext(), getChildFragmentManager());
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);
         viewPager.setAdapter(pagerAdapter);
 
@@ -38,12 +39,16 @@ public class ViewPagerFragmentParent extends Fragment {
     }
 
     private class NavigationAdapter extends FragmentPagerAdapter {
-
-        private final String[] mTitles = new String[] { "Downloads", "Settings" };
+        private Context mContext;
+        private List<String> mTitles;
 
         List<Fragment> fragmentList = new ArrayList<>();
-        public NavigationAdapter(FragmentManager fm) {
+        public NavigationAdapter(Context context, FragmentManager fm) {
             super(fm);
+            mContext = context;
+            mTitles = new ArrayList<>();
+            mTitles.add(mContext.getString(R.string.view_pager_title_downloads));
+            mTitles.add(mContext.getString(R.string.view_pager_title_settings));
         }
 
         @Override
@@ -67,12 +72,12 @@ public class ViewPagerFragmentParent extends Fragment {
 
         @Override
         public int getCount() {
-            return mTitles.length;
+            return mTitles.size();
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return mTitles[position];
+            return mTitles.get(position);
         }
     }
 }
