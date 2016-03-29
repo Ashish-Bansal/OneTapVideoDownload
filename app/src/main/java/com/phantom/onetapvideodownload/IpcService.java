@@ -41,6 +41,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     private static final String CLASS_NAME = PACKAGE_NAME + ".IpcService";
     private static final String ACTION_SAVE_BROWSER_VIDEO = PACKAGE_NAME + ".action.saveurl";
     private static final String ACTION_SAVE_YOUTUBE_VIDEO = PACKAGE_NAME + ".action.saveyoutubeurl";
+    private static final String ACTION_INSPECT_MEDIA_URI = PACKAGE_NAME + ".action.inspectmediaurl";
     private static final String TAG = "IpcService";
 
     public static final String EXTRA_URL = PACKAGE_NAME + ".extra.url";
@@ -75,10 +76,12 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
         context.startService(intent);
     }
 
-    public static void inspectMediaUri(String uri, String packageName) {
-        if (mMediaChecker != null) {
-            mMediaChecker.addUri(uri, packageName);
-        }
+    public static void startInspectMediaUriAction(Context context, String uri, String packageName) {
+        Intent intent = new Intent(ACTION_INSPECT_MEDIA_URI);
+        intent.setClassName(PACKAGE_NAME, CLASS_NAME);
+        intent.putExtra(EXTRA_URL, uri);
+        intent.putExtra(EXTRA_PACKAGE_NAME, packageName);
+        context.startService(intent);
     }
 
     @Override
@@ -143,6 +146,10 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
             } else if (ACTION_SAVE_YOUTUBE_VIDEO.equals(action)) {
                 final String paramString = intent.getStringExtra(EXTRA_PARAM_STRING);
                 handleActionSaveYoutubeVideo(paramString);
+            } else if (ACTION_INSPECT_MEDIA_URI.equals(action)) {
+                String url = intent.getStringExtra(EXTRA_URL);
+                String packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME);
+                mMediaChecker.addUri(url, packageName);
             }
         }
 

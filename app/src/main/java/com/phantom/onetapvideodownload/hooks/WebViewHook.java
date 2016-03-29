@@ -1,5 +1,7 @@
 package com.phantom.onetapvideodownload.hooks;
 
+import android.content.Context;
+
 import com.phantom.onetapvideodownload.IpcService;
 
 import java.lang.reflect.Field;
@@ -14,6 +16,12 @@ import static de.robv.android.xposed.XposedHelpers.findAndHookMethod;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
 public class WebViewHook implements IXposedHookLoadPackage {
+
+    public Context getContext() {
+        Class activityThreadClass = XposedHelpers.findClass("android.app.ActivityThread", null);
+        Object activityThread = XposedHelpers.callStaticMethod(activityThreadClass, "currentActivityThread");
+        return (Context) XposedHelpers.callMethod(activityThread, "getSystemContext");
+    }
 
     @Override
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
@@ -35,7 +43,7 @@ public class WebViewHook implements IXposedHookLoadPackage {
                     Field urlField = webViewAwWebResourceRequest.getField("url");
                     String url = (String) urlField.get(hookParams.args[0]);
                     log(lpparam.packageName + " URL : " + url);
-                    IpcService.inspectMediaUri(url, lpparam.packageName);
+                    IpcService.startInspectMediaUriAction(getContext(), url, lpparam.packageName);
                 }
             };
 
