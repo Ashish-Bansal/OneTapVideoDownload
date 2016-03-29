@@ -30,8 +30,8 @@ import com.phantom.onetapvideodownload.utils.YoutubeParserProxy;
 
 import org.json.JSONObject;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -109,9 +109,14 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
                         while (!Thread.interrupted()) {
                             try {
                                 LocalSocket localSocket = mLocalServerSocket.accept();
-                                ByteArrayInputStream byteArrayInputStream =
-                                        (ByteArrayInputStream) localSocket.getInputStream();
-                                JSONObject json = new JSONObject(byteArrayInputStream.toString());
+                                InputStream inputStream = localSocket.getInputStream();
+                                byte[] bytes = new byte[1000*1000];
+                                if (inputStream.read(bytes) == -1) {
+                                    throw new Exception("Unable to read data from Socket input stream");
+                                }
+
+                                String data = new String(bytes);
+                                JSONObject json = new JSONObject(data);
                                 String packageName = (String) json.get(EXTRA_PACKAGE_NAME);
                                 String videoUrl = (String) json.get(EXTRA_URL);
                                 startSaveUrlAction(getApplicationContext(), Uri.parse(videoUrl), packageName);
