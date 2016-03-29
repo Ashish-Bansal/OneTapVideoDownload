@@ -73,6 +73,8 @@
     <string name="view_pager_title_downloads">Downloads</string>
     <string name="view_pager_title_settings">@string/action_settings</string>
 
+    <string name="md_choose_label">Choose</string>
+
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
         <item>2 Notifications</item>
