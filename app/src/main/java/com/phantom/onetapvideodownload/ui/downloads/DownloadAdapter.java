@@ -26,7 +26,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         mContext = context;
         context.startService(DownloadManager.getActionStartService());
         Intent mIntent = new Intent(context, DownloadManager.class);
-        context.bindService(mIntent, mConnection, context.BIND_AUTO_CREATE);
+        context.bindService(mIntent, mConnection, Context.BIND_ABOVE_CLIENT);
     }
 
     ServiceConnection mConnection = new ServiceConnection() {
