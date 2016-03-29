@@ -68,6 +68,11 @@
     <string name="okay">OK</string>
     <string name="unknown_file_size">Неизвестный размер файла</string>
 
+    <string name="view_pager_title_downloads">Загрузки</string>
+    <string name="view_pager_title_settings">@string/action_settings</string>
+
+    <string name="md_choose_label">Выбрать</string>
+
     <string-array name="pref_notification_count_titles">
         <item>1 Уведомление</item>
         <item>2 Уведомления</item>
