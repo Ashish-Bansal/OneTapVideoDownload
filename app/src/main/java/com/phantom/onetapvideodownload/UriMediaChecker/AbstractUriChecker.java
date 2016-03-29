@@ -1,5 +1,7 @@
 package com.phantom.onetapvideodownload.UriMediaChecker;
 
+import com.phantom.onetapvideodownload.Video.Video;
+
 public interface AbstractUriChecker {
-    String checkUrl(String url);
+    Video checkUrl(String url);
 }

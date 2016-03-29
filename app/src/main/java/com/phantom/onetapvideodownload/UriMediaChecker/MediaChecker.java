@@ -1,18 +1,14 @@
 package com.phantom.onetapvideodownload.UriMediaChecker;
 
-import android.net.LocalSocket;
-import android.net.LocalSocketAddress;
-import android.util.Log;
+import android.content.Context;
+import android.net.Uri;
 
 import com.phantom.onetapvideodownload.IpcService;
+import com.phantom.onetapvideodownload.Video.BrowserVideo;
+import com.phantom.onetapvideodownload.Video.Video;
+import com.phantom.onetapvideodownload.Video.YoutubeVideo;
 import com.phantom.onetapvideodownload.utils.Global;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.OutputStream;
-import java.io.Serializable;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -23,8 +19,7 @@ public class MediaChecker {
     private final String TAG = "MediaChecker";
     private ExecutorService mExecutorService;
     private static List<String> nonMediaSuffixList =  new ArrayList<>();
-    private String mServerSocketAddress;
-    private LocalSocket mLocalSocket;
+    private Context mContext;
 
     static {
         nonMediaSuffixList.add("html");
@@ -32,99 +27,61 @@ public class MediaChecker {
         nonMediaSuffixList.add("js");
     }
 
-    private class UriInfo implements Serializable {
-        private String mUrl;
-        private String mPackageName;
-
-        UriInfo(String url, String packageName) {
-            mUrl = url;
-            mPackageName = packageName;
-        }
-
-        public String getUrl() {
-            return mUrl;
-        }
-
-        public void setUrl(String url) {
-            mUrl = url;
-        }
-
-        public String getPackageName() {
-            return mPackageName;
-        }
-    }
-
-    public static synchronized List<AbstractUriChecker> getWebsiteSpecificUriCheckers() {
+    public List<AbstractUriChecker> getWebsiteSpecificUriCheckers() {
         List<AbstractUriChecker> websiteSpecificUriCheckers = new ArrayList<>();
-        websiteSpecificUriCheckers.add(new VimeoUriChecker());
+        websiteSpecificUriCheckers.add(new VimeoUriChecker(mContext));
         return websiteSpecificUriCheckers;
     }
 
     class UriMediaCheckThread implements Runnable {
-        private UriInfo mUriInfo;
-        public UriMediaCheckThread(UriInfo uriMediaInfo){
-            mUriInfo = uriMediaInfo;
+        private String mUrl, mPackageName;
+        public UriMediaCheckThread(String url, String packageName){
+            mUrl = url;
+            mPackageName = packageName;
         }
 
         public void run() {
-            String url = mUriInfo.getUrl();
             for (AbstractUriChecker uriChecker : getWebsiteSpecificUriCheckers()) {
-                String directUrl = uriChecker.checkUrl(url);
-                if (directUrl != null) {
-                    mUriInfo.setUrl(directUrl);
-                    writeUriInfoToSocket(mUriInfo);
+                Video video = uriChecker.checkUrl(mUrl);
+                if (video != null) {
+                    video.setPackageName(mPackageName);
+                    startSaveUrlAction(video);
                     return;
                 }
             }
 
             for (String suffix : nonMediaSuffixList) {
-                String filename = Global.getFilenameFromUrl(url);
+                String filename = Global.getFilenameFromUrl(mUrl);
                 if (filename != null && filename.endsWith(suffix)) {
                     return;
                 }
             }
 
-            String contentType = Global.getResourceMime(url);
+            String contentType = Global.getResourceMime(mUrl);
             if (contentType != null && contentType.startsWith("video")) {
-                writeUriInfoToSocket(mUriInfo);
+                Video video = new BrowserVideo(mContext, mUrl);
+                video.setPackageName(mPackageName);
+                startSaveUrlAction(video);
             }
         }
     }
 
-    public MediaChecker(String serverSocketAddress) {
+    public MediaChecker(Context context) {
         mExecutorService = Executors.newFixedThreadPool(THREAD_POOL_SIZE);
-        mServerSocketAddress = serverSocketAddress;
-        mLocalSocket = new LocalSocket();
+        mContext = context;
     }
 
     public void addUri(String url, String packageName) {
-        UriInfo uriInfo = new UriInfo(url, packageName);
-        UriMediaCheckThread uriMediaCheckThread = new UriMediaCheckThread(uriInfo);
+        UriMediaCheckThread uriMediaCheckThread = new UriMediaCheckThread(url, packageName);
         mExecutorService.execute(uriMediaCheckThread);
     }
 
-    public synchronized void writeUriInfoToSocket(UriInfo uriInfo) {
-        try {
-            String json = getJson(uriInfo.getUrl(), uriInfo.getPackageName());
-            mLocalSocket.connect(new LocalSocketAddress(mServerSocketAddress));
-            OutputStream outputStream = mLocalSocket.getOutputStream();
-            outputStream.write(json.getBytes(Charset.forName("UTF-8")));
-            outputStream.close();
-            mLocalSocket.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void startSaveUrlAction(Video video) {
+        if (video instanceof BrowserVideo) {
+            IpcService.startSaveUrlAction(mContext, Uri.parse(video.getUrl()), video.getPackageName());
+        } else if (video instanceof YoutubeVideo){
+            YoutubeVideo youtubeVideo = (YoutubeVideo) video;
+            IpcService.startSaveYoutubeVideoAction(mContext, youtubeVideo.getParam());
         }
-    }
-
-    public String getJson(String url, String packageName) {
-        JSONObject json = new JSONObject();
-        try {
-            json.put(IpcService.EXTRA_URL, url);
-            json.put(IpcService.EXTRA_PACKAGE_NAME, packageName);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        return json.toString();
     }
 }

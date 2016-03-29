@@ -7,8 +7,6 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
-import android.net.LocalServerSocket;
-import android.net.LocalSocket;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
@@ -28,10 +26,6 @@ import com.phantom.onetapvideodownload.utils.Global;
 import com.phantom.onetapvideodownload.utils.Invokable;
 import com.phantom.onetapvideodownload.utils.YoutubeParserProxy;
 
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -48,14 +42,11 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     public static final String EXTRA_PARAM_STRING = PACKAGE_NAME + ".extra.url";
     public static final String EXTRA_PACKAGE_NAME = PACKAGE_NAME + ".extra.package_name";
     public static final String EXTRA_METADATA = PACKAGE_NAME + ".extra.metadata";
-    public static final String SOCKET_ADDRESS_NAME = PACKAGE_NAME;
 
     private Handler mHandler = new Handler();
     private final IBinder mBinder = new LocalBinder();
     private static final AtomicInteger notificationId = new AtomicInteger();
-    private static LocalServerSocket mLocalServerSocket;
     private static MediaChecker mMediaChecker;
-    private static Boolean instantiateObjects;
 
     public static void startSaveUrlAction(Context context, Uri uri, String packageName) {
         Intent intent = new Intent(ACTION_SAVE_BROWSER_VIDEO);
@@ -97,38 +88,8 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (instantiateObjects == null) {
-            instantiateObjects = Boolean.FALSE;
-
-            try {
-                mMediaChecker = new MediaChecker(SOCKET_ADDRESS_NAME);
-                mLocalServerSocket = new LocalServerSocket(SOCKET_ADDRESS_NAME);
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        while (!Thread.interrupted()) {
-                            try {
-                                LocalSocket localSocket = mLocalServerSocket.accept();
-                                InputStream inputStream = localSocket.getInputStream();
-                                byte[] bytes = new byte[1000*1000];
-                                if (inputStream.read(bytes) == -1) {
-                                    throw new Exception("Unable to read data from Socket input stream");
-                                }
-
-                                String data = new String(bytes);
-                                JSONObject json = new JSONObject(data);
-                                String packageName = (String) json.get(EXTRA_PACKAGE_NAME);
-                                String videoUrl = (String) json.get(EXTRA_URL);
-                                startSaveUrlAction(getApplicationContext(), Uri.parse(videoUrl), packageName);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                }).start();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if (mMediaChecker == null) {
+            mMediaChecker = new MediaChecker(this);
         }
 
         if (intent != null && intent.getAction() != null) {
