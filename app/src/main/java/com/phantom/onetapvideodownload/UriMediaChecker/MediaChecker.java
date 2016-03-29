@@ -2,6 +2,7 @@ package com.phantom.onetapvideodownload.UriMediaChecker;
 
 import android.net.LocalSocket;
 import android.net.LocalSocketAddress;
+import android.util.Log;
 
 import com.phantom.onetapvideodownload.IpcService;
 import com.phantom.onetapvideodownload.utils.Global;
@@ -19,6 +20,7 @@ import java.util.concurrent.Executors;
 
 public class MediaChecker {
     private final Integer THREAD_POOL_SIZE = 4;
+    private final String TAG = "MediaChecker";
     private ExecutorService mExecutorService;
     private static List<String> nonMediaSuffixList =  new ArrayList<>();
     private String mServerSocketAddress;
@@ -76,7 +78,8 @@ public class MediaChecker {
             }
 
             for (String suffix : nonMediaSuffixList) {
-                if (Global.getFilenameFromUrl(url).endsWith(suffix)) {
+                String filename = Global.getFilenameFromUrl(url);
+                if (filename != null && filename.endsWith(suffix)) {
                     return;
                 }
             }
