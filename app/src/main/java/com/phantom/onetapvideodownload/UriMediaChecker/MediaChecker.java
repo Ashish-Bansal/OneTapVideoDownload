@@ -30,6 +30,7 @@ public class MediaChecker {
     public List<AbstractUriChecker> getWebsiteSpecificUriCheckers() {
         List<AbstractUriChecker> websiteSpecificUriCheckers = new ArrayList<>();
         websiteSpecificUriCheckers.add(new VimeoUriChecker(mContext));
+        websiteSpecificUriCheckers.add(new YoutubeUriChecker(mContext));
         return websiteSpecificUriCheckers;
     }
 
