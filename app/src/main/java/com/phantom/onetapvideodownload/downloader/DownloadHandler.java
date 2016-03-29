@@ -84,9 +84,9 @@ public class DownloadHandler {
                 @Override
                 public void onResponse(Call call, Response response) {
                     BufferedOutputStream bufferedOutputStream = null;
+                    InputStream inputStream = response.body().byteStream();
 
                     try {
-                        InputStream inputStream = response.body().byteStream();
                         if (response.isSuccessful()) {
                             if (!started()) {
                                 mDownloadInfo.setContentLength(response.body().contentLength());
@@ -125,6 +125,10 @@ public class DownloadHandler {
                         try {
                             if (bufferedOutputStream != null) {
                                 bufferedOutputStream.close();
+                            }
+
+                            if (inputStream != null) {
+                                inputStream.close();
                             }
                         } catch (IOException ioException) {
                                 ioException.printStackTrace();
