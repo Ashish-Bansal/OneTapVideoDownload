@@ -7,7 +7,6 @@ import com.phantom.onetapvideodownload.IpcService;
 import com.phantom.onetapvideodownload.Video.BrowserVideo;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
-import com.phantom.onetapvideodownload.utils.Global;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,20 +48,6 @@ public class MediaChecker {
                     startSaveUrlAction(video);
                     return;
                 }
-            }
-
-            for (String suffix : nonMediaSuffixList) {
-                String filename = Global.getFilenameFromUrl(mUrl);
-                if (filename != null && filename.endsWith(suffix)) {
-                    return;
-                }
-            }
-
-            String contentType = Global.getResourceMime(mUrl);
-            if (contentType != null && contentType.startsWith("video")) {
-                Video video = new BrowserVideo(mContext, mUrl);
-                video.setPackageName(mPackageName);
-                startSaveUrlAction(video);
             }
         }
     }
