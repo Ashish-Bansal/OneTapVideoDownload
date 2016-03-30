@@ -75,6 +75,13 @@
 
     <string name="md_choose_label">Choose</string>
 
+    <string name="menu_item_plus_one">Give it a +1</string>
+    <string name="menu_item_rate">Rate this app</string>
+    <string name="menu_item_donate">Donate</string>
+    <string name="menu_item_translate">Help to translate</string>
+    <string name="menu_item_help">Need Help ?</string>
+    <string name="menu_item_about">About</string>
+
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
         <item>2 Notifications</item>

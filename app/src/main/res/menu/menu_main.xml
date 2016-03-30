@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".ui.MainActivity">
+    <item android:id="@+id/menu_plus_one"
+        android:title="@string/menu_item_plus_one" />
+    <item android:id="@+id/menu_rate_my_app"
+        android:title="@string/menu_item_rate" />
+    <item android:id="@+id/menu_donate"
+        android:title="@string/menu_item_donate" />
+    <item android:id="@+id/menu_translate"
+        android:title="@string/menu_item_translate" />
+    <item android:id="@+id/menu_require_help"
+        android:title="@string/menu_item_help" />
+    <item android:id="@+id/menu_about"
+        android:title="@string/menu_item_about" />
 </menu>

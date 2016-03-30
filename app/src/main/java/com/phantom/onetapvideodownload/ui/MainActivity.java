@@ -34,6 +34,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.google.android.gms.plus.PlusOneButton;
 import com.phantom.onetapvideodownload.AnalyticsApplication;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.Video.Video;
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     private Tracker mTracker;
     private MaterialDialogIds folderChooserDialogId;
     private static RecyclerView mDownloadDialogRecyclerView;
+    private static final String APP_URL = "https://play.google.com/store/apps/details?id=com.phantom.onetapvideodownload";
+    private PlusOneButton mPlusOneButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +93,9 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     protected void onResume() {
         super.onResume();
         checkAndRequestPermission(AppPermissions.External_Storage_Permission);
+        if (mPlusOneButton != null) {
+            mPlusOneButton.initialize(APP_URL, 0);
+        }
     }
 
     private void displaySnackbar(String text, String actionName, View.OnClickListener action) {
@@ -113,6 +119,31 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        switch (id) {
+            case R.id.menu_plus_one:
+                showPlusOneDialog();
+                break;
+            case R.id.menu_rate_my_app :
+//                ToDo:
+//                openAppInPlayStore();
+                break;
+            case R.id.menu_donate :
+//                ToDo:
+//                openDonateActivity();
+                break;
+            case R.id.menu_translate :
+//                ToDo:
+//                sendEmailForTranslation();
+                break;
+            case R.id.menu_require_help :
+//                ToDo:
+//                sendEmailForHelp();
+                break;
+            case R.id.menu_about:
+//                ToDo:
+//                openAboutActivity();
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -310,5 +341,17 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     @Override
     public void onNewIntent(Intent intent) {
         checkForDownloadDialog(intent);
+    }
+
+    public void showPlusOneDialog() {
+        final MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .customView(R.layout.dialog_plus_one, false)
+                .canceledOnTouchOutside(true)
+                .show();
+        View dialogView = dialog.getCustomView();
+        if (dialogView != null) {
+            mPlusOneButton = (PlusOneButton) dialogView.findViewById(R.id.plus_one_button);
+            mPlusOneButton.initialize(APP_URL, 0);
+        }
     }
 }
