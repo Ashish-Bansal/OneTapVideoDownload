@@ -75,7 +75,7 @@ public class DonateActivity extends AppCompatActivity implements BillingProcesso
          */
 
         TransactionDetails transactionDetails = mBillingProcessor.getPurchaseTransactionDetails(donationProductId);
-        if (!transactionDetails.purchaseToken.isEmpty()) {
+        if (transactionDetails != null) {
             CheckPreferences.setDonationStatus(this, true);
             setContentView(R.layout.activity_donated);
         }
