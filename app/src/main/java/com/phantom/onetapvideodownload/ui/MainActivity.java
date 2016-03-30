@@ -2,6 +2,7 @@ package com.phantom.onetapvideodownload.ui;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -124,8 +125,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
                 showPlusOneDialog();
                 break;
             case R.id.menu_rate_my_app :
-//                ToDo:
-//                openAppInPlayStore();
+                openAppInPlayStore();
                 break;
             case R.id.menu_donate :
 //                ToDo:
@@ -352,6 +352,19 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         if (dialogView != null) {
             mPlusOneButton = (PlusOneButton) dialogView.findViewById(R.id.plus_one_button);
             mPlusOneButton.initialize(APP_URL, 0);
+        }
+    }
+
+    public void openAppInPlayStore() {
+        Uri uri = Uri.parse("market://details?id=" + getPackageName());
+        Intent playStoreIntent = new Intent(Intent.ACTION_VIEW, uri);
+        playStoreIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY |
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        try {
+            startActivity(playStoreIntent);
+        } catch (ActivityNotFoundException e) {
+            startActivity(new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
         }
     }
 }
