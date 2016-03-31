@@ -19,6 +19,12 @@ import okhttp3.Response;
 
 public class Global {
     public static String VIDEO_MIME = "video/*";
+    public static String DEVELOPER_EMAIL = "onetapvideodownload@gmail.com";
+
+    public static String getDeveloperEmail() {
+        return DEVELOPER_EMAIL;
+    }
+
     public static String getFilenameFromUrl(String url) {
         Uri uri = Uri.parse(url);
         return uri.getLastPathSegment();
@@ -133,5 +139,13 @@ public class Global {
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public static void sendEmail(Context context, String to, String subject, String body) {
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", to, null));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        emailIntent.putExtra(Intent.EXTRA_TEXT, body);
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { to });
+        context.startActivity(Intent.createChooser(emailIntent, "Send email..."));
     }
 }

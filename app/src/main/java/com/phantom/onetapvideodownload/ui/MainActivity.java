@@ -45,6 +45,7 @@ import com.phantom.onetapvideodownload.downloader.ProxyDownloadManager;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionAdapter;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionIds;
 import com.phantom.onetapvideodownload.utils.CheckPreferences;
+import com.phantom.onetapvideodownload.utils.Global;
 import com.phantom.onetapvideodownload.utils.XposedChecker;
 import com.phantom.onetapvideodownload.utils.enums.AppPermissions;
 import com.phantom.onetapvideodownload.utils.enums.MaterialDialogIds;
@@ -132,8 +133,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
 //                openDonateActivity();
                 break;
             case R.id.menu_translate :
-//                ToDo:
-//                sendEmailForTranslation();
+                sendEmailForTranslation();
                 break;
             case R.id.menu_require_help :
 //                ToDo:
@@ -367,4 +367,12 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
                     Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName())));
         }
     }
+
+    public void sendEmailForTranslation() {
+        String to = Global.getDeveloperEmail();
+        String subject = "One Tap Video Download - App Translation";
+        String body = "I would like to translate One Tap Video Download to {REPLACE THIS WITH LANGUAGE NAME}";
+        Global.sendEmail(this, to, subject, body);
+    }
+
 }
