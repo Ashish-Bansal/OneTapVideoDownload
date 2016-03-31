@@ -136,8 +136,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
                 sendEmailForTranslation();
                 break;
             case R.id.menu_require_help :
-//                ToDo:
-//                sendEmailForHelp();
+                sendEmailForHelp();
                 break;
             case R.id.menu_about:
 //                ToDo:
@@ -372,6 +371,13 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         String to = Global.getDeveloperEmail();
         String subject = "One Tap Video Download - App Translation";
         String body = "I would like to translate One Tap Video Download to {REPLACE THIS WITH LANGUAGE NAME}";
+        Global.sendEmail(this, to, subject, body);
+    }
+
+    public void sendEmailForHelp() {
+        String to = Global.getDeveloperEmail();
+        String subject = "One Tap Video Download - Need Help";
+        String body = "Hi, I am experience this issue : {REPLACE THIS WITH YOUR ISSUE}";
         Global.sendEmail(this, to, subject, body);
     }
 
