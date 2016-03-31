@@ -129,8 +129,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
                 openAppInPlayStore();
                 break;
             case R.id.menu_donate :
-//                ToDo:
-//                openDonateActivity();
+                openDonateActivity();
                 break;
             case R.id.menu_translate :
                 sendEmailForTranslation();
@@ -381,4 +380,8 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         Global.sendEmail(this, to, subject, body);
     }
 
+    public void openDonateActivity() {
+        Intent donateIntent = new Intent(this, DonateActivity.class);
+        startActivity(donateIntent);
+    }
 }
