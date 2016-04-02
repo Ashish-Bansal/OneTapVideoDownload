@@ -138,8 +138,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
                 sendEmailForHelp();
                 break;
             case R.id.menu_about:
-//                ToDo:
-//                openAboutActivity();
+                openAboutActivity();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -381,7 +380,15 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     }
 
     public void openDonateActivity() {
-        Intent donateIntent = new Intent(this, DonateActivity.class);
+        startActivity(DonateActivity.class);
+    }
+
+    public void openAboutActivity() {
+        startActivity(About.class);
+    }
+
+    public void startActivity(Class activityClass) {
+        Intent donateIntent = new Intent(this, activityClass);
         startActivity(donateIntent);
     }
 }

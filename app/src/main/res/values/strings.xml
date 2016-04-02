@@ -82,6 +82,11 @@
     <string name="menu_item_help">Need Help ?</string>
     <string name="menu_item_about">About</string>
 
+    <string name="about_intro">One Tap Video Download is a Free and Open Source Xposed Module which enables user to download/play video from many applications like browser, facebook etc.</string>
+    <string name="about_developed_by">Developed By</string>
+    <string name="about_developer_name">Ashish Bansal</string>
+    <string name="about_copyright">&#169; 2016 One Tap Video Download</string>
+
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
         <item>2 Notifications</item>

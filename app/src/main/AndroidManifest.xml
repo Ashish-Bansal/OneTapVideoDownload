@@ -90,8 +90,11 @@
                 android:resource="@xml/file_provider_paths" />
         </provider>
 
-        <activity android:name=".ui.DonateActivity"
-            android:exported="true"></activity>
+        <activity
+            android:name=".ui.DonateActivity"
+            android:exported="true" />
+
+        <activity android:name=".ui.About" />
     </application>
 
 </manifest>
