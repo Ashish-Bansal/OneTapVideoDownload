@@ -3,17 +3,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ui.DonateActivity">
 
-    <Button
+    <com.phantom.onetapvideodownload.ui.views.InstagramView
+        android:id="@+id/instagramView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" />
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Donate"
-        android:id="@+id/donate_button"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerInParent="true">
+
+        <com.bluejamesbond.text.DocumentView xmlns:ext="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            ext:documentView_antialias="true"
+            ext:documentView_cacheConfig="auto_quality"
+            ext:documentView_insetPaddingBottom="15sp"
+            ext:documentView_insetPaddingLeft="15sp"
+            ext:documentView_insetPaddingRight="15sp"
+            ext:documentView_insetPaddingTop="15sp"
+            ext:documentView_lineHeightMultiplier="1.5"
+            ext:documentView_maxLines="10"
+            ext:documentView_reverse="false"
+            ext:documentView_text="@string/donate_description"
+            ext:documentView_textAlignment="justified"
+            ext:documentView_textColor="@android:color/white"
+            ext:documentView_textFormat="plain"
+            ext:documentView_textSize="15sp" />
+
+        <Button
+            android:id="@+id/donate_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/description"
+            android:layout_centerHorizontal="true"
+            android:background="@color/donate_translucent"
+            android:text="@string/donate"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
 </RelativeLayout>

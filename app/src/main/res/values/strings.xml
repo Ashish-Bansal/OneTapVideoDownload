@@ -87,6 +87,10 @@
     <string name="about_developer_name">Ashish Bansal</string>
     <string name="about_copyright">&#169; 2016 One Tap Video Download</string>
 
+    <string name="donate">Donate</string>
+    <string name="donate_description">I work on One Tap Video Download in my free time. Please support development by donating if possible. Thanks!</string>
+    <string name="donate_thanks_for_donation">Thanks for donation!</string>
+
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
         <item>2 Notifications</item>
