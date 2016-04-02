@@ -86,6 +86,7 @@
     <string name="about_developed_by">Developed By</string>
     <string name="about_developer_name">Ashish Bansal</string>
     <string name="about_copyright">&#169; 2016 One Tap Video Download</string>
+    <string name="about_credits">Credits : Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Julia Yanovskaya, Open.Orange</string>
 
     <string name="donate">Donate</string>
     <string name="donate_description">I work on One Tap Video Download in my free time. Please support development by donating if possible. Thanks!</string>
