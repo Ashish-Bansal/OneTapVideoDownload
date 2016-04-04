@@ -68,6 +68,28 @@
     <string name="okay">Okay</string>
     <string name="unknown_file_size">未知的檔案大小</string>
 
+    <string name="view_pager_title_downloads">下載</string>
+    <string name="view_pager_title_settings">@string/action_settings</string>
+
+    <string name="md_choose_label">選擇</string>
+
+    <string name="menu_item_plus_one">給個+1</string>
+    <string name="menu_item_rate">評分本程式</string>
+    <string name="menu_item_donate">贊助</string>
+    <string name="menu_item_translate">協助翻譯</string>
+    <string name="menu_item_help">需要說明嗎？</string>
+    <string name="menu_item_about">關於</string>
+
+    <string name="about_intro">One Tap Video Download是個免費而且開放原始碼、能讓使用者從眾多的程式下載/播放影片的Xposed模組，像是瀏覽器、FaceBook等。</string>
+    <string name="about_developed_by">開發者</string>
+    <string name="about_developer_name">Ashish Bansal</string>
+    <string name="about_copyright">&#169; 2016 One Tap Video Download</string>
+    <string name="about_credits">貢獻人員：Haariger Harald, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Julia Yanovskaya, Open.Orange 以及其他我繁忙或許忘記提及的人員。</string>
+
+    <string name="donate">贊助</string>
+    <string name="donate_description">我忙裡偷閒地編寫One Tap Video Download。請您盡可能地考慮贊助以支持發展。謝謝您！</string>
+    <string name="donate_thanks_for_donation">謝謝贊助！</string>
+
     <string-array name="pref_notification_count_titles">
         <item>一個通知</item>
         <item>兩個通知</item>
