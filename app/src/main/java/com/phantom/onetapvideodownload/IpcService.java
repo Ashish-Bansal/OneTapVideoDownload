@@ -26,8 +26,6 @@ import com.phantom.onetapvideodownload.utils.Global;
 import com.phantom.onetapvideodownload.utils.Invokable;
 import com.phantom.onetapvideodownload.utils.YoutubeParserProxy;
 
-import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class IpcService extends Service implements Invokable<Video, Integer> {
@@ -41,7 +39,6 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     public static final String EXTRA_URL = PACKAGE_NAME + ".extra.url";
     public static final String EXTRA_PARAM_STRING = PACKAGE_NAME + ".extra.url";
     public static final String EXTRA_PACKAGE_NAME = PACKAGE_NAME + ".extra.package_name";
-    public static final String EXTRA_METADATA = PACKAGE_NAME + ".extra.metadata";
 
     private Handler mHandler = new Handler();
     private final IBinder mBinder = new LocalBinder();
@@ -53,10 +50,6 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent.putExtra(EXTRA_URL, uri.toString());
         intent.putExtra(EXTRA_PACKAGE_NAME, packageName);
-
-        Calendar cal = Calendar.getInstance();
-        intent.putExtra(EXTRA_METADATA, DateFormat.getDateTimeInstance().format(cal.getTime()));
-
         context.startService(intent);
     }
 
