@@ -58,6 +58,11 @@ public class DonateActivity extends AppCompatActivity implements BillingProcesso
         /*
          * Called when requested PRODUCT ID was successfully purchased
          */
+
+        if (details != null) {
+            CheckPreferences.setDonationStatus(this, true);
+            setContentView(R.layout.activity_donated);
+        }
     }
 
     @Override
