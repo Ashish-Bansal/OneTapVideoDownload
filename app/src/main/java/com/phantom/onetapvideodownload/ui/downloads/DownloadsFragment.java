@@ -26,6 +26,8 @@ public class DownloadsFragment extends Fragment {
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.downloadRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setReverseLayout(true);
+        layoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
 
