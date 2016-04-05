@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VideoDatabase extends SQLiteOpenHelper {
-    private static final int VIDEO_TYPE_BROWSER = 0;
-    private static final int VIDEO_TYPE_YOUTUBE = 1;
+    public static final int VIDEO_TYPE_BROWSER = 0;
+    public static final int VIDEO_TYPE_YOUTUBE = 1;
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "VideoDatabase";

@@ -30,23 +30,34 @@ public class ProxyDownloadManager extends IntentService {
 
     public static void startActionYoutubeDownload(Context context, long videoId, String filename,
                                                   String downloadLocation, int itag) {
+        Intent intent = getActionYoutubeDownload(context, videoId, filename, downloadLocation, itag);
+        context.startService(intent);
+    }
+
+    public static Intent getActionYoutubeDownload(Context context, long videoId, String filename,
+                                                  String downloadLocation, int itag) {
         Intent intent = new Intent(context, ProxyDownloadManager.class);
         intent.setAction(ACTION_START_DOWNLOAD);
         intent.putExtra(EXTRA_VIDEO_ID, videoId);
         intent.putExtra(EXTRA_FILENAME, filename);
         intent.putExtra(EXTRA_DOWNLOAD_LOCATION, downloadLocation);
         intent.putExtra(EXTRA_VIDEO_ITAG, itag);
+        return intent;
+    }
+    public static void startActionBrowserDownload(Context context, long videoId, String filename,
+                                                  String downloadLocation) {
+        Intent intent = getActionBrowserDownload(context, videoId, filename, downloadLocation);
         context.startService(intent);
     }
 
-    public static void startActionBrowserDownload(Context context, long videoId, String filename,
+    public static Intent getActionBrowserDownload(Context context, long videoId, String filename,
                                                   String downloadLocation) {
         Intent intent = new Intent(context, ProxyDownloadManager.class);
         intent.setAction(ACTION_START_DOWNLOAD);
         intent.putExtra(EXTRA_VIDEO_ID, videoId);
         intent.putExtra(EXTRA_FILENAME, filename);
         intent.putExtra(EXTRA_DOWNLOAD_LOCATION, downloadLocation);
-        context.startService(intent);
+        return intent;
     }
 
     public static void startActionYoutubeInserted(Context context, long videoId, String filename,

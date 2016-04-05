@@ -20,6 +20,7 @@ import com.phantom.onetapvideodownload.Video.BrowserVideo;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
 import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
+import com.phantom.onetapvideodownload.downloader.ProxyDownloadManager;
 import com.phantom.onetapvideodownload.ui.MainActivity;
 import com.phantom.onetapvideodownload.utils.CheckPreferences;
 import com.phantom.onetapvideodownload.utils.Global;
@@ -139,14 +140,34 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
             notificationId.set(possibleId);
         }
 
-        Intent downloadIntent = new Intent(this, MainActivity.class);
-        downloadIntent.putExtra("videoId", videoId);
+        VideoDatabase videoDatabase = VideoDatabase.getDatabase(this);
+        Intent instantDownloadIntent = null;
+        if (VideoDatabase.VIDEO_TYPE_BROWSER == videoDatabase.getCategory(videoId)) {
+            instantDownloadIntent = ProxyDownloadManager.getActionBrowserDownload(this,
+                    videoId,
+                    Global.getFilenameFromUrl(url),
+                    CheckPreferences.getDownloadLocation(this)
+                    );
+        } else if (VideoDatabase.VIDEO_TYPE_YOUTUBE == videoDatabase.getCategory(videoId)) {
+            YoutubeVideo video = (YoutubeVideo)videoDatabase.getVideo(videoId);
+            int itag = video.getBestVideoFormat().itag;
+            instantDownloadIntent = ProxyDownloadManager.getActionYoutubeDownload(this,
+                    videoId,
+                    Global.getFilenameFromUrl(url),
+                    CheckPreferences.getDownloadLocation(this),
+                    itag
+                    );
+        }
 
-        PendingIntent downloadPendingIntent = PendingIntent.getActivity(this,
+        if (instantDownloadIntent == null) {
+            return;
+        }
+
+        PendingIntent instantDownloadPendingIntent = PendingIntent.getService(this,
                 possibleId,
-                downloadIntent,
+                instantDownloadIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
-        mBuilder.addAction(R.drawable.download, "Download", downloadPendingIntent);
+        mBuilder.addAction(R.drawable.download, "Download", instantDownloadPendingIntent);
 
         Intent viewIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         viewIntent.setDataAndType(Uri.parse(url), "video/mp4");
@@ -163,6 +184,13 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
                 PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.addAction(R.drawable.browser, "Open", openPendingIntent);
 
+
+        Intent downloadIntent = new Intent(this, MainActivity.class);
+        downloadIntent.putExtra("videoId", videoId);
+        PendingIntent downloadPendingIntent = PendingIntent.getActivity(this,
+                possibleId,
+                downloadIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(downloadPendingIntent);
 
         final NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
