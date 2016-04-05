@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">"Einstellungen"</string>
+    <string name="action_clear_videos">"URL Log leeren"</string>
+    <string name="url_log">"URL Log"</string>
+    <string name="prefs_open_url_log">"URL Log öffnen"</string>
+    <string name="no_data_available">"Keine Daten vorhanden"</string>
+    <string name="pref_url_logging_title">"URL Logging aktivieren"</string>
+    <string name="pref_url_logging_summary">"URLs speichern um später darauf zuzugreifen"</string>
+    <string name="pref_url_logging_header">"URL Logging"</string>
+    <string name="pref_notification_header">"Benachrichtigungsoptionen"</string>
+    <string name="pref_notification_enable_title">"Benachrichtigungen aktivieren"</string>
+    <string name="pref_notification_enable_summary">"Benachrichtigung für Videos im Stream"</string>
+    <string name="pref_notification_count_title">"Maximale Anzahl an Benachrichtigungen"</string>
+    <string name="pref_notification_dismiss_time_title">"Benachrichtigung ausblenden nach"</string>
+    <string name="xposed_not_found_title">"Xposed Framework nicht gefunden"</string>
+    <string name="xposed_not_found_description">"Zum Nutzen dieser App ist ein gerootetes Gerät, sowie das Xposed Framework erforderlich"</string>
+    <string name="module_not_enabled_title">"Modul nicht aktiviert oder Neustart des Geräts erforderlich"</string>
+    <string name="module_not_enabled_description">"Bitte aktiviere dieses Modul im Xposed Installer und starte das Gerät neu."</string>
+    <string name="notification_dismiss_time">"15"</string>
+    <string name="notification_count">"1"</string>
+    <string name="permission_accepted">"One Tap Video Download: Schreibzugriff genehmigt"</string>
+    <string name="permission_denied">"One Tap Video Download: Schreibzugriff abgelehnt"</string>
+    <string name="accept_write_permission_title">"Aktiviere Schreibzugriff auf dem Speicher"</string>
+    <string name="accept_write_permission_description">"Es ist erforderlich, der App Schreibzugriff zu genehmigen, damit deine  heruntergeladenen Videos auf dem Speicher des Geräts abgelegt werden können.
+        \n \n Die folgenden Schritte sind anzuwenden:
+        \n 1. Drücke \"Fortsetzen\"
+        \n 2. Wählen \"Berechtigungen\"
+        \n 3. Aktiviere den Schreibzugriff
+        \n 4. Starte die App neu"
+    </string>
+    <string name="pref_notification_vibrate_title">"Vibration bei Benachrichtigung"</string>
+    <string name="pref_notification_vibrate_summary">"Das Gerät vibriert, wenn ein Video gestreamt wird. "</string>
+    <string name="pref_notification_vibrate_amount_title">"Vibrationsdauer"</string>
+    <string name="default_vibrate_amount">"200"</string>
+    <string name="pref_notification_headsup_title">"Heads up Benachrichtigungen aktivieren"</string>
+    <string name="pref_notification_headsup_summary">"Heads up Benachrichtigungen zusätzlich zu normalen Benachrichtigungen"</string>
+    <string name="pref_download_header">"Downloadoptionen"</string>
+    <string name="prefs_download_location_title">"Downloadverzeichnis wählen"</string>
+    <string name="open">"Öffnen"</string>
+    <string name="share">"Teilen"</string>
+    <string name="download_in_other_resolution">"Download in anderer Auflösung "</string>
+    <string name="remove_from_list">"Aus Liste entfernen"</string>
+    <string name="delete_from_storage">"Löschen "</string>
+    <string name="details">"Eigenschaften"</string>
+    <string name="resume">"Fortsetzen"</string>
+    <string name="pause">"Pause"</string>
+    <string name="filename">"Dateiname"</string>
+    <string name="enter_filename">"Dateinamen eingeben"</string>
+    <string name="video_quality">"Videoqualität"</string>
+    <string name="download_location">"Downloadverzeichnis"</string>
+    <string name="download_later">"Später herunterladen"</string>
+    <string name="start_download">"Starte Download"</string>
+    <string name="unable_to_delete_file">"Löschvorgang fehlgeschlagen"</string>
+    <string name="file_deleted_successfully">"Datei erfolgreich gelöscht "</string>
+    <string name="delete_confirmation">"Löschbestätigung "</string>
+    <string name="delete_confirmation_content">"Bist du sicher, dass der Download vom Speicher gelöscht werden soll? "</string>
+    <string name="yes">"Ja"</string>
+    <string name="no">"Nein"</string>
+    <string name="remove_from_list_confirmation">"Löschbestätigung"</string>
+    <string name="remove_from_list_confirmation_content">"Bist du sicher, dass du den Download aus der Liste entfernen möchtest? "</string>
+    <string name="progress_dialog">"Downloadlinks werden abgerufen"</string>
+    <string name="please_wait">"Bitte warten.... "</string>
+    <string name="unable_to_fetch">"Abrufen der Links nicht möglich.  Bitte erneut versuchen"</string>
+    <string name="total_size">"Gesamtgröße"</string>
+    <string name="downloaded_size">"Heruntergeladene Größe"</string>
+    <string name="okay">"Okay"</string>
+    <string name="unknown_file_size">"Unbekannte Dateigröße"</string>
+    <string name="view_pager_title_downloads">"Downloads"</string>
+    <string name="md_choose_label">"Auswählen"</string>
+    <string name="menu_item_plus_one">"Gib uns +1"</string>
+    <string name="menu_item_rate">"Diese App bewerten"</string>
+    <string name="menu_item_donate">"Spenden"</string>
+    <string name="menu_item_translate">"Hilf beim Übersetzen"</string>
+    <string name="menu_item_help">"Kontakt"</string>
+    <string name="menu_item_about">"Über"</string>
+    <string name="about_intro">"One Tap Video Download ist ein kostenloses Open Source Xposed Modul, welches es ermöglicht, Videos aus vielen Apps, wie Browsern, Facebook, etc. komfortabel herunterzuladen und abzuspielen"</string>
+    <string name="about_developed_by">"Entwickelt von"</string>
+    <string name="about_developer_name">"Ashish Bansal"</string>
+    <string name="about_copyright">"© 2016 One Tap Video Download"</string>
+    <string name="about_credits">"Danksagungen : Haariger Harald, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Julia Yanovskaya, Open.Orange und all die Anderen, welche ich eventuell vergessen habe. "</string>
+    <string name="donate">"Spenden"</string>
+    <string name="donate_description">"Ich arbeite in meiner Freizeit an One Tap Video Download. Bitte unterstütze die weitere Entwicklung wenn möglich durch eine Spende. Danke! "</string>
+    <string name="donate_thanks_for_donation">"Vielen Dank für die Spende! "</string>
+</resources>
