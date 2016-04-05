@@ -91,8 +91,11 @@
     <string name="donate">Donate</string>
     <string name="donate_description">I work on One Tap Video Download in my free time. Please support development by donating if possible. Thanks!</string>
     <string name="via_wallet">Via Google Wallet</string>
+    <string name="via_paypal">Via Paypal</string>
     <string name="via_playstore">Via Playstore</string>
-    <string name="donate_thanks_for_donation">Thanks for donation!</string>
+    <string name="select_donation_amount">Select Donation amount</string>
+    <string name="donate_thanks_for_donation">Thanks for the donation!</string>
+    <string name="donate_thanks_for_donation_summary">I\'m really glad to know that you have contributed to this project. Thanks a lot! </string>
     <string name="google_services_not_found_title">Play services not found</string>
     <string name="google_services_not_found_summary">Please choose some other donation method as play services are unavailable on this device.</string>
 
