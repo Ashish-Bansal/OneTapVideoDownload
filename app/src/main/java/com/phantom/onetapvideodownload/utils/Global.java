@@ -1,5 +1,6 @@
 package com.phantom.onetapvideodownload.utils;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -81,11 +82,18 @@ public class Global {
     }
 
     public static void startOpenIntent(Context context, String fileLocation) {
-        Intent openIntent = new Intent();
-        openIntent.setAction(android.content.Intent.ACTION_VIEW);
-        openIntent.setDataAndType(Uri.parse(fileLocation), "video/*");
-        openIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(openIntent);
+        try {
+            Intent openIntent = new Intent();
+            openIntent.setAction(android.content.Intent.ACTION_VIEW);
+            openIntent.setDataAndType(Uri.parse(fileLocation), "video/*");
+            openIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(openIntent);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+            Toast.makeText(context,
+                    context.getResources().getString(R.string.play_video_activity_not_found),
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     public static void startFileShareIntent(Context context, String fileLocation) {

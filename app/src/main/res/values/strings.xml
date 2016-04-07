@@ -100,6 +100,8 @@
     <string name="google_services_not_found_title">Play services not found</string>
     <string name="google_services_not_found_summary">Please choose some other donation method as play services are unavailable on this device.</string>
 
+    <string name="play_video_activity_not_found">No application found to play video.</string>
+
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
         <item>2 Notifications</item>
