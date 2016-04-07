@@ -93,6 +93,7 @@
     <string name="via_wallet">Via Google Wallet</string>
     <string name="via_paypal">Via Paypal</string>
     <string name="via_playstore">Via Playstore</string>
+    <string name="select_donation_method">Select Donation method</string>
     <string name="select_donation_amount">Select Donation amount</string>
     <string name="donate_thanks_for_donation">Thanks for the donation!</string>
     <string name="donate_thanks_for_donation_summary">I\'m really glad to know that you have contributed to this project. Thanks a lot! </string>

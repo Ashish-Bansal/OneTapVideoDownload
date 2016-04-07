@@ -39,7 +39,7 @@ public class DonateActivity extends AppCompatActivity implements BillingProcesso
                 donationMethods.add(v.getContext().getString(R.string.via_playstore));
 
                 new MaterialDialog.Builder(v.getContext())
-                        .title(R.string.select_donation_amount)
+                        .title(R.string.select_donation_method)
                         .items(donationMethods)
                         .itemsCallback(new MaterialDialog.ListCallback() {
                             @Override
@@ -58,8 +58,9 @@ public class DonateActivity extends AppCompatActivity implements BillingProcesso
                                         startActivity(paypalIntent);
                                         break;
                                     case 2 :
-                                        List<String> donationAmounts = Arrays.asList("1 USD", "2 USD", "4USD", "10USD");
+                                        List<String> donationAmounts = Arrays.asList("1 USD", "2 USD", "4 USD", "10 USD");
                                         new MaterialDialog.Builder(dialog.getContext())
+                                                .title(R.string.select_donation_amount)
                                                 .items(donationAmounts)
                                                 .itemsCallback(new MaterialDialog.ListCallback() {
                                                     @Override
