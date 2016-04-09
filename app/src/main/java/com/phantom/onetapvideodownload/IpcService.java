@@ -188,20 +188,13 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
         VideoDatabase videoDatabase = VideoDatabase.getDatabase(this);
         Intent instantDownloadIntent = null;
         if (VideoDatabase.VIDEO_TYPE_BROWSER == videoDatabase.getCategory(videoId)) {
-            instantDownloadIntent = ProxyDownloadManager.getActionBrowserDownload(this,
-                    videoId,
-                    Global.getFilenameFromUrl(url),
-                    CheckPreferences.getDownloadLocation(this)
-                    );
+            instantDownloadIntent = ProxyDownloadManager.getActionBrowserDownload(this, videoId,
+                    title, CheckPreferences.getDownloadLocation(this));
         } else if (VideoDatabase.VIDEO_TYPE_YOUTUBE == videoDatabase.getCategory(videoId)) {
             YoutubeVideo video = (YoutubeVideo)videoDatabase.getVideo(videoId);
             int itag = video.getBestVideoFormat().itag;
-            instantDownloadIntent = ProxyDownloadManager.getActionYoutubeDownload(this,
-                    videoId,
-                    Global.getFilenameFromUrl(url),
-                    CheckPreferences.getDownloadLocation(this),
-                    itag
-                    );
+            instantDownloadIntent = ProxyDownloadManager.getActionYoutubeDownload(this, videoId,
+                    title, CheckPreferences.getDownloadLocation(this), itag);
         }
 
         if (instantDownloadIntent == null) {
@@ -228,7 +221,6 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
                 openIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.addAction(R.drawable.browser, "Open", openPendingIntent);
-
 
         Intent downloadIntent = new Intent(this, MainActivity.class);
         downloadIntent.putExtra("videoId", videoId);
@@ -258,7 +250,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     private void handleActionSaveBrowserVideo(Video video) {
         long id = saveUrlToDatabase(video);
         if (CheckPreferences.notificationsEnabled(this)) {
-            showNotification(video.getUrl(), Global.getFilenameFromUrl(video.getUrl()), id);
+            showNotification(video.getUrl(), video.getTitle(), id);
         }
     }
 
