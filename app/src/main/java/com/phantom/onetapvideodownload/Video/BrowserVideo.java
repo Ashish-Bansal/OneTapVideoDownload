@@ -33,9 +33,9 @@ public class BrowserVideo implements Video {
         mContext = context;
         mUrl = url;
         mTitle = title;
-        if (mTitle.isEmpty()) {
+        if (mTitle == null || mTitle.isEmpty()) {
             mTitle = Global.getFilenameFromUrl(url);
-            if (mTitle.isEmpty()) {
+            if (mTitle == null || mTitle.isEmpty()) {
                 mTitle = "otv_unnamed_video.mp4";
             }
         }

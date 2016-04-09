@@ -40,6 +40,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     private static final String TAG = "IpcService";
 
     public static final String EXTRA_URL = PACKAGE_NAME + ".extra.url";
+    public static final String EXTRA_TITLE = PACKAGE_NAME + ".extra.title";
     public static final String EXTRA_PARAM_STRING = PACKAGE_NAME + ".extra.url";
     public static final String EXTRA_PACKAGE_NAME = PACKAGE_NAME + ".extra.package_name";
     public static final String EXTRA_NOTIFICATION_TITLE = PACKAGE_NAME + ".extra.notification_title";
@@ -127,11 +128,12 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
             if (ACTION_SAVE_BROWSER_VIDEO.equals(action)) {
                 String url = intent.getStringExtra(EXTRA_URL);
                 String packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME);
+                String title = intent.getStringExtra(EXTRA_TITLE);
                 if (url == null || url.isEmpty() || Global.getFilenameFromUrl(url) == null) {
                     return START_STICKY;
                 }
 
-                Video video = new BrowserVideo(this, url);
+                Video video = new BrowserVideo(this, url, title);
                 if (packageName != null) {
                     video.setPackageName(packageName);
                 } else {
