@@ -12,9 +12,9 @@ import android.net.NetworkInfo;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
-import com.phantom.onetapvideodownload.ui.MainActivity;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
+import com.phantom.onetapvideodownload.ui.MainActivity;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -39,7 +39,6 @@ public class DownloadHandler {
     private final static AtomicInteger mNotificationId = new AtomicInteger(150);
     private static long lastWriteTime = System.currentTimeMillis();
     private Call mCall;
-    private final static String tempFileExtension = ".otvd";
 
     DownloadHandler(Context context, DownloadInfo downloadInfo) {
         mContext = context;
@@ -49,7 +48,7 @@ public class DownloadHandler {
     }
 
     public void startDownload() {
-        File filePath = new File(mDownloadInfo.getDownloadLocation() + tempFileExtension);
+        File filePath = new File(mDownloadInfo.getDownloadLocation());
         downloadFile(mDownloadInfo.getUrl(), filePath);
         setStatus(DownloadInfo.Status.Downloading);
         mContext.startService(DownloadManager.getActionUpdateUi());
@@ -108,10 +107,6 @@ public class DownloadHandler {
                             bufferedOutputStream.close();
                             inputStream.close();
 
-                            String tempFile = file.getAbsolutePath();
-                            File originalFile = new File(tempFile.substring(0, tempFile.length() - tempFileExtension.length()));
-                            file.renameTo(originalFile);
-
                             setStatus(DownloadInfo.Status.Completed);
                             writeToDatabase();
                             DownloadManager downloadManager = (DownloadManager) mContext;
@@ -131,7 +126,7 @@ public class DownloadHandler {
                                 inputStream.close();
                             }
                         } catch (IOException ioException) {
-                                ioException.printStackTrace();
+                            ioException.printStackTrace();
                         }
                     } finally {
                         writeToDatabase();
