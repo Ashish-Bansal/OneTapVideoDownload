@@ -136,8 +136,6 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
                 Video video = new BrowserVideo(this, url, title);
                 if (packageName != null) {
                     video.setPackageName(packageName);
-                } else {
-                    Log.e(TAG, "Package name is invalid");
                 }
                 handleActionSaveBrowserVideo(video);
             } else if (ACTION_SAVE_YOUTUBE_VIDEO.equals(action)) {
