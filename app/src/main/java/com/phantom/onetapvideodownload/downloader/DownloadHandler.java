@@ -11,16 +11,20 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 import com.phantom.onetapvideodownload.ui.MainActivity;
+import com.phantom.onetapvideodownload.utils.Global;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Collection;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -49,8 +53,8 @@ public class DownloadHandler {
 
     public void startDownload() {
         File filePath = new File(mDownloadInfo.getDownloadLocation());
-        downloadFile(mDownloadInfo.getUrl(), filePath);
         setStatus(DownloadInfo.Status.Downloading);
+        downloadFile(mDownloadInfo.getUrl(), filePath);
         mContext.startService(DownloadManager.getActionUpdateUi());
     }
 
@@ -64,7 +68,41 @@ public class DownloadHandler {
         return isAvailable;
     }
 
-    private void downloadFile(String url, final File file) {
+    private void downloadFile(String url, File file) {
+        if (Global.isLocalFile(url)) {
+            handleLocalFileDownload(url, file);
+        } else {
+            handleRemoteFileDownload(url, file);
+        }
+    }
+
+    private void handleLocalFileDownload(String url, final File file) {
+        final File sourceFile = new File(url);
+        if (!sourceFile.exists()) {
+            Toast.makeText(mContext, R.string.link_expired_download_again, Toast.LENGTH_LONG).show();
+            setStatus(DownloadInfo.Status.NetworkProblem);
+            writeToDatabase();
+            return;
+        }
+
+        mDownloadInfo.setContentLength(sourceFile.length());
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    InputStream inputStream = new FileInputStream(sourceFile);
+                    inputStream.skip(mDownloadInfo.getDownloadedLength());
+                    OutputStream outputStream = new FileOutputStream(file);
+                    writeData(inputStream, outputStream);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).run();
+    }
+
+    private void handleRemoteFileDownload(String url, final File file) {
         if (isNetworkAvailable()) {
             OkHttpClient Client = new OkHttpClient();
             Request request = new Request.Builder()
@@ -82,59 +120,66 @@ public class DownloadHandler {
 
                 @Override
                 public void onResponse(Call call, Response response) {
-                    BufferedOutputStream bufferedOutputStream = null;
-                    InputStream inputStream = response.body().byteStream();
-
                     try {
                         if (response.isSuccessful()) {
+                            InputStream inputStream = response.body().byteStream();
                             if (!started()) {
                                 mDownloadInfo.setContentLength(response.body().contentLength());
                             }
 
-                            bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(file, started()));
-                            byte data[] = new byte[1024 * 4];
-                            int count;
-                            while ((count = inputStream.read(data)) != -1) {
-                                bufferedOutputStream.write(data, 0, count);
-                                mDownloadInfo.addDownloadedLength(count);
-                                long currentTime = System.currentTimeMillis();
-                                if (currentTime - lastWriteTime > 8000L) {
-                                    writeToDatabase();
-                                    lastWriteTime = currentTime;
-                                }
-                            }
-
-                            bufferedOutputStream.close();
-                            inputStream.close();
-
-                            setStatus(DownloadInfo.Status.Completed);
-                            writeToDatabase();
-                            DownloadManager downloadManager = (DownloadManager) mContext;
-                            downloadManager.updateUi();
-                            showNotification();
+                            OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file, started()));
+                            writeData(inputStream, outputStream);
                         } else {
                             Log.v(TAG, "Status Code : " + response.code());
                         }
                     } catch (IOException e) {
                         Log.e("DownloadService", "Exception : ", e);
-                        try {
-                            if (bufferedOutputStream != null) {
-                                bufferedOutputStream.close();
-                            }
-
-                            if (inputStream != null) {
-                                inputStream.close();
-                            }
-                        } catch (IOException ioException) {
-                            ioException.printStackTrace();
-                        }
-                    } finally {
-                        writeToDatabase();
                     }
                 }
             });
         } else {
             setStatus(DownloadInfo.Status.NetworkNotAvailable);
+            writeToDatabase();
+        }
+    }
+
+    private void writeData(InputStream inputStream, OutputStream outputStream) {
+        try {
+            byte data[] = new byte[1024 * 4];
+            int count;
+            while ((count = inputStream.read(data)) != -1) {
+                outputStream.write(data, 0, count);
+                mDownloadInfo.addDownloadedLength(count);
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - lastWriteTime > 8000L) {
+                    writeToDatabase();
+                    lastWriteTime = currentTime;
+                }
+            }
+
+            outputStream.close();
+            inputStream.close();
+
+            setStatus(DownloadInfo.Status.Completed);
+            writeToDatabase();
+
+            DownloadManager downloadManager = (DownloadManager) mContext;
+            downloadManager.updateUi();
+            showNotification();
+        } catch (Exception e) {
+            e.printStackTrace();
+            try {
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+
+                if (inputStream != null) {
+                    inputStream.close();
+                }
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        } finally {
             writeToDatabase();
         }
     }

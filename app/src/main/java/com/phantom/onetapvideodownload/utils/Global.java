@@ -178,4 +178,8 @@ public class Global {
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { to });
         context.startActivity(Intent.createChooser(emailIntent, "Send email..."));
     }
+
+    public static boolean isLocalFile(String path) {
+        return path.startsWith("file://") || path.startsWith("/");
+    }
 }
