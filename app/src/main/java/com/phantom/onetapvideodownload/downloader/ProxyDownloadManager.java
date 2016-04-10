@@ -11,6 +11,7 @@ import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
 import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.BrowserDownloadInfo;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.YoutubeDownloadInfo;
+import com.phantom.onetapvideodownload.utils.Global;
 
 import java.io.File;
 
@@ -120,10 +121,12 @@ public class ProxyDownloadManager extends IntentService {
             return -1;
         }
 
+        String nonDuplicateFilename = Global.suggestName(downloadLocation, filename);
+        File downloadFile = new File(downloadLocation, nonDuplicateFilename);
         BrowserDownloadInfo browserDownloadInfo = new BrowserDownloadInfo(this,
                 filename,
                 video.getUrl(),
-                new File(downloadLocation, filename).getAbsolutePath());
+                downloadFile.getAbsolutePath());
 
         browserDownloadInfo.setPackageName(video.getPackageName());
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(this);
@@ -139,10 +142,13 @@ public class ProxyDownloadManager extends IntentService {
         }
 
         filename += '.' + YoutubeVideo.getExtensionForItag(itag);
+
+        String nonDuplicateFilename = Global.suggestName(downloadLocation, filename);
+        File downloadFile = new File(downloadLocation, nonDuplicateFilename);
         YoutubeDownloadInfo youtubeDownloadInfo = new YoutubeDownloadInfo(this,
                 filename,
                 video.getVideoUrl(itag),
-                new File(downloadLocation, filename).getAbsolutePath(),
+                downloadFile.getAbsolutePath(),
                 video.getParam(),
                 itag);
 

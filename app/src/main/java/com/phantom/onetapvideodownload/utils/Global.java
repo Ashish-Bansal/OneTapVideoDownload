@@ -31,6 +31,28 @@ public class Global {
         return uri.getLastPathSegment();
     }
 
+    public static String suggestName(String location, String filename) {
+        File downloadFile = new File(location, filename);
+        if (!downloadFile.exists()) {
+            return downloadFile.getName();
+        }
+
+        int dotPos = filename.lastIndexOf('.');
+        int openingBracketPos = filename.lastIndexOf('(');
+        int closingBracketPos = filename.lastIndexOf(')');
+        if (dotPos == closingBracketPos + 1 && closingBracketPos - openingBracketPos == 2) {
+            String numberString = filename.substring(openingBracketPos + 1, closingBracketPos);
+            Integer number = Integer.parseInt(numberString);
+            number = number  + 1;
+            filename = filename.substring(0, openingBracketPos + 1) + number.toString()
+                    + filename.charAt(closingBracketPos) + filename.substring(dotPos);
+        } else {
+            filename = filename.substring(0, dotPos) + "(1)" + filename.substring(dotPos);
+        }
+
+        return suggestName(location, filename);
+    }
+
     public static boolean isResourceAvailable(String urlString) {
         URL url;
         HttpURLConnection urlConnection;
