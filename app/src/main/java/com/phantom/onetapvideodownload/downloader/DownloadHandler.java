@@ -99,7 +99,7 @@ public class DownloadHandler {
                     e.printStackTrace();
                 }
             }
-        }).run();
+        }).start();
     }
 
     private void handleRemoteFileDownload(String url, final File file) {
