@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     private static RecyclerView mDownloadDialogRecyclerView;
     private static final String APP_URL = "https://play.google.com/store/apps/details?id=com.phantom.onetapvideodownload";
     private PlusOneButton mPlusOneButton;
+    private ApplicationUpdateNotification mApplicationUpdateNotification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         mTracker.setScreenName("Activity~" + getClass().getName());
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
         checkXposedInstallation();
+        mApplicationUpdateNotification = new ApplicationUpdateNotification(this);
+        mApplicationUpdateNotification.checkForUpdate();
     }
 
     @Override

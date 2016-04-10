@@ -102,6 +102,8 @@
 
     <string name="play_video_activity_not_found">No application found to play video.</string>
     <string name="link_expired_download_again">Download link has been expired. Please add download again.</string>
+    <string name="new_update_available_title">New Update Available</string>
+    <string name="download">Download</string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
