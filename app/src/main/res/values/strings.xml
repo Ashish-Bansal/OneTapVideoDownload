@@ -100,6 +100,7 @@
     <string name="google_services_not_found_summary">Thanks for considering but it\'s not possible to donate without playstore being installed on device.</string>
 
     <string name="play_video_activity_not_found">No application found to play video.</string>
+    <string name="share_video_activity_not_found">No application found to share video.</string>
     <string name="link_expired_download_again">Download link has been expired. Please add download again.</string>
     <string name="new_update_available_title">New Update Available</string>
     <string name="download">Download</string>

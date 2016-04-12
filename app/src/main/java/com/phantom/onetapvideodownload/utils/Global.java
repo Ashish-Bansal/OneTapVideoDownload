@@ -119,16 +119,23 @@ public class Global {
     }
 
     public static void startFileShareIntent(Context context, String fileLocation) {
-        Intent shareIntent = new Intent();
-        shareIntent.setAction(Intent.ACTION_SEND);
+        try {
+            Intent shareIntent = new Intent();
+            shareIntent.setAction(Intent.ACTION_SEND);
 
-        Uri fileUri = FileProvider.getUriForFile(context, "com.phantom.fileprovider",
-                new File(fileLocation));
-        shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
-        shareIntent.setType(Global.VIDEO_MIME);
-        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        context.startActivity(shareIntent);
+            Uri fileUri = FileProvider.getUriForFile(context, "com.phantom.fileprovider",
+                    new File(fileLocation));
+            shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+            shareIntent.setType(Global.VIDEO_MIME);
+            shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            context.startActivity(shareIntent);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+            Toast.makeText(context,
+                    context.getResources().getString(R.string.share_video_activity_not_found),
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     public static void deleteFile(Context context, String fileLocation) {
