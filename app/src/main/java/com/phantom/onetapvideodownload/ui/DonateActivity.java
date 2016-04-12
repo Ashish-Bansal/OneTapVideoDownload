@@ -1,7 +1,6 @@
 package com.phantom.onetapvideodownload.ui;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -13,7 +12,6 @@ import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
 import com.phantom.onetapvideodownload.R;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,60 +27,30 @@ public class DonateActivity extends AppCompatActivity implements BillingProcesso
         setContentView(R.layout.activity_donation);
         mBillingProcessor = new BillingProcessor(this, mPublicLicenseKey, this);
 
-        Button donateButton = (Button)findViewById(R.id.donate_button);
+        Button donateButton = (Button) findViewById(R.id.donate_button);
         donateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<String> donationMethods = new ArrayList<>();
-                donationMethods.add(v.getContext().getString(R.string.via_wallet));
-                donationMethods.add(v.getContext().getString(R.string.via_paypal));
-                donationMethods.add(v.getContext().getString(R.string.via_playstore));
-
-                new MaterialDialog.Builder(v.getContext())
-                        .title(R.string.select_donation_method)
-                        .items(donationMethods)
+                List<String> donationAmounts = Arrays.asList("1 USD", "2 USD", "4 USD", "10 USD");
+                new MaterialDialog.Builder(DonateActivity.this)
+                        .title(R.string.select_donation_amount)
+                        .items(donationAmounts)
                         .itemsCallback(new MaterialDialog.ListCallback() {
                             @Override
                             public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                                switch(which) {
-                                    case 0 :
-                                        String walletUrl = "https://wallet.google.com/manage/#sendMoney:bansal.ashish096@gmail.com";
-                                        Intent walletIntent = new Intent(Intent.ACTION_VIEW);
-                                        walletIntent.setData(Uri.parse(walletUrl));
-                                        startActivity(walletIntent);
-                                        break;
-                                    case 1 :
-                                        String paypalUrl = "http://www.ashish-bansal.in/paypal-donation.html";
-                                        Intent paypalIntent = new Intent(Intent.ACTION_VIEW);
-                                        paypalIntent.setData(Uri.parse(paypalUrl));
-                                        startActivity(paypalIntent);
-                                        break;
-                                    case 2 :
-                                        List<String> donationAmounts = Arrays.asList("1 USD", "2 USD", "4 USD", "10 USD");
-                                        new MaterialDialog.Builder(dialog.getContext())
-                                                .title(R.string.select_donation_amount)
-                                                .items(donationAmounts)
-                                                .itemsCallback(new MaterialDialog.ListCallback() {
-                                                    @Override
-                                                    public void onSelection(MaterialDialog dialog, View itemView, int which, CharSequence text) {
-                                                        String productId = donationProductIds.get(0);
-                                                        if (which < donationProductIds.size()) {
-                                                            productId = donationProductIds.get(which);
-                                                        }
-                                                        boolean isAvailable = BillingProcessor.isIabServiceAvailable(DonateActivity.this);
-                                                        if(isAvailable) {
-                                                            mBillingProcessor.purchase(DonateActivity.this, productId);
-                                                        } else {
-                                                            new MaterialDialog.Builder(dialog.getContext())
-                                                                    .title(R.string.google_services_not_found_title)
-                                                                    .content(R.string.google_services_not_found_summary)
-                                                                    .positiveText(R.string.okay)
-                                                                    .show();
-                                                        }
-                                                    }
-                                                })
-                                                .show();
-                                        break;
+                                String productId = donationProductIds.get(0);
+                                if (which < donationProductIds.size()) {
+                                    productId = donationProductIds.get(which);
+                                }
+                                boolean isAvailable = BillingProcessor.isIabServiceAvailable(DonateActivity.this);
+                                if (isAvailable) {
+                                    mBillingProcessor.purchase(DonateActivity.this, productId);
+                                } else {
+                                    new MaterialDialog.Builder(dialog.getContext())
+                                            .title(R.string.google_services_not_found_title)
+                                            .content(R.string.google_services_not_found_summary)
+                                            .positiveText(R.string.okay)
+                                            .show();
                                 }
                             }
                         })
