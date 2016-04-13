@@ -130,7 +130,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
                 String packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME);
                 String title = intent.getStringExtra(EXTRA_TITLE);
                 if (url == null || url.isEmpty() || Global.getFilenameFromUrl(url) == null) {
-                    return START_STICKY;
+                    return START_NOT_STICKY;
                 }
 
                 Video video = new BrowserVideo(this, url, title);
@@ -152,13 +152,13 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
                 String emailBody = intent.getStringExtra(EXTRA_EMAIL_BODY);
                 if (notificationTitle == null || notificationBody== null || emailSubject== null
                         || emailBody== null) {
-                    return START_STICKY;
+                    return START_NOT_STICKY;
                 }
                 sendEmailNotification(notificationTitle, notificationBody, emailSubject, emailBody);
             }
         }
 
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 
     private void showNotification(String url, String title, long videoId) {
