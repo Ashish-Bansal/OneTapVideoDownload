@@ -46,7 +46,9 @@ import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionAdapter;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionIds;
 import com.phantom.onetapvideodownload.utils.CheckPreferences;
 import com.phantom.onetapvideodownload.utils.Global;
+import com.phantom.onetapvideodownload.utils.Invokable;
 import com.phantom.onetapvideodownload.utils.XposedChecker;
+import com.phantom.onetapvideodownload.utils.YoutubeParserProxy;
 import com.phantom.onetapvideodownload.utils.enums.AppPermissions;
 import com.phantom.onetapvideodownload.utils.enums.MaterialDialogIds;
 
@@ -54,7 +56,8 @@ import net.xpece.android.support.preference.Fixes;
 
 import java.io.File;
 
-public class MainActivity extends AppCompatActivity implements FolderChooserDialog.FolderCallback {
+public class MainActivity extends AppCompatActivity implements FolderChooserDialog.FolderCallback,
+        Invokable<Video, Integer> {
     private final static String TAG = "MainActivity";
     private Toolbar toolbar;
     private Tracker mTracker;
@@ -63,6 +66,9 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     private static final String APP_URL = "https://play.google.com/store/apps/details?id=com.phantom.onetapvideodownload";
     private PlusOneButton mPlusOneButton;
     private ApplicationUpdateNotification mApplicationUpdateNotification;
+    private MaterialDialog mProgressDialog;
+
+    public final static String ACTION_SHOW_DOWNLOAD_DIALOG = "com.phantom.onetapvideodownload.action.saveurl";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +88,6 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
             fm.executePendingTransactions();
         }
 
-        checkForDownloadDialog(getIntent());
-
         AnalyticsApplication application = (AnalyticsApplication) getApplication();
         mTracker = application.getDefaultTracker();
 
@@ -100,6 +104,36 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         checkAndRequestPermission(AppPermissions.External_Storage_Permission);
         if (mPlusOneButton != null) {
             mPlusOneButton.initialize(APP_URL, 0);
+        }
+    }
+
+    private void handleActionShareIntent(Intent intent) {
+        String type = intent.getType();
+        if (type != null && type.startsWith("text")) {
+            String videoUrl = intent.getStringExtra(Intent.EXTRA_TEXT);
+            if (videoUrl == null) {
+                return;
+            }
+
+
+            Uri uri = Uri.parse(videoUrl);
+            String videoParam = null;
+            if (videoUrl.contains("youtube")) {
+                videoParam = uri.getQueryParameter("v");
+            } else if (videoUrl.contains("youtu.be")) {
+                videoParam = uri.getLastPathSegment();
+            }
+
+            if (videoParam != null) {
+                mProgressDialog = new MaterialDialog.Builder(this)
+                        .title(R.string.progress_dialog)
+                        .content(R.string.please_wait)
+                        .progress(true, 0)
+                        .show();
+                YoutubeParserProxy.startParsing(this, videoParam, this);
+            } else {
+                Toast.makeText(this, R.string.invalid_url, Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -331,7 +365,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         });
     }
 
-    private void checkForDownloadDialog(Intent intent) {
+    private void handleActionDownloadDialog(Intent intent) {
         long videoId = intent.getLongExtra("videoId", -1);
         if (videoId != -1) {
             showVideoDownloadDialog(videoId);
@@ -340,7 +374,12 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
 
     @Override
     public void onNewIntent(Intent intent) {
-        checkForDownloadDialog(intent);
+        String actionName = intent.getAction();
+        if (Intent.ACTION_SEND.equals(actionName)) {
+            handleActionShareIntent(intent);
+        } else if (ACTION_SHOW_DOWNLOAD_DIALOG.equals(actionName)) {
+            handleActionDownloadDialog(intent);
+        }
     }
 
     public void showPlusOneDialog() {
@@ -393,5 +432,31 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     public void startActivity(Class activityClass) {
         Intent donateIntent = new Intent(this, activityClass);
         startActivity(donateIntent);
+    }
+
+    @Override
+    public Integer invoke(Video video) {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+
+        if (video != null) {
+            YoutubeVideo youtubeVideo = (YoutubeVideo)video;
+            youtubeVideo.setPackageName("com.google.android.youtube");
+
+            VideoDatabase videoDatabase = VideoDatabase.getDatabase(this);
+            long videoId = videoDatabase.addOrUpdateVideo(video);
+
+            Intent downloadIntent = new Intent(this, MainActivity.class);
+            downloadIntent.putExtra("videoId", videoId);
+            downloadIntent.setAction(ACTION_SHOW_DOWNLOAD_DIALOG);
+            downloadIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            downloadIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            downloadIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(downloadIntent);
+        } else {
+            Toast.makeText(this, R.string.unable_to_fetch, Toast.LENGTH_LONG).show();
+        }
+        return 0;
     }
 }

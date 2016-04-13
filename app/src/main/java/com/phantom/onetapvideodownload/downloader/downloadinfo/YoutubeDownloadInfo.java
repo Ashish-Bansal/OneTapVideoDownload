@@ -187,6 +187,7 @@ public class YoutubeDownloadInfo extends DownloadInfo implements Invokable<Video
         if (video != null) {
             long id = saveVideoToDatabase(youtubeVideo);
             Intent downloadIntent = new Intent(mContext, MainActivity.class);
+            downloadIntent.setAction(MainActivity.ACTION_SHOW_DOWNLOAD_DIALOG);
             downloadIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             downloadIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             downloadIntent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

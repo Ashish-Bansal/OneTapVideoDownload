@@ -223,6 +223,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
         mBuilder.addAction(R.drawable.browser, "Open", openPendingIntent);
 
         Intent downloadIntent = new Intent(this, MainActivity.class);
+        downloadIntent.setAction(MainActivity.ACTION_SHOW_DOWNLOAD_DIALOG);
         downloadIntent.putExtra("videoId", videoId);
         PendingIntent downloadPendingIntent = PendingIntent.getActivity(this,
                 possibleId,

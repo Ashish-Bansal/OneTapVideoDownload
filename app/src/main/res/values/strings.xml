@@ -64,6 +64,7 @@
     <string name="progress_dialog">Fetching Download Links</string>
     <string name="please_wait">Please wait&#8230;</string>
     <string name="unable_to_fetch">Unable to fetch links, Please try again</string>
+    <string name="invalid_url">Shared URL is invalid. Please try again.</string>
 
     <string name="total_size">Total Size</string>
     <string name="downloaded_size">Downloaded Size</string>
