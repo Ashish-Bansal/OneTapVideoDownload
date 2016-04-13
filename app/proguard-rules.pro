@@ -24,6 +24,7 @@
 -dontskipnonpubliclibraryclasses
 -dontwarn **
 -microedition
+-dontobfuscate
 
 -keep class com.phantom.onetapvideodownload.hooks.** { *; }
 -keep class com.phantom.onetapvideodownload.ui.MainActivity { *; }
