@@ -45,6 +45,7 @@ public class ProxyDownloadManager extends IntentService {
         intent.putExtra(EXTRA_VIDEO_ITAG, itag);
         return intent;
     }
+
     public static void startActionBrowserDownload(Context context, long videoId, String filename,
                                                   String downloadLocation) {
         Intent intent = getActionBrowserDownload(context, videoId, filename, downloadLocation);
@@ -91,7 +92,7 @@ public class ProxyDownloadManager extends IntentService {
                 int itag = intent.getIntExtra(EXTRA_VIDEO_ITAG, -1);
                 String downloadLocation = intent.getStringExtra(EXTRA_DOWNLOAD_LOCATION);
                 String filename = intent.getStringExtra(EXTRA_FILENAME);
-                long downloadId = -1;
+                long downloadId;
                 if (itag == -1) {
                     downloadId = insertBrowserVideo(videoId, filename, downloadLocation);
                 } else {
@@ -154,7 +155,6 @@ public class ProxyDownloadManager extends IntentService {
 
         youtubeDownloadInfo.setPackageName(video.getPackageName());
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(this);
-        long downloadId = downloadDatabase.addDownload(youtubeDownloadInfo);
-        return downloadId;
+        return downloadDatabase.addDownload(youtubeDownloadInfo);
     }
 }

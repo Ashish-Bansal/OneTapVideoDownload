@@ -160,8 +160,6 @@ public class YoutubeDownloadInfo extends DownloadInfo implements Invokable<Video
                         .show();
                 YoutubeParserProxy.startParsing(mContext, mParam, YoutubeDownloadInfo.this);
                 return true;
-            // ToDo: Implement the resume and pause functionality
-            // case R.string.details:
         }
 
         return false;
@@ -179,10 +177,6 @@ public class YoutubeDownloadInfo extends DownloadInfo implements Invokable<Video
 
     @Override
     public Integer invoke(Video video) {
-        if (mProgressDialog != null) {
-            mProgressDialog.dismiss();
-        }
-
         YoutubeVideo youtubeVideo = (YoutubeVideo)video;
         if (video != null) {
             long id = saveVideoToDatabase(youtubeVideo);
@@ -196,6 +190,11 @@ public class YoutubeDownloadInfo extends DownloadInfo implements Invokable<Video
         } else {
             Toast.makeText(mContext, R.string.unable_to_fetch, Toast.LENGTH_LONG).show();
         }
+
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+
         return 0;
     }
 

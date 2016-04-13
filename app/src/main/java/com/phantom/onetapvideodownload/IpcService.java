@@ -123,7 +123,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
         }
 
         if (intent != null && intent.getAction() != null) {
-            final String action = intent.getAction();
+            String action = intent.getAction();
             Log.e("IpcService", action);
             if (ACTION_SAVE_BROWSER_VIDEO.equals(action)) {
                 String url = intent.getStringExtra(EXTRA_URL);
