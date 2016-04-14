@@ -27,6 +27,8 @@ import com.phantom.onetapvideodownload.utils.Global;
 import com.phantom.onetapvideodownload.utils.Invokable;
 import com.phantom.onetapvideodownload.utils.YoutubeParserProxy;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -52,6 +54,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     private final IBinder mBinder = new LocalBinder();
     private static final AtomicInteger notificationId = new AtomicInteger();
     private static MediaChecker mMediaChecker;
+    private static final List<Runnable> notificationCancelRunnables = new ArrayList<>();
 
     public void sendEmailNotification(String notificationTitle, String notificationBody,
                                         String emailSubject, String emailBody) {
@@ -236,11 +239,18 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
         final int id = possibleId;
         notificationmanager.notify(id, mBuilder.build());
         int delayInSeconds = CheckPreferences.notificationDismissTime(this);
-        mHandler.postDelayed(new Runnable() {
+
+        if (notificationCancelRunnables.size() > id && notificationCancelRunnables.get(id) != null) {
+            mHandler.removeCallbacks(notificationCancelRunnables.get(id));
+        }
+        Runnable runnable = new Runnable() {
             public void run() {
                 notificationmanager.cancel(id);
+                notificationCancelRunnables.remove(id);
             }
-        }, delayInSeconds*1000);
+        };
+        notificationCancelRunnables.add(id, runnable);
+        mHandler.postDelayed(runnable, delayInSeconds*1000);
     }
 
     private long saveUrlToDatabase(Video video) {
