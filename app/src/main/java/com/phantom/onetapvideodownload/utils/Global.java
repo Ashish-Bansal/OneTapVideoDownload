@@ -1,6 +1,8 @@
 package com.phantom.onetapvideodownload.utils;
 
 import android.content.ActivityNotFoundException;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -188,5 +190,12 @@ public class Global {
 
     public static boolean isLocalFile(String path) {
         return path.startsWith("file://") || path.startsWith("/");
+    }
+
+    public static void copyUrlToClipboard(Context context, String url) {
+        ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        Uri copyUri = Uri.parse(url);
+        ClipData clip = ClipData.newUri(context.getContentResolver(), "URI", copyUri);
+        clipboard.setPrimaryClip(clip);
     }
 }

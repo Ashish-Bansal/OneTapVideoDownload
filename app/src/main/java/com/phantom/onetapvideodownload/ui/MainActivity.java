@@ -322,6 +322,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
 
         Button startDownloadButton = (Button)dialogView.findViewById(R.id.start_download);
         Button downloadLaterButton = (Button) dialogView.findViewById(R.id.download_later);
+        Button copyVideoLink = (Button) dialogView.findViewById(R.id.copy_download_link);
 
         startDownloadButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -362,6 +363,16 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
                 } else {
                     ProxyDownloadManager.startActionBrowserInserted(getApplicationContext(), videoId, filename, downloadLocation);
                 }
+            }
+        });
+
+        copyVideoLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                String url = video.getUrl();
+                Global.copyUrlToClipboard(getApplicationContext(), url);
+                Toast.makeText(getApplicationContext(), R.string.video_url_copied, Toast.LENGTH_SHORT).show();
             }
         });
     }

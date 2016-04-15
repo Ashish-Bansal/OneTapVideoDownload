@@ -1,7 +1,5 @@
 package com.phantom.onetapvideodownload.ui.urllog;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -23,6 +21,7 @@ import com.google.android.gms.analytics.Tracker;
 import com.phantom.onetapvideodownload.AnalyticsApplication;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.Video.Video;
+import com.phantom.onetapvideodownload.utils.Global;
 
 import java.util.ArrayList;
 
@@ -91,11 +90,8 @@ public class UrlLogActivity extends AppCompatActivity {
 
             @Override
             public boolean swipeRight(Video itemData) {
-                ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-                Uri copyUri = Uri.parse(itemData.getUrl());
-                ClipData clip = ClipData.newUri(getContentResolver(), "URI", copyUri);
-                clipboard.setPrimaryClip(clip);
-                displaySnackbar("URL copied", null, null);
+                Global.copyUrlToClipboard(getApplicationContext(), itemData.getUrl());
+                displaySnackbar(getResources().getString(R.string.video_url_copied), null, null);
                 return true;
             }
 
