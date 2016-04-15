@@ -45,27 +45,30 @@
             android:text="@string/copy_download_link" />
 
         <Button
+            android:id="@+id/start_download"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/copy_download_link"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:padding="10sp"
+            android:background="@color/transparent"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            android:text="@string/start_download" />
+
+        <Button
             android:id="@+id/download_later"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/copy_download_link"
-            android:layout_toRightOf="@+id/copy_download_link"
+            android:layout_below="@+id/copy_download_link"
+            android:layout_toLeftOf="@+id/start_download"
+            android:layout_toStartOf="@+id/start_download"
             android:padding="10sp"
             android:background="@color/transparent"
             android:textColor="@color/white"
             android:textAllCaps="false"
             android:text="@string/download_later" />
 
-        <Button
-            android:id="@+id/start_download"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/download_later"
-            android:layout_toRightOf="@+id/download_later"
-            android:padding="10sp"
-            android:background="@color/transparent"
-            android:textColor="@color/white"
-            android:textAllCaps="false"
-            android:text="@string/start_download" />
     </RelativeLayout>
 </RelativeLayout>
