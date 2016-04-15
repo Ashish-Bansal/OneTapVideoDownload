@@ -1,93 +1,91 @@
 <resources>
-    <string name="action_settings">"Configurações"</string>
-    <string name="action_clear_videos">"Limpar lista de URL"</string>
-    <string name="url_log">"Registro de URL"</string>
-    <string name="prefs_open_url_log">"Abrir registro de URL"</string>
-    <string name="no_data_available">"Registro de URL vazio"</string>
-    <string name="pref_url_logging_title">"Ativar registro de URL"</string>
-    <string name="pref_url_logging_summary">"Registrar URLs para vê-las depois"</string>
-    <string name="pref_url_logging_header">"Registrando URL"</string>
-    <string name="pref_notification_header">"Configurações de notificação"</string>
-    <string name="pref_notification_enable_title">"Ativar notificações"</string>
-    <string name="pref_notification_enable_summary">"Notificações durante transmissão de vídeos"</string>
-    <string name="pref_notification_count_title">"Número máximo de notificações"</string>
-    <string name="pref_notification_dismiss_time_title">"Tempo para dispensar notificação"</string>
-    <string name="xposed_not_found_title">"Xposed Framework não encontrado"</string>
-    <string name="xposed_not_found_description">"Você precisa de root e Xposed Framework para usar esse aplicativo"</string>
-    <string name="module_not_enabled_title">"Módulo não ativado ou necessita reiniciar"</string>
-    <string name="module_not_enabled_description">"Você precisa ativar esse módulo no Xposed Installer. Se você já fez isso, por favor reinicie seu dispositivo."</string>
-    <string name="notification_dismiss_time">"15"</string>
-    <string name="notification_count">"1"</string>
-    <string name="permission_accepted">"One Tap Video Download : Permissão de escrita aceita"</string>
-    <string name="permission_denied">"One Tap Video Download : Permissão de escrita negada"</string>
-    <string name="accept_write_permission_title">"Ative a permissão de escrita no armazenamento"</string>
-    <string name="accept_write_permission_description">"Você precisa dar permissão de escrita em ordem para poder salvar seus vídeos no armazenamento do telefone.
+    <string name="action_settings">Configurações</string>
+    <string name="action_clear_videos">Limpar lista de URL</string>
+    <string name="url_log">Registro de URL</string>
+    <string name="prefs_open_url_log">Abrir registro de URL</string>
+    <string name="no_data_available">Registro de URL vazio</string>
+    <string name="pref_url_logging_title">Ativar registro de URL</string>
+    <string name="pref_url_logging_summary">Registrar URLs para vê-las depois</string>
+    <string name="pref_url_logging_header">Registrando URL</string>
+    <string name="pref_notification_header">Configurações de notificação</string>
+    <string name="pref_notification_enable_title">Ativar notificações</string>
+    <string name="pref_notification_enable_summary">Notificações durante transmissão de vídeos</string>
+    <string name="pref_notification_count_title">Número máximo de notificações</string>
+    <string name="pref_notification_dismiss_time_title">Tempo para dispensar notificação</string>
+    <string name="xposed_not_found_title">Xposed Framework não encontrado</string>
+    <string name="xposed_not_found_description">Você precisa de root e Xposed Framework para usar esse aplicativo</string>
+    <string name="module_not_enabled_title">Módulo não ativado ou necessita reiniciar</string>
+    <string name="module_not_enabled_description">Você precisa ativar esse módulo no Xposed Installer. Se você já fez isso, por favor reinicie seu dispositivo.</string>
+    <string name="permission_accepted">One Tap Video Download : Permissão de escrita aceita</string>
+    <string name="permission_denied">One Tap Video Download : Permissão de escrita negada</string>
+    <string name="accept_write_permission_title">Ative a permissão de escrita no armazenamento</string>
+    <string name="accept_write_permission_description">Você precisa dar permissão de escrita em ordem para poder salvar seus vídeos no armazenamento do telefone.
         \n \n Passos para prover permissão:
-        \n 1. Pressione \"continuar\"
-        \n 2. Selecione \"Permissões\"
-        \n 3. Ative \"Permissão de armazenamento\"
-        \n 4. Reinicie o aplicativo"
+        \n 1. Pressione continuar
+        \n 2. Selecione Permissões
+        \n 3. Ative Permissão de armazenamento
+        \n 4. Reinicie o aplicativo
     </string>
 
-    <string name="pref_notification_vibrate_title">"Vibrar quando notificar"</string>
-    <string name="pref_notification_vibrate_summary">"Vibrar o dispositivo quando um vídeo está sendo transmitido"</string>
-    <string name="pref_notification_vibrate_amount_title">"Tempo da vibração"</string>
-    <string name="default_vibrate_amount">"200"</string>
-    <string name="pref_notification_headsup_title">"Ativar notificação Heads Up"</string>
-    <string name="pref_notification_headsup_summary">"Notificação Heads Up juntamente com notificação normal"</string>
-    <string name="pref_download_header">"Opções de download"</string>
-    <string name="prefs_download_location_title">"Escolha a pasta de download"</string>
-    <string name="open">"Abrir"</string>
-    <string name="share">"Compartilhar"</string>
-    <string name="download_in_other_resolution">"Baixar em outra resolução"</string>
-    <string name="remove_from_list">"Remover da lista"</string>
-    <string name="delete_from_storage">"Deletar do armazenamento"</string>
-    <string name="details">"Detalhes"</string>
-    <string name="resume">"Continuar"</string>
-    <string name="pause">"Pausar"</string>
-    <string name="filename">"Nome do arquivo"</string>
-    <string name="enter_filename">"Entre com o nome do arquivo"</string>
-    <string name="video_quality">"Qualidade do vídeo"</string>
-    <string name="download_location">"Pasta de download"</string>
-    <string name="download_later">"Baixar depois"</string>
-    <string name="start_download">"Iniciar download"</string>
-    <string name="unable_to_delete_file">"Incapaz de excluir o arquivo"</string>
-    <string name="file_deleted_successfully">"Arquivo excluído com sucesso"</string>
-    <string name="delete_confirmation">"Confirmação para excluir"</string>
-    <string name="delete_confirmation_content">"Você tem certeza que deseja excluir esse download do armazenamento?"</string>
-    <string name="yes">"Sim"</string>
-    <string name="no">"Não"</string>
-    <string name="remove_from_list_confirmation">"Remover confirmação"</string>
-    <string name="remove_from_list_confirmation_content">"Você tem certeza que deseja remover esse download da lista?"</string>
-    <string name="progress_dialog">"Processando links de download"</string>
-    <string name="please_wait">"Por favor espere..."</string>
-    <string name="unable_to_fetch">"Incapaz de processar links, por favor tente de novo"</string>
+    <string name="pref_notification_vibrate_title">Vibrar quando notificar</string>
+    <string name="pref_notification_vibrate_summary">Vibrar o dispositivo quando um vídeo está sendo transmitido</string>
+    <string name="pref_notification_vibrate_amount_title">Tempo da vibração</string>
+    <string name="default_vibrate_amount">200</string>
+    <string name="pref_notification_headsup_title">Ativar notificação Heads Up</string>
+    <string name="pref_notification_headsup_summary">Notificação Heads Up juntamente com notificação normal</string>
+    <string name="pref_download_header">Opções de download</string>
+    <string name="prefs_download_location_title">Escolha a pasta de download</string>
+    <string name="open">Abrir</string>
+    <string name="share">Compartilhar</string>
+    <string name="download_in_other_resolution">Baixar em outra resolução</string>
+    <string name="remove_from_list">Remover da lista</string>
+    <string name="delete_from_storage">Deletar do armazenamento</string>
+    <string name="details">Detalhes</string>
+    <string name="resume">Continuar</string>
+    <string name="pause">Pausar</string>
+    <string name="filename">Nome do arquivo</string>
+    <string name="enter_filename">Entre com o nome do arquivo</string>
+    <string name="video_quality">Qualidade do vídeo</string>
+    <string name="download_location">Pasta de download</string>
+    <string name="download_later">Baixar depois</string>
+    <string name="start_download">Iniciar download</string>
+    <string name="unable_to_delete_file">Incapaz de excluir o arquivo</string>
+    <string name="file_deleted_successfully">Arquivo excluído com sucesso</string>
+    <string name="delete_confirmation">Confirmação para excluir</string>
+    <string name="delete_confirmation_content">Você tem certeza que deseja excluir esse download do armazenamento?</string>
+    <string name="yes">Sim</string>
+    <string name="no">Não</string>
+    <string name="remove_from_list_confirmation">Remover confirmação</string>
+    <string name="remove_from_list_confirmation_content">Você tem certeza que deseja remover esse download da lista?</string>
+    <string name="progress_dialog">Processando links de download</string>
+    <string name="please_wait">Por favor espere...</string>
+    <string name="unable_to_fetch">Incapaz de processar links, por favor tente de novo</string>
 
-    <string name="total_size">"Tamanho total"</string>
-    <string name="downloaded_size">"Tamanho baixado"</string>
-    <string name="okay">"Ok"</string>
-    <string name="unknown_file_size">"Tamanho do arquivo desconhecido"</string>
+    <string name="total_size">Tamanho total</string>
+    <string name="downloaded_size">Tamanho baixado</string>
+    <string name="okay">Ok</string>
+    <string name="unknown_file_size">Tamanho do arquivo desconhecido</string>
 
-    <string name="view_pager_title_downloads">"Downloads"</string>
+    <string name="view_pager_title_downloads">Downloads</string>
     <string name="view_pager_title_settings">@string/action_settings</string>
 
-    <string name="md_choose_label">"Escolher"</string>
+    <string name="md_choose_label">Escolher</string>
 
-    <string name="menu_item_plus_one">"Avalie como +1"</string>
-    <string name="menu_item_rate">"Avalie esse app"</string>
-    <string name="menu_item_donate">"Doar"</string>
-    <string name="menu_item_translate">"Ajude a traduzir"</string>
-    <string name="menu_item_help">"Precisa de ajuda?"</string>
-    <string name="menu_item_about">"Sobre"</string>
+    <string name="menu_item_plus_one">Avalie como +1</string>
+    <string name="menu_item_rate">Avalie esse app</string>
+    <string name="menu_item_donate">Doar</string>
+    <string name="menu_item_translate">Ajude a traduzir</string>
+    <string name="menu_item_help">Precisa de ajuda?</string>
+    <string name="menu_item_about">Sobre</string>
 
-    <string name="about_intro">"One Tap Video Download é grátis e um módulo Xposed de código livre que possibilita ao usuário baixar/executar videos de vários aplicativos como navegador, Facebook etc."</string>
-    <string name="about_developed_by">"Desenvolvido por"</string>
-    <string name="about_developer_name">"Ashish Bansal"</string>
-    <string name="about_copyright">"© 2016 One Tap Video Download"</string>
-    <string name="about_credits">"Créditos : Haariger Harald, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Julia Yanovskaya, Open.Orange, Matheus Coelho, Carlo, Harminizer e todos os outros que eu posso ter esquecido de citar."</string>
+    <string name="about_intro">One Tap Video Download é grátis e um módulo Xposed de código livre que possibilita ao usuário baixar/executar videos de vários aplicativos como navegador, Facebook etc.</string>
+    <string name="about_developed_by">Desenvolvido por</string>
+    <string name="about_developer_name">Ashish Bansal</string>
+    <string name="about_copyright">© 2016 One Tap Video Download</string>
+    <string name="about_credits">Créditos : Haariger Harald, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Julia Yanovskaya, Open.Orange, Matheus Coelho, Carlo, Harminizer e todos os outros que eu posso ter esquecido de citar.</string>
 
-    <string name="donate">"Doar"</string>
-    <string name="donate_description">"Eu trabalho no One Tap Video Download em meu tempo livre. Por favor suporte o desenvolvimento doando se possível. Obrigado!"</string>
-    <string name="donate_thanks_for_donation">"Obrigado pela doação!"</string>
+    <string name="donate">Doar</string>
+    <string name="donate_description">Eu trabalho no One Tap Video Download em meu tempo livre. Por favor suporte o desenvolvimento doando se possível. Obrigado!</string>
+    <string name="donate_thanks_for_donation">Obrigado pela doação!</string>
 
 </resources>

@@ -16,8 +16,6 @@
     <string name="xposed_not_found_description">你必須先root並且安裝Xposed框架才能使用本應用程式</string>
     <string name="module_not_enabled_title">模組沒有啟用或需要重新開機</string>
     <string name="module_not_enabled_description">你需要在Xposed Installer啟用本模組。若你已經啟用本模組，請重新啟動你的裝置。</string>
-    <string name="notification_dismiss_time">15</string>
-    <string name="notification_count">1</string>
     <string name="permission_accepted">One Tap Video Download：寫入權限被允許</string>
     <string name="permission_denied">One Tap Video Download : 寫入權限被拒絕</string>
     <string name="accept_write_permission_title">啟用儲存空間的寫入權限</string>
@@ -97,13 +95,6 @@
         <item>四個通知</item>
         <item>五個通知</item>
     </string-array>
-    <string-array name="pref_notification_count_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-    </string-array>
 
     <string-array name="pref_notification_dismiss_time_titles">
         <item>10秒</item>
@@ -113,14 +104,6 @@
         <item>1分鐘</item>
         <item>3分鐘</item>
     </string-array>
-    <string-array name="pref_notification_dismiss_time_values">
-        <item>10</item>
-        <item>15</item>
-        <item>20</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-    </string-array>
 
     <string-array name="pref_vibrate_amount_titles">
         <item>100毫秒</item>
@@ -128,12 +111,5 @@
         <item>300毫秒</item>
         <item>400毫秒</item>
         <item>500毫秒</item>
-    </string-array>
-    <string-array name="pref_vibrate_amount_values">
-        <item>100</item>
-        <item>200</item>
-        <item>300</item>
-        <item>400</item>
-        <item>500</item>
     </string-array>
 </resources>

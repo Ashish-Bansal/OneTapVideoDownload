@@ -16,8 +16,6 @@
     <string name="xposed_not_found_description">Вам нужны рут права и Xposed Framework, чтобы использовать это приложение</string>
     <string name="module_not_enabled_title">Модуль не включен или требуется перезагрузка</string>
     <string name="module_not_enabled_description">Вам нужно включить этот модуль в Xposed Installer. Если вы уже включили его, перезагрузите устройство.</string>
-    <string name="notification_dismiss_time">15</string>
-    <string name="notification_count">1</string>
     <string name="permission_accepted">One Tap Video Download : Разрешение на запись получено</string>
     <string name="permission_denied">One Tap Video Download : В разрешении на запись отказано</string>
     <string name="accept_write_permission_title">Включить разрешение на запись для сохранения</string>
@@ -80,13 +78,6 @@
         <item>4 Уведомления</item>
         <item>5 Уведомлений</item>
     </string-array>
-    <string-array name="pref_notification_count_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-    </string-array>
 
     <string-array name="pref_notification_dismiss_time_titles">
         <item>10 Секунд</item>
@@ -96,14 +87,6 @@
         <item>1 Минута</item>
         <item>3 Минуты</item>
     </string-array>
-    <string-array name="pref_notification_dismiss_time_values">
-        <item>10</item>
-        <item>15</item>
-        <item>20</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-    </string-array>
 
     <string-array name="pref_vibrate_amount_titles">
         <item>100 Миллисекунд</item>
@@ -111,12 +94,5 @@
         <item>300 Миллисекунд</item>
         <item>400 Миллисекунд</item>
         <item>500 Миллисекунд</item>
-    </string-array>
-    <string-array name="pref_vibrate_amount_values">
-        <item>100</item>
-        <item>200</item>
-        <item>300</item>
-        <item>400</item>
-        <item>500</item>
     </string-array>
 </resources>
