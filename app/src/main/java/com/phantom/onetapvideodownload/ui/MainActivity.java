@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         checkXposedInstallation();
         mApplicationUpdateNotification = new ApplicationUpdateNotification(this);
         mApplicationUpdateNotification.checkForUpdate();
+        onNewIntent(getIntent());
     }
 
     @Override
