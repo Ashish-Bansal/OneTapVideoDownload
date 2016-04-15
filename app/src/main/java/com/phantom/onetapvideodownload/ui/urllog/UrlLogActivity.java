@@ -97,13 +97,16 @@ public class UrlLogActivity extends AppCompatActivity {
 
             @Override
             public void onClick(final Video itemData) {
-                displaySnackbar("Filename : " + itemData.getTitle(), "Open", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(itemData.getUrl()));
-                        startActivity(intent);
-                    }
-                });
+                displaySnackbar(getResources().getString(R.string.filename) + " : " + itemData.getTitle(),
+                        getResources().getString(R.string.open),
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(itemData.getUrl()));
+                                startActivity(intent);
+                            }
+                        }
+                );
             }
 
             @Override
