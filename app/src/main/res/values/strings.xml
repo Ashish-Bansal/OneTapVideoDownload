@@ -18,7 +18,7 @@
     <string name="xposed_not_found_description">You need root and Xposed Framework to use this application</string>
     <string name="module_not_enabled_title">Module not enabled or Needs Reboot</string>
     <string name="module_not_enabled_description">You need to enable this module in Xposed Installer. If you already have enabled it, please reboot your device.</string>
-    <string name="notification_dismiss_time">15</string>
+    <string name="notification_dismiss_time">30</string>
     <string name="notification_count">1</string>
     <string name="permission_accepted">One Tap Video Download : Write Permission Accepted</string>
     <string name="permission_denied">One Tap Video Download : Write Permission Denied</string>
