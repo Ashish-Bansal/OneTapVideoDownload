@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.phantom.onetapvideodownload.downloader.downloadinfo.BrowserDownloadInfo;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
@@ -247,7 +246,6 @@ public class DownloadDatabase extends SQLiteOpenHelper {
             do {
                 int downloadId = downloadListCursor.getInt(0);
                 int downloadCategory = downloadListCursor.getInt(1);
-                Log.e("getDownloadsOfType", " Download Category " + downloadCategory + " Id " + downloadId);
                 DownloadInfo downloadInfo = getDownload(downloadCategory, downloadId);
                 if (downloadInfo != null) {
                     downloadInfo.setDatabaseId(downloadId);
@@ -296,10 +294,10 @@ public class DownloadDatabase extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDatabase();
             if (downloadInfo instanceof BrowserDownloadInfo) {
                 ContentValues values = getContentValuesForBrowserVideo(downloadInfo, id);
-                db.update(TABLE_BROWSER_DOWNLOAD_LIST, values, KEY_ID + "=" + id, null);
+                db.update(TABLE_BROWSER_DOWNLOAD_LIST, values, KEY_VIDEO_ID + "=" + id, null);
             } else if (downloadInfo instanceof YoutubeDownloadInfo) {
                 ContentValues values = getContentValuesForYoutubeVideo(downloadInfo, id);
-                db.update(TABLE_YOUTUBE_DOWNLOAD_LIST, values, KEY_ID + "=" + id, null);
+                db.update(TABLE_YOUTUBE_DOWNLOAD_LIST, values, KEY_VIDEO_ID + "=" + id, null);
             }
         } else {
             return -1;
