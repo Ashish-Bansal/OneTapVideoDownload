@@ -1,7 +1,6 @@
 package com.phantom.onetapvideodownload.downloader.downloadinfo;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
 
@@ -54,7 +53,6 @@ public class BrowserDownloadInfo extends DownloadInfo {
 
     @Override
     public void setStatus(Status status) {
-        Log.e(TAG, "Download Status changed from " + mStatus.name() + " to " + status.name());
         mStatus = status;
     }
 
@@ -89,9 +87,8 @@ public class BrowserDownloadInfo extends DownloadInfo {
     }
 
     @Override
-    public void writeToDatabase() {
-        DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(mContext);
-        downloadDatabase.addOrUpdateDownload(this);
+    public Context getContext() {
+        return mContext;
     }
 
     @Override

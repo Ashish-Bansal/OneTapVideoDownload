@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.phantom.onetapvideodownload.R;
+import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
 import com.phantom.onetapvideodownload.downloader.DownloadManager;
 import com.phantom.onetapvideodownload.utils.Global;
 
@@ -44,11 +45,11 @@ public abstract class DownloadInfo {
     public abstract void setDownloadedLength(long downloadedLength);
     public abstract void addDownloadedLength(long additionValue);
     public abstract Integer getProgress();
-    public abstract void writeToDatabase();
     public abstract void removeDatabaseEntry();
     public abstract Collection<String> getOptions();
     public abstract String getPackageName();
     public abstract void setPackageName(String packageName);
+    public abstract Context getContext();
 
     List<String> getOptions(Context context, Status status) {
         List<String> options = new ArrayList<>();
@@ -206,6 +207,11 @@ public abstract class DownloadInfo {
 
     public void deleteDownloadFromStorage(Context context) {
         Global.deleteFile(context, getDownloadLocation());
+    }
+
+    public void writeToDatabase() {
+        DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(getContext());
+        downloadDatabase.addOrUpdateDownload(this);
     }
 
 }

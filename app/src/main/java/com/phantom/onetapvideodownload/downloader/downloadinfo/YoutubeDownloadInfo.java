@@ -112,9 +112,8 @@ public class YoutubeDownloadInfo extends DownloadInfo implements Invokable<Video
     }
 
     @Override
-    public void writeToDatabase() {
-        DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(mContext);
-        downloadDatabase.addOrUpdateDownload(this);
+    public Context getContext() {
+        return mContext;
     }
 
     @Override
