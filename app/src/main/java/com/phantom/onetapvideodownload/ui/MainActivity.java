@@ -178,6 +178,9 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
             case R.id.menu_about:
                 openAboutActivity();
                 break;
+            case R.id.menu_usage_instruction_title:
+                openUsageInstructionActivity();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -442,8 +445,8 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     }
 
     public void startActivity(Class activityClass) {
-        Intent donateIntent = new Intent(this, activityClass);
-        startActivity(donateIntent);
+        Intent intent = new Intent(this, activityClass);
+        startActivity(intent);
     }
 
     @Override
@@ -471,4 +474,9 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         }
         return 0;
     }
+
+    public void openUsageInstructionActivity() {
+        startActivity(UsageInstruction.class);
+    }
+
 }

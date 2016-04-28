@@ -322,6 +322,7 @@ public class DownloadManager extends Service {
 
         return -1;
     }
+
     public void startUiUpdateThread() {
         if (mUiUpdateThread == null || !mUiUpdateThread.isAlive()) {
             mUiUpdateThread = new Thread(new Runnable() {
