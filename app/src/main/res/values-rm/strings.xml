@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">"Setări"</string>
+    <string name="action_clear_videos">"Șterge listă URL"</string>
+    <string name="url_log">"Jurnal URL"</string>
+    <string name="prefs_open_url_log">"Deschide jurnal URL"</string>
+    <string name="no_data_available">"Jurnal URL gol"</string>
+    <string name="pref_url_logging_title">"Activează jurnal URL"</string>
+    <string name="pref_url_logging_summary">"Notează URL-uri pentru a le viziona mai târziu"</string>
+    <string name="pref_url_logging_header">"Salvare URL"</string>
+    <string name="pref_notification_header">"Setări notificare"</string>
+    <string name="pref_notification_enable_title">"Activare notificări"</string>
+    <string name="pref_notification_enable_summary">"Notificări pentru video transmise în flux"</string>
+    <string name="pref_notification_count_title">"Număr maxim de notificări"</string>
+    <string name="pref_notification_dismiss_time_title">"Timp respingere notificare"</string>
+    <string name="xposed_not_found_title">"Xposed Framework nu a fost găsit"</string>
+    <string name="xposed_not_found_description">"Ai nevoie de root și Xposed Framework pentru a folosi aplicația"</string>
+    <string name="module_not_enabled_title">"Modul neactivat sau necesită repornire"</string>
+    <string name="module_not_enabled_description">"Trebuie să activezi acest modul in Xposed Installer. Dacă l-ai activat deja, te rog repornește dispozitivul."</string>
+    <string name="notification_dismiss_time">"15"</string>
+    <string name="notification_count">"1"</string>
+    <string name="permission_accepted">"One Tap Video Download: Permisiune scriere acceptată"</string>
+    <string name="permission_denied">"One Tap Video Download: Permisiune scriere refuzată"</string>
+    <string name="accept_write_permission_title">"Activează permisiune scriere memorie"</string>
+    <string name="accept_write_permission_description">"Trebuie să oferi permisiune scriere pentru a stoca filmele în memoria telefonului.
+    \n \n Pași pentru a oferi permisiune:
+    \n 1. Apasă continuă
+    \n 2. Selectează permisiuni
+    \n 3. Activează permisiune stocare
+    \n 4. Repornește aplicație"
+    </string>
+    <string name="pref_notification_vibrate_title">"Vibrație la notificare"</string>
+    <string name="pref_notification_vibrate_summary">"Dispozitivul vibrează când un video este în flux"</string>
+    <string name="pref_notification_vibrate_amount_title">"Valoare vibrație"</string>
+    <string name="default_vibrate_amount">"200"</string>
+    <string name="pref_notification_headsup_title">"Activează notificări afișare"</string>
+    <string name="pref_notification_headsup_summary">"Notificări afișare împreună cu notificările normale"</string>
+    <string name="pref_download_header">"Opțiuni descărcare"</string>
+    <string name="prefs_download_location_title">"Alege dosar descărcare"</string>
+    <string name="open">"Deschide"</string>
+    <string name="share">"Distribuie"</string>
+    <string name="download_in_other_resolution">"Descarcă la altă rezoluție"</string>
+    <string name="remove_from_list">"Șterge din listă"</string>
+    <string name="delete_from_storage">"Șterge din memorie"</string>
+    <string name="details">"Detalii"</string>
+    <string name="resume">"Continuă"</string>
+    <string name="pause">"Pauză"</string>
+    <string name="filename">"Nume fișier"</string>
+    <string name="enter_filename">"Introdu nume fișier"</string>
+    <string name="video_quality">"Calitate video"</string>
+    <string name="download_location">"Dosar descărcare"</string>
+    <string name="download_later">"Descarcă mai târziu"</string>
+    <string name="start_download">"Pornește descărcare"</string>
+    <string name="unable_to_delete_file">"Nu se poate șterge fișier"</string>
+    <string name="file_deleted_successfully">"Fișier șters cu succes"</string>
+    <string name="delete_confirmation">"Șterge confirmare"</string>
+    <string name="delete_confirmation_content">"Ești sigur că vrei să ștergi fișierul descărcat din memorie?"</string>
+    <string name="yes">"Da"</string>
+    <string name="no">"Nu"</string>
+    <string name="remove_from_list_confirmation">"Șterge confirmare"</string>
+    <string name="remove_from_list_confirmation_content">"Ești sigur că vrei să ștergi fișierul descărcat din listă?"</string>
+    <string name="progress_dialog">"Preia adrese descărcare"</string>
+    <string name="please_wait">"Te rog așteaptă..."</string>
+    <string name="unable_to_fetch">"Nu se poate prelua adrese, te rog reîncearcă"</string>
+    <string name="total_size">"Dim. totală"</string>
+    <string name="downloaded_size">"Dim. fișier descărcat"</string>
+    <string name="okay">"Bine"</string>
+    <string name="unknown_file_size">"Dim. fișier necunoscută"</string>
+    <string name="view_pager_title_downloads">"Descărcări"</string>
+    <string name="md_choose_label">"Alege"</string>
+    <string name="menu_item_plus_one">"Dă-i un +1"</string>
+    <string name="menu_item_rate">"Evaluează această aplicație"</string>
+    <string name="menu_item_donate">"Donează"</string>
+    <string name="menu_item_translate">"Ajută la traducere"</string>
+    <string name="menu_item_help">"Ai nevoie de ajutor?"</string>
+    <string name="menu_item_about">"Despe"</string>
+    <string name="about_intro">"One Tap Video Download este un modul Xposed gratuit și open source care permite utilizatorului descărcarea/rularea filmelor din diverse aplicații ca exploratorul, facebook  etc."</string>
+    <string name="about_developed_by">"Dezvoltat de"</string>
+    <string name="about_developer_name">"Ashish Bansal"</string>
+    <string name="about_copyright">"© 2016 One Tap Video Download"</string>
+    <string name="about_credits">"Colaboratori: Haariger Harald, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Julia Yanovskaya, Open.Orange și toți ceilalți pe care poate am uitat să-i menționez."</string>
+    <string name="donate">"Donează"</string>
+    <string name="donate_description">"Lucrez la One Tap Video Download în timpul meu liber. Te rog să sprijini dezvoltarea prin donații dacă ai posibilitatea. Mulțumiri!"</string>
+    <string name="donate_thanks_for_donation">"Mulțumesc pentru donație!"</string>
+
+    <string name="select_donation_amount">"Select Donation amount"</string>
+    <string name="donate_thanks_for_donation_summary">"I\'m really glad to know that you have contributed to this project. Thanks a lot!"</string>
+    <string name="google_services_not_found_title">"Play services not found"</string>
+    <string name="google_services_not_found_summary">"Thanks for considering but it\'s not possible to donate without playstore being installed on device."</string>
+    <string name="play_video_activity_not_found">"No application found to play video."</string>
+    <string name="share_video_activity_not_found">"No application found to share video."</string>
+    <string name="link_expired_download_again">"Download link has been expired. Please add download again."</string>
+    <string name="new_update_available_title">"New Update Available"</string>
+    <string name="download">"Download"</string>
+    <string name="copy_download_link">"Copy Download Link"</string>
+    <string name="video_url_copied">"Video URL copied"</string>
+    <string name="menu_item_usage_instruction_title">"Usage Instructions"</string>
+    <string name="usage_instruction_summary">"\n 1. Enable One Tap Video Download in Xposed Installer
+        \n 2. Reboot your device
+        \n 3. Play a video in browser
+        \n 4. Notification will show in notification panel with different options
+        \n (Please note that  this notification will disappear automatically in 30 seconds if you haven\'t changed this setting in main application)
+        \n 5. Enjoy your video offline by downloading or play it using your favorite video player from the notification itself
+        \n Still unable to follow? &lt;a href=\"https://youtu.be/uTME1FudFmU\"&gt;Watch video in English here&lt;/a&gt;"
+    </string>
+</resources>

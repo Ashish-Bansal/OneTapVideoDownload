@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">"Instellingen"</string>
+    <string name="action_clear_videos">"Leeg URL Lijst"</string>
+    <string name="url_log">"URL Log"</string>
+    <string name="prefs_open_url_log">"Open URL Log"</string>
+    <string name="no_data_available">"URL Log is leeg"</string>
+    <string name="pref_url_logging_title">"Zet URL logging aan"</string>
+    <string name="pref_url_logging_summary">"Log URLs om ze later te bekijken"</string>
+    <string name="pref_url_logging_header">"URL Logging"</string>
+    <string name="pref_notification_header">"Notificatie Instellingen"</string>
+    <string name="pref_notification_enable_title">"Notificaties aan zetten"</string>
+    <string name="pref_notification_enable_summary">"Notificaties voor streamende video's"</string>
+    <string name="pref_notification_count_title">"Maximaal aantal notificaties"</string>
+    <string name="pref_notification_dismiss_time_title">"Tijd voor dat een Notificatie weg gaat"</string>
+    <string name="xposed_not_found_title">"Geen Xposed Framework gevonden"</string>
+    <string name="xposed_not_found_description">"Je hebt Root en Xposed Framework nodig om deze app te gebruiken"</string>
+    <string name="module_not_enabled_title">"De module staat uit of je moet opnieuw opstarten"</string>
+    <string name="module_not_enabled_description">"Je moet deze module aanzetten in Xposed Installeren. Als je het al aan hebt gezet, start je apparaat opnieuw op."</string>
+    <string name="notification_dismiss_time">"15"</string>
+    <string name="notification_count">"1"</string>
+    <string name="permission_accepted">"One Tap Video Download : Schrijf Permissie Geaccepteerd"</string>
+    <string name="permission_denied">"Schrijf permissie niet geaccepteerd"</string>
+    <string name="accept_write_permission_title">"zet opslag schrijf permissie aan"</string>
+    <string name="accept_write_permission_description">"Je moet schrijf permissie aanzetten om je video's op te slaan in je telefoon opslag.
+    \n \n stappen om permissie te geven:
+    \n 1. Druk op volgende
+    \n 2. Selecteer Permissies
+    \n 3. Zet Opslag permissie aan
+    \n 4. Herstart de app"
+    </string>
+    <string name="pref_notification_vibrate_title">"Vibratie voor de notificatie"</string>
+    <string name="pref_notification_vibrate_summary">"Vibreer het apparaat wanneer een video word gestreamd"</string>
+    <string name="pref_notification_vibrate_amount_title">"Vibreer aantal"</string>
+    <string name="default_vibrate_amount">"200"</string>
+    <string name="pref_notification_headsup_title">"Zet Heads up notificatie aan"</string>
+    <string name="pref_notification_headsup_summary">"Heads up notificatie samen met de normale notificatie"</string>
+    <string name="pref_download_header">"Download opties"</string>
+    <string name="prefs_download_location_title">"Kies download plek"</string>
+    <string name="open">"Open"</string>
+    <string name="share">"Deel"</string>
+    <string name="download_in_other_resolution">"Download in een andere resolutie"</string>
+    <string name="remove_from_list">"Verwijder van lijst"</string>
+    <string name="delete_from_storage">"Verwijder van opslag"</string>
+    <string name="details">"Details"</string>
+    <string name="resume">"Hervat"</string>
+    <string name="pause">"Pauze "</string>
+    <string name="filename">"Bestandsnaam "</string>
+    <string name="enter_filename">"Typ Bestandsnaam"</string>
+    <string name="video_quality">"Video Kwaliteit "</string>
+    <string name="download_location">"Download plaats"</string>
+    <string name="download_later">"Dowload later"</string>
+    <string name="start_download">"Start Download"</string>
+    <string name="unable_to_delete_file">"Niet mogelijk om bestand te verwijderen"</string>
+    <string name="file_deleted_successfully">"Bestand succesvol verwijderd"</string>
+    <string name="delete_confirmation">"Verwijder bevestiging"</string>
+    <string name="delete_confirmation_content">"Weet je zeker dat je de download van je opslag wil verwijderen?"</string>
+    <string name="yes">"Ja"</string>
+    <string name="no">"Nee"</string>
+    <string name="remove_from_list_confirmation">"Verwijder bevestiging"</string>
+    <string name="remove_from_list_confirmation_content">"Weet je zeker dat je de download van de lijst wil verwijderen?"</string>
+    <string name="progress_dialog">"Ophalen van download links"</string>
+    <string name="please_wait">"A.U.B. wacht..."</string>
+    <string name="unable_to_fetch">"Niet mogelijk om download links op te halen, Probeer het opnieuw."</string>
+    <string name="total_size">"Totale groote"</string>
+    <string name="downloaded_size">"Gedownloade groote"</string>
+    <string name="okay">"Oke"</string>
+    <string name="unknown_file_size">"Onbekende bestand groote"</string>
+    <string name="view_pager_title_downloads">"Downloads"</string>
+    <string name="md_choose_label">"Kies"</string>
+    <string name="menu_item_plus_one">"Geef het een +1"</string>
+    <string name="menu_item_rate">"Beoordeel deze app"</string>
+    <string name="menu_item_donate">"Doneer "</string>
+    <string name="menu_item_translate">"Help om te vertalen"</string>
+    <string name="menu_item_help">"Hulp nodig?"</string>
+    <string name="menu_item_about">"Over"</string>
+    <string name="about_intro">"One Tap Video Download is een gratis een Open Source Xposed mudule wat het de gebruiker mogelijk maakt om het te downloaden van video's van veel app's zoals browser, facebook etc."</string>
+    <string name="about_developed_by">"Onontwikkeld door"</string>
+    <string name="about_developer_name">"Ashish Bansal"</string>
+    <string name="about_copyright">"© 2016 One Tap Video Download"</string>
+    <string name="about_credits">"Credits: Haariger Harald, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Julia Yanovskaya, Open.Orange en alle anderen die ik misschien vergeten te melden heb."</string>
+    <string name="donate">"Doneer"</string>
+    <string name="donate_description">"Ik werk in mijn eigen tijd aan One Tap Video Download. Aub support de ontwikkelijk door te doneren. Bedankt!"</string>
+    <string name="donate_thanks_for_donation">"Bedankt voor je donatie!"</string>
+
+    <string name="select_donation_amount">"Select Donation amount"</string>
+    <string name="donate_thanks_for_donation_summary">"I\'m really glad to know that you have contributed to this project. Thanks a lot!"</string>
+    <string name="google_services_not_found_title">"Play services not found"</string>
+    <string name="google_services_not_found_summary">"Thanks for considering but it\'s not possible to donate without playstore being installed on device."</string>
+    <string name="play_video_activity_not_found">"No application found to play video."</string>
+    <string name="share_video_activity_not_found">"No application found to share video."</string>
+    <string name="link_expired_download_again">"Download link has been expired. Please add download again."</string>
+    <string name="new_update_available_title">"New Update Available"</string>
+    <string name="download">"Download"</string>
+    <string name="copy_download_link">"Copy Download Link"</string>
+    <string name="video_url_copied">"Video URL copied"</string>
+    <string name="menu_item_usage_instruction_title">"Usage Instructions"</string>
+    <string name="usage_instruction_summary">"\n 1. Enable One Tap Video Download in Xposed Installer
+        \n 2. Reboot your device
+        \n 3. Play a video in browser
+        \n 4. Notification will show in notification panel with different options
+        \n (Please note that  this notification will disappear automatically in 30 seconds if you haven\'t changed this setting in main application)
+        \n 5. Enjoy your video offline by downloading or play it using your favorite video player from the notification itself
+
+       \n Still unable to follow? &lt;a href=\"https://youtu.be/uTME1FudFmU\"&gt;Watch video in English here&lt;/a&gt;"
+    </string>
+</resources>

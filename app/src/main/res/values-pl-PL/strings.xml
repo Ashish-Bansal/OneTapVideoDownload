@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">"Ustawienia"</string>
+    <string name="action_clear_videos">"Wyczyść listę URL"</string>
+    <string name="url_log">"Logi URL"</string>
+    <string name="prefs_open_url_log">"Otwórz logi URL"</string>
+    <string name="no_data_available">"Logi URL są puste"</string>
+    <string name="pref_url_logging_title">"Włącz zapisywanie logów URL"</string>
+    <string name="pref_url_logging_summary">"Zapisz URL by przeczytać je pózniej"</string>
+    <string name="pref_url_logging_header">"Zapisywanie URL"</string>
+    <string name="pref_notification_header">"Ustawienia Powiadomień"</string>
+    <string name="pref_notification_enable_title">"Włącz Powiadomienia"</string>
+    <string name="pref_notification_enable_summary">"Powiadomienia dla odtwarzanego wideo będą pokazywane"</string>
+    <string name="pref_notification_count_title">"Maksymalna liczba powiadomień"</string>
+    <string name="pref_notification_dismiss_time_title">"Czas ukazania powiadomienia"</string>
+    <string name="xposed_not_found_title">"Nie znaleziono Xposed Framework"</string>
+    <string name="xposed_not_found_description">"Potrzebujesz roota i Xposed Framework do używania tej aplikacji"</string>
+    <string name="module_not_enabled_title">"Moduł Xposed nie aktywowany lub potrzebny restart"</string>
+    <string name="module_not_enabled_description">"Musisz aktywować ten moduł w Xposed Installer. Jeżeli już to zrobiłeś, proszę, zrestartuj swój telefon."</string>
+    <string name="notification_dismiss_time">"15"</string>
+    <string name="notification_count">"1"</string>
+    <string name="permission_accepted">"One Tap Video Download: Przyznano uprawnienia"</string>
+    <string name="permission_denied">"One Tap Video Download: Nie przyznano uprawnień"</string>
+    <string name="accept_write_permission_title">"Włącz pozwolenie na używanie pamięci"</string>
+    <string name="accept_write_permission_description">"Musisz przyznać uprawnienia aby móc przechowywać pliki na pamięci telefonu.
+        \n \n Kroki jak przyznać uprawnienia:
+        \n 1. Kliknij Kontynuuj
+        \n 2. Wybierz Uprawnienia
+        \n 3. Włącz uprawnienia zapisu
+        \n 4. Zrestartuj aplikacje"
+    </string>
+    <string name="pref_notification_vibrate_title">"Wibracja przy powiadomieniu"</string>
+    <string name="pref_notification_vibrate_summary">"Wibruj gdy telefon otwiera video strumieniowe"</string>
+    <string name="pref_notification_vibrate_amount_title">"Długość wibracji"</string>
+    <string name="default_vibrate_amount">"200"</string>
+    <string name="pref_notification_headsup_title">"Włącz dymki powiadomień"</string>
+    <string name="pref_notification_headsup_summary">"Dymki będą tak długo jak normalne powiadomienie"</string>
+    <string name="pref_download_header">"Opcje Pobierania"</string>
+    <string name="prefs_download_location_title">"Wybierz folder pobierania"</string>
+    <string name="open">"Otwórz"</string>
+    <string name="share">"Podziel się"</string>
+    <string name="download_in_other_resolution">"Pobierz w innej rozdzielczośći"</string>
+    <string name="remove_from_list">"Skasuj z listy"</string>
+    <string name="delete_from_storage">"Skasuj z pamięci"</string>
+    <string name="details">"Szczegóły"</string>
+    <string name="resume">"Wznów"</string>
+    <string name="pause">"Pauza"</string>
+    <string name="filename">"Nazwa pliku"</string>
+    <string name="enter_filename">"Wpisz nazwę pliku"</string>
+    <string name="video_quality">"Jakość wideo"</string>
+    <string name="download_location">"Miejsce pobierania"</string>
+    <string name="download_later">"Pobierz potem"</string>
+    <string name="start_download">"Rozpocznij pobieranie"</string>
+    <string name="unable_to_delete_file">"Nie można skasować pliku"</string>
+    <string name="file_deleted_successfully">"Plik usunięty"</string>
+    <string name="delete_confirmation">"Potwierdź usunięcie"</string>
+    <string name="delete_confirmation_content">"Jesteś pewien, że chcesz usunąć plik z pamięci telefonu ?"</string>
+    <string name="yes">"Tak"</string>
+    <string name="no">"Nie"</string>
+    <string name="remove_from_list_confirmation">"Potwierdzenie skasowania"</string>
+    <string name="remove_from_list_confirmation_content">"Jesteś pewien, że chcesz skasować plik z listy?"</string>
+    <string name="progress_dialog">"Przygotowanie Plików do pobrania"</string>
+    <string name="please_wait">"Proszę czekać"</string>
+    <string name="unable_to_fetch">"Nie można odczytać linku. Proszę spróbować jeszcze raz"</string>
+    <string name="total_size">"Całkowity rozmiar"</string>
+    <string name="downloaded_size">"Rozmiar pobierania"</string>
+    <string name="okay">"Okay"</string>
+    <string name="unknown_file_size">"Nieznany rozmiar pliku"</string>
+    <string name="view_pager_title_downloads">"Pobrane"</string>
+    <string name="md_choose_label">"Wybierz"</string>
+    <string name="menu_item_plus_one">"Daj +1 :3"</string>
+    <string name="menu_item_rate">"Oceń te aplikację"</string>
+    <string name="menu_item_donate">"Darowizna"</string>
+    <string name="menu_item_translate">"Pomóż w tłumaczeniu"</string>
+    <string name="menu_item_help">"Potrzebna pomoc ?"</string>
+    <string name="menu_item_about">"O aplikacji"</string>
+    <string name="about_intro">"One Tap Video Download jest to Darmowy i Open Source moduł Xposed który pozwala na pobieranie/otwieranie wideo z wielu aplikacji jak przeglądarka, facebook itp."</string>
+    <string name="about_developed_by">"Stworzona przez"</string>
+    <string name="about_developer_name">"Ashish Bansal"</string>
+    <string name="about_copyright">"© 2016 One Tap Video Download"</string>
+    <string name="about_credits">"Podziękowania: Haariger Harald, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Julia Yanovskaya, Open.Orange i wszystkim których mogłem przypadkowo zapomnieć."</string>
+    <string name="donate">"Darowizna"</string>
+    <string name="donate_description">"Pracuje nad One Tap Video Download w moim wolnym czasie. Proszę wspomóż twórcę przez dotacje jeśli to możliwe. Dzięki!"</string>
+
+    <string name="donate_thanks_for_donation">"Dziękuje za dotację!"</string>
+    <string name="select_donation_amount">"Wybierz opcje Dotacji"</string>
+    <string name="donate_thanks_for_donation_summary">"Jestem bardzo zadowolony, że wspierasz projekt. Dziękuje!"</string>
+    <string name="google_services_not_found_title">"Nie odnaleziono play service"</string>
+    <string name="google_services_not_found_summary">"Thanks for considering but it\'s not possible to donate without playstore being installed on device."</string>
+    <string name="play_video_activity_not_found">"Nie ma aplikacji do odtwarzania video"</string>
+    <string name="share_video_activity_not_found">"Nie ma aplikacji do wysłania video"</string>
+    <string name="link_expired_download_again">"Download link has been expired. Please add download again."</string>
+    <string name="new_update_available_title">"New Update Available"</string>
+    <string name="download">"Download"</string>
+    <string name="copy_download_link">"Copy Download Link"</string>
+    <string name="video_url_copied">"Video URL copied"</string>
+    <string name="menu_item_usage_instruction_title">"Usage Instructions"</string>
+    <string name="usage_instruction_summary">"\n 1. Enable One Tap Video Download in Xposed Installer
+        \n 2. Reboot your device
+        \n 3. Play a video in browser
+        \n 4. Notification will show in notification panel with different options
+        \n (Please note that  this notification will disappear automatically in 30 seconds if you haven\'t changed this setting in main application)
+        \n 5. Enjoy your video offline by downloading or play it using your favorite video player from the notification itself
+        \n Still unable to follow? &lt;a href=\"https://youtu.be/uTME1FudFmU\"&gt;Watch video in English here&lt;/a&gt;"
+    </string>
+</resources>

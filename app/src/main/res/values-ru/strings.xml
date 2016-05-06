@@ -1,25 +1,26 @@
 <resources>
-    <string name="action_settings">Настройки</string>
-    <string name="action_clear_videos">Очистить список URL</string>
-    <string name="url_log">URL журнал</string>
-    <string name="prefs_open_url_log">Открыть URL журнал</string>
-    <string name="no_data_available">URL журнал пуст</string>
-    <string name="pref_url_logging_title">Включить ведение журнала URL</string>
-    <string name="pref_url_logging_summary">Логирование URLs чтобы просмотреть их позже</string>
-    <string name="pref_url_logging_header">URL логирование</string>
-    <string name="pref_notification_header">Настройки уведомлений</string>
-    <string name="pref_notification_enable_title">Включить уведомления</string>
-    <string name="pref_notification_enable_summary">Уведомления для потоковой передачи видео</string>
-    <string name="pref_notification_count_title">Максимальное количество уведомлений</string>
-    <string name="pref_notification_dismiss_time_title">Отклонить время уведомления</string>
-    <string name="xposed_not_found_title">Xposed Framework не найден</string>
-    <string name="xposed_not_found_description">Вам нужны рут права и Xposed Framework, чтобы использовать это приложение</string>
-    <string name="module_not_enabled_title">Модуль не включен или требуется перезагрузка</string>
-    <string name="module_not_enabled_description">Вам нужно включить этот модуль в Xposed Installer. Если вы уже включили его, перезагрузите устройство.</string>
-    <string name="permission_accepted">One Tap Video Download : Разрешение на запись получено</string>
-    <string name="permission_denied">One Tap Video Download : В разрешении на запись отказано</string>
-    <string name="accept_write_permission_title">Включить разрешение на запись для сохранения</string>
-    <string name="accept_write_permission_description">Вы должны дать разрешение на запись для того, чтобы сохранить видео в память телефона.
+    <string name="action_settings">"Настройки"</string>
+    <string name="action_clear_videos">"Очистить список URL-адресов"</string>
+    <string name="url_log">"Журнал URL-адресов"</string>
+    <string name="prefs_open_url_log">"Открыть журнал URL-адресов"</string>
+    <string name="no_data_available">"Журнал URL-адресо пуст"</string>
+    <string name="pref_url_logging_title">"Включить ведение журнала URL-адресов"</string>
+    <string name="pref_url_logging_summary">"Журнал URL-адресов чтобы просмотреть их позже"</string>
+    <string name="pref_url_logging_header">"Ведение журнала URL-адресов"</string>
+    <string name="pref_notification_header">"Настройки уведомлений"</string>
+    <string name="pref_notification_enable_title">"Включить уведомления"</string>
+    <string name="pref_notification_enable_summary">"Уведомления потоковой передачи видео"</string>
+    <string name="pref_notification_count_title">"Максимальное количество уведомлений"</string>
+    <string name="pref_notification_dismiss_time_title">"Время отклонения уведомления"</string>
+    <string name="xposed_not_found_title">"Xposed Framework не найден"</string>
+    <string name="xposed_not_found_description">"Вам нужны ROOT права и Xposed Framework, чтобы использовать это приложение"</string>
+    <string name="module_not_enabled_title">"Модуль не включен или требуется перезагрузка"</string>
+    <string name="module_not_enabled_description">"Вам нужно включить этот модуль в Xposed Installer. Если вы уже включили его, перезагрузите устройство."</string>
+    <string name="notification_dismiss_time">"15"</string>
+    <string name="notification_count">"1"</string>
+    <string name="permission_accepted">"One Tap Video Download : Разрешение на запись получено"</string>
+    <string name="permission_denied">"One Tap Video Download : В разрешении на запись отказано"</string>
+    <string name="accept_write_permission_title">"Включить разрешение на сохранения записи"</string><string name="accept_write_permission_description">Вы должны дать разрешение на запись для того, чтобы сохранить видео в память телефона.
         \n \n Шаги для предоставления разрешения :
         \n 1. Нажмите продолжить
         \n 2. Выберите разрешения
@@ -27,49 +28,81 @@
         \n 4. Перезапустите приложение
     </string>
 
-    <string name="pref_notification_vibrate_title">Вибрация при уведомлении</string>
-    <string name="pref_notification_vibrate_summary">Вибрация устройства, когда выполняется потоковая передача видео</string>
-    <string name="pref_notification_vibrate_amount_title">Время вибрации</string>
-    <string name="default_vibrate_amount">200</string>
-    <string name="pref_notification_headsup_title">Включить Heads up уведомления</string>
-    <string name="pref_notification_headsup_summary">Heads up уведомление наряду с обычным уведомлением</string>
-    <string name="pref_download_header">Параметры загрузки</string>
-    <string name="prefs_download_location_title">Выберите каталог для загрузки</string>
-    <string name="open">Открыть</string>
-    <string name="share">Поделиться</string>
-    <string name="download_in_other_resolution">Скачать в другом разрешении</string>
-    <string name="remove_from_list">Убрать из списка</string>
-    <string name="delete_from_storage">Удалить из хранилища</string>
-    <string name="details">Детали</string>
-    <string name="resume">Возобновить</string>
-    <string name="pause">Пауза</string>
-    <string name="filename">Имя файла</string>
-    <string name="enter_filename">Введите имя файла</string>
-    <string name="video_quality">Качество видео</string>
-    <string name="download_location">Директория загрузки</string>
-    <string name="download_later">Загрузить позже</string>
-    <string name="start_download">Начало загрузки</string>
-    <string name="unable_to_delete_file">Не удается удалить файл</string>
-    <string name="file_deleted_successfully">Файл успешно удалён</string>
-    <string name="delete_confirmation">Подтверждение удаления</string>
-    <string name="delete_confirmation_content">Вы уверены, что вы хотите удалить загрузки из хранилища?</string>
-    <string name="yes">Да</string>
-    <string name="no">Нет</string>
-    <string name="remove_from_list_confirmation">Подтверждение удаления</string>
-    <string name="remove_from_list_confirmation_content">Вы уверены, что хотите удалить загрузку из списка?</string>
-    <string name="progress_dialog">Получение ссылки для скачивания</string>
-    <string name="please_wait">Пожалуйста подождите&#8230;</string>
-    <string name="unable_to_fetch">Не удалось получить ссылки, пожалуйста попробуйте еще раз</string>
+    <string name="pref_notification_vibrate_title">"Вибрация при уведомлении"</string>
+    <string name="pref_notification_vibrate_summary">"Вибрация устройства, когда выполняется потоковая передача видео"</string>
+    <string name="pref_notification_vibrate_amount_title">"Время вибрации"</string>
+    <string name="default_vibrate_amount">"200"</string>
+    <string name="pref_notification_headsup_title">"Включить Heads up уведомления"</string>
+    <string name="pref_notification_headsup_summary">"Heads up уведомление наряду с обычным уведомлением"</string>
+    <string name="pref_download_header">"Параметры загрузки"</string>
+    <string name="prefs_download_location_title">"Выберите каталог для загрузки"</string>
+    <string name="open">"Открыть"</string>
+    <string name="share">"Поделиться"</string>
+    <string name="download_in_other_resolution">"Скачать в другом разрешении"</string>
+    <string name="remove_from_list">"Убрать из списка"</string>
+    <string name="delete_from_storage">"Удалить из хранилища"</string>
+    <string name="details">"Детали"</string>
+    <string name="resume">"Сводка"</string>
+    <string name="pause">"Пауза"</string>
+    <string name="filename">"Имя файла"</string>
+    <string name="enter_filename">"Введите имя файла"</string>
+    <string name="video_quality">"Качество видео"</string>
+    <string name="download_location">"Директория загрузки"</string>
+    <string name="download_later">"Загрузить позже"</string>
+    <string name="start_download">"Начало загрузки"</string>
+    <string name="unable_to_delete_file">"Не удается удалить файл"</string>
+    <string name="file_deleted_successfully">"Файл успешно удален"</string>
+    <string name="delete_confirmation">"Подтверждение удаления"</string>
+    <string name="delete_confirmation_content">"Вы уверены, что хотите удалить загрузку из хранилища?"</string>
+    <string name="yes">"Да"</string>
+    <string name="no">"Нет"</string>
+    <string name="remove_from_list_confirmation">"Подтверждение удаления"</string>
+    <string name="remove_from_list_confirmation_content">"Вы уверены, что хотите удалить загрузку из списка?"</string>
+    <string name="progress_dialog">"Получение ссылки для скачивания"</string>
+    <string name="please_wait">"Пожалуйста подождите…"</string>
+    <string name="unable_to_fetch">"Не удалось получить ссылки, пожалуйста попробуйте еще раз"</string>
+    <string name="total_size">"Общий размер"</string>
+    <string name="downloaded_size">"Размер загруженного"</string>
+    <string name="okay">"Окей"</string>
+    <string name="unknown_file_size">"Неизвестный размер файла"</string>
+    <string name="view_pager_title_downloads">"Загрузки"</string>
+    <string name="md_choose_label">"Выбрать"</string>
+    <string name="menu_item_plus_one">"Поставить +1"</string>
+    <string name="menu_item_rate">"Оценить это приложение"</string>
+    <string name="menu_item_donate">"Пожертвовать"</string>
+    <string name="menu_item_translate">"Помощь в переводе приложения"</string>
+    <string name="menu_item_help">"Нужна помощь ?"</string>
+    <string name="menu_item_about">"О приложении"</string>
+    <string name="about_intro">"One Tap Video Download является свободным с открытым исходным кодом Xposed модулем, который позволяет пользователю скачать/воспроизвести видео из многих приложений, таких как браузер, facebook и т.д."</string>
+    <string name="about_developed_by">"Разработчик"</string>
+    <string name="about_developer_name">"Ashish Bansal"</string>
+    <string name="about_copyright">"© 2016 One Tap Video Download"</string>
+    <string name="about_credits">"Особая благодарность : Haariger Harald, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Юлия Яновская, Open.Orange и всем другим которых я мог бы, но забыл указать."</string>
+    <string name="donate">"Пожертвование"</string>
+    <string name="donate_description">"Я работаю над One Tap Video Download в свободное время. Пожалуйста, поддержите развитие программы пожертвованием, если это возможно. Благодарю!"</string>
+    <string name="donate_thanks_for_donation">"Спасибо за пожертвование!"</string>
 
-    <string name="total_size">Общий размер</string>
-    <string name="downloaded_size">Размер загруженного</string>
-    <string name="okay">OK</string>
-    <string name="unknown_file_size">Неизвестный размер файла</string>
-
-    <string name="view_pager_title_downloads">Загрузки</string>
-    <string name="view_pager_title_settings">@string/action_settings</string>
-
-    <string name="md_choose_label">Выбрать</string>
+    <string name="select_donation_amount">"Выберите сумму пожертвования"</string>
+    <string name="donate_thanks_for_donation_summary">"Я рад, что вы внесли свой вклад в этот проект. Большое спасибо!"</string>
+    <string name="google_services_not_found_title">"Google сервисы не найдены"</string>
+    <string name="google_services_not_found_summary">"Спасибо за рассмотрение, но не возможно пожертвовать без playstore установленном на устройстве."</string>
+    <string name="play_video_activity_not_found">"Не найдено приложения для воспроизведения видео"</string>
+    <string name="share_video_activity_not_found">"Не найдено приложения для чтобы поделиться видео"</string>
+    <string name="link_expired_download_again">"Срок ссылки истек, скачайте заново"</string>
+    <string name="new_update_available_title">"Доступно новое обновление"</string>
+    <string name="download">"Скачать"</string>
+    <string name="copy_download_link">"Копировать ссылку загрузки"</string>
+    <string name="video_url_copied">"Ссылка на видео скопирована"</string>
+    <string name="menu_item_usage_instruction_title">"Инструкция по использованию"</string>
+    <string name="usage_instruction_summary">"
+        \n 1. Включить One Tap Video Download в Xposed Installer
+        \n 2. Перезагрузите устройство
+        \n 3. Воспроизведите видео в браузере
+        \n 4. Уведомление будет отображаться в панели уведомлений с различными вариантами
+        \n (Обратите внимание, что это уведомление будет автоматически исчезать через 30 секунд, если только вы не изменили этот параметр в основном приложении)
+        \n 5. Наслаждайтесь просмотром видео в автономном режиме после загрузки или используя воспроизведение в видеоплеере после уведомления
+        \n Все еще не способны понять? &lt;a href=\"https://youtu.be/uTME1FudFmU\"&gt;Смотреть видео на английском языке здесь&lt;/a&gt; "
+    </string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Уведомление</item>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">"Ajustes"</string>
+    <string name="action_clear_videos">"Vaciar lista de URLs"</string>
+    <string name="url_log">"URL Log"</string>
+    <string name="prefs_open_url_log">"Abrir URLS guardadas"</string>
+    <string name="no_data_available">"No hay URLS guardadas"</string>
+    <string name="pref_url_logging_title">"Activar el guardado de URLS"</string>
+    <string name="pref_url_logging_summary">"Guardar URL para mas tarde"</string>
+    <string name="pref_url_logging_header">"URLS guardadas"</string>
+    <string name="pref_notification_header">"Ajustes de notificaciones"</string>
+    <string name="pref_notification_enable_title">"Activar notificaciones"</string>
+    <string name="pref_notification_enable_summary">"Notificaciones para vídeos en streaming"</string>
+    <string name="pref_notification_count_title">"Num. Máximo de notificaciones"</string>
+    <string name="pref_notification_dismiss_time_title">"Tiempo de notificacion"</string>
+    <string name="xposed_not_found_title">"No se ha encontrado Xposed Framework"</string>
+    <string name="xposed_not_found_description">"Necesitas root y Xposed Framework para usar esta aplicación"</string>
+    <string name="module_not_enabled_title">"El modulo no ha sido activado o necesitas reiniciar el dispositivo"</string>
+    <string name="module_not_enabled_description">"Debes activar el modulo en los ajustes de Xposed, si ya lo has activado, reinicia tu dispositivo"</string>
+    <string name="notification_dismiss_time">"15"</string>
+    <string name="notification_count">"1"</string>
+    <string name="permission_accepted">"One Tap Video Download: Permisos de escritura concedidos"</string>
+    <string name="permission_denied">"One Tap Video Download: Permisos de escritura denegados"</string>
+    <string name="accept_write_permission_title">"Activar permisos de escritura"</string>
+    <string name="accept_write_permission_description">"Necesitas dar permisos de escritura para poder guardar tus videos en tu telefono
+        \n \n Pasos para activar los permisos de escritura:
+        \n 1. Presiona continuar
+        \n 2. Selecciona los permisos
+        \n 3. Activa los permisos de almacenamiento
+        \n 4. Cierra y elimina de recientes la app y vuelve a abrirla"
+    </string>
+    <string name="pref_notification_vibrate_title">"Vibrar en notificacion"</string>
+    <string name="pref_notification_vibrate_summary">"Vibrar cuando un video esta siendo reproducido"</string>
+    <string name="pref_notification_vibrate_amount_title">"Cantidad de vibracion"</string>
+    <string name="default_vibrate_amount">"200"</string>
+    <string name="pref_notification_headsup_title">"Activar notificaciones Heads Up"</string>
+    <string name="pref_notification_headsup_summary">"Notificacion Heads Up junto con la notificacion normal"</string>
+    <string name="pref_download_header">"Ajustes de descarga"</string>
+    <string name="prefs_download_location_title">"Descargar en"</string>
+    <string name="open">"Abrir"</string>
+    <string name="share">"Compartir"</string>
+    <string name="download_in_other_resolution">"Descargar en otra resolucion"</string>
+    <string name="remove_from_list">"Remover de la lista"</string>
+    <string name="delete_from_storage">"Borrar"</string>
+    <string name="details">"Detalles"</string>
+    <string name="resume">"Continuar"</string>
+    <string name="pause">"Pausar"</string>
+    <string name="filename">"Nombre del archivo"</string>
+    <string name="enter_filename">"Introducir nombre"</string>
+    <string name="video_quality">"Calidad de video"</string>
+    <string name="download_location">"Directorio de descarga"</string>
+    <string name="download_later">"Descargar mas tarde"</string>
+    <string name="start_download">"Comenzar con la descarga"</string>
+    <string name="unable_to_delete_file">"No se ha podido eliminar"</string>
+    <string name="file_deleted_successfully">"Archivo eliminado"</string>
+    <string name="delete_confirmation">"Confirmar eliminacion"</string>
+    <string name="delete_confirmation_content">"¿Estas seguro que quieres eliminar la descarga?"</string>
+    <string name="yes">"Si"</string>
+    <string name="no">"No"</string>
+    <string name="remove_from_list_confirmation">"Remover de la lista"</string>
+    <string name="remove_from_list_confirmation_content">"¿Estas seguro que deseas remover la descarga de la lista?"</string>
+    <string name="progress_dialog">"Capturando links de descarga"</string>
+    <string name="please_wait">"Por favor, espere..."</string>
+    <string name="unable_to_fetch">"No se han podido capturar los enlaces, por favor intente denuevo"</string>
+    <string name="total_size">"Total"</string>
+    <string name="downloaded_size">"Descargado"</string>
+    <string name="okay">"Ok"</string>
+    <string name="unknown_file_size">"Tamaño desconocido"</string>
+    <string name="view_pager_title_downloads">"Descargas"</string>
+    <string name="md_choose_label">"Elegir"</string>
+    <string name="menu_item_plus_one">"Dale +1"</string>
+    <string name="menu_item_rate">"Calificar esta app"</string>
+    <string name="menu_item_donate">"Donar"</string>
+    <string name="menu_item_translate">"Ayudar a traducir"</string>
+    <string name="menu_item_help">"¿Necesitas ayuda?"</string>
+    <string name="menu_item_about">"Informacion"</string>
+    <string name="about_intro">"One Tap Video Download es un modulo de Xposed gratis y de codigo abierto que permite a los usuarios descargar/reproducir videos desde muchas aplicaciones como exploradores, facebook, etc."</string>
+    <string name="about_developed_by">"Creado por"</string>
+    <string name="about_developer_name">"Ashish Bansal"</string>
+    <string name="about_copyright">"© 2016 One Tap Video Download"</string>
+    <string name="about_credits">"Creditos: Haariger Harald, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Julia Yanovskaya, Open.Orange y todos los demas a quienes puedo haber olvidado de especificar"</string>
+    <string name="donate">"Donar"</string>
+    <string name="donate_description">"Trabajo en One Tap Download en mi tiempo libre. Por favor ayudame a mejorarlo contribuyendo con tu donacion. Gacias!"</string>
+    <string name="donate_thanks_for_donation">"¡Gracias por tu donacion!"</string>
+    <string name="select_donation_amount">"Selecciona la cantidad a donar"</string>
+    <string name="donate_thanks_for_donation_summary">"Estoy muy agradecido de que hayas contribuido con este proyecto. Muchisimas gracias!"</string>
+    <string name="google_services_not_found_title">" no se encuentra Google play juegos"</string>
+    <string name="google_services_not_found_summary">"Gracias por considerarlo, pero no es posible donar sin tener Google Playstore instalado en el dispositivo"</string>
+    <string name="play_video_activity_not_found">"No se encontro la aplicacion para reproducir el video"</string>
+    <string name="share_video_activity_not_found">"No se encontro la aplicacion para compartir el video"</string>
+    <string name="link_expired_download_again">"El link de descarga ha expirado. Por favor agrega la descarga nuevamente"</string>
+    <string name="new_update_available_title">"Nueva actualizacion disponible"</string>
+    <string name="download">"Descargar"</string>
+    <string name="copy_download_link">"Copiar link"</string>
+    <string name="video_url_copied">"Link copiado"</string>
+    <string name="menu_item_usage_instruction_title">"Instrucciones"</string>
+    <string name="usage_instruction_summary">"\n 1. Activa One Tap Video Download en Xposed
+        \n 2. Reinicia tu dispositivo
+        \n 3. Reproduce un video en tu navegador
+        \n 4. Una notificacion con diferentes opciones aparecera
+        \n (La notitifcacion desaparecera a los 30 segundos si no has cambiado este ajuste en la aplicacion)
+        \n 5. Disfruta tu video sin conexion o reproducelo con tu reproductor de videos favorito
+
+       \n Necesitas mas ayuda? &lt;a href=\"https://youtu.be/uTME1FudFmU\"&gt;Observa el video (Ingles)&lt;/a&gt; "
+    </string>
+</resources>

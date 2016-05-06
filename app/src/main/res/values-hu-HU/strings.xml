@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">"Beállítások"</string>
+    <string name="action_clear_videos">"URL lista ürítése"</string>
+    <string name="url_log">"URL Napló"</string>
+    <string name="prefs_open_url_log">"URL Napló megnyitása"</string>
+    <string name="no_data_available">"URL Napló üres"</string>
+    <string name="pref_url_logging_title">"URL Naplózás engedélyezése"</string>
+    <string name="pref_url_logging_summary">"URL Napló mentése későbbi megtekintésre"</string>
+    <string name="pref_url_logging_header">"URL Naplózás"</string>
+    <string name="pref_notification_header">"Értesítés beállítások"</string>
+    <string name="pref_notification_enable_title">"Értesítések engedélyezése"</string>
+    <string name="pref_notification_enable_summary">"Videóközvetítés értesítése"</string>
+    <string name="pref_notification_count_title">"Értesítések maximális száma"</string>
+    <string name="pref_notification_dismiss_time_title">"Értesítés időtartama"</string>
+    <string name="xposed_not_found_title">"Xposed Framework nem található"</string>
+    <string name="xposed_not_found_description">"Az alkalmazás futtatásához Root és Xposed Framework szükséges."</string>
+    <string name="module_not_enabled_title">"A modul még nincs aktiválva vagy újraindítást igényel"</string>
+    <string name="module_not_enabled_description">"A modul engedélyt igényel az Xposed Installer alkalmazásban. Ha már engedélyezve van, kérjük indítsa újra az eszközét."</string>
+    <string name="notification_dismiss_time">"15"</string>
+    <string name="notification_count">"1"</string>
+    <string name="permission_accepted">"One Tap Video Download: írás engedély elfogadva"</string>
+    <string name="permission_denied">"One Tap Video Download: írás engedély elutasítva"</string>
+    <string name="accept_write_permission_title">"Tárhely használat engedélyezése"</string>
+    <string name="accept_write_permission_description">"A videók tárolásához írás engedély szükséges.
+    \n \n Az írás engedély megadásának lépései:
+    \n 1. Nyomja meg a Folytatás-t
+    \n 2. Válassza ki az Engedélyek-et
+    \n 3. Engedélyezze a tárhely használatát
+    \n 4. Indítsa újra az alkalmazást"
+    </string>
+    <string name="pref_notification_vibrate_title">"Rezgés értesítésnél"</string>
+    <string name="pref_notification_vibrate_summary">"Az eszköz rezgése videó közvetítésnél"</string>
+    <string name="pref_notification_vibrate_amount_title">"Rezgés időtartama"</string>
+    <string name="default_vibrate_amount">"200"</string>
+    <string name="pref_notification_headsup_title">"Felugró értesítés engedélyezése"</string>
+    <string name="pref_notification_headsup_summary">"Felugró értesítés alap értesítéssel"</string>
+    <string name="pref_download_header">"Letöltés beállítások"</string>
+    <string name="prefs_download_location_title">"Letöltés helyének megadása"</string>
+    <string name="open">"Megnyitás"</string>
+    <string name="share">"Megosztás"</string>
+    <string name="download_in_other_resolution">"Letöltés más felbontásban"</string>
+    <string name="remove_from_list">"Törlés a listáról"</string>
+    <string name="delete_from_storage">"Törlés a tárhelyről"</string>
+    <string name="details">"Tulajdonságok"</string>
+    <string name="resume">"Folytatás"</string>
+    <string name="pause">"Szünet"</string>
+    <string name="filename">"Fájlnév"</string>
+    <string name="enter_filename">"Fájlnév megadása"</string>
+    <string name="video_quality">"Videó minőség"</string>
+    <string name="download_location">"Letöltés helye"</string>
+    <string name="download_later">"Letöltés később"</string>
+    <string name="start_download">"Letöltés indítása"</string>
+    <string name="unable_to_delete_file">"A fájl törlése sikertelen"</string>
+    <string name="file_deleted_successfully">"A fájl sikeresen törölve"</string>
+    <string name="delete_confirmation">"Megerősítés törlése"</string>
+    <string name="delete_confirmation_content">"Bíztos benne hogy törölni szeretné a letöltést a tárhelyről?"</string>
+    <string name="yes">"Igen"</string>
+    <string name="no">"Nem"</string>
+    <string name="remove_from_list_confirmation">"Megerősítés törlése"</string>
+    <string name="remove_from_list_confirmation_content">"Bíztos benne hogy törölni szeretné a letöltést a listáról?"</string>
+    <string name="progress_dialog">"Letöltési linkek lekérése"</string>
+    <string name="please_wait">"Kérjük várjon..."</string>
+    <string name="unable_to_fetch">"Letöltési linkek lekérése sikertelen. Kérjük próbálja újra"</string>
+    <string name="total_size">"Teljes méret"</string>
+    <string name="downloaded_size">"Letöltés mérete"</string>
+    <string name="okay">"Rendben"</string>
+    <string name="unknown_file_size">"Ismeretlen fájlméret"</string>
+    <string name="view_pager_title_downloads">"Letöltések"</string>
+    <string name="md_choose_label">"Válasszon:"</string>
+    <string name="menu_item_plus_one">"Adjon egy +1-et"</string>
+    <string name="menu_item_rate">"Értékelje az alkalmazást"</string>
+    <string name="menu_item_donate">"Adományozás"</string>
+    <string name="menu_item_translate">"Segítsen honosítani"</string>
+    <string name="menu_item_help">"Segítségre van szüksége?"</string>
+    <string name="menu_item_about">"Információ"</string>
+    <string name="about_intro">"One Tap Video Download egy ingjenes és Nyitott Forrású Xposed Modul amely lehetővé teszi a felhasználónak, hogy letöltsön/lejátszon videókat különböző alkalmazásokból, mint pl. böngésző, facebook és sok más."</string>
+    <string name="about_developed_by">"Fejlesztette:"</string>
+    <string name="about_developer_name">"Ashish Bansal"</string>
+    <string name="about_copyright">"© 2016 One Tap Video Download"</string>
+    <string name="about_credits">"Fejlesztők: Haariger Harald, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Julia Yanovskaya, Open.Orange és mindenki más akit elfelejtettem megemlíteni."</string>
+    <string name="donate">"Adományozás"</string>
+    <string name="donate_description">"A One Tap Video Download-on a szabad időmben szoktam dolgozni. Ha szeretnéd, kérlek támogasd a fejlesztést adományozással. Köszönöm!"</string>
+    <string name="donate_thanks_for_donation">"Köszönet az adományozásért!"</string>
+
+    <string name="select_donation_amount">"Válassza ki az adományozás mennyiségét:"</string>
+    <string name="donate_thanks_for_donation_summary">"Nagyon hálás vagyok, hogy hozzájárult a projecthez. Köszönjük!"</string>
+    <string name="google_services_not_found_title">"Google szolgáltatás nem elérhető"</string>
+    <string name="google_services_not_found_summary">"Köszönöm, hogy adományozni szeretnél, de ez nem lehetséges a Playstore alkalmazás nélkül"</string>
+    <string name="play_video_activity_not_found">"Nem található médialejátszó alkalmazás"</string>
+    <string name="share_video_activity_not_found">"Nem található médiamegosztó alkalmazás"</string>
+    <string name="link_expired_download_again">"A letöltő link lejárt. Kérjük próbálja újra"</string>
+    <string name="new_update_available_title">"Új frissítés elérhető"</string>
+    <string name="download">"Letöltés"</string>
+    <string name="copy_download_link">"Letöltési link másolása"</string>
+    <string name="video_url_copied">"Videó URL másolva"</string>
+    <string name="menu_item_usage_instruction_title">"Használati útmutató"</string>
+    <string name="usage_instruction_summary">"\n 1. Engedélyezze a One Tap Video Download-ot az Xposed Installer alkalmazásban
+        \n 2. Indítsa újra az eszközét
+        \n 3. Játsza le a videóklippet a böngészőben
+        \n 4. Értesítés fog megjelenni különböző opciókkal az értesítések panelben
+        \n (Az értesítés elfog tűnni 30 másodperc után ha nem módosította ezt a beállítást az alkalmazásban. )
+        \n 5. Tekintse meg a videót offline (letöltve) vagy játsza le közvetlen az értesítésből a kedvenc médialejátszó alkalmazásával.
+       \n Nem sikerült a leírás alapján? &lt;a href=\"https://youtu.be/uTME1FudFmU\"&gt;Nézz meg egy angol nyelvű oktatóvideót itt&lt;/a&gt; "
+    </string>
+</resources>

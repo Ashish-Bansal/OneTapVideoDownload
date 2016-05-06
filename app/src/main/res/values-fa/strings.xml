@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">"تنظیمات"</string>
+    <string name="action_clear_videos">"پاک کردن لیست تارنما"</string>
+    <string name="url_log">"فهرست تارنما"</string>
+    <string name="prefs_open_url_log">"باز کردن فهرست تارنما"</string>
+    <string name="no_data_available">"پاک کردن فهرست تارنما"</string>
+    <string name="pref_url_logging_title">"فعال کردن ثبت تارنما"</string>
+    <string name="pref_url_logging_summary">"ثبت تارنما ها و مشاهده آنها در آینده"</string>
+    <string name="pref_url_logging_header">"ثبت تارنما"</string>
+    <string name="pref_notification_header">"تنظیمات اعلان"</string>
+    <string name="pref_notification_enable_title">"فعال کردن اعلان"</string>
+    <string name="pref_notification_enable_summary">"اعلانهای ویدیوهای در حال پخش"</string>
+    <string name="pref_notification_count_title">"حداکثر تعداد اعلانها"</string>
+    <string name="pref_notification_dismiss_time_title">"زمان حذف اعلان ها"</string>
+    <string name="xposed_not_found_title">"فریم ورک xposed یافت نشد"</string>
+    <string name="xposed_not_found_description">"دستگاه شما برای اجرای این برنامه به روت و فریم ورک xposed نیاز دارد"</string>
+    <string name="module_not_enabled_title">"ماژول فعال نشده است یا نیاز به شروع مجدد دستگاه میباشد"</string>
+    <string name="module_not_enabled_description">"شما نیاز به فعال کردن ماژول این برنامه در بخش تنظیمات xposed میباشید. اگر قبلا این کار را کرده اید، دستگاه شما نیاز به شروع مجدد دارد."</string>
+    <string name="notification_dismiss_time">"۱۵"</string>
+    <string name="notification_count">"۱"</string>
+    <string name="permission_accepted">"One Tap Video Download : دسترسی نوشت قبول شد"</string>
+    <string name="permission_denied">"One Tap Video Download : دسترسی نوشتن رد شد"</string>
+    <string name="accept_write_permission_title">"فعال کردن دسترسی نوشتن در حافظه"</string>
+    <string name="accept_write_permission_description">"شما برای ذخیره ویدیو ها، نیاز به دادن دسترسی نوشتن در حافظه دستگاه خود میباشید.
+\n راهنمای زیر، مراحل دادن دسترسی را توضیح میدهد:
+        \n ۱. continue یا ادامه را انتخاب نمایید
+        \n ۲. Permissions یا دسترسی را انتخاب نمایید
+        \n ۳. Storage Permission یا قسمت دادن دسترسی به حافظه را فعال نماید
+        \n ۴. برنامه را شروع مجدد نمایید"
+    </string>
+    <string name="pref_notification_vibrate_title">"لرزش برای اعلان"</string>
+    <string name="pref_notification_vibrate_summary">"لرزش دستگاه وقتی ویدیو دریافت میگردد"</string>
+    <string name="pref_notification_vibrate_amount_title">"مقدار لرزش"</string>
+    <string name="default_vibrate_amount">"۲۰۰"</string>
+    <string name="pref_notification_headsup_title">"فعال سازی هشدار اعلان"</string>
+    <string name="pref_notification_headsup_summary">"هشدار اعلان به همراه اعلان عادی"</string>
+    <string name="pref_download_header">"تنظیمات دریافت و ذخیره"</string>
+    <string name="prefs_download_location_title">"انتخاب محل ذخیره"</string>
+    <string name="open">"باز کردن"</string>
+    <string name="share">"اشتراک گذاری"</string>
+    <string name="download_in_other_resolution">"ذخیره در کیفیت های دیگر"</string>
+    <string name="remove_from_list">"حذف از لیست"</string>
+    <string name="delete_from_storage">"پاک کردن از حافظه"</string>
+    <string name="details">"جزئیات"</string>
+    <string name="resume">"ادامه"</string>
+    <string name="pause">"توقف"</string>
+    <string name="filename">"نام فایل"</string>
+    <string name="enter_filename">"وارد کردن نام فایل"</string>
+    <string name="video_quality">"کیفیت ویدیو"</string>
+    <string name="download_location">"پوشه محل ذخیره"</string>
+    <string name="download_later">"بعدا دریافت گردد"</string>
+    <string name="start_download">"شروع به دریافت"</string>
+    <string name="unable_to_delete_file">"پاک کردن فایل امکانپذیر نیست"</string>
+    <string name="file_deleted_successfully">"فایل با موفقیت پاک گردید"</string>
+    <string name="delete_confirmation">"تایید پاک کردن"</string>
+    <string name="delete_confirmation_content">"آیا مطمئن هستید که میخواهید فایل دریافت شده را از حافظه دستگاه پاک نمایید؟"</string>
+    <string name="yes">"بلی"</string>
+    <string name="no">"خیر"</string>
+    <string name="remove_from_list_confirmation">"پاک کردن تایید"</string>
+    <string name="remove_from_list_confirmation_content">"آیا مطمئن به حذف از لیست دریافت هستید؟"</string>
+    <string name="progress_dialog">"در حال دریافت لینکها"</string>
+    <string name="please_wait">"لطفا صبر کنید"</string>
+    <string name="unable_to_fetch">"امکان دریافت لینکها نیست، لطفا مجددا تکرار نمایید"</string>
+    <string name="total_size">"حجم کل"</string>
+    <string name="downloaded_size">"حجم دریافت شده"</string>
+    <string name="okay">"خب"</string>
+    <string name="unknown_file_size">"حجم فایل معلوم نیست"</string>
+    <string name="view_pager_title_downloads">"دریافت ها"</string>
+    <string name="md_choose_label">"انتخاب"</string>
+    <string name="menu_item_plus_one">"دادن +۱"</string>
+    <string name="menu_item_rate">"نظرات درباره این برنامه"</string>
+    <string name="menu_item_donate">"حمایت از برنامه"</string>
+    <string name="menu_item_translate">"کمک برای ترجمه"</string>
+    <string name="menu_item_help">"آیا نیاز به کمک دارید؟"</string>
+    <string name="menu_item_about">"درباره"</string>
+    <string name="about_intro">"برنامه One Tap Video Download is a Free یک نرم افزارمجانی و متن بازمیباشد و به صورت یک ماژول xposed قادر است از مرورگر و یا برنامه های نظیر فیسبوک و یوتیوب ویدیو ها را دریافت و ذخیره نمیاد."</string>
+    <string name="about_developed_by">"توسعه توسط"</string>
+    <string name="about_developer_name">"Ashish Bansal"</string>
+    <string name="about_copyright">"2016 One Tap Video Download "</string>
+    <string name="about_credits">"Credits : Haariger Harald, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Julia Yanovskaya, Open.Orange and all others who I might have forgot to specify"</string>
+    <string name="donate">"حمایت"</string>
+    <string name="donate_description">"لطفا با حمایت خود به توسعه این برنامه کمک نمایید. حمایت های شما باعث دلگرمی توسعه دهنده این برنامه میباشد."</string>
+    <string name="donate_thanks_for_donation">"از حمایت شما سپاسگزارم"</string>
+
+    <string name="select_donation_amount">"مبلغ اهدایی را تعیین نمایید"</string>
+    <string name="donate_thanks_for_donation_summary">"از حمایت مالی شما برای این پروژه بسیار سپاسگزارم"</string>
+    <string name="google_services_not_found_title">"خدمات Play services یافت نشد"</string>
+    <string name="google_services_not_found_summary">"از اینکه مایل به حمایت از برنامه میباشید سپاسگزاریم ولی برای این منظور نیاز به خدمات Play services دارید که در دستگاه شما نصب نشده است"</string>
+    <string name="play_video_activity_not_found">"هیچ برنامه ای برای پخش ویدیو یافت نشد"</string>
+    <string name="share_video_activity_not_found">"هیچ برنامه ای برای اشتراک گزاری این ویدیو یافت نشد"</string>
+    <string name="link_expired_download_again">"لینک دریافت منقضی شده است. لطفا بار دیگر تکرار نمایید"</string>
+    <string name="new_update_available_title">"بروز رسانی جدید موجود میباشد"</string>
+    <string name="download">"دریافت"</string>
+    <string name="copy_download_link">"کپی کردن تارنمای دانلود"</string>
+    <string name="video_url_copied">"تارنمای ویدیو کپی شد"</string>
+    <string name="menu_item_usage_instruction_title">"دستورالعمل های استفاده"</string>
+    <string name="usage_instruction_summary">"\n  1. برنامه One Tap Video Download را در Xposed Installer فعال نمایید
+        \n  2. دستگاه خود را شروع مجدد نمایید
+        \n  3. یک ویدیو را در مرورگر دستگاه خود پخش نمایید
+        \n  4. در نوار اعلانات، هشدار مربوط به برنامه با تنظیمات مختلف نمایان میگردد
+        \n  5. لطفا توجه نمایید که درصورت عدم تغییر تنظیمات برنامه، هشدار مربوط به دریافت ویدیو به صورت خودکار پس از ۳۰ ثانیه پاک میگردد
+        \n  6. اگر هنوز برای استفاده از برنامه مشکلی دارید میتوانید ویدیو زبان انگلیسی زیر را مشاهده نمایید: https://youtu.be/uTME1FudFmU"
+    </string>
+</resources>

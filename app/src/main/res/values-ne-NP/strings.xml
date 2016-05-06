@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">"सेटिङहरु"</string>
+    <string name="action_clear_videos">"URL सुची मेटाउनुहोस"</string>
+    <string name="url_log">"दैनिकी URL"</string>
+    <string name="prefs_open_url_log">"URL दैनिकी खोल"</string>
+    <string name="no_data_available">"URL दैनिकी खाली "</string>
+    <string name="pref_url_logging_title">"URL दैनिकी सक्षम गर"</string>
+    <string name="pref_url_logging_summary">"भविस्यको लागि URLs बचत गर"</string>
+    <string name="pref_url_logging_header">"URL बचत"</string>
+    <string name="pref_notification_header">"सुचनाको सेटिङ "</string>
+    <string name="pref_notification_enable_title">"सुचना सक्षम गर"</string>
+    <string name="pref_notification_enable_summary">"स्ट्रिम भएको भिडियोको सुचना"</string>
+    <string name="pref_notification_count_title">"अधिकताम सुचना संख्या "</string>
+    <string name="pref_notification_dismiss_time_title">"सुचना खारेज समय "</string>
+    <string name="xposed_not_found_title">"Xposed Framework भेटिएन"</string>
+    <string name="xposed_not_found_description">"तपाइँलाई यो अनुप्रयोग प्रयोग गर्न Root र Xposed Framework चाहिन्छ"</string>
+    <string name="module_not_enabled_title">"Module सुचित गरिएको छैन अथवा Root छैन"</string>
+    <string name="module_not_enabled_description">"तपाईले यो Module, Xposed Installer मा सुचित गर्नुपर्ने हुन्छ।यदि सुचित गरिसकेको भए कृपया आफ्नो मोबाइल रिबुट गर्नुहोस।"</string>
+    <string name="notification_dismiss_time">"१५"</string>
+    <string name="notification_count">"१"</string>
+    <string name="permission_accepted">"एक ट्याप भिडीयो डाउनलोड : Write अनुमती स्वीकार गरियो"</string>
+    <string name="permission_denied">"एक ट्याप भिडीयो डाउनलोड : Write अनुमती अस्वीकार गरियो"</string>
+    <string name="accept_write_permission_title">"स्टाेरेज Write अनुमती सक्षम गर्ने,"</string>
+    <string name="accept_write_permission_description">"फोन स्टोरेजमा भिडीयो भन्डारण गर्न तपाईले Write अनुमति प्रदान गर्नुपर्ने हुन्छ।
+        \n \n Write अनुमति प्रदान गर्ने तरिकाहरु:
+        \n १. अगाडि जानुहोस
+        \n २. अनुमति थिच्नुहोस
+        \n ३. भन्डारण अनुमति सक्ष्यम गर्नुहोस
+        \n ४. अनुप्रयोग फेरि सुरुवात गर्नुहोस"</string>
+    <string name="pref_notification_vibrate_title">"सुचना मा तरङ्ग "</string>
+    <string name="pref_notification_vibrate_summary">"भिडियो स्ट्रिम हुँदा फोनमा तरङ्ग पैदा हुन्छ"</string>
+    <string name="pref_notification_vibrate_amount_title">"तरङ्ग प्रतीशत"</string>
+    <string name="default_vibrate_amount">"२००"</string>
+    <string name="pref_notification_headsup_title">"हेड्स अप सुचना सक्षम गर"</string>
+    <string name="pref_notification_headsup_summary">"साधारण सुचना संगै हेड्स अप सुचना"</string>
+    <string name="pref_download_header">"डाउनलोड विकल्पहरु "</string>
+    <string name="prefs_download_location_title">"डाउन्लोड ठेगाना "</string>
+    <string name="open">"खुला"</string>
+    <string name="share">"बाँड्नुहोस "</string>
+    <string name="download_in_other_resolution">"अरु सन्कल्पमा डाउनलोड गर्नुहोस "</string>
+    <string name="remove_from_list">"सुचीबाट हटाउनुहोस "</string>
+    <string name="delete_from_storage">"भन्डारणबाट हटाउनुहोस"</string>
+    <string name="details">"विवरण "</string>
+    <string name="resume">"रिजुम"</string>
+    <string name="pause">"रोक्नुहोस"</string>
+    <string name="filename">"फाइलनाम"</string>
+    <string name="enter_filename">"फाइलनाम लेख्नुहोस"</string>
+    <string name="video_quality">"भिडीयाे गुणस्तर"</string>
+    <string name="download_location">"डाउनलोड ठेगाना"</string>
+    <string name="download_later">"पछि डाउनलोड गर्नुहोस"</string>
+    <string name="start_download">"डाउनलोड सुरु गर्नुहोस "</string>
+    <string name="unable_to_delete_file">"फाइल हटाउन सकिएन"</string>
+    <string name="file_deleted_successfully">"फाइल हटाइयो"</string>
+    <string name="delete_confirmation">"हटाउने पुष्टि "</string>
+    <string name="delete_confirmation_content">"के तपाईं यो फाइल भणडारण बाट  साँच्चै हटाउन चाहानुहुन्छ?उनुहोस"</string>
+    <string name="yes">"हो"</string>
+    <string name="no">"होइन "</string>
+    <string name="remove_from_list_confirmation">"पुष्टि हटाउनुहोस"</string>
+    <string name="remove_from_list_confirmation_content">"के तपाईं यो फाइल सुची बाट साँच्चै हटाउन चाहानुहुन्छ?"</string>
+    <string name="progress_dialog">"डाउनलोड लिंक ल्याइँदै"</string>
+    <string name="please_wait">"कृपया पर्खनुहोस..."</string>
+    <string name="unable_to_fetch">"लिंक ल्याउन सकिएन, कृपया केही समय पछि कोसिस गर्नुहोस"</string>
+    <string name="total_size">"जम्मा साइज"</string>
+    <string name="downloaded_size">"डाउनलोड साइज"</string>
+    <string name="okay">"ठिक छ"</string>
+    <string name="unknown_file_size">"फाइल साइज थाहा भएन"</string>
+    <string name="view_pager_title_downloads">"डाउनलोडहरु "</string>
+    <string name="md_choose_label">"छान्नुहोस"</string>
+    <string name="menu_item_plus_one">"यसलाई +१ दिनुहोस"</string>
+    <string name="menu_item_rate">"यो अनुप्रयोग मुल्यांकन गर्नुहोस"</string>
+    <string name="menu_item_donate">"सहयोग गर्नुहोस"</string>
+    <string name="menu_item_translate">"अनुवाद गर्न मद्दत गर्नुहोस"</string>
+    <string name="menu_item_help">"सहयोग चाहियो?"</string>
+    <string name="menu_item_about">"बारेमा"</string>
+    <string name="about_intro">"एक ट्याप भिडियो डाउनलोड Xposed Framework को एक यस्तो मुक्त र खुला स्रोत हो जसले प्रयोगकर्ता लाई विभिन्न अनुप्रयोग जस्तै कुनै ब्राउजर, फेसबुक आदि.. बाट  डाउनलोड/प्ले बाट डाउनलोड गर्न मद्दत गर्छ।"</string>
+    <string name="about_developed_by">"विकासकर्ता"</string>
+    <string name="about_developer_name">"Ashish Bansal"</string>
+    <string name="about_copyright">"© २०१६ एक ट्याप भिडियो डाउनलोड"</string>
+    <string name="about_credits">"Credits : Haariger Harald, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Sandeep Paudyal, Julia Yanovskaya, Open.Orange and all others who I might have forgot to specify. "</string>
+    <string name="donate">"सहयोग गर्नुहोस"</string>
+    <string name="donate_description">"म मेरो खाली समयमा एक ट्याप भिडीयो  डाउनलोडमा काम गर्छु।कृपया donate गरेर यो अनुप्रयोगको विकासमा सहयोग पुर्‍याउनुहोला।"</string>
+    <string name="donate_thanks_for_donation">"सहयोगको लागि धन्यवाद !!!"</string>
+
+    <string name="select_donation_amount">"सहयोग रकम छान्नुहोस"</string>
+    <string name="donate_thanks_for_donation_summary">"तपाईले यस परियोजनामा योगदान गरेको थाहा पाउँदा खुशी लाग्यो। धेरै धेरै धन्यवाद !"</string>
+    <string name="google_services_not_found_title">"प्ले सेवाहरु भेटिएन"</string>
+    <string name="google_services_not_found_summary">"विचारको लागि धन्यवाद तर प्ले स्टोर नभए सम्म donate गर्न मिल्दैन"</string>
+    <string name="play_video_activity_not_found">"भिडियो प्ले गर्ने अनुप्रयोग भेटिएन"</string>
+    <string name="share_video_activity_not_found">"बाँड्नको लागि कुनै अनुप्रयोग भेटिएन"</string>
+    <string name="link_expired_download_again">"डाउनलोड लिङ्क पुरानो भयो।कृपया डाउनलोड फेरि थप्नुहोला"</string>
+    <string name="new_update_available_title">"नयाँ अपडेट उपलब्ध "</string>
+    <string name="download">"डाउनलोड"</string>
+    <string name="copy_download_link">"डाउनलोड लिङ्क सार्नुहोस"</string>
+    <string name="video_url_copied">"भिडियो URL सारियो"</string>
+    <string name="menu_item_usage_instruction_title">"उपयोग निर्देशन"</string>
+    <string name="usage_instruction_summary">"\n 1. Enable One Tap Video Download in Xposed Installer
+        \n 2. Reboot your device
+        \n 3. Play a video in browser
+        \n 4. Notification will show in notification panel with different options
+        \n (Please note that  this notification will disappear automatically in 30 seconds if you haven\'t changed this setting in main application)
+        \n 5. Enjoy your video offline by downloading or play it using your favorite video player from the notification itself
+        \n Still unable to follow? &lt;a href=\"https://youtu.be/uTME1FudFmU\"&gt;Watch video in English here&lt;/a&gt; "
+    </string>
+</resources>

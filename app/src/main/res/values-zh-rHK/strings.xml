@@ -1,24 +1,26 @@
 <resources>
-    <string name="action_settings">設定</string>
-    <string name="action_clear_videos">清除網網址清單</string>
-    <string name="url_log">網址紀錄</string>
-    <string name="prefs_open_url_log">開啟網址紀錄</string>
-    <string name="no_data_available">網址紀錄為空</string>
-    <string name="pref_url_logging_title">啟用網址紀錄</string>
-    <string name="pref_url_logging_summary">記錄網址以便之後檢視</string>
-    <string name="pref_url_logging_header">網址紀錄</string>
-    <string name="pref_notification_header">通知設定</string>
-    <string name="pref_notification_enable_title">啟用通知</string>
-    <string name="pref_notification_enable_summary">影片串流播放的通知</string>
-    <string name="pref_notification_count_title">最大通知數目</string>
-    <string name="pref_notification_dismiss_time_title">通知消除時間</string>
-    <string name="xposed_not_found_title">找不到Xposed框架</string>
-    <string name="xposed_not_found_description">你必須先root並且安裝Xposed框架才能使用本應用程式</string>
-    <string name="module_not_enabled_title">模組沒有啟用或需要重新開機</string>
-    <string name="module_not_enabled_description">你需要在Xposed Installer啟用本模組。若你已經啟用本模組，請重新啟動你的裝置。</string>
-    <string name="permission_accepted">One Tap Video Download：寫入權限被允許</string>
-    <string name="permission_denied">One Tap Video Download : 寫入權限被拒絕</string>
-    <string name="accept_write_permission_title">啟用儲存空間的寫入權限</string>
+    <string name="action_settings">"設定"</string>
+    <string name="action_clear_videos">"清除網址清單"</string>
+    <string name="url_log">"網址紀錄"</string>
+    <string name="prefs_open_url_log">"開啟網址紀錄"</string>
+    <string name="no_data_available">"網址紀錄為空"</string>
+    <string name="pref_url_logging_title">"啟用網址紀錄"</string>
+    <string name="pref_url_logging_summary">"記錄網址以便之後檢視"</string>
+    <string name="pref_url_logging_header">"網址紀錄"</string>
+    <string name="pref_notification_header">"通知設定"</string>
+    <string name="pref_notification_enable_title">"啟用通知"</string>
+    <string name="pref_notification_enable_summary">"影片串流播放的通知"</string>
+    <string name="pref_notification_count_title">"最大通知數目"</string>
+    <string name="pref_notification_dismiss_time_title">"通知消除時間"</string>
+    <string name="xposed_not_found_title">"找不到Xposed框架"</string>
+    <string name="xposed_not_found_description">"你必須先root並且安裝Xposed框架才能使用本應用程式"</string>
+    <string name="module_not_enabled_title">"模組沒有啟用或需要重新開機"</string>
+    <string name="module_not_enabled_description">"你需要在Xposed Installer啟用本模組。若你已經啟用本模組，請重新啟動你的裝置。"</string>
+    <string name="notification_dismiss_time">"15"</string>
+    <string name="notification_count">"1"</string>
+    <string name="permission_accepted">"One Tap Video Download：寫入權限被允許"</string>
+    <string name="permission_denied">"One Tap Video Download : 寫入權限被拒絕"</string>
+    <string name="accept_write_permission_title">"啟用儲存空間的寫入權限"</string>
     <string name="accept_write_permission_description">為了能在手機儲存空間上儲存影片，你必須授予寫入權限。
         \n \n 提供權限的步驟：
         \n 1. 點一下「繼續」
@@ -27,66 +29,80 @@
         \n 4. 重新啟動應用程式
     </string>
 
-    <string name="pref_notification_vibrate_title">通知時震動</string>
-    <string name="pref_notification_vibrate_summary">影片正在串流播放時震動裝置</string>
-    <string name="pref_notification_vibrate_amount_title">震動時間</string>
-    <string name="default_vibrate_amount">200</string>
-    <string name="pref_notification_headsup_title">啟用浮動通知</string>
-    <string name="pref_notification_headsup_summary">在通知欄下方顯示浮動通知</string>
-    <string name="pref_download_header">下載選項</string>
-    <string name="prefs_download_location_title">選擇下載目錄</string>
-    <string name="open">開啟</string>
-    <string name="share">分享</string>
-    <string name="download_in_other_resolution">下載其他的解析度</string>
-    <string name="remove_from_list">從清單內移除</string>
-    <string name="delete_from_storage">從儲存空間刪除</string>
-    <string name="details">詳細資料</string>
-    <string name="resume">繼續</string>
-    <string name="pause">暫停</string>
-    <string name="filename">檔案名稱</string>
-    <string name="enter_filename">輸入檔案名稱</string>
-    <string name="video_quality">影片品質</string>
-    <string name="download_location">下載目錄</string>
-    <string name="download_later">稍後下載</string>
-    <string name="start_download">開始下載</string>
-    <string name="unable_to_delete_file">無法刪除檔案</string>
-    <string name="file_deleted_successfully">檔案已成功刪除</string>
-    <string name="delete_confirmation">確認刪除</string>
-    <string name="delete_confirmation_content">你確定要從儲存空間刪除嗎？</string>
-    <string name="yes">是</string>
-    <string name="no">否</string>
-    <string name="remove_from_list_confirmation">移除確認</string>
-    <string name="remove_from_list_confirmation_content">你確定要從清單刪除嗎？</string>
-    <string name="progress_dialog">獲取下載連結中</string>
-    <string name="please_wait">請稍候&#8230;</string>
-    <string name="unable_to_fetch">無法獲取下載連結，請再試一次</string>
+    <string name="pref_notification_vibrate_title">"通知時震動"</string>
+    <string name="pref_notification_vibrate_summary">"影片正在串流播放時震動裝置"</string>
+    <string name="pref_notification_vibrate_amount_title">"震動時間"</string>
+    <string name="default_vibrate_amount">"200"</string>
+    <string name="pref_notification_headsup_title">"啟用Heads-up懸浮通知"</string>
+    <string name="pref_notification_headsup_summary">"在通知欄旁顯示Heads-up懸浮通知"</string>
+    <string name="pref_download_header">"下載選項"</string>
+    <string name="prefs_download_location_title">"選擇下載目錄"</string>
+    <string name="open">"開啟"</string>
+    <string name="share">"分享"</string>
+    <string name="download_in_other_resolution">"下載其他的解析度"</string>
+    <string name="remove_from_list">"從清單內移除"</string>
+    <string name="delete_from_storage">"從儲存空間刪除"</string>
+    <string name="details">"詳細資料"</string>
+    <string name="resume">"繼續"</string>
+    <string name="pause">"暫停"</string>
+    <string name="filename">"檔案名稱"</string>
+    <string name="enter_filename">"輸入檔案名稱"</string>
+    <string name="video_quality">"影片品質"</string>
+    <string name="download_location">"下載目錄"</string>
+    <string name="download_later">"稍後下載"</string>
+    <string name="start_download">"開始下載"</string>
+    <string name="unable_to_delete_file">"無法刪除檔案"</string>
+    <string name="file_deleted_successfully">"檔案已成功刪除"</string>
+    <string name="delete_confirmation">"確認刪除"</string>
+    <string name="delete_confirmation_content">"你確定要從儲存空間刪除嗎？"</string>
+    <string name="yes">"是"</string>
+    <string name="no">"否"</string>
+    <string name="remove_from_list_confirmation">"移除確認"</string>
+    <string name="remove_from_list_confirmation_content">"你確定要從清單刪除嗎？"</string>
+    <string name="progress_dialog">"獲取下載連結中"</string>
+    <string name="please_wait">"請稍候…"</string>
+    <string name="unable_to_fetch">"無法獲取下載連結，請再試一次"</string>
+    <string name="total_size">"總共大小"</string>
+    <string name="downloaded_size">"已下載大小"</string>
+    <string name="okay">"Okay"</string>
+    <string name="unknown_file_size">"未知的檔案大小"</string>
+    <string name="view_pager_title_downloads">"下載"</string>
+    <string name="md_choose_label">"選擇"</string>
+    <string name="menu_item_plus_one">"給個+1"</string>
+    <string name="menu_item_rate">"評分本程式"</string>
+    <string name="menu_item_donate">"贊助"</string>
+    <string name="menu_item_translate">"協助翻譯"</string>
+    <string name="menu_item_help">"需要說明嗎？"</string>
+    <string name="menu_item_about">"關於"</string>
+    <string name="about_intro">"One Tap Video Download是個免費而且開放原始碼、能讓使用者從眾多的程式下載/播放影片的Xposed模組，像是瀏覽器、FaceBook等。"</string>
+    <string name="about_developed_by">"開發者"</string>
+    <string name="about_developer_name">"Ashish Bansal"</string>
+    <string name="about_copyright">"© 2016 One Tap Video Download"</string>
+    <string name="about_credits">"貢獻人員：Haariger Harald, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Julia Yanovskaya, Open.Orange 以及其他我繁忙或許忘記提及的人員。"</string>
+    <string name="donate">"贊助"</string>
+    <string name="donate_description">"我忙裡偷閒地編寫One Tap Video Download。請您盡可能地考慮贊助以支持發展。謝謝您！"</string>
+    <string name="donate_thanks_for_donation">"謝謝贊助！"</string>
 
-    <string name="total_size">總共大小</string>
-    <string name="downloaded_size">已下載大小</string>
-    <string name="okay">Okay</string>
-    <string name="unknown_file_size">未知的檔案大小</string>
-
-    <string name="view_pager_title_downloads">下載</string>
-    <string name="view_pager_title_settings">@string/action_settings</string>
-
-    <string name="md_choose_label">選擇</string>
-
-    <string name="menu_item_plus_one">給個+1</string>
-    <string name="menu_item_rate">評分本程式</string>
-    <string name="menu_item_donate">贊助</string>
-    <string name="menu_item_translate">協助翻譯</string>
-    <string name="menu_item_help">需要說明嗎？</string>
-    <string name="menu_item_about">關於</string>
-
-    <string name="about_intro">One Tap Video Download是個免費而且開放原始碼、能讓使用者從眾多的程式下載/播放影片的Xposed模組，像是瀏覽器、FaceBook等。</string>
-    <string name="about_developed_by">開發者</string>
-    <string name="about_developer_name">Ashish Bansal</string>
-    <string name="about_copyright">&#169; 2016 One Tap Video Download</string>
-    <string name="about_credits">貢獻人員：Haariger Harald, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Julia Yanovskaya, Open.Orange, Matheus Coelho, Carlo, Harminizer 以及其他我繁忙或許忘記提及的人員。</string>
-
-    <string name="donate">贊助</string>
-    <string name="donate_description">我忙裡偷閒地編寫One Tap Video Download。請您盡可能地考慮贊助以支持發展。謝謝您！</string>
-    <string name="donate_thanks_for_donation">謝謝贊助！</string>
+    <string name="select_donation_amount">"選擇贊助金額"</string>
+    <string name="donate_thanks_for_donation_summary">"我真的很高興本專案有你的貢獻。非常感謝！"</string>
+    <string name="google_services_not_found_title">"找不到Play服務"</string>
+    <string name="google_services_not_found_summary">"謝謝你考慮贊助，但是沒有安裝Play Store的裝置是無法贊助的。"</string>
+    <string name="play_video_activity_not_found">"找不到應用程式以播放影片。"</string>
+    <string name="share_video_activity_not_found">"找不到應用程式以分享影片。"</string>
+    <string name="link_expired_download_again">"下載連結已經過期。請再次加入下載連結。"</string>
+    <string name="new_update_available_title">"可用的新更新"</string>
+    <string name="download">"下載"</string>
+    <string name="copy_download_link">"複製下載連結"</string>
+    <string name="video_url_copied">"影片網址已複製"</string>
+    <string name="menu_item_usage_instruction_title">"使用方法"</string>
+    <string name="usage_instruction_summary">"\n 1. 在Xposed Installer啟用One Tap Video Download
+        \n 2. 重新啟動你的裝置
+        \n 3. 在瀏覽器播放影片
+        \n 4. 附有數種不同選項的通知將會顯示在通知面板
+        \n （請留意，若沒在主程式變更此設定，本通知將在30秒後自動消失。）
+        \n 5. 享受下載好的離線影片或是從通知使用喜歡的播放器播放它。
+        \n 依然無法理解？&lt;a href=\"https://youtu.be/uTME1FudFmU\"&gt;在此觀看英文影片&lt;/a&gt; "
+    </string>
 
     <string-array name="pref_notification_count_titles">
         <item>一個通知</item>
@@ -94,13 +110,6 @@
         <item>三個通知</item>
         <item>四個通知</item>
         <item>五個通知</item>
-    </string-array>
-    <string-array name="pref_notification_count_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
     </string-array>
 
     <string-array name="pref_notification_dismiss_time_titles">
@@ -111,14 +120,6 @@
         <item>1分鐘</item>
         <item>3分鐘</item>
     </string-array>
-    <string-array name="pref_notification_dismiss_time_values">
-        <item>10</item>
-        <item>15</item>
-        <item>20</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-    </string-array>
 
     <string-array name="pref_vibrate_amount_titles">
         <item>100毫秒</item>
@@ -126,12 +127,5 @@
         <item>300毫秒</item>
         <item>400毫秒</item>
         <item>500毫秒</item>
-    </string-array>
-    <string-array name="pref_vibrate_amount_values">
-        <item>100</item>
-        <item>200</item>
-        <item>300</item>
-        <item>400</item>
-        <item>500</item>
     </string-array>
 </resources>
