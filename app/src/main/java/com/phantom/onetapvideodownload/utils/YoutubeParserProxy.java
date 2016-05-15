@@ -8,7 +8,6 @@ import android.util.SparseArray;
 
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
-import com.phantom.onetapvideodownload.utils.Invokable;
 
 import at.huber.youtubeExtractor.YouTubeUriExtractor;
 import at.huber.youtubeExtractor.YtFile;
@@ -31,8 +30,6 @@ public class YoutubeParserProxy {
                         video.addFormat(videoFormat.getUrl(), Integer.parseInt(p.first.toString()));
                     }
 
-                    Log.v(TAG, video.getBestAudioFormat().url);
-                    Log.v(TAG, video.getBestVideoFormat().url);
                     try {
                         invokable.invoke(video);
                     } catch (java.lang.Exception e) {
