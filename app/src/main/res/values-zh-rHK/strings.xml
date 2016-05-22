@@ -101,7 +101,7 @@
         \n 4. 附有數種不同選項的通知將會顯示在通知面板
         \n （請留意，若沒在主程式變更此設定，本通知將在30秒後自動消失。）
         \n 5. 享受下載好的離線影片或是從通知使用喜歡的播放器播放它。
-        \n 依然無法理解？&lt;a href=\"https://youtu.be/uTME1FudFmU\"&gt;在此觀看英文影片&lt;/a&gt; "
+        \n 依然無法理解？<a href="https://youtu.be/uTME1FudFmU\">在此觀看英文影片</a> "
     </string>
 
     <string-array name="pref_notification_count_titles">
