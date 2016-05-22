@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">"Ayarlar"</string>
+    <string name="action_clear_videos">"URL listesini temizle"</string>
+    <string name="url_log">"URL Log"</string>
+    <string name="prefs_open_url_log">"URL log kaydını aç"</string>
+    <string name="no_data_available">"URL Log boş"</string>
+    <string name="pref_url_logging_title">"URL Loglama Aktif"</string>
+    <string name="pref_url_logging_summary">"URL\'leri sonra görüntümelek için log tut."</string>
+    <string name="pref_url_logging_header">"URL Loglama"</string>
+    <string name="pref_notification_header">"Bildirim Seçenekleri"</string>
+    <string name="pref_notification_enable_title">"Bildirimler Aktif"</string>
+    <string name="pref_notification_enable_summary">"Oynatılan videolar için bildirimler"</string>
+    <string name="pref_notification_count_title">"Maksimum bildirim sayısı"</string>
+    <string name="pref_notification_dismiss_time_title">"Bildirimin kapanma süresi"</string>
+    <string name="xposed_not_found_title">"Xposed Framework bulunamadı"</string>
+    <string name="xposed_not_found_description">"Bu uygulamayı kullanabilmek için Root yetkiniz olmalı ve Xposed Framework kurulu olmalıdır."</string>
+    <string name="module_not_enabled_title">"Xposed Modülü aktif değil veya yeniden başlatma gerekiyor"</string>
+    <string name="module_not_enabled_description">"Bu modülü Xposed içinde aktif etmeniz gerekiyor. Eğer zaten aktif etmişseniz lütfen aygıtınızı yeniden başlatın."</string>
+    <string name="permission_accepted">"One Tap Video Download : Yazma İzni Kabul Edildi"</string>
+    <string name="permission_denied">"One Tap Video Download : Yazma İzni Reddedildi"</string>
+    <string name="accept_write_permission_title">"Yazma izni etkinleştirme"</string>
+    <string name="accept_write_permission_description">"Videoların aygıtınıza kaydedilebilmesi için yazma izni vermelisiniz.
+        \n \n Aşağıdaki adımları uygulayarak izin verebilirsiniz :
+        \n 1. Devam tıklayın
+        \n 2. İzinler seçin
+        \n 3. Depolama izni seçin
+        \n 4. Uygulamayı yeniden başlatın."
+    </string>
+    <string name="pref_notification_vibrate_title">"Bildirimlerde titreşim."</string>
+    <string name="pref_notification_vibrate_summary">"Video oynatılmaya başladığında titreşimle uyar"</string>
+    <string name="pref_notification_vibrate_amount_title">"Titreşim miktarı"</string>
+    <string name="default_vibrate_amount">"200"</string>
+    <string name="pref_notification_headsup_title">"Heads up bildirimi etkinleştir"</string>
+    <string name="pref_notification_headsup_summary">"Normal bildirimle beraber Heads up bildirimi de al"</string>
+    <string name="pref_download_header">"İndirme Seçenekleri"</string>
+    <string name="prefs_download_location_title">"İndirme Klasörünü Seç"</string>
+    <string name="open">"Aç"</string>
+    <string name="share">"Paylaş"</string>
+    <string name="download_in_other_resolution">"Diğer çözünürlüklerde indir"</string>
+    <string name="remove_from_list">"Listeden sil"</string>
+    <string name="delete_from_storage">"Telefondan sil"</string>
+    <string name="details">"Detaylar"</string>
+    <string name="resume">"Devam et"</string>
+    <string name="pause">"Duraklat"</string>
+    <string name="filename">"Dosya adı"</string>
+    <string name="enter_filename">"Dosya adı yazın"</string>
+    <string name="video_quality">"Video Kalitesi"</string>
+    <string name="download_location">"İndirme Klasörü"</string>
+    <string name="download_later">"Sonra İndir"</string>
+    <string name="start_download">"İndirmeyi Başlat"</string>
+    <string name="unable_to_delete_file">"Dosya silinemiyor"</string>
+    <string name="file_deleted_successfully">"Dosya silme başarılı"</string>
+    <string name="delete_confirmation">"Silmeyi Onayla"</string>
+    <string name="delete_confirmation_content">"İndirilen dosyayı aygıtınızdan silmek istediğinize emin misiniz?"</string>
+    <string name="yes">"Evet"</string>
+    <string name="no">"Hayır"</string>
+    <string name="remove_from_list_confirmation">"Kaldırma Onayı"</string>
+    <string name="remove_from_list_confirmation_content">"Listeden silmek istediğinize emin misiniz?"</string>
+    <string name="progress_dialog">"İndirme Linklerini Al"</string>
+    <string name="please_wait">"Lütfen bekleyin..."</string>
+    <string name="unable_to_fetch">"İndirme linkleri alınamadı. Lütfen tekrar deneyin."</string>
+    <string name="total_size">"Toplam Boyut"</string>
+    <string name="downloaded_size">"İndirilen"</string>
+    <string name="okay">"Tamam"</string>
+    <string name="unknown_file_size">"Bilinmeyen Dosya Boyutu"</string>
+    <string name="view_pager_title_downloads">"İndirmeler"</string>
+    <string name="md_choose_label">"Seçin"</string>
+    <string name="menu_item_plus_one">"+1 Verin"</string>
+    <string name="menu_item_rate">"Uygulamaya oy verin"</string>
+    <string name="menu_item_donate">"Bağış"</string>
+    <string name="menu_item_translate">"Çeviri yardımı"</string>
+    <string name="menu_item_help">"Yardıma İhtiyacınız var mı?"</string>
+    <string name="menu_item_about">"Hakkında"</string>
+    <string name="about_intro">"One Tap Video Download; Browser, facebook vb, birçok kaynaktan video indirmeyi ve istediğiniz playerda oynatmayı sağlayan Ücretsiz ve Açık Kaynak bir Xposed Modülüdür."</string>
+    <string name="about_developed_by">"Geliştiren"</string>
+    <string name="about_developer_name">"Ashish Bansal"</string>
+    <string name="about_copyright">"© 2016 One Tap Video Download"</string>
+    <string name="about_credits">"Katkıda bulunanlar: Haariger Harald, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Julia Yanovskaya, Open.Orange ve belirtmeyi unuttuğum diğerleri..."</string>
+    <string name="donate">"Bağış"</string>
+    <string name="donate_description">"Ben One Tap Video Download uygulamasını boş zamanlarımda geliştiriyorum. Lütfen imkanınız varsa geliştirme sürecini bağış yaparak destekleyin. Teşekkürler. "</string>
+    <string name="donate_thanks_for_donation">"Bağışınız için teşekkürler."</string>
+
+    <string name="select_donation_amount">"Bağış miktarını seçin"</string>
+    <string name="donate_thanks_for_donation_summary">"Bu projeye katkıda bulunduğunuz için çok teşekkür ederim."</string>
+    <string name="google_services_not_found_title">"Google Play servisi bulunamadı"</string>
+    <string name="google_services_not_found_summary">"Desteğiniz için teşekkürler fakat Google Playstore servisi olmadan bağış yapmanız mümkün değil."</string>
+    <string name="play_video_activity_not_found">"Video oynatmak için uygulama bulunamadı."</string>
+    <string name="share_video_activity_not_found">"Video paylaşmak için uygulama bulunamadı."</string>
+    <string name="link_expired_download_again">"İndirme linkinin süresi doldu. Lütfen tekrar indirme listesine ekleyin."</string>
+    <string name="new_update_available_title">"Yeni güncelleme mevcut."</string>
+    <string name="download">"İndir"</string>
+    <string name="copy_download_link">"İndirme Linkini Kopyala"</string>
+    <string name="video_url_copied">"Video adresi kopyalandı"</string>
+    <string name="menu_item_usage_instruction_title">"Kullanma Talimatları"</string>
+    <string name="usage_instruction_summary">"
+        \n 1. Xposed Installer içinden One Tap Video Download modülünü aktifleştirin
+        \n 2. Aygıtınızı yeniden başlatın
+        \n 3. Tarayıcınızda video açın
+        \n 4. Bildirim panelinde değişik seçeneklerle Bildirim göreceksiniz
+        \n (Lüten dikkat, ön tanımlı ayarlarla bildirim panelindeki uyarı 15 saniye içinde kaybolacaktır. Bu süreyi uygulama ayarlarından değiştirebilirsiniz.)
+        \n 5. Videolarınızın keyfini çıkarın.
+
+        \n Hala problem yaşıyorsanız <a href="https://youtu.be/uTME1FudFmU\">Videoya göz atın (İngilizce)</a> "
+    </string>
+</resources>

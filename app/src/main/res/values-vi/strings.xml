@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">"Cài đặt"</string>
+    <string name="action_clear_videos">"Xóa danh sách URL"</string>
+    <string name="url_log">"Nhật ký URL"</string>
+    <string name="prefs_open_url_log">"Mở nhật ký URL"</string>
+    <string name="no_data_available">"Nhật ký URL trống"</string>
+    <string name="pref_url_logging_title">"Kích hoạt tính năng ghi nhật ký URL"</string>
+    <string name="pref_url_logging_summary">"Ghi lại URL để xem chúng sau này"</string>
+    <string name="pref_url_logging_header">"Ghi nhật ký URL"</string>
+    <string name="pref_notification_header">"Cài đặt thông báo"</string>
+    <string name="pref_notification_enable_title">"Kích hoạt tính năng thông báo"</string>
+    <string name="pref_notification_enable_summary">"Thông báo video được phát trực tuyến"</string>
+    <string name="pref_notification_count_title">"Tối đa số các thông báo"</string>
+    <string name="pref_notification_dismiss_time_title">"Thời gian bỏ qua thông báo"</string>
+    <string name="xposed_not_found_title">"Xposed Framework không tìm thấy"</string>
+    <string name="xposed_not_found_description">"Bạn cần root và Xposed Framework để sử dụng ứng dụng này"</string>
+    <string name="module_not_enabled_title">"Module chưa được kích hoạt hoặc Cần khởi động lại"</string>
+    <string name="module_not_enabled_description">"Bạn cần phải bật module này trong Xposed Installer. Nếu bạn đã kích hoạt nó, hãy khởi động lại thiết bị của bạn."</string>
+    <string name="notification_dismiss_time">"15"</string>
+    <string name="notification_count">"1"</string>
+    <string name="permission_accepted">"One Tap Video Download: Quyền ghi được chấp nhận"</string>
+    <string name="permission_denied">"One Tap Video Download: Quyền ghi bị từ chối"</string>
+    <string name="accept_write_permission_title">"Kích hoạt quyền ghi vào bộ nhớ"</string>
+    <string name="accept_write_permission_description">"Bạn cần phải cung cấp quyền ghi để lưu trữ video của bạn trong lưu trữ điện thoại của bạn.
+        \n \n Các bước để cung cấp cho phép:
+        \n 1. Nhấn vào tiếp tục
+        \n 2. Chọn Quyền
+        \n 3. Kích hoạt tính năng quyền bộ nhớ
+        \n 4. Khởi động lại ứng dụng"
+    </string>
+    <string name="pref_notification_vibrate_title">"Rung khi thông báo"</string>
+    <string name="pref_notification_vibrate_summary">"Rung điện thoại khi video đang được xem trực tuyến"</string>
+    <string name="pref_notification_vibrate_amount_title">"Mức rung"</string>
+    <string name="default_vibrate_amount">"200"</string>
+    <string name="pref_notification_headsup_title">"Kích hoạt Heads up thông báo"</string>
+    <string name="pref_notification_headsup_summary">"Heads up thông báo cùng với thông báo bình thường"</string>
+    <string name="pref_download_header">"Tùy chọn tải về"</string>
+    <string name="prefs_download_location_title">"Chọn thư mục tải về"</string>
+    <string name="open">"Mở"</string>
+    <string name="share">"Chia sẻ"</string>
+    <string name="download_in_other_resolution">"Tải về độ phân giải khác"</string>
+    <string name="remove_from_list">"Xóa từ danh sách"</string>
+    <string name="delete_from_storage">"Xóa từ bộ nhớ"</string>
+    <string name="details">"Chi tiết"</string>
+    <string name="resume">"Tiếp tục"</string>
+    <string name="pause">"Tạm dừng"</string>
+    <string name="filename">"Tên tệp tin"</string>
+    <string name="enter_filename">"Nhập tên tệp tin"</string>
+    <string name="video_quality">"Chất lượng video"</string>
+    <string name="download_location">"Thư mục tải về"</string>
+    <string name="download_later">"Tải về sau"</string>
+    <string name="start_download">"Bắt đầu tải"</string>
+    <string name="unable_to_delete_file">"Không thể xóa tệp tin"</string>
+    <string name="file_deleted_successfully">"Xóa tệp tin thành công"</string>
+    <string name="delete_confirmation">"Xác nhận xóa"</string>
+    <string name="delete_confirmation_content">"Bạn có chắc chắn muốn xóa tải về từ bộ nhớ không?"</string>
+    <string name="yes">"Có"</string>
+    <string name="no">"Không"</string>
+    <string name="remove_from_list_confirmation">"Xác nhận loại bỏ"</string>
+    <string name="remove_from_list_confirmation_content">"Bạn có chắc chắn muốn xóa bản tải xuống từ danh sách"</string>
+    <string name="progress_dialog">"Đang tìm nạp liên kết tải về"</string>
+    <string name="please_wait">"Vui lòng chờ..."</string>
+    <string name="unable_to_fetch">"Không thể lấy liên kết, Xin vui lòng thử lại"</string>
+    <string name="total_size">"Tổng kích thước"</string>
+    <string name="downloaded_size">"Kích thước tải về"</string>
+    <string name="okay">"Ok"</string>
+    <string name="unknown_file_size">"Kích thước tệp tin không xác định"</string>
+    <string name="view_pager_title_downloads">"Tải về"</string>
+    <string name="md_choose_label">"Lựa chọn"</string>
+    <string name="menu_item_plus_one">"Cho nó +1"</string>
+    <string name="menu_item_rate">"Đ.giá ứng dụng"</string>
+    <string name="menu_item_donate">"Tặng"</string>
+    <string name="menu_item_translate">"Giúp dịch"</string>
+    <string name="menu_item_help">"Cần giúp đỡ?"</string>
+    <string name="menu_item_about">"Giới thiệu"</string>
+    <string name="about_intro">"One Tap Video Download là một nguồn Xposed module miễn phí và mở cho phép người dùng tải về / chơi video từ nhiều ứng dụng như trình duyệt, facebook vv"</string>
+    <string name="about_developed_by">"Phát triển bởi"</string>
+    <string name="about_developer_name">"Ashish Bansal "</string>
+    <string name="about_copyright">"© 2016 One Tap Video Download "</string>
+    <string name="about_credits">"Tín dụng: Haariger Harald, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Julia Yanovskaya, Open.Orange và tất cả những người tôi có thể đã quên chỉ định."</string>
+    <string name="donate">"Tặng"</string>
+    <string name="donate_description">"Tôi làm việc trên One Tap Video Download trong thời gian rảnh rỗi. Xin hãy ủng hộ phát triển bằng cách quyên góp nếu có thể. Cảm ơn!"</string>
+    <string name="donate_thanks_for_donation">"Cảm ơn đã đóng góp!"</string>
+    <string name="select_donation_amount">"Chọn số tiền tặng"</string>
+    <string name="donate_thanks_for_donation_summary">"Tôi thực sự vui mừng khi biết rằng bạn đã đóng góp cho dự án này. Cảm ơn nhiều!"</string>
+    <string name="google_services_not_found_title">"Không tìm thấy dịch vụ Play"</string>
+    <string name="google_services_not_found_summary">"Cảm ơn đã quan tâm nhưng nó không thể tặng mà không cửa hàng play đang được cài đặt trên thiết bị."</string>
+    <string name="play_video_activity_not_found">"Không tìm thấy ứng để chơi video."</string>
+    <string name="share_video_activity_not_found">"Không tìm thấy ứng để chia sẻ video."</string>
+    <string name="link_expired_download_again">"Liên kết đã hết hạn. Vui lòng thêm tải về lại."</string>
+    <string name="new_update_available_title">"Cập nhật mới có sẵn"</string>
+    <string name="download">"Tải về"</string>
+    <string name="copy_download_link">"Sao chép liên kết tải về"</string>
+    <string name="video_url_copied">"Đã sao chép URL video"</string>
+    <string name="menu_item_usage_instruction_title">"Hướng dẫn sử dụng"</string>
+    <string name="usage_instruction_summary">"
+        \n 1. Kích hoạt tính năng Một Tap Video Download tại Xposed Installer
+        \n 2. Khởi động lại thiết bị của bạn
+        \n 3. Phát video trong trình duyệt
+        \n 4. Thông báo sẽ hiển thị trong bảng thông báo với các tùy chọn khác nhau
+        \n (Xin lưu ý rằng thông báo này sẽ tự động biến mất trong 30 giây nếu bạn không thay đổi thiết lập này trong ứng dụng chính)
+        \n 5. Thưởng thức video offline của bạn bằng cách tải về hoặc chơi nó sử dụng máy phát video yêu thích từ các thông báo
+
+        \n Vẫn không thể làm theo? <a href="https://youtu.be/uTME1FudFmU\">Xem video tiếng Anh ở đây </a>"</string>
+</resources>
