@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">"Paramètres"</string>
+    <string name="action_clear_videos">"Vider la liste des URLs"</string>
+    <string name="url_log">"Liste des URLs"</string>
+    <string name="prefs_open_url_log">"Ouvrir la liste des URLs"</string>
+    <string name="no_data_available">"Liste vide"</string>
+    <string name="pref_url_logging_title">"Activer le listage des URLs"</string>
+    <string name="pref_url_logging_summary">"Lister les URLs pour les visionner plus tard"</string>
+    <string name="pref_url_logging_header">"Listage des URLs"</string>
+    <string name="pref_notification_header">"Paramètres des notifications"</string>
+    <string name="pref_notification_enable_title">"Activer les notifications"</string>
+    <string name="pref_notification_enable_summary">"Notifications des vidéos en cours de diffusion"</string>
+    <string name="pref_notification_count_title">"Nombre maximum de notifications"</string>
+    <string name="pref_notification_dismiss_time_title">"Délai rejet de notification"</string>
+    <string name="xposed_not_found_title">"Le framework Xposed est introuvable"</string>
+    <string name="xposed_not_found_description">"Afin de pouvoir utiliser cette application, il vous faut l'accès root &amp; le framework Xposed"</string>
+    <string name="module_not_enabled_title">"Le module est désactivé ou un redémarrage est requis"</string>
+    <string name="module_not_enabled_description">"Il vous faut activer ce module dans Xposed Installer. Si vous l'avez déjà fait, veuillez redémarrer votre appareil."</string>
+    <string name="permission_accepted">"One Tap Video Download : Permission en Ecriture Acceptée"</string>
+    <string name="permission_denied">"One Tap Video Download : Permission en Ecriture Refusée"</string>
+    <string name="accept_write_permission_title">"Autorisé la permission en écriture sur l'espace de stockage"</string>
+    <string name="accept_write_permission_description">"Afin d'enregistrer vos vidéos sur l'espace de stockage de votre appareil, il vous faut donner la permission en écriture.
+        \n \n Etapes à suivre :
+        \n 1. Appuyez sur continue
+        \n 2. Selectionnez Permissions
+        \n 3. Activez Permission Stockage
+        \n 4. Redémarrez l'application"
+    </string>
+    <string name="pref_notification_vibrate_title">"Vibrer lors de la notification"</string>
+    <string name="pref_notification_vibrate_summary">"Vibrer lorsque la vidéo est diffusée"</string>
+    <string name="pref_notification_vibrate_amount_title">"Niveau de vibration"</string>
+    <string name="default_vibrate_amount">"200"</string>
+    <string name="pref_notification_headsup_title">"Activer les notifications flottantes"</string>
+    <string name="pref_notification_headsup_summary">"Notifications flottantes &amp; notifications normales"</string>
+    <string name="pref_download_header">"Options de téléchargement"</string>
+    <string name="prefs_download_location_title">"Définir le répertoire de téléchargement"</string>
+    <string name="open">"Ouvrir"</string>
+    <string name="share">"Partager"</string>
+    <string name="download_in_other_resolution">"Télécharger une autre résolution"</string>
+    <string name="remove_from_list">"Retirer de la liste"</string>
+    <string name="delete_from_storage">"Effacer du stockage"</string>
+    <string name="details">"Détails"</string>
+    <string name="resume">"Reprendre"</string>
+    <string name="pause">"Pause"</string>
+    <string name="filename">"Nom du fichier"</string>
+    <string name="enter_filename">"Entrer le nom du fichier"</string>
+    <string name="video_quality">"Qualité de la vidéo"</string>
+    <string name="download_location">"Répertoire de téléchargement"</string>
+    <string name="download_later">"Télécharger ultérieurement"</string>
+    <string name="start_download">"Démarrer le téléchargement"</string>
+    <string name="unable_to_delete_file">"La suppression du fichier a échoué"</string>
+    <string name="file_deleted_successfully">"Suppression réussie"</string>
+    <string name="delete_confirmation">"Confirmer la suppression"</string>
+    <string name="delete_confirmation_content">"Etes-vous certain de vouloir supprimer ce téléchargement de la mémoire de stockage ?"</string>
+    <string name="yes">"Oui"</string>
+    <string name="no">"Non"</string>
+    <string name="remove_from_list_confirmation">"Retirer la demande de confirmation"</string>
+    <string name="remove_from_list_confirmation_content">"Etes-vous certain de vouloir retirer ce téléchargement de la liste ?"</string>
+    <string name="progress_dialog">"Récupération des liens de téléchargements"</string>
+    <string name="please_wait">"Veuillez patienter..."</string>
+    <string name="unable_to_fetch">"Echec de la récupération des liens. Veuillez réessayer"</string>
+    <string name="total_size">"Taille totale"</string>
+    <string name="downloaded_size">"Taille téléchargée"</string>
+    <string name="okay">"Ok"</string>
+    <string name="unknown_file_size">"Taille du fichier inconnue"</string>
+    <string name="view_pager_title_downloads">"Téléchargements"</string>
+    <string name="md_choose_label">"Sélectionner"</string>
+    <string name="menu_item_plus_one">"+1"</string>
+    <string name="menu_item_rate">"Evaluez cette application"</string>
+    <string name="menu_item_donate">"Donation"</string>
+    <string name="menu_item_translate">"Aidez à la traduction"</string>
+    <string name="menu_item_help">"Besoin d'aide ?"</string>
+    <string name="menu_item_about">"A propos"</string>
+    <string name="about_intro">"One Tap Video Download est module Xposed Libre et Open Source vous permettant de télécharger/jouer des vidéos depuis maintes applications dont le navigateur, facebook etc."</string>
+    <string name="about_developed_by">"Développé par"</string>
+    <string name="about_developer_name">"Ashish Bansal"</string>
+    <string name="about_copyright">"© 2016 One Tap Video Download "</string>
+    <string name="about_credits">"Remerciements : Haariger Harald, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Julia Yanovskaya, Open.Orange, Jules Guillou et tous les autres que je n'aurais pas mentionnés."</string>
+    <string name="donate">"Donation"</string>
+    <string name="donate_description">"Je travaille sur One Tap Video Download durant mon temps libre. Soutenez son développement en faisant un don si cela vous est possible. Merci !"</string>
+    <string name="donate_thanks_for_donation">"Merci pour ce don!"</string>
+
+    <string name="select_donation_amount">"Sélectionner une somme pour le don"</string>
+    <string name="donate_thanks_for_donation_summary">"Je suis très heureux que vous contribuiez au développement de ce projet. Merci beaucoup!"</string>
+    <string name="google_services_not_found_title">"Services Google Play introuvable"</string>
+    <string name="google_services_not_found_summary">"Merci d'envisager un don mais il est impossible de ce faire sans le Play Store installé sur votre appareil."</string>
+    <string name="play_video_activity_not_found">"Aucune application trouvée pour lire la vidéo"</string>
+    <string name="share_video_activity_not_found">"Aucune application trouvée pour partager la vidéo"</string>
+    <string name="link_expired_download_again">"Lien de téléchargement expiré. Veuillez l'ajouter de nouveau."</string>
+    <string name="new_update_available_title">"Une mise à jour est disponible"</string>
+    <string name="download">"Téléchargement"</string>
+    <string name="copy_download_link">"Copie du lien de téléchargement"</string>
+    <string name="video_url_copied">"URL copiée"</string>
+    <string name="menu_item_usage_instruction_title">"Instructions d'utilisation"</string>
+    <string name="usage_instruction_summary">
+        \n 1. Activez One Tap Video Download dans Xposed Installer
+        \n 2. Redémarrez votre appareil
+        \n 3. Jouez une vidéo dans votre navigateur
+        \n 4. Une notification apparaitra dans le tiroir des notifications avec différentes options
+        \n (Veuillez noter que cette notification disparaitra automatiquement après 30 secondes si vous n'avez pas modifié ces paramètre)
+        \n 5. Profitez de votre vidéo hors connexion en la téléchargeant ou lancez-la dans votre lecteur vidéo préféré depuis la notification
+
+        \n Vous avez du mal à suivre ?<a href="https://youtu.be/uTME1FudFmU\">Watch video in English here</a></string>
+</resources>
