@@ -14,13 +14,13 @@
     <string name="pref_notification_count_title">"Nombre maximum de notifications"</string>
     <string name="pref_notification_dismiss_time_title">"Délai rejet de notification"</string>
     <string name="xposed_not_found_title">"Le framework Xposed est introuvable"</string>
-    <string name="xposed_not_found_description">"Afin de pouvoir utiliser cette application, il vous faut l'accès root &amp; le framework Xposed"</string>
+    <string name="xposed_not_found_description">"Afin de pouvoir utiliser cette application, il vous faut l\'accès root &amp; le framework Xposed"</string>
     <string name="module_not_enabled_title">"Le module est désactivé ou un redémarrage est requis"</string>
     <string name="module_not_enabled_description">"Il vous faut activer ce module dans Xposed Installer. Si vous l'avez déjà fait, veuillez redémarrer votre appareil."</string>
     <string name="permission_accepted">"One Tap Video Download : Permission en Ecriture Acceptée"</string>
     <string name="permission_denied">"One Tap Video Download : Permission en Ecriture Refusée"</string>
-    <string name="accept_write_permission_title">"Autorisé la permission en écriture sur l'espace de stockage"</string>
-    <string name="accept_write_permission_description">"Afin d'enregistrer vos vidéos sur l'espace de stockage de votre appareil, il vous faut donner la permission en écriture.
+    <string name="accept_write_permission_title">"Autorisé la permission en écriture sur l\'espace de stockage"</string>
+    <string name="accept_write_permission_description">"Afin d'enregistrer vos vidéos sur l\'espace de stockage de votre appareil, il vous faut donner la permission en écriture.
         \n \n Etapes à suivre :
         \n 1. Appuyez sur continue
         \n 2. Selectionnez Permissions
@@ -98,7 +98,7 @@
         \n 2. Redémarrez votre appareil
         \n 3. Jouez une vidéo dans votre navigateur
         \n 4. Une notification apparaitra dans le tiroir des notifications avec différentes options
-        \n (Veuillez noter que cette notification disparaitra automatiquement après 30 secondes si vous n'avez pas modifié ces paramètre)
+        \n (Veuillez noter que cette notification disparaitra automatiquement après 30 secondes si vous n\'avez pas modifié ces paramètre)
         \n 5. Profitez de votre vidéo hors connexion en la téléchargeant ou lancez-la dans votre lecteur vidéo préféré depuis la notification
 
         \n Vous avez du mal à suivre ?<a href="https://youtu.be/uTME1FudFmU\">Watch video in English here</a></string>
