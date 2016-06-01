@@ -33,6 +33,9 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.plus.PlusOneButton;
@@ -67,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     private PlusOneButton mPlusOneButton;
     private ApplicationUpdateNotification mApplicationUpdateNotification;
     private MaterialDialog mProgressDialog;
+    private AdView mAdView;
 
     public final static String ACTION_SHOW_DOWNLOAD_DIALOG = "com.phantom.onetapvideodownload.action.saveurl";
 
@@ -76,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
 
         Fixes.updateLayoutInflaterFactory(getLayoutInflater());
         setContentView(R.layout.activity_main);
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-4007739214025921~1601743291");
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -97,6 +102,13 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         mApplicationUpdateNotification = new ApplicationUpdateNotification(this);
         mApplicationUpdateNotification.checkForUpdate();
         onNewIntent(getIntent());
+
+        mAdView = (AdView) findViewById(R.id.adView);
+        if (CheckPreferences.getAdEnabled(this)) {
+            showAd();
+        } else {
+            hideAd();
+        }
     }
 
     @Override
@@ -157,6 +169,14 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem adSwitch = menu.findItem(R.id.adswitch);
+        adSwitch.setChecked(CheckPreferences.getAdEnabled(this));
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
@@ -180,6 +200,15 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
                 break;
             case R.id.menu_usage_instruction_title:
                 openUsageInstructionActivity();
+                break;
+            case R.id.adswitch:
+                item.setChecked(!item.isChecked());
+                CheckPreferences.toggleAdEnabled(this);
+                if (item.isChecked()) {
+                    Toast.makeText(this, R.string.ad_enabled, Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(this, R.string.ad_disabled, Toast.LENGTH_LONG).show();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -479,4 +508,16 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         startActivity(UsageInstruction.class);
     }
 
+    private void hideAd() {
+        mAdView.setEnabled(false);
+        mAdView.setVisibility(View.GONE);
+    }
+
+    private void showAd() {
+        mAdView.setEnabled(true);
+        mAdView.setVisibility(View.VISIBLE);
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        mAdView.loadAd(adRequest);
+    }
 }

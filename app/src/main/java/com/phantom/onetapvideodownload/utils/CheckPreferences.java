@@ -93,4 +93,21 @@ public class CheckPreferences {
         editor.putBoolean("donation_status", donationStatus);
         editor.apply();
     }
+
+    public static Boolean getAdEnabled(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getBoolean("ad_enabled", true);
+    }
+
+    public static void setAdEnabled(Context context, Boolean enabled) {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("ad_enabled", enabled);
+        editor.apply();
+    }
+
+    public static void toggleAdEnabled(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        setAdEnabled(context, !sharedPreferences.getBoolean("ad_enabled", true));
+    }
 }
