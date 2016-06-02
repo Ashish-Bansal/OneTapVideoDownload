@@ -39,6 +39,7 @@ import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.plus.PlusOneButton;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.phantom.onetapvideodownload.AnalyticsApplication;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.Video.Video;
@@ -108,6 +109,11 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         mApplicationUpdateNotification = new ApplicationUpdateNotification(this);
         mApplicationUpdateNotification.checkForUpdate();
         onNewIntent(getIntent());
+        if (Global.isPlaystoreAvailable(this)) {
+            FirebaseMessaging.getInstance().subscribeToTopic("playstore_users_notifications");;
+        } else {
+            FirebaseMessaging.getInstance().subscribeToTopic("non_playstore_users_notifications");
+        }
     }
 
     @Override
