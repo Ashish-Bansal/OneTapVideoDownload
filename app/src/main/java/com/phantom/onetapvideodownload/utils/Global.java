@@ -5,8 +5,11 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.phantom.onetapvideodownload.R;
@@ -14,6 +17,8 @@ import com.phantom.onetapvideodownload.R;
 import java.io.File;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import okhttp3.OkHttpClient;
@@ -21,8 +26,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class Global {
-    public static String VIDEO_MIME = "video/*";
-    public static String DEVELOPER_EMAIL = "onetapvideodownload@gmail.com";
+    public static final String TAG = "Global";
+    public static final String VIDEO_MIME = "video/*";
+    public static final String DEVELOPER_EMAIL = "onetapvideodownload@gmail.com";
 
     public static String getDeveloperEmail() {
         return DEVELOPER_EMAIL;
@@ -215,4 +221,22 @@ public class Global {
         ClipData clip = ClipData.newUri(context.getContentResolver(), "URI", copyUri);
         clipboard.setPrimaryClip(clip);
     }
+
+    public static boolean isPlaystoreAvailable(@NonNull Context context) {
+        List<String> packages = new ArrayList<>();
+        packages.add("com.google.market");
+        packages.add("com.android.vending");
+
+        PackageManager packageManager = context.getPackageManager();
+        for (String packageName : packages) {
+            try {
+                packageManager.getPackageInfo(packageName, 0);
+                return true;
+            } catch (PackageManager.NameNotFoundException e) {
+            }
+        }
+        Log.v(TAG, "Playstore not available on the device!");
+        return false;
+    }
+
 }

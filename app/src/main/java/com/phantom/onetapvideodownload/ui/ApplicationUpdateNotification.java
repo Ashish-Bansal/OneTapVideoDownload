@@ -12,6 +12,7 @@ import android.util.Log;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.phantom.onetapvideodownload.R;
+import com.phantom.onetapvideodownload.utils.Global;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,8 +23,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ApplicationUpdateNotification {
     private static final String UPDATE_JSON_URL = "https://raw.githubusercontent.com/Ashish-Bansal/OneTapVideoDownload/master/version.json";
@@ -47,7 +46,7 @@ public class ApplicationUpdateNotification {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if (isPlaystoreAvailable(mContext)) {
+                if (Global.isPlaystoreAvailable(mContext)) {
                     return;
                 }
 
@@ -156,23 +155,6 @@ public class ApplicationUpdateNotification {
             e.printStackTrace();
             return -1;
         }
-    }
-
-    public boolean isPlaystoreAvailable(@NonNull Context context) {
-        List<String> packages = new ArrayList<>();
-        packages.add("com.google.market");
-        packages.add("com.android.vending");
-
-        PackageManager packageManager = context.getPackageManager();
-        for (String packageName : packages) {
-            try {
-                packageManager.getPackageInfo(packageName, 0);
-                return true;
-            } catch (PackageManager.NameNotFoundException e) {
-            }
-        }
-        Log.v(TAG, "Playstore not available on the device!");
-        return false;
     }
 
     public static String getUpdateJsonUrl() {
