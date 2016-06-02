@@ -10,14 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.phantom.onetapvideodownload.ui.MainActivity;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.DownloadManager;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
-import com.phantom.onetapvideodownload.utils.OnDownloadChangeListener;
 
-public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
-        implements OnDownloadChangeListener {
+public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private DownloadManager mDownloadManager;
     private boolean mBounded;
     private Context mContext;
@@ -40,7 +37,6 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             mBounded = true;
             DownloadManager.LocalBinder mLocalBinder = (DownloadManager.LocalBinder)service;
             mDownloadManager = mLocalBinder.getServiceInstance();
-            mDownloadManager.addOnDownloadChangeListener(DownloadAdapter.this);
             notifyDataSetChanged();
         }
     };
@@ -88,42 +84,11 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             } else {
                 vh.setProgressBarState(true, false);
             }
-
         } else {
             vh.setProgressBarState(false, false);
 
         }
 
         vh.setProgress(mDownloadManager.getDownloadProgress(position));
-    }
-
-    @Override
-    public void onDownloadAdded() {
-        ((MainActivity)mContext).runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
-            }
-        });
-    }
-
-    @Override
-    public void onDownloadRemoved() {
-        ((MainActivity)mContext).runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
-            }
-        });
-    }
-
-    @Override
-    public void onDownloadInfoUpdated() {
-        ((MainActivity)mContext).runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                notifyDataSetChanged();
-            }
-        });
     }
 }

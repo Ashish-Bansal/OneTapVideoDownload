@@ -43,17 +43,18 @@ public class DownloadManager extends Service {
     private static final String ACTION_STOP_DOWNLOAD = "com.phantom.onetapvideodownload.action.stop";
     private static final String ACTION_DELETE_DOWNLOAD = "com.phantom.onetapvideodownload.action.delete";
     private static final String EXTRA_DOWNLOAD_ID = "com.phantom.onetapvideodownload.extra.download_id";
+    private static final String TAG = "DownloadManager";
     private final int STORAGE_PERMISSION_NOTIFICATION_ID = 100;
     private List<Pair<Long, DownloadHandler>> mDownloadHandlers = new ArrayList<>();
     private final IBinder mBinder = new LocalBinder();
-    private List<OnDownloadChangeListener> onDownloadChangeListeners = new ArrayList<>();
-    private final String TAG = "DownloadManager";
+    private static List<OnDownloadChangeListener> onDownloadChangeListeners = new ArrayList<>();
     private NotificationCompat.Builder mBuilder;
     private NotificationManager mNotifyManager;
     private Notification mNotification;
     private final Integer mNotificationId = 20;
     private final Long NOTIFICATION_UPDATE_WAIT_TIME = 2500L;
     private Thread mUiUpdateThread;
+    private static DownloadManager mDownloadManager;
 
     @Override
     public void onCreate() {
@@ -66,6 +67,14 @@ public class DownloadManager extends Service {
 
         mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         mBuilder = new NotificationCompat.Builder(this);
+        mDownloadManager = this;
+    }
+
+    /*
+       Returns the DownloadManager Instance if service is running else returns null
+     */
+    public static DownloadManager getDownloadManagerInstance() {
+        return mDownloadManager;
     }
 
     @Override
@@ -137,7 +146,7 @@ public class DownloadManager extends Service {
         return mDownloadHandlers.size();
     }
 
-    public void addOnDownloadChangeListener(OnDownloadChangeListener object) {
+    public static void addOnDownloadChangeListener(OnDownloadChangeListener object) {
         Log.e(TAG, "Registering DownloadChangeListener " + object.getClass().getName());
         onDownloadChangeListeners.add(object);
     }

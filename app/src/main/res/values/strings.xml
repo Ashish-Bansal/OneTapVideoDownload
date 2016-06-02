@@ -122,6 +122,7 @@
     <string name="ad_switch">Ad Switch</string>
     <string name="ad_enabled">Thanks for enabling ads!</string>
     <string name="ad_disabled">Application restart is required to observe changes.</string>
+    <string name="no_downloads">Empty Download List</string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
