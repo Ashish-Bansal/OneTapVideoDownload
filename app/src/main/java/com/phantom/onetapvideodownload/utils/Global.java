@@ -33,6 +33,11 @@ public class Global {
         return uri.getLastPathSegment();
     }
 
+    public static String getDomain(String url) {
+        Uri uri = Uri.parse(url);
+        return uri.getHost();
+    }
+
     public static String getNewFilename(String filename) {
         int dotPos = filename.lastIndexOf('.');
         if (dotPos == -1) {

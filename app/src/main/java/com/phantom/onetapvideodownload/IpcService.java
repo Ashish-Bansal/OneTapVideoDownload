@@ -22,6 +22,7 @@ import com.phantom.onetapvideodownload.Video.YoutubeVideo;
 import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
 import com.phantom.onetapvideodownload.downloader.ProxyDownloadManager;
 import com.phantom.onetapvideodownload.ui.MainActivity;
+import com.phantom.onetapvideodownload.ui.domainblacklist.BlacklistDomainList;
 import com.phantom.onetapvideodownload.utils.CheckPreferences;
 import com.phantom.onetapvideodownload.utils.Global;
 import com.phantom.onetapvideodownload.utils.Invokable;
@@ -132,7 +133,10 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
                 String url = intent.getStringExtra(EXTRA_URL);
                 String packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME);
                 String title = intent.getStringExtra(EXTRA_TITLE);
-                if (url == null || url.isEmpty() || Global.getFilenameFromUrl(url) == null) {
+                if (url == null
+                        || url.isEmpty()
+                        || Global.getFilenameFromUrl(url) == null
+                        || BlacklistDomainList.getUrlListSingleTon(this).exists(Global.getDomain(url))) {
                     return START_NOT_STICKY;
                 }
 
@@ -279,9 +283,16 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
         if (video != null) {
             YoutubeVideo youtubeVideo = (YoutubeVideo)video;
             youtubeVideo.setPackageName("com.google.android.youtube");
+            String bestFormatUrl = youtubeVideo.getBestVideoFormat().url;
+            if (bestFormatUrl == null
+                    || bestFormatUrl.isEmpty()
+                    || BlacklistDomainList.getUrlListSingleTon(this).exists(Global.getDomain(bestFormatUrl))) {
+                return 0;
+            }
+
             long id = saveUrlToDatabase(youtubeVideo);
             if (CheckPreferences.notificationsEnabled(this)) {
-                showNotification(youtubeVideo.getBestVideoFormat().url, youtubeVideo.getTitle(), id);
+                showNotification(bestFormatUrl, youtubeVideo.getTitle(), id);
             }
         }
         return 0;

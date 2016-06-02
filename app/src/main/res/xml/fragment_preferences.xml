@@ -10,6 +10,13 @@
         </Preference>
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/pref_url_blacklisting_header">
+        <Preference
+            android:title="@string/prefs_open_blacklist_domain_log">
+            <intent android:action="com.phantom.onetapvideodownload.ui.domainblacklist.BlacklistDomainActivity" />
+        </Preference>
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/pref_url_logging_header">
         <SwitchPreference
             android:title="@string/pref_url_logging_title"

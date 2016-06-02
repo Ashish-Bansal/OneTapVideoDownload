@@ -123,6 +123,19 @@
     <string name="ad_enabled">Thanks for enabling ads!</string>
     <string name="ad_disabled">Application restart is required to observe changes.</string>
     <string name="no_downloads">Empty Download List</string>
+    <string name="action_add_domain">Blacklist New Domain</string>
+    <string name="action_clear_domain">Clear all domains</string>
+    <string name="pref_url_blacklisting_header">Domain Blacklisting</string>
+    <string name="prefs_open_blacklist_domain_log">Open Blacklisted Domains</string>
+    <string name="no_blacklisted_domains">No Blacklisted Domains</string>
+    <string name="blacklisted_domains">Blacklisted Domains</string>
+    <string name="add_new_domain">Add New Domain</string>
+    <string name="blacklist_domain_hint">http://foo.bar</string>
+    <string name="blacklist_domain_copied">Blacklisted Domain Copied</string>
+    <string name="edit_blacklisted_domain">Edit Blacklisted Domain</string>
+    <string name="edit">Edit</string>
+    <string name="invalid_domain">Invalid Domain Name entered</string>
+    <string name="empty"></string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
