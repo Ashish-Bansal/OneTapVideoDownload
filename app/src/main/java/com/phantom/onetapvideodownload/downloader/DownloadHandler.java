@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import okhttp3.Call;
@@ -104,13 +105,18 @@ public class DownloadHandler {
 
     private void handleRemoteFileDownload(String url, final File file) {
         if (isNetworkAvailable()) {
-            OkHttpClient Client = new OkHttpClient();
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(100, TimeUnit.SECONDS)
+                    .writeTimeout(100, TimeUnit.SECONDS)
+                    .readTimeout(100, TimeUnit.SECONDS)
+                    .build();
+
             Request request = new Request.Builder()
                     .url(url)
                     .addHeader("Range", "bytes=" + getDownloadedLength() + "-")
                     .build();
 
-            mCall = Client.newCall(request);
+            mCall = client.newCall(request);
             mCall.enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
