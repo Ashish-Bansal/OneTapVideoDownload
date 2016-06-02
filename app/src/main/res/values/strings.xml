@@ -137,6 +137,7 @@
     <string name="invalid_domain">Invalid Domain Name entered</string>
     <string name="empty"></string>
     <string name="download_url">Download URL</string>
+    <string name="copy_url">Copy URL</string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>

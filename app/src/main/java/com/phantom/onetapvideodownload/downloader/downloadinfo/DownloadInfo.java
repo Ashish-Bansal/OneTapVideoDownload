@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -103,11 +104,21 @@ public abstract class DownloadInfo {
                         .title(R.string.details)
                         .customView(R.layout.dialog_download_details, true)
                         .positiveText(R.string.okay)
+                        .negativeText(R.string.copy_url)
                         .positiveColorRes(R.color.primary)
+                        .negativeColorRes(R.color.primary)
                         .onPositive(new MaterialDialog.SingleButtonCallback() {
                             @Override
                             public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
                                 dialog.dismiss();
+                            }
+                        })
+                        .onNegative(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                dialog.dismiss();
+                                Global.copyUrlToClipboard(getContext(), getUrl());
+                                Toast.makeText(getContext(), R.string.video_url_copied, Toast.LENGTH_LONG).show();
                             }
                         })
                         .build();
