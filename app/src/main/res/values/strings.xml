@@ -138,6 +138,7 @@
     <string name="empty"></string>
     <string name="download_url">Download URL</string>
     <string name="copy_url">Copy URL</string>
+    <string name="unable_to_file_file">Unable to find file </string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>

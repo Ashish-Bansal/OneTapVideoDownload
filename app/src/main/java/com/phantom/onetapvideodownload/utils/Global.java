@@ -140,6 +140,11 @@ public class Global {
             Toast.makeText(context,
                     context.getResources().getString(R.string.play_video_activity_not_found),
                     Toast.LENGTH_LONG).show();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            Toast.makeText(context,
+                    context.getResources().getString(R.string.unable_to_file_file) + fileLocation,
+                    Toast.LENGTH_LONG).show();
         }
     }
 
@@ -159,6 +164,11 @@ public class Global {
             e.printStackTrace();
             Toast.makeText(context,
                     context.getResources().getString(R.string.share_video_activity_not_found),
+                    Toast.LENGTH_LONG).show();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            Toast.makeText(context,
+                    context.getResources().getString(R.string.unable_to_file_file) + fileLocation,
                     Toast.LENGTH_LONG).show();
         }
     }
