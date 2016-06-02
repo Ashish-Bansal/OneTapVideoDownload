@@ -368,6 +368,14 @@ public class DownloadManager extends Service {
         mBuilder.setOngoing(true);
         mBuilder.setOnlyAlertOnce(false);
         mBuilder.setProgress(100, 0, false);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                mNotificationId,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mBuilder.setContentIntent(pendingIntent);
         mNotification = mBuilder.build();
         mNotifyManager.notify(mNotificationId, mNotification);
         startForeground(mNotificationId, mNotification);
