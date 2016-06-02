@@ -81,6 +81,12 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         Fixes.updateLayoutInflaterFactory(getLayoutInflater());
         setContentView(R.layout.activity_main);
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-4007739214025921~1601743291");
+        mAdView = (NativeExpressAdView)findViewById(R.id.adView);
+        if (CheckPreferences.getAdEnabled(this)) {
+            showAd();
+        } else {
+            hideAd();
+        }
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -102,13 +108,6 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         mApplicationUpdateNotification = new ApplicationUpdateNotification(this);
         mApplicationUpdateNotification.checkForUpdate();
         onNewIntent(getIntent());
-
-        mAdView = (NativeExpressAdView)findViewById(R.id.adView);
-        if (CheckPreferences.getAdEnabled(this)) {
-            showAd();
-        } else {
-            hideAd();
-        }
     }
 
     @Override
