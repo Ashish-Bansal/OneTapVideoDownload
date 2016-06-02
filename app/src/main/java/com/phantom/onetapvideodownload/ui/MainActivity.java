@@ -34,8 +34,8 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.plus.PlusOneButton;
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     private PlusOneButton mPlusOneButton;
     private ApplicationUpdateNotification mApplicationUpdateNotification;
     private MaterialDialog mProgressDialog;
-    private AdView mAdView;
+    private NativeExpressAdView mAdView;
 
     public final static String ACTION_SHOW_DOWNLOAD_DIALOG = "com.phantom.onetapvideodownload.action.saveurl";
 
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         mApplicationUpdateNotification.checkForUpdate();
         onNewIntent(getIntent());
 
-        mAdView = (AdView) findViewById(R.id.adView);
+        mAdView = (NativeExpressAdView)findViewById(R.id.adView);
         if (CheckPreferences.getAdEnabled(this)) {
             showAd();
         } else {
@@ -516,8 +516,8 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     private void showAd() {
         mAdView.setEnabled(true);
         mAdView.setVisibility(View.VISIBLE);
-        AdRequest adRequest = new AdRequest.Builder()
+        AdRequest request = new AdRequest.Builder()
                 .build();
-        mAdView.loadAd(adRequest);
+        mAdView.loadAd(request);
     }
 }
