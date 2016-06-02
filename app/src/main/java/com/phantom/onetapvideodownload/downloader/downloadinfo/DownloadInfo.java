@@ -132,6 +132,9 @@ public abstract class DownloadInfo {
                     TextView downloadLocation = (TextView)materialDialogView.findViewById(R.id.download_location);
                     File file = new File(getDownloadLocation());
                     downloadLocation.setText(file.getParent());
+
+                    TextView downloadUrl = (TextView)materialDialogView.findViewById(R.id.download_url);
+                    downloadUrl.setText(getUrl());
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                 }
