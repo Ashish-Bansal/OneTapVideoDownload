@@ -26,7 +26,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         context.bindService(mIntent, mConnection, Context.BIND_ABOVE_CLIENT);
     }
 
-    ServiceConnection mConnection = new ServiceConnection() {
+    private ServiceConnection mConnection = new ServiceConnection() {
         public void onServiceDisconnected(ComponentName name) {
             mBounded = false;
             mDownloadManager = null;
