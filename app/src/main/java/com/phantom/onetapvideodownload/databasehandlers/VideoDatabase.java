@@ -145,7 +145,7 @@ public class VideoDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String videoQuery;
-        Cursor videoQueryCursor;
+        Cursor videoQueryCursor = null;
         switch(videoCategory) {
             case VIDEO_TYPE_BROWSER :
                 videoQuery = "SELECT * FROM " + TABLE_BROWSER_VIDEO_LIST + " WHERE "
@@ -184,6 +184,9 @@ public class VideoDatabase extends SQLiteOpenHelper {
                 break;
         }
 
+        if (videoQueryCursor != null) {
+            videoQueryCursor.close();
+        }
         return null;
     }
 
@@ -269,7 +272,7 @@ public class VideoDatabase extends SQLiteOpenHelper {
             return categoryId;
         }
 
-        assert(false);
+        cursor.close();
         return -1;
     }
 

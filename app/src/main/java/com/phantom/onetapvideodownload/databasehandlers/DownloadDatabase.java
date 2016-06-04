@@ -167,7 +167,7 @@ public class DownloadDatabase extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String downloadQuery;
-        Cursor downloadQueryCursor;
+        Cursor downloadQueryCursor = null;
         switch(downloadCategory) {
             case DOWNLOAD_TYPE_BROWSER :
                 downloadQuery = "SELECT * FROM " + TABLE_BROWSER_DOWNLOAD_LIST + " WHERE "
@@ -223,6 +223,9 @@ public class DownloadDatabase extends SQLiteOpenHelper {
                 break;
         }
 
+        if (downloadQueryCursor != null) {
+            downloadQueryCursor.close();
+        }
         return null;
     }
 
@@ -318,6 +321,7 @@ public class DownloadDatabase extends SQLiteOpenHelper {
             return true;
         }
 
+        cursor.close();
         return false;
     }
 
@@ -334,7 +338,7 @@ public class DownloadDatabase extends SQLiteOpenHelper {
             return categoryId;
         }
 
-        assert(false);
+        cursor.close();
         return -1;
     }
 
