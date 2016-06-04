@@ -55,10 +55,10 @@ dependencies {
     compile('com.github.HaarigerHarald:android-youtubeExtractor:v1.3.0@aar') {
         transitive = true
     }
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.4@aar') {
+    compile('com.github.afollestad.material-dialogs:core:0.8.5.8@aar') {
         transitive = true
     }
-    compile('com.github.afollestad.material-dialogs:commons:0.8.5.4@aar') {
+    compile('com.github.afollestad.material-dialogs:commons:0.8.5.8@aar') {
         transitive = true
     }
     compile 'com.jakewharton:butterknife:7.0.1'

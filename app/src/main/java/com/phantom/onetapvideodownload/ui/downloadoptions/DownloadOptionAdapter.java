@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.phantom.onetapvideodownload.ui.MainActivity;
-import com.phantom.onetapvideodownload.utils.enums.MaterialDialogIds;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.DownloadOptionItem;
 import com.phantom.onetapvideodownload.utils.CheckPreferences;
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DownloadOptionAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    public static final String FOLDER_CHOOSER_TAG = "VideoDownloadLocation";
     private List<DownloadOptionItem> mOptionList;
     private Context mContext;
     private String mDownloadLocation;
@@ -42,9 +42,9 @@ public class DownloadOptionAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     @Override
                     public void onClick(View v) {
                         MainActivity mainActivity = (MainActivity)mContext;
-                        mainActivity.setFolderChooserDialogId(MaterialDialogIds.VideoDownloadLocation);
                         new FolderChooserDialog.Builder((MainActivity)mContext)
                                 .chooseButton(R.string.md_choose_label)
+                                .tag(FOLDER_CHOOSER_TAG)
                                 .initialPath(mDownloadLocation)
                                 .show();
                     }

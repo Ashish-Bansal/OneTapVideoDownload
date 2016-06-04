@@ -54,7 +54,6 @@ import com.phantom.onetapvideodownload.utils.Invokable;
 import com.phantom.onetapvideodownload.utils.XposedChecker;
 import com.phantom.onetapvideodownload.utils.YoutubeParserProxy;
 import com.phantom.onetapvideodownload.utils.enums.AppPermissions;
-import com.phantom.onetapvideodownload.utils.enums.MaterialDialogIds;
 
 import net.xpece.android.support.preference.Fixes;
 
@@ -65,7 +64,6 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     private final static String TAG = "MainActivity";
     private Toolbar toolbar;
     private Tracker mTracker;
-    private MaterialDialogIds folderChooserDialogId;
     private static RecyclerView mDownloadDialogRecyclerView;
     private static final String APP_URL = "https://play.google.com/store/apps/details?id=com.phantom.onetapvideodownload";
     private PlusOneButton mPlusOneButton;
@@ -298,9 +296,10 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     }
 
     @Override
-    public void onFolderSelection(@NonNull File directory) {
-        switch(folderChooserDialogId) {
-            case DefaultDownloadLocation:
+    public void onFolderSelection(@NonNull FolderChooserDialog dialog, @NonNull File directory) {
+        String tag = dialog.getTag();
+        switch(tag) {
+            case SettingsFragment.FOLDER_CHOOSER_TAG:
                 if(directory.canWrite()) {
                     CheckPreferences.setDownloadLocation(this, directory.getPath());
                     SettingsFragment.updatePreferenceSummary();
@@ -308,7 +307,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
                     Toast.makeText(this, "No write permission on selected directory", Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case VideoDownloadLocation:
+            case DownloadOptionAdapter.FOLDER_CHOOSER_TAG:
                 if(directory.canWrite()) {
                     DownloadOptionAdapter downloadOptionAdapter =
                             (DownloadOptionAdapter) mDownloadDialogRecyclerView.getAdapter();
@@ -318,10 +317,6 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
                     Toast.makeText(this, "No write permission on selected directory", Toast.LENGTH_SHORT).show();
                 }
         }
-    }
-
-    public void setFolderChooserDialogId(MaterialDialogIds id) {
-        folderChooserDialogId = id;
     }
 
     public static DownloadOptionAdapter getDownloadOptionAdapter() {

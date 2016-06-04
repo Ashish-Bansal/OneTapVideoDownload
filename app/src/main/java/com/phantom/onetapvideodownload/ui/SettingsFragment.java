@@ -6,7 +6,6 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.XpPreferenceFragment;
 
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
-import com.phantom.onetapvideodownload.utils.enums.MaterialDialogIds;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.utils.CheckPreferences;
 
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SettingsFragment extends XpPreferenceFragment {
+    public static final String FOLDER_CHOOSER_TAG = "DefaultDownloadLocation";
     private static List<Preference> preferenceList = new ArrayList<>();
 
     @Override
@@ -36,9 +36,9 @@ public class SettingsFragment extends XpPreferenceFragment {
             @Override
             public boolean onPreferenceClick(Preference preference) {
                 MainActivity mainActivity = ((MainActivity)getActivity());
-                mainActivity.setFolderChooserDialogId(MaterialDialogIds.DefaultDownloadLocation);
                 new FolderChooserDialog.Builder(mainActivity)
                         .chooseButton(R.string.md_choose_label)
+                        .tag(FOLDER_CHOOSER_TAG)
                         .initialPath(Environment.getExternalStorageDirectory().getPath())
                         .show();
                 return true;
