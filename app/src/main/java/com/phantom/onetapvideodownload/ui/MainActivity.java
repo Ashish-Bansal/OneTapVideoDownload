@@ -55,8 +55,6 @@ import com.phantom.onetapvideodownload.utils.XposedChecker;
 import com.phantom.onetapvideodownload.utils.YoutubeParserProxy;
 import com.phantom.onetapvideodownload.utils.enums.AppPermissions;
 
-import net.xpece.android.support.preference.Fixes;
-
 import java.io.File;
 
 public class MainActivity extends AppCompatActivity implements FolderChooserDialog.FolderCallback,
@@ -77,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Fixes.updateLayoutInflaterFactory(getLayoutInflater());
         setContentView(R.layout.activity_main);
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-4007739214025921~1601743291");
         mAdView = (NativeExpressAdView)findViewById(R.id.adView);

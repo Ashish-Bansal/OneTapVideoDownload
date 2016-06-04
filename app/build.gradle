@@ -47,12 +47,12 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'co.dift.ui.swipetoaction:library:1.1'
-    compile 'net.xpece.android:support-preference:0.5.3'
+    compile 'net.xpece.android:support-preference:0.8.1'
     compile 'com.google.android.gms:play-services-analytics:9.0.1'
     compile 'com.google.android.gms:play-services-ads:9.0.1'
     compile 'com.google.android.gms:play-services-plus:9.0.1'
     compile 'com.google.firebase:firebase-ads:9.0.1'
-    compile('com.github.HaarigerHarald:android-youtubeExtractor:v1.3.0@aar') {
+    compile('com.github.HaarigerHarald:android-youtubeExtractor:v1.4.0@aar') {
         transitive = true
     }
     compile('com.github.afollestad.material-dialogs:core:0.8.5.8@aar') {
