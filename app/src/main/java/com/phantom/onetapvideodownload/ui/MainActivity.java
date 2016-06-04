@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -41,6 +42,7 @@ import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.plus.PlusOneButton;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.phantom.onetapvideodownload.AnalyticsApplication;
+import com.phantom.onetapvideodownload.BuildConfig;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
@@ -73,6 +75,16 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (BuildConfig.DEBUG) {
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectLeakedClosableObjects()
+                    .detectLeakedSqlLiteObjects()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build()
+            );
+        }
+
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
