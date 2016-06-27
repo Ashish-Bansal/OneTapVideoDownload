@@ -112,7 +112,9 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
 
         mTracker.setScreenName("Activity~" + getClass().getName());
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-        checkXposedInstallation();
+        if (CheckPreferences.xposedErrorsEnabled(this)) {
+            checkXposedInstallation();
+        }
         mApplicationUpdateNotification = new ApplicationUpdateNotification(this);
         mApplicationUpdateNotification.checkForUpdate();
         onNewIntent(getIntent());

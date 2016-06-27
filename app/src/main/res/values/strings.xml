@@ -139,6 +139,9 @@
     <string name="download_url">Download URL</string>
     <string name="copy_url">Copy URL</string>
     <string name="unable_to_file_file">Unable to find file </string>
+    <string name="pref_other_header">Other Preferences </string>
+    <string name="prefs_enable_startup_errors_title">Enable Xposed related Startup Errors</string>
+    <string name="prefs_enable_startup_errors_summary">Checks module requirements and reports if something is wrong.</string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>

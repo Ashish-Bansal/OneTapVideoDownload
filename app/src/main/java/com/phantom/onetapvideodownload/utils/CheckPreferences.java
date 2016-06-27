@@ -110,4 +110,9 @@ public class CheckPreferences {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         setAdEnabled(context, !sharedPreferences.getBoolean("ad_enabled", true));
     }
+
+    public static boolean xposedErrorsEnabled(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean("prefs_enable_startup_errors", true);
+    }
 }

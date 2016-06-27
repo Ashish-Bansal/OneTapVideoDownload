@@ -87,4 +87,12 @@
             app:asp_iconPaddingEnabled="false"/>
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/pref_other_header">
+        <SwitchPreference
+            android:title="@string/prefs_enable_startup_errors_title"
+            android:summary="@string/prefs_enable_startup_errors_summary"
+            android:defaultValue="true"
+            android:key="prefs_enable_startup_errors"/>
+    </PreferenceCategory>
+
 </PreferenceScreen>
