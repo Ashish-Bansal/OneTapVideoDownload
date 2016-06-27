@@ -47,6 +47,7 @@ import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
 import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
+import com.phantom.onetapvideodownload.downloader.DownloadOptionItem;
 import com.phantom.onetapvideodownload.downloader.ProxyDownloadManager;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionAdapter;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionIds;
@@ -375,10 +376,12 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
                 String filename = downloadOptionAdapter.getOptionItem(DownloadOptionIds.Filename).getOptionValue();
                 String downloadLocation = downloadOptionAdapter.getOptionItem(DownloadOptionIds.DownloadLocation).getOptionValue();
 
-                if (video instanceof YoutubeVideo) {
-                    Integer itag = YoutubeVideo.getItagForDescription(downloadOptionAdapter.getOptionItem(DownloadOptionIds.Format).getOptionValue());
+                DownloadOptionItem formatOption = downloadOptionAdapter.getOptionItem(DownloadOptionIds.Format);
+                if (formatOption != null) {
+                    Integer itag = YoutubeVideo.getItagForDescription(formatOption.getOptionValue());
                     if (itag == -1) {
-                        Log.e(TAG, "getItagForDescription returned NULL");
+                        Log.e(TAG, "returned itag value is invalid");
+                        return;
                     }
 
                     ProxyDownloadManager.startActionYoutubeDownload(getApplicationContext(), videoId, filename, downloadLocation, itag);
