@@ -52,17 +52,6 @@ public class Global {
     }
 
     public static String getNewFilename(String filename) {
-        boolean validVideoExtension = false;
-        for(String extension : VIDEO_FILE_EXTENSION) {
-            if (filename.endsWith(extension)) {
-                validVideoExtension = true;
-            }
-        }
-
-        if (!validVideoExtension) {
-            filename += MP4_FILE_EXTENSION;
-        }
-
         int dotPos = filename.lastIndexOf('.');
         if (dotPos == -1) {
             dotPos = filename.length() - 1;
@@ -87,6 +76,17 @@ public class Global {
     }
 
     public static String suggestName(String location, String filename) {
+        boolean validVideoExtension = false;
+        for(String extension : VIDEO_FILE_EXTENSION) {
+            if (filename.endsWith(extension)) {
+                validVideoExtension = true;
+            }
+        }
+
+        if (!validVideoExtension) {
+            filename += MP4_FILE_EXTENSION;
+        }
+
         File downloadFile = new File(location, filename);
         if (!downloadFile.exists()) {
             return downloadFile.getName();
