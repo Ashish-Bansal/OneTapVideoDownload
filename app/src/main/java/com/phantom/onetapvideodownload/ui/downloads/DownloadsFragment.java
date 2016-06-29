@@ -72,9 +72,6 @@ public class DownloadsFragment extends Fragment implements OnDownloadChangeListe
             }
         });
 
-        getActivity().startService(DownloadManager.getActionStartService());
-        Intent mIntent = new Intent(getActivity(), DownloadManager.class);
-        getActivity().bindService(mIntent, mConnection, Context.BIND_ABOVE_CLIENT);
         return rootView;
     }
 
@@ -90,6 +87,16 @@ public class DownloadsFragment extends Fragment implements OnDownloadChangeListe
         } else {
             mRecyclerView.setVisibility(View.VISIBLE);
             mEmptyView.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mBounded == null || !mBounded) {
+            getActivity().startService(DownloadManager.getActionStartService());
+            Intent mIntent = new Intent(getActivity(), DownloadManager.class);
+            getActivity().bindService(mIntent, mConnection, Context.BIND_ABOVE_CLIENT);
         }
     }
 
