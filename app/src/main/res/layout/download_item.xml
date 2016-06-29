@@ -26,6 +26,15 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp" />
 
+            <ImageButton
+                android:visibility="gone"
+                android:layout_gravity="bottom|center|right"
+                android:id="@+id/tick"
+                android:layout_width="56dip"
+                android:layout_height="56dip"
+                android:src="@drawable/tick"
+                android:scaleType="center" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

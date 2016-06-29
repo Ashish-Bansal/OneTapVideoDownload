@@ -8,12 +8,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 
 import java.net.URLDecoder;
-import java.util.Collection;
 import java.util.Locale;
 
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
@@ -60,16 +58,12 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
         mApplicationImageView.setImageDrawable(icon);
     }
 
-    public void setOnClickListener(final Collection<String> options, final MaterialDialog.ListCallback callback) {
-        mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new MaterialDialog.Builder(mContext)
-                        .items(options)
-                        .itemsCallback(callback)
-                        .show();
-            }
-        });
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        mView.setOnClickListener(onClickListener);
+    }
+
+    public void setOnLongClickListener(View.OnLongClickListener onLongClickListener) {
+        mView.setOnLongClickListener(onLongClickListener);
     }
 
     public void setProgressBarState(boolean visibility, boolean indeterminate) {

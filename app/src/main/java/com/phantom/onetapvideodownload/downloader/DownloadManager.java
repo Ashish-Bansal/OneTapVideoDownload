@@ -503,4 +503,13 @@ public class DownloadManager extends Service {
         mDownloadHandlers.remove(index);
         emitOnDownloadInfoUpdated();
     }
+
+    public void removeDownloadByIndex(int index) {
+        if (mDownloadHandlers.size() > index) {
+            Log.e(TAG,"RemovingDownloadByIndex " + mDownloadHandlers.get(index).second.getFilename());
+            DownloadHandler downloadHandler = mDownloadHandlers.get(index).second;
+            downloadHandler.removeDownloadFromList();
+            removeDownloadHandler(index);
+        }
+    }
 }
