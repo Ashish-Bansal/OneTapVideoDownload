@@ -1,74 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/dialog_background"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <ImageView
-        android:id="@+id/close"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:maxHeight="5sp"
-        android:maxWidth="5sp"
-        android:padding="10sp"
-        android:src="@drawable/close" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/download_option_list"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/close"
-        android:divider="@null"
-        android:dividerHeight="0dp" />
+        android:background="@color/dialog_background"
+        android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/download_option_list"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:padding="20sp">
-
-        <Button
-            android:id="@+id/copy_download_link"
+        <ImageView
+            android:id="@+id/close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:padding="10sp"
-            android:background="@color/transparent"
-            android:textColor="@color/white"
-            android:textAllCaps="false"
-            android:text="@string/copy_download_link" />
-
-        <Button
-            android:id="@+id/start_download"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/copy_download_link"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
+            android:maxHeight="5sp"
+            android:maxWidth="5sp"
             android:padding="10sp"
-            android:background="@color/transparent"
-            android:textColor="@color/white"
-            android:textAllCaps="false"
-            android:text="@string/start_download" />
+            android:src="@drawable/close" />
 
-        <Button
-            android:id="@+id/download_later"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/download_option_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/close"
+            android:divider="@null"
+            android:dividerHeight="0dp" />
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/copy_download_link"
-            android:layout_toLeftOf="@+id/start_download"
-            android:layout_toStartOf="@+id/start_download"
-            android:padding="10sp"
-            android:background="@color/transparent"
-            android:textColor="@color/white"
-            android:textAllCaps="false"
-            android:text="@string/download_later" />
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/download_option_list"
+            android:padding="20sp">
 
+            <Button
+                android:id="@+id/copy_download_link"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="@color/transparent"
+                android:padding="10sp"
+                android:text="@string/copy_download_link"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/start_download"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/copy_download_link"
+                android:background="@color/transparent"
+                android:padding="10sp"
+                android:text="@string/start_download"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
+            <Button
+                android:id="@+id/download_later"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/copy_download_link"
+                android:layout_toLeftOf="@+id/start_download"
+                android:layout_toStartOf="@+id/start_download"
+                android:background="@color/transparent"
+                android:padding="10sp"
+                android:text="@string/download_later"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+        </RelativeLayout>
     </RelativeLayout>
-</RelativeLayout>
+</ScrollView>
