@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     protected void onCreate(Bundle savedInstanceState) {
         if (BuildConfig.DEBUG) {
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
-                    .detectLeakedClosableObjects()
                     .detectLeakedSqlLiteObjects()
                     .penaltyLog()
                     .penaltyDeath()
