@@ -29,6 +29,13 @@ public class Global {
     public static final String TAG = "Global";
     public static final String VIDEO_MIME = "video/*";
     public static final String DEVELOPER_EMAIL = "onetapvideodownload@gmail.com";
+    public static final String MP4_FILE_EXTENSION = ".mp4";
+
+    //List taken from Wikipedia
+    public static final String[] VIDEO_FILE_EXTENSION = {"webm", "mkv", "flv", "vob", "ogv", "ogg",
+            "drc", "gif", "gifv", "mng", "avi", "mov", "qt", "wmv", "yuv", "rm", "rmvb", "asf", "amv",
+            "mp4", "m4p", "m4v", "mpg", "mp2", "mpeg", "mpe", "mpv", "m2v", "svi", "3gp", "sg2", "mxf",
+            "roq", "nsv", "flb", "f4v", "f4p", "f4a", "f4b" };
 
     public static String getDeveloperEmail() {
         return DEVELOPER_EMAIL;
@@ -45,6 +52,17 @@ public class Global {
     }
 
     public static String getNewFilename(String filename) {
+        boolean validVideoExtension = false;
+        for(String extension : VIDEO_FILE_EXTENSION) {
+            if (filename.endsWith(extension)) {
+                validVideoExtension = true;
+            }
+        }
+
+        if (!validVideoExtension) {
+            filename += MP4_FILE_EXTENSION;
+        }
+
         int dotPos = filename.lastIndexOf('.');
         if (dotPos == -1) {
             dotPos = filename.length() - 1;
