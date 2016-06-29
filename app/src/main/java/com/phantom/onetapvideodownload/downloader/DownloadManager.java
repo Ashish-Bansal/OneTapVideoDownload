@@ -284,6 +284,7 @@ public class DownloadManager extends Service {
         DownloadHandler downloadHandler = mDownloadHandlers.get(index).second;
         downloadHandler.removeDownloadFromList();
         removeDownloadHandler(index);
+        emitOnDownloadInfoUpdated();
     }
 
     private void handleActionDeleteDownload(long id) {
@@ -295,6 +296,7 @@ public class DownloadManager extends Service {
         DownloadHandler downloadHandler = mDownloadHandlers.get(index).second;
         downloadHandler.deleteDownloadFromStorage();
         removeDownloadHandler(index);
+        emitOnDownloadInfoUpdated();
     }
 
     private void handleActionResumeDownload(long id) {
@@ -501,7 +503,6 @@ public class DownloadManager extends Service {
 
     public void removeDownloadHandler(int index) {
         mDownloadHandlers.remove(index);
-        emitOnDownloadInfoUpdated();
     }
 
     public void removeDownloadByIndex(int index) {

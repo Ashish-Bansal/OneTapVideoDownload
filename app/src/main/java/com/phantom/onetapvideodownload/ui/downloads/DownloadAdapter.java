@@ -22,9 +22,10 @@ import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.DownloadManager;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements ActionMode.Callback  {
@@ -178,8 +179,8 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return mSelectedItems.size();
     }
 
-    public Set<Integer> getSelectedItems() {
-        return mSelectedItems.keySet();
+    public ArrayList<Integer> getSelectedItems() {
+        return new ArrayList<>(mSelectedItems.keySet());
     }
 
     @Override
@@ -198,11 +199,13 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.menu_delete:
-                Set<Integer> selectedItemPositions = getSelectedItems();
-                for (Integer pos : selectedItemPositions) {
+                ArrayList<Integer> keys = getSelectedItems();
+                Collections.sort(keys);
+                Collections.reverse(keys);
+                for (Integer pos : keys) {
                     mDownloadManager.removeDownloadByIndex(pos);
-                    notifyItemRemoved(pos);
                 }
+                notifyDataSetChanged();
                 actionMode.finish();
                 return true;
             default:
