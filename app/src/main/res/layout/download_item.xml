@@ -16,33 +16,42 @@
             android:layout_height="wrap_content"
             android:padding="16dp">
 
-            <ImageView
-                android:id="@+id/application_icon"
+            <RelativeLayout
+                android:id="@+id/icon_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp" />
+                android:layout_alignParentTop="true">
 
-            <ImageButton
-                android:visibility="gone"
-                android:layout_gravity="bottom|center|right"
-                android:id="@+id/tick"
-                android:layout_width="56dip"
-                android:layout_height="56dip"
-                android:src="@drawable/tick"
-                android:scaleType="center" />
+                <ImageView
+                    android:id="@+id/application_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginRight="16dp"
+                    android:padding="7dp"/>
+
+                <ImageView
+                    android:id="@+id/tick"
+                    android:visibility="gone"
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:src="@drawable/selected"
+                    android:tint="@color/primary"
+                    android:layout_alignRight="@+id/application_icon"
+                    android:layout_alignEnd="@+id/application_icon"
+                    android:layout_alignBottom="@+id/application_icon" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/application_icon"
+                android:layout_toEndOf="@+id/icon_layout"
                 android:layout_toLeftOf="@+id/status_layout"
                 android:layout_toStartOf="@+id/status_layout"
-                android:layout_toRightOf="@+id/application_icon"
+                android:layout_toRightOf="@+id/icon_layout"
                 android:orientation="vertical">
 
                 <TextView
