@@ -32,6 +32,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.google.android.gms.ads.AdRequest;
@@ -55,7 +56,6 @@ import com.phantom.onetapvideodownload.utils.CheckPreferences;
 import com.phantom.onetapvideodownload.utils.Global;
 import com.phantom.onetapvideodownload.utils.Invokable;
 import com.phantom.onetapvideodownload.utils.XposedChecker;
-import com.phantom.onetapvideodownload.utils.YoutubeParserProxy;
 import com.phantom.onetapvideodownload.utils.enums.AppPermissions;
 
 import java.io.File;
@@ -142,25 +142,17 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
                 return;
             }
 
-
-            Uri uri = Uri.parse(videoUrl);
-            String videoParam = null;
-            if (videoUrl.contains("youtube")) {
-                videoParam = uri.getQueryParameter("v");
-            } else if (videoUrl.contains("youtu.be")) {
-                videoParam = uri.getLastPathSegment();
-            }
-
-            if (videoParam != null) {
-                mProgressDialog = new MaterialDialog.Builder(this)
-                        .title(R.string.progress_dialog)
-                        .content(R.string.please_wait)
-                        .progress(true, 0)
-                        .show();
-                YoutubeParserProxy.startParsing(this, videoParam, this);
-            } else {
-                Toast.makeText(this, R.string.invalid_url, Toast.LENGTH_LONG).show();
-            }
+            new MaterialDialog.Builder(this)
+                    .title(R.string.feature_removed)
+                    .content(R.string.youtube_share_intent_removed)
+                    .negativeText(R.string.okay)
+                    .onNegative(new MaterialDialog.SingleButtonCallback() {
+                        @Override
+                        public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .show();
         }
     }
 

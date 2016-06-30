@@ -142,6 +142,8 @@
     <string name="pref_other_header">Other Preferences </string>
     <string name="prefs_enable_startup_errors_title">Enable Xposed related Startup Errors</string>
     <string name="prefs_enable_startup_errors_summary">Checks module requirements and reports if something is wrong.</string>
+    <string name="feature_removed">Feature Removed</string>
+    <string name="youtube_share_intent_removed">I\'m sorry to inform you that because of YouTube terms and conditions, this feature has been removed from the application.</string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
