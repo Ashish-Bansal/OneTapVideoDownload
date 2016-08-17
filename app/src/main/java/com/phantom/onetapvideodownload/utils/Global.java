@@ -15,12 +15,15 @@ import android.widget.Toast;
 import com.phantom.onetapvideodownload.R;
 
 import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import de.robv.android.xposed.XposedHelpers;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -265,6 +268,19 @@ public class Global {
         }
         Log.v(TAG, "Playstore not available on the device!");
         return false;
+    }
+
+    public static String getStackTrace(final Throwable throwable) {
+        final StringWriter sw = new StringWriter();
+        final PrintWriter pw = new PrintWriter(sw, true);
+        throwable.printStackTrace(pw);
+        return sw.getBuffer().toString();
+    }
+
+    public static Context getContext() {
+        Class activityThreadClass = XposedHelpers.findClass("android.app.ActivityThread", null);
+        Object activityThread = XposedHelpers.callStaticMethod(activityThreadClass, "currentActivityThread");
+        return (Context) XposedHelpers.callMethod(activityThread, "getSystemContext");
     }
 
 }
