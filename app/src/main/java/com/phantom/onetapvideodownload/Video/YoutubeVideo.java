@@ -73,7 +73,7 @@ public class YoutubeVideo implements Video {
         format.itag = itag;
         format.dashAudio = false;
         for (Pair p : itagQualityMapping) {
-            if (p.first == itag && p.second.toString().contains("kbit")) {
+            if ((int)p.first == itag && p.second.toString().contains("kbit")) {
                 format.dashAudio = true;
             }
         }
