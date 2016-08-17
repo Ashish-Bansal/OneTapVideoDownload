@@ -17,6 +17,8 @@
         <item name="android:actionModeBackground">@color/primary</item>
         <item name="actionModeBackground">@color/primary</item>
         <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="asp_preferenceIconTint">?colorAccent</item>
+        <item name="asp_preferenceDialogIconTint">?asp_preferenceIconTint</item>
     </style>
 
     <style name="AppTheme.Dialog" parent="Theme.AppCompat.Light.Dialog">
