@@ -12,11 +12,13 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
 public class ChromeHook implements IXposedHookLoadPackage {
-    private String packageName = "com.android.chrome";
 
     @Override
     public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
-        if (!lpparam.packageName.equals(packageName)) {
+        String chromePackageName = "com.android.chrome";
+        String chromeDevPackageName = "com.chrome.dev";
+        final String packageName = lpparam.packageName;
+        if (!packageName.equals(chromePackageName) && !packageName.equals(chromeDevPackageName)) {
             return;
         }
 
