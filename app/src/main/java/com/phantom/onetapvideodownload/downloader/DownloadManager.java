@@ -408,6 +408,7 @@ public class DownloadManager extends Service {
         mBuilder.setContentText("Downloads Finished");
         mBuilder.setAutoCancel(true);
         mBuilder.setOnlyAlertOnce(true);
+        mBuilder.setOngoing(false);
         mBuilder.setProgress(0, 0, false);
 
         Intent intent = new Intent(this, MainActivity.class);
