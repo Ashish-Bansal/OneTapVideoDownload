@@ -155,6 +155,7 @@ public class DownloadHandler {
             while ((count = (bufferedSource.read(bufferedSink.buffer(), READ_BUFFER_SIZE))) != -1) {
                 mDownloadInfo.addDownloadedLength(count);
                 currentTime = System.currentTimeMillis();
+                bufferedSink.flush();
                 if (currentTime - lastWriteTime > UPDATE_PROGRESS_TIME) {
                     writeToDatabase();
                     lastWriteTime = currentTime;
