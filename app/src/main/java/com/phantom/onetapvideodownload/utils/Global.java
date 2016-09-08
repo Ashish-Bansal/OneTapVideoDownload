@@ -283,4 +283,15 @@ public class Global {
         return (Context) XposedHelpers.callMethod(activityThread, "getSystemContext");
     }
 
+    public static long getDirectorySize(File file) {
+        long size = 0;
+        if (file.isDirectory()) {
+            for (File childFile : file.listFiles()) {
+                size += getDirectorySize(childFile);
+                }
+            } else {
+            size = file.length();
+            }
+        return size;
+     }
 }

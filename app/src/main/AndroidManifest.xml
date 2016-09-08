@@ -118,6 +118,11 @@
         <activity android:name=".ui.About" />
 
         <activity android:name=".ui.UsageInstruction"></activity>
+
+        <receiver
+            android:name=".ApplicationLogMaintainer"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>
