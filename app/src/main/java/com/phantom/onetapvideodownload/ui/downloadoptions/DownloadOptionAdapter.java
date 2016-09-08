@@ -46,6 +46,7 @@ public class DownloadOptionAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                                 .chooseButton(R.string.md_choose_label)
                                 .tag(FOLDER_CHOOSER_TAG)
                                 .initialPath(mDownloadLocation)
+                                .allowNewFolder(true, R.string.new_folder)
                                 .show();
                     }
                 }

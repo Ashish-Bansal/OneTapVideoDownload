@@ -40,6 +40,7 @@ public class SettingsFragment extends XpPreferenceFragment {
                         .chooseButton(R.string.md_choose_label)
                         .tag(FOLDER_CHOOSER_TAG)
                         .initialPath(Environment.getExternalStorageDirectory().getPath())
+                        .allowNewFolder(true, R.string.new_folder)
                         .show();
                 return true;
             }
