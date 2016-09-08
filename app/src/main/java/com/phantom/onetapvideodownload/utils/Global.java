@@ -316,4 +316,13 @@ public class Global {
             return false;
         }
     }
+
+    public static boolean isClassPresent(ClassLoader loader, String className) {
+        try {
+            loader.loadClass(className);
+            return true;
+        } catch( ClassNotFoundException e ) {
+            return false;
+        }
+    }
 }

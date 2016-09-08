@@ -52,9 +52,13 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     private static final Map<Integer, Runnable> notificationCancelRunnables = new HashMap<>();
 
     public static void startSaveUrlAction(Context context, Uri uri, String packageName) {
+        startSaveUrlAction(context, uri.toString(), packageName);
+    }
+
+    public static void startSaveUrlAction(Context context, String uri, String packageName) {
         Intent intent = new Intent(ACTION_SAVE_BROWSER_VIDEO);
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
-        intent.putExtra(EXTRA_URL, uri.toString());
+        intent.putExtra(EXTRA_URL, uri);
         intent.putExtra(EXTRA_PACKAGE_NAME, packageName);
         context.startService(intent);
     }
