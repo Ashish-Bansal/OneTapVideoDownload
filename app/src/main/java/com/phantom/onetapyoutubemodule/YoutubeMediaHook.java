@@ -83,13 +83,13 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
     }
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
-        final Context context = Global.getContext();
         if (!lpparam.packageName.equals(PACKAGE_NAME)) {
             return;
         }
 
+        final Context context = Global.getContext();
+        ApplicationLogMaintainer.sendBroadcast(context, "One Tap Youtube Hook Initialized");
         if (!Global.isPackageInstalled(Global.getContext(), ONE_TAP_YOUTUBE_MODULE_PACKAGE_NAME)) {
-            ApplicationLogMaintainer.sendBroadcast(context, "One Tap Youtube Hook Initialized");
             ApplicationLogMaintainer.sendBroadcast(context, "One Tap Youtube Module not installed");
             return;
         }
