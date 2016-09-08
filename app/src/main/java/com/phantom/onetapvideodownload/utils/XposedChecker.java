@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 
@@ -96,13 +95,7 @@ public class XposedChecker {
 
     public static boolean isXposedInstalled(Context context) {
         String packageName = "de.robv.android.xposed.installer";
-        PackageManager packageManager = context.getPackageManager();
-        try {
-            packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
-            return true;
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
+        return Global.isPackageInstalled(context, packageName);
     }
 
 }
