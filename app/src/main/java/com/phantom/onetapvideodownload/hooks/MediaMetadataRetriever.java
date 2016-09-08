@@ -3,12 +3,12 @@ package com.phantom.onetapvideodownload.hooks;
 import android.content.Context;
 import android.net.Uri;
 
+import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
 import com.phantom.onetapvideodownload.IpcService;
 import com.phantom.onetapvideodownload.utils.Global;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 
@@ -22,7 +22,7 @@ public class MediaMetadataRetriever implements IXposedHookLoadPackage {
                 String packageName = context.getPackageName();
                 Uri uri = (Uri) hookParams.args[1];
                 if (uri.toString().startsWith("http") || uri.toString().startsWith("ftp")) {
-                    XposedBridge.log(uri.toString());
+                    ApplicationLogMaintainer.sendBroadcast(Global.getContext(), uri.toString());
                     IpcService.startSaveUrlAction(context, uri,  packageName);
                 }
             }

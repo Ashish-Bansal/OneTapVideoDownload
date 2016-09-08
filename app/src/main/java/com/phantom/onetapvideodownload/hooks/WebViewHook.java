@@ -1,5 +1,6 @@
 package com.phantom.onetapvideodownload.hooks;
 
+import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
 import com.phantom.onetapvideodownload.IpcService;
 import com.phantom.onetapvideodownload.utils.Global;
 
@@ -43,6 +44,8 @@ public class WebViewHook implements IXposedHookLoadPackage {
             Object[] objects = new Object[] { webViewAwWebResourceRequest, methodHook};
 
             findAndHookMethod(webViewBackgroundThreadClientImpl, "shouldInterceptRequest", objects);
+        } catch (Exception e) {
+            ApplicationLogMaintainer.sendBroadcast(Global.getContext(), Global.getStackTrace(e));
         } catch (XposedHelpers.ClassNotFoundError | NoSuchMethodError _) {
         }
 
