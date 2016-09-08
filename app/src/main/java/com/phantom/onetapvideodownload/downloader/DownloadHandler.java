@@ -18,13 +18,8 @@ import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 import com.phantom.onetapvideodownload.ui.MainActivity;
 import com.phantom.onetapvideodownload.utils.Global;
 
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -34,14 +29,19 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okio.BufferedSink;
+import okio.BufferedSource;
+import okio.Okio;
 
 public class DownloadHandler {
+    private final static String TAG = "DownloadHandler";
+    private final static AtomicInteger mNotificationId = new AtomicInteger(150);
+    private final static Long UPDATE_PROGRESS_TIME = 7000L;
+    private final static Long READ_BUFFER_SIZE = 2048L;
     private Context mContext;
     private DownloadInfo mDownloadInfo;
-    private final static String TAG = "DownloadHandler";
     private NotificationCompat.Builder mBuilder;
     private NotificationManager mNotifyManager;
-    private final static AtomicInteger mNotificationId = new AtomicInteger(150);
     private static long lastWriteTime = System.currentTimeMillis();
     private Call mCall;
 
@@ -92,10 +92,10 @@ public class DownloadHandler {
             @Override
             public void run() {
                 try {
-                    InputStream inputStream = new FileInputStream(sourceFile);
-                    inputStream.skip(mDownloadInfo.getDownloadedLength());
-                    OutputStream outputStream = new FileOutputStream(file);
-                    writeData(inputStream, outputStream);
+                    BufferedSource bufferedSource = Okio.buffer(Okio.source(sourceFile));
+                    bufferedSource.skip(mDownloadInfo.getDownloadedLength());
+                    BufferedSink bufferedSink = Okio.buffer(Okio.appendingSink(file));
+                    writeData(bufferedSource, bufferedSink);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -128,13 +128,13 @@ public class DownloadHandler {
                 public void onResponse(Call call, Response response) {
                     try {
                         if (response.isSuccessful()) {
-                            InputStream inputStream = response.body().byteStream();
+                            BufferedSource bufferedSource = response.body().source();
                             if (!started()) {
                                 mDownloadInfo.setContentLength(response.body().contentLength());
                             }
 
-                            OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file, started()));
-                            writeData(inputStream, outputStream);
+                            BufferedSink bufferedSink = Okio.buffer(Okio.appendingSink(file));;
+                            writeData(bufferedSource, bufferedSink);
                         } else {
                             Log.v(TAG, "Status Code : " + response.code());
                         }
@@ -149,22 +149,22 @@ public class DownloadHandler {
         }
     }
 
-    private void writeData(InputStream inputStream, OutputStream outputStream) {
+    private void writeData(BufferedSource bufferedSource, BufferedSink bufferedSink) {
         try {
-            byte data[] = new byte[1024 * 4];
-            int count;
-            while ((count = inputStream.read(data)) != -1) {
-                outputStream.write(data, 0, count);
+            long count, currentTime;
+            while ((count = (bufferedSource.read(bufferedSink.buffer(), READ_BUFFER_SIZE))) != -1) {
                 mDownloadInfo.addDownloadedLength(count);
-                long currentTime = System.currentTimeMillis();
-                if (currentTime - lastWriteTime > 8000L) {
+                currentTime = System.currentTimeMillis();
+                if (currentTime - lastWriteTime > UPDATE_PROGRESS_TIME) {
                     writeToDatabase();
                     lastWriteTime = currentTime;
                 }
             }
 
-            outputStream.close();
-            inputStream.close();
+            bufferedSink.writeAll(bufferedSource);
+            bufferedSink.flush();
+            bufferedSink.close();
+            bufferedSource.close();
 
             setStatus(DownloadInfo.Status.Completed);
             writeToDatabase();
@@ -175,12 +175,12 @@ public class DownloadHandler {
         } catch (Exception e) {
             e.printStackTrace();
             try {
-                if (outputStream != null) {
-                    outputStream.close();
+                if (bufferedSource != null) {
+                    bufferedSource.close();
                 }
 
-                if (inputStream != null) {
-                    inputStream.close();
+                if (bufferedSink != null) {
+                    bufferedSink.close();
                 }
             } catch (IOException ioException) {
                 ioException.printStackTrace();
