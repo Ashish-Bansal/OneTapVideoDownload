@@ -1,28 +1,21 @@
 package com.phantom.onetapvideodownload.downloader;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
-import com.phantom.onetapvideodownload.ui.MainActivity;
 import com.phantom.onetapvideodownload.utils.Global;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -35,21 +28,16 @@ import okio.Okio;
 
 public class DownloadHandler {
     private final static String TAG = "DownloadHandler";
-    private final static AtomicInteger mNotificationId = new AtomicInteger(150);
     private final static Long UPDATE_PROGRESS_TIME = 3000L;
     private final static Long READ_BUFFER_SIZE = 2048L;
     private Context mContext;
     private DownloadInfo mDownloadInfo;
-    private NotificationCompat.Builder mBuilder;
-    private NotificationManager mNotifyManager;
     private static long lastWriteTime = System.currentTimeMillis();
     private Call mCall;
 
     DownloadHandler(Context context, DownloadInfo downloadInfo) {
         mContext = context;
         mDownloadInfo = downloadInfo;
-        mNotifyManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        mBuilder = new NotificationCompat.Builder(mContext);
     }
 
     public void startDownload() {
@@ -172,7 +160,6 @@ public class DownloadHandler {
 
             DownloadManager downloadManager = (DownloadManager) mContext;
             downloadManager.updateUi();
-            showNotification();
         } catch (Exception e) {
             e.printStackTrace();
             try {
@@ -222,28 +209,6 @@ public class DownloadHandler {
         } catch (PackageManager.NameNotFoundException e) {
             return null;
         }
-    }
-
-    private void showNotification() {
-        mBuilder.setSmallIcon(R.drawable.download);
-        mBuilder.setLargeIcon(BitmapFactory.decodeResource(mContext.getResources(), R.mipmap.ic_launcher));
-        mBuilder.setContentTitle(getFilename());
-        mBuilder.setContentText(getNotificationContent());
-        mBuilder.setAutoCancel(true);
-        mBuilder.setOnlyAlertOnce(false);
-
-        Intent intent = new Intent(mContext, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(mContext,
-                mNotificationId.get(),
-                intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
-
-        mBuilder.setContentIntent(pendingIntent);
-        mNotifyManager.notify(mNotificationId.getAndIncrement(), mBuilder.build());
-    }
-
-    private String getNotificationContent() {
-        return "Download Finished";
     }
 
     public Collection<String> getOptions() {

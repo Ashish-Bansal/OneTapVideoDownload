@@ -393,12 +393,31 @@ public class DownloadManager extends Service {
         if (progress == 100) {
             mNotifyManager.cancel(mNotificationId);
             stopForeground(true);
+            showDownloadsFinishedNotification(mNotificationId);
         } else {
             mBuilder.setContentText(getNotificationContent());
             mBuilder.setProgress(100, progress, false);
             mNotification = mBuilder.build();
             mNotifyManager.notify(mNotificationId, mNotification);
         }
+    }
+
+    private void showDownloadsFinishedNotification(int notificationId) {
+        mBuilder.setSmallIcon(R.drawable.download);
+        mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+        mBuilder.setContentText("Downloads Finished");
+        mBuilder.setAutoCancel(true);
+        mBuilder.setOnlyAlertOnce(true);
+        mBuilder.setProgress(0, 0, false);
+
+        Intent intent = new Intent(this, MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                notificationId,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+
+        mBuilder.setContentIntent(pendingIntent);
+        mNotifyManager.notify(notificationId, mBuilder.build());
     }
 
     public int getDownloadCountByStatus(DownloadInfo.Status status) {
