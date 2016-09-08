@@ -235,11 +235,23 @@ public class Global {
     }
 
     public static void sendEmail(Context context, String to, String subject, String body) {
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", to, null));
+        sendEmail(context, to, subject, body, null);
+    }
+
+    public static void sendEmail(Context context, String to, String subject, String body, String fileLocation) {
+        Intent emailIntent = new Intent(Intent.ACTION_SEND);
+        emailIntent.setType("text/plain");
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
         emailIntent.putExtra(Intent.EXTRA_TEXT, body);
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { to });
-        context.startActivity(Intent.createChooser(emailIntent, "Send email..."));
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, to);
+
+        if (fileLocation != null) {
+            Uri fileUri = FileProvider.getUriForFile(context, "com.phantom.fileprovider", new File(fileLocation));
+            emailIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+        }
+
+        emailIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        context.startActivity(Intent.createChooser(emailIntent, "Send via Email"));
     }
 
     public static boolean isLocalFile(String path) {

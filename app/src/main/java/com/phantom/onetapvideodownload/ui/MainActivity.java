@@ -43,6 +43,7 @@ import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.plus.PlusOneButton;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.phantom.onetapvideodownload.AnalyticsApplication;
+import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
 import com.phantom.onetapvideodownload.BuildConfig;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.Video.Video;
@@ -467,7 +468,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         String to = Global.getDeveloperEmail();
         String subject = "One Tap Video Download - Need Help";
         String body = "Hi, I am experience this issue : {REPLACE THIS WITH YOUR ISSUE}";
-        Global.sendEmail(this, to, subject, body);
+        Global.sendEmail(this, to, subject, body, ApplicationLogMaintainer.getLogFilePath());
     }
 
     public void openDonateActivity() {

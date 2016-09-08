@@ -31,6 +31,10 @@ public class ApplicationLogMaintainer extends BroadcastReceiver {
         context.sendBroadcast(intent);
     }
 
+    public static String getLogFilePath() {
+        return new File(Environment.getExternalStorageDirectory(), ".OneTapVideoDownload/Error.txt").getPath();
+    }
+
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent == null) {
