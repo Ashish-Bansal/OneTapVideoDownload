@@ -3,8 +3,6 @@ package com.phantom.onetapvideodownload.downloader;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -47,16 +45,6 @@ public class DownloadHandler {
         mContext.startService(DownloadManager.getActionUpdateUi());
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager manager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
-        boolean isAvailable = false;
-        if (networkInfo != null && networkInfo.isConnected()) {
-            isAvailable = true;
-        }
-        return isAvailable;
-    }
-
     private void downloadFile(String url, File file) {
         if (Global.isLocalFile(url)) {
             handleLocalFileDownload(url, file);
@@ -92,7 +80,7 @@ public class DownloadHandler {
     }
 
     private void handleRemoteFileDownload(String url, final File file) {
-        if (isNetworkAvailable()) {
+        if (Global.isInternetAvailable(mContext)) {
             OkHttpClient client = new OkHttpClient.Builder()
                     .connectTimeout(15, TimeUnit.SECONDS)
                     .writeTimeout(15, TimeUnit.SECONDS)
