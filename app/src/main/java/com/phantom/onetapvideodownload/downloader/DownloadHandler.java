@@ -106,9 +106,9 @@ public class DownloadHandler {
     private void handleRemoteFileDownload(String url, final File file) {
         if (isNetworkAvailable()) {
             OkHttpClient client = new OkHttpClient.Builder()
-                    .connectTimeout(100, TimeUnit.SECONDS)
-                    .writeTimeout(100, TimeUnit.SECONDS)
-                    .readTimeout(100, TimeUnit.SECONDS)
+                    .connectTimeout(15, TimeUnit.SECONDS)
+                    .writeTimeout(15, TimeUnit.SECONDS)
+                    .readTimeout(15, TimeUnit.SECONDS)
                     .build();
 
             Request request = new Request.Builder()
