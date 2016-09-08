@@ -36,7 +36,7 @@ import okio.Okio;
 public class DownloadHandler {
     private final static String TAG = "DownloadHandler";
     private final static AtomicInteger mNotificationId = new AtomicInteger(150);
-    private final static Long UPDATE_PROGRESS_TIME = 7000L;
+    private final static Long UPDATE_PROGRESS_TIME = 3000L;
     private final static Long READ_BUFFER_SIZE = 2048L;
     private Context mContext;
     private DownloadInfo mDownloadInfo;
