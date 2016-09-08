@@ -11,7 +11,7 @@ import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
 import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.BrowserDownloadInfo;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.YoutubeDownloadInfo;
-import com.phantom.onetapvideodownload.utils.Global;
+import com.phantom.utils.Global;
 
 import java.io.File;
 

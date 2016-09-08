@@ -4,7 +4,7 @@ import android.net.Uri;
 
 import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
 import com.phantom.onetapvideodownload.IpcService;
-import com.phantom.onetapvideodownload.utils.Global;
+import com.phantom.utils.Global;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;

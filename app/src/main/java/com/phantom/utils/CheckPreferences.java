@@ -1,4 +1,4 @@
-package com.phantom.onetapvideodownload.utils;
+package com.phantom.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

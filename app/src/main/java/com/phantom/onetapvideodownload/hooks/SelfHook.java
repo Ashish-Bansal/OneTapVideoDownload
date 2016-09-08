@@ -1,7 +1,7 @@
 package com.phantom.onetapvideodownload.hooks;
 
 import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
-import com.phantom.onetapvideodownload.utils.Global;
+import com.phantom.utils.Global;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodReplacement;

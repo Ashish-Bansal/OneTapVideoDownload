@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.DownloadManager;
 import com.phantom.onetapvideodownload.ui.UsageInstruction;
-import com.phantom.onetapvideodownload.utils.OnDownloadChangeListener;
+import com.phantom.utils.OnDownloadChangeListener;
 
 public class DownloadsFragment extends Fragment implements OnDownloadChangeListener {
     public static final String TAG = "DownloadsFragment";

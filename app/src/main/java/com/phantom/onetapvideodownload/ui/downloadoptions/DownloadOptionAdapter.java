@@ -10,7 +10,7 @@ import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.phantom.onetapvideodownload.ui.MainActivity;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.DownloadOptionItem;
-import com.phantom.onetapvideodownload.utils.CheckPreferences;
+import com.phantom.utils.CheckPreferences;
 
 import java.util.ArrayList;
 import java.util.List;

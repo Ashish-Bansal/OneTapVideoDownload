@@ -1,4 +1,4 @@
-package com.phantom.onetapvideodownload.utils;
+package com.phantom.utils;
 
 public interface OnDownloadChangeListener {
     void onDownloadAdded();

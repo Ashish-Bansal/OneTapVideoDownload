@@ -7,7 +7,7 @@ import android.view.View;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionAdapter;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionIds;
-import com.phantom.onetapvideodownload.utils.Global;
+import com.phantom.utils.Global;
 import com.phantom.onetapvideodownload.ui.MainActivity;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.DownloadOptionItem;

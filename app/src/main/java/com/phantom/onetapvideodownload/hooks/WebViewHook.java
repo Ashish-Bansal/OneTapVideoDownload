@@ -2,7 +2,7 @@ package com.phantom.onetapvideodownload.hooks;
 
 import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
 import com.phantom.onetapvideodownload.IpcService;
-import com.phantom.onetapvideodownload.utils.Global;
+import com.phantom.utils.Global;
 
 import java.lang.reflect.Field;
 

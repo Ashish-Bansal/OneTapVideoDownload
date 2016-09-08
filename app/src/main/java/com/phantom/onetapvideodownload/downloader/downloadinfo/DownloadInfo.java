@@ -11,7 +11,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
 import com.phantom.onetapvideodownload.downloader.DownloadManager;
-import com.phantom.onetapvideodownload.utils.Global;
+import com.phantom.utils.Global;
 
 import java.io.File;
 import java.util.ArrayList;

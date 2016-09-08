@@ -19,12 +19,12 @@ import android.util.Log;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.phantom.onetapvideodownload.utils.enums.AppPermissions;
+import com.phantom.utils.enums.AppPermissions;
 import com.phantom.onetapvideodownload.ui.MainActivity;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
-import com.phantom.onetapvideodownload.utils.OnDownloadChangeListener;
+import com.phantom.utils.OnDownloadChangeListener;
 
 import java.util.ArrayList;
 import java.util.Collection;

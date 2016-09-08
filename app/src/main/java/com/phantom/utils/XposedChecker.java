@@ -1,4 +1,4 @@
-package com.phantom.onetapvideodownload.utils;
+package com.phantom.utils;
 
 import android.app.Activity;
 import android.content.Context;

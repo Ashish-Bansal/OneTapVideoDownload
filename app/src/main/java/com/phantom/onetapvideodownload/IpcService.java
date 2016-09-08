@@ -23,10 +23,10 @@ import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
 import com.phantom.onetapvideodownload.downloader.ProxyDownloadManager;
 import com.phantom.onetapvideodownload.ui.MainActivity;
 import com.phantom.onetapvideodownload.ui.domainblacklist.BlacklistDomainList;
-import com.phantom.onetapvideodownload.utils.CheckPreferences;
-import com.phantom.onetapvideodownload.utils.Global;
-import com.phantom.onetapvideodownload.utils.Invokable;
-import com.phantom.onetapvideodownload.utils.YoutubeParserProxy;
+import com.phantom.utils.CheckPreferences;
+import com.phantom.utils.Global;
+import com.phantom.utils.Invokable;
+import com.phantom.utils.YoutubeParserProxy;
 
 import java.util.HashMap;
 import java.util.Map;

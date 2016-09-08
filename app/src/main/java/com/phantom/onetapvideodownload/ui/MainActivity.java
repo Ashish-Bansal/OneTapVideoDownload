@@ -53,11 +53,11 @@ import com.phantom.onetapvideodownload.downloader.DownloadOptionItem;
 import com.phantom.onetapvideodownload.downloader.ProxyDownloadManager;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionAdapter;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionIds;
-import com.phantom.onetapvideodownload.utils.CheckPreferences;
-import com.phantom.onetapvideodownload.utils.Global;
-import com.phantom.onetapvideodownload.utils.Invokable;
-import com.phantom.onetapvideodownload.utils.XposedChecker;
-import com.phantom.onetapvideodownload.utils.enums.AppPermissions;
+import com.phantom.utils.CheckPreferences;
+import com.phantom.utils.Global;
+import com.phantom.utils.Invokable;
+import com.phantom.utils.XposedChecker;
+import com.phantom.utils.enums.AppPermissions;
 
 import java.io.File;
 

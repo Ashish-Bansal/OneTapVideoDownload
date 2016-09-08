@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Environment;
 
-import com.phantom.onetapvideodownload.utils.Global;
+import com.phantom.utils.Global;
 
 import java.io.BufferedWriter;
 import java.io.File;

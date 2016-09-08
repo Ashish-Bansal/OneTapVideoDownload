@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
-import com.phantom.onetapvideodownload.utils.Global;
+import com.phantom.utils.Global;
 
 import java.io.File;
 import java.io.IOException;

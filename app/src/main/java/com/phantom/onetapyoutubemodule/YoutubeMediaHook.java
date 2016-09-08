@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
 import com.phantom.onetapvideodownload.IpcService;
-import com.phantom.onetapvideodownload.utils.Global;
+import com.phantom.utils.Global;
 
 import java.util.HashMap;
 import java.util.Map;

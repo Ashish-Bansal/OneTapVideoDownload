@@ -10,10 +10,10 @@ import com.phantom.onetapvideodownload.ui.MainActivity;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
-import com.phantom.onetapvideodownload.utils.YoutubeParserProxy;
+import com.phantom.utils.YoutubeParserProxy;
 import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
 import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
-import com.phantom.onetapvideodownload.utils.Invokable;
+import com.phantom.utils.Invokable;
 
 import java.util.Collection;
 import java.util.List;

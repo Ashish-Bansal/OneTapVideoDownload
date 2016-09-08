@@ -11,7 +11,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
 import com.phantom.onetapvideodownload.R;
-import com.phantom.onetapvideodownload.utils.CheckPreferences;
+import com.phantom.utils.CheckPreferences;
 
 import java.util.Arrays;
 import java.util.List;

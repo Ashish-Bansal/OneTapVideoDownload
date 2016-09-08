@@ -7,7 +7,7 @@ import android.support.v7.preference.XpPreferenceFragment;
 
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.phantom.onetapvideodownload.R;
-import com.phantom.onetapvideodownload.utils.CheckPreferences;
+import com.phantom.utils.CheckPreferences;
 
 import net.xpece.android.support.preference.ListPreference;
 import net.xpece.android.support.preference.SwitchPreference;

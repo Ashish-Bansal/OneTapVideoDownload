@@ -1,4 +1,4 @@
-package com.phantom.onetapvideodownload.utils.enums;
+package com.phantom.utils.enums;
 
 import android.Manifest;
 
