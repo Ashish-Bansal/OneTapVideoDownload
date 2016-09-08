@@ -21,7 +21,7 @@ public class MediaMetadataRetriever implements IXposedHookLoadPackage {
                 Context context = Global.getContext();
                 String packageName = context.getPackageName();
                 Uri uri = (Uri) hookParams.args[1];
-                if (uri.toString().startsWith("http")) {
+                if (uri.toString().startsWith("http") || uri.toString().startsWith("ftp")) {
                     XposedBridge.log(uri.toString());
                     IpcService.startSaveUrlAction(context, uri,  packageName);
                 }
