@@ -3,3 +3,4 @@ com.phantom.onetapvideodownload.hooks.SelfHook
 com.phantom.onetapvideodownload.hooks.WebViewHook
 com.phantom.onetapvideodownload.hooks.ChromeHook
 com.phantom.onetapvideodownload.hooks.MediaMetadataRetriever
+com.phantom.onetapyoutubemodule.YoutubeMediaHook
