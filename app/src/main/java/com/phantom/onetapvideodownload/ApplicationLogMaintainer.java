@@ -17,9 +17,12 @@ import java.util.Date;
 import java.util.Locale;
 
 public class ApplicationLogMaintainer extends BroadcastReceiver {
-    private static final String PACKAGE_NAME = "com.phantom.onetapvideodownload";
-    private static final String CLASS_NAME = PACKAGE_NAME + ".ApplicationLogMaintainer";
+    public static final String PACKAGE_NAME = "com.phantom.onetapvideodownload";
+    public static final String CLASS_NAME = PACKAGE_NAME + ".ApplicationLogMaintainer";
     public static final String EXTRA_MESSAGE = PACKAGE_NAME + ".extra.message";
+    public static final Integer MAX_LOG_FILE_SIZE = 10000;
+    public static final String LOG_DIRECTORY_NAME = ".OneTapVideoDownload";
+    public static final String LOG_FILE_NAME = "Logs.txt";
 
     public ApplicationLogMaintainer() {
     }
@@ -32,7 +35,7 @@ public class ApplicationLogMaintainer extends BroadcastReceiver {
     }
 
     public static String getLogFilePath() {
-        return new File(Environment.getExternalStorageDirectory(), ".OneTapVideoDownload/Error.txt").getPath();
+        return new File(Environment.getExternalStorageDirectory(), LOG_DIRECTORY_NAME + '/' + LOG_FILE_NAME).getPath();
     }
 
     @Override
@@ -42,66 +45,46 @@ public class ApplicationLogMaintainer extends BroadcastReceiver {
         }
 
         String logMessage = intent.getStringExtra(EXTRA_MESSAGE);
-        if (logMessage.equals("One Tap Initialized")) {
+        if (logMessage.toLowerCase().contains("initialized")) {
             try {
-                if (Global.getDirectorySize(new File(Environment.getExternalStorageDirectory(), ".OneTapVideoDownload/Error.txt")) > 10000) {
-                    startErrorLog(logMessage);
+                File logFile = new File(getLogFilePath());
+                Long fileSize = Global.getDirectorySize(logFile);
+                if (fileSize > MAX_LOG_FILE_SIZE) {
+                    writeToLog(logMessage);
                 } else {
-                    setError("---------------------------");
-                    setError(logMessage);
+                    writeToLog("---------------------------");
+                    writeToLog(logMessage);
                 }
             } catch (Exception e) {
             }
 
             try {
-                PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-                setError("OneTapVideoDownload Version " + pInfo.versionName);
+                PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+                writeToLog("OneTapVideoDownload Version " + packageInfo.versionName);
             } catch (Exception e) {
             }
         } else {
-            setError(logMessage);
+            writeToLog(logMessage);
         }
     }
 
-    void setError(String status) {
+    void writeToLog(String message) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.US);
             String time = sdf.format(new Date());
 
-            status = time + " - " + status;
+            message = time + " - " + message;
 
-            File root = new File(Environment.getExternalStorageDirectory(), ".OneTapVideoDownload");
-            if (!root.exists()) {
-                root.mkdirs();
+            File logFile = new File(getLogFilePath());
+            if (!logFile.getParentFile().exists()) {
+                logFile.getParentFile().mkdirs();
             }
-            File file = new File(root, "Error.txt");
-            BufferedWriter buf = new BufferedWriter(new FileWriter(file, true));
-            buf.newLine();
-            buf.append(status);
-            buf.close();
+
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(logFile, true));
+            bufferedWriter.newLine();
+            bufferedWriter.append(message);
+            bufferedWriter.close();
         } catch (IOException e) {
-
-        }
-    }
-
-    void startErrorLog(String status) {
-        try {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.US);
-            String time = sdf.format(new Date());
-
-            status = time + " - " + status;
-
-            File root = new File(Environment.getExternalStorageDirectory(), ".OneTapVideoDownload");
-            if (!root.exists()) {
-                root.mkdirs();
-            }
-            File gpxfile = new File(root, "Error.txt");
-            FileWriter writer = new FileWriter(gpxfile);
-            writer.append(status);
-            writer.flush();
-            writer.close();
-        } catch (IOException e) {
-
         }
     }
 }
