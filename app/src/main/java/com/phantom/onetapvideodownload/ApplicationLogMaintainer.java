@@ -50,17 +50,16 @@ public class ApplicationLogMaintainer extends BroadcastReceiver {
                 File logFile = new File(getLogFilePath());
                 Long fileSize = Global.getDirectorySize(logFile);
                 if (fileSize > MAX_LOG_FILE_SIZE) {
-                    writeToLog(logMessage);
+                    writeToLog(logMessage, false);
+                    try {
+                        PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+                        writeToLog("OneTapVideoDownload Version " + packageInfo.versionName);
+                    } catch (Exception e) {
+                    }
                 } else {
                     writeToLog("---------------------------");
                     writeToLog(logMessage);
                 }
-            } catch (Exception e) {
-            }
-
-            try {
-                PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-                writeToLog("OneTapVideoDownload Version " + packageInfo.versionName);
             } catch (Exception e) {
             }
         } else {
@@ -69,6 +68,10 @@ public class ApplicationLogMaintainer extends BroadcastReceiver {
     }
 
     void writeToLog(String message) {
+        writeToLog(message, true);
+    }
+
+    void writeToLog(String message, boolean appendMode) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss", Locale.US);
             String time = sdf.format(new Date());
@@ -80,7 +83,7 @@ public class ApplicationLogMaintainer extends BroadcastReceiver {
                 logFile.getParentFile().mkdirs();
             }
 
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(logFile, true));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(logFile, appendMode));
             bufferedWriter.newLine();
             bufferedWriter.append(message);
             bufferedWriter.close();
