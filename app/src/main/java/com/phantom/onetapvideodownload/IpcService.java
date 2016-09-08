@@ -30,7 +30,6 @@ import com.phantom.onetapvideodownload.utils.YoutubeParserProxy;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class IpcService extends Service implements Invokable<Video, Integer> {
@@ -39,52 +38,18 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     private static final String ACTION_SAVE_BROWSER_VIDEO = PACKAGE_NAME + ".action.saveurl";
     private static final String ACTION_SAVE_YOUTUBE_VIDEO = PACKAGE_NAME + ".action.saveyoutubeurl";
     private static final String ACTION_INSPECT_MEDIA_URI = PACKAGE_NAME + ".action.inspectmediaurl";
-    private static final String ACTION_SEND_NOTIFICATION_FOR_EMAIL = PACKAGE_NAME + ".action.sendemail";
     private static final String TAG = "IpcService";
 
     public static final String EXTRA_URL = PACKAGE_NAME + ".extra.url";
     public static final String EXTRA_TITLE = PACKAGE_NAME + ".extra.title";
     public static final String EXTRA_PARAM_STRING = PACKAGE_NAME + ".extra.url";
     public static final String EXTRA_PACKAGE_NAME = PACKAGE_NAME + ".extra.package_name";
-    public static final String EXTRA_NOTIFICATION_TITLE = PACKAGE_NAME + ".extra.notification_title";
-    public static final String EXTRA_NOTIFICATION_BODY = PACKAGE_NAME + ".extra.notification_body";
-    public static final String EXTRA_EMAIL_SUBJECT = PACKAGE_NAME + ".extra.email_subject";
-    public static final String EXTRA_EMAIL_BODY = PACKAGE_NAME + ".extra.email_body";
 
     private Handler mHandler = new Handler();
     private final IBinder mBinder = new LocalBinder();
     private static final AtomicInteger notificationId = new AtomicInteger();
     private static MediaChecker mMediaChecker;
     private static final Map<Integer, Runnable> notificationCancelRunnables = new HashMap<>();
-
-    public void sendEmailNotification(String notificationTitle, String notificationBody,
-                                        String emailSubject, String emailBody) {
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setSmallIcon(R.drawable.one_tap_small);
-        mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.one_tap_large));
-        mBuilder.setContentTitle(notificationTitle);
-        mBuilder.setContentText(notificationBody);
-        mBuilder.setAutoCancel(false);
-
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto",
-                Global.DEVELOPER_EMAIL, null));
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, emailSubject);
-        emailIntent.putExtra(Intent.EXTRA_TEXT, emailBody);
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[] { Global.DEVELOPER_EMAIL });
-
-        Random random = new Random();
-        int id = random.nextInt() + 100;
-        PendingIntent emailPendingIntent = PendingIntent.getService(this,
-                id,
-                Intent.createChooser(emailIntent, "Send email..."),
-                PendingIntent.FLAG_UPDATE_CURRENT);
-
-        mBuilder.addAction(R.drawable.download, "Send email", emailPendingIntent);
-        mBuilder.setContentIntent(emailPendingIntent);
-
-        NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationmanager.notify(id, mBuilder.build());
-    }
 
     public static void startSaveUrlAction(Context context, Uri uri, String packageName) {
         Intent intent = new Intent(ACTION_SAVE_BROWSER_VIDEO);
@@ -152,16 +117,6 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
                 String url = intent.getStringExtra(EXTRA_URL);
                 String packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME);
                 mMediaChecker.addUri(url, packageName);
-            } else if (ACTION_SEND_NOTIFICATION_FOR_EMAIL.equals(action)) {
-                String notificationTitle = intent.getStringExtra(EXTRA_NOTIFICATION_TITLE);
-                String notificationBody = intent.getStringExtra(EXTRA_NOTIFICATION_BODY);
-                String emailSubject = intent.getStringExtra(EXTRA_EMAIL_SUBJECT);
-                String emailBody = intent.getStringExtra(EXTRA_EMAIL_BODY);
-                if (notificationTitle == null || notificationBody== null || emailSubject== null
-                        || emailBody== null) {
-                    return START_NOT_STICKY;
-                }
-                sendEmailNotification(notificationTitle, notificationBody, emailSubject, emailBody);
             }
         }
 
