@@ -30,3 +30,5 @@
 -keep class com.phantom.onetapvideodownload.ui.MainActivity { *; }
 -keep class de.robv.** { *; }
 -keep class com.evgenii.jsevaluator.**  { *; }
+-keep class com.phantom.onetapfacebookmodule.** { *; }
+-keep class com.phantom.onetapyoutubemodule.** { *; }
