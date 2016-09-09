@@ -18,7 +18,6 @@ import java.util.Map;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
@@ -30,15 +29,6 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
     private static final String ORIGINAL_METHOD_CLASS_NAME = "com.google.android.libraries.youtube.proto.nano.InnerTubeApi.FormatStream";
     private static final HashMap<Integer, YouTubePackage> classNamesMap = new HashMap<>();
     private static long lastVideoTime = System.currentTimeMillis();
-
-    public boolean findClass(ClassLoader loader, String className) {
-        try {
-            loader.loadClass(className);
-            return true;
-        } catch( ClassNotFoundException e ) {
-            return false;
-        }
-    }
 
     void loadJSONToMap(JSONObject jsonObject) throws JSONException{
             Iterator<String> jsonKeys = jsonObject.keys();
@@ -96,7 +86,7 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
         // public MainClass(MethodParameterClass paramJlb, String paramString, long paramLong)
 
         final ClassLoader loader = lpparam.classLoader;
-        boolean isNotObfuscated = findClass(loader, ORIGINAL_MAIN_CLASS_NAME);
+        boolean isNotObfuscated = Global.isClassPresent(loader, ORIGINAL_MAIN_CLASS_NAME);
 
         final XC_MethodHook methodHook = new XC_MethodHook() {
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam hookParams) throws Throwable {
@@ -107,8 +97,7 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
 
                 lastVideoTime = currentTime;
                 String paramString = (String)hookParams.args[1];
-                XposedBridge.log(paramString);
-
+                ApplicationLogMaintainer.sendBroadcast(context, "Youtube Video Id : " + paramString);
                 IpcService.startSaveYoutubeVideoAction(context, paramString);
             }
         };
@@ -116,7 +105,7 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
         int packageVersion = context.getPackageManager()
                 .getPackageInfo(lpparam.packageName, 0).versionCode;
 
-        XposedBridge.log("OneTapVideoDownload : Youtube Package version : " + packageVersion);
+        ApplicationLogMaintainer.sendBroadcast(context, "Youtube Package version Code : " + packageVersion);
 
         YouTubePackage currentPackage;
         if (isNotObfuscated) {
@@ -125,9 +114,9 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
             currentPackage = classNamesMap.get(getSignificantDigits(packageVersion));
         }
 
+        boolean successful = false;
         if (currentPackage == null) {
-            XposedBridge.log("One Tap Video Download : Trying bruteforcing");
-            boolean successful;
+            ApplicationLogMaintainer.sendBroadcast(context, "Trying bruteforcing using Map");
             for (Map.Entry<Integer, YouTubePackage> pair : classNamesMap.entrySet()) {
                 String mainClassName = pair.getValue().getMainClass();
                 String parameterClassName = pair.getValue().getMethodParameterClass();
@@ -140,7 +129,12 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
         } else {
             String mainClassName = currentPackage.getMainClass();
             String parameterClassName = currentPackage.getMethodParameterClass();
-            hookYoutube(lpparam.classLoader, methodHook, mainClassName, parameterClassName);
+            successful = hookYoutube(lpparam.classLoader, methodHook, mainClassName, parameterClassName);
+        }
+        if (successful) {
+            ApplicationLogMaintainer.sendBroadcast(context, "Youtube Hooking Successful");
+        } else {
+            ApplicationLogMaintainer.sendBroadcast(context, "Youtube hooking failed");
         }
     }
 
@@ -158,7 +152,6 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
         } catch (Exception | NoSuchMethodError e) {
             return false;
         }
-        XposedBridge.log("OneTapVideoDownload : Successful Hooking : " + mainClassName);
         return true;
     }
 
