@@ -32,9 +32,9 @@ public class FacebookLiteHook implements IXposedHookLoadPackage {
         }
 
         final Context context = Global.getContext();
-        ApplicationLogMaintainer.sendBroadcast(context, "One Tap Facebook Hook Initialized");
+        ApplicationLogMaintainer.sendBroadcast(context, "One Tap Facebook Lite Hook Initialized");
         if (!Global.isPackageInstalled(context, ONE_TAP_FACEBOOK_MODULE_PACKAGE_NAME)) {
-            ApplicationLogMaintainer.sendBroadcast(context, "One Tap Facebook Module not installed");
+            ApplicationLogMaintainer.sendBroadcast(context, "One Tap Facebook Lite Module not installed");
             return;
         }
 
@@ -75,7 +75,7 @@ public class FacebookLiteHook implements IXposedHookLoadPackage {
         int packageVersion = context.getPackageManager()
                 .getPackageInfo(lpparam.packageName, 0).versionCode;
 
-        ApplicationLogMaintainer.sendBroadcast(context, "Facebook Package Version : " + packageVersion);
+        ApplicationLogMaintainer.sendBroadcast(context, "Facebook Lite Package Version : " + packageVersion);
 
         Pair<String, String> classPair = classNamesMap.get(Global.getXSignificantDigits(packageVersion, 2));
         if (classPair == null) {

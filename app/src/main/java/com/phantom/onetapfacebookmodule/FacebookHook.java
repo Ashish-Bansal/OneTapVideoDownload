@@ -55,12 +55,14 @@ public class FacebookHook implements IXposedHookLoadPackage {
             }
         };
 
-        String packageName = context.getPackageManager().getPackageInfo(FACEBOOK_PACKAGE_NAME,
-                PackageManager.GET_META_DATA).packageName;
+        String versionName = context.getPackageManager().getPackageInfo(FACEBOOK_PACKAGE_NAME,
+                PackageManager.GET_META_DATA).versionName;
+
+        ApplicationLogMaintainer.sendBroadcast(context, "Facebook package version : " + versionName);
 
         if (!Global.isClassPresent(lpparam.classLoader, VIDEO_PLAY_REQUEST)
                 || !Global.isClassPresent(lpparam.classLoader, VIDEO_URI_SOURCE_TYPE)) {
-            ApplicationLogMaintainer.sendBroadcast(context, "Facebook Hook class not found. Package version : " + packageName);
+            ApplicationLogMaintainer.sendBroadcast(context, "Facebook Hook class not found. ToDo: Update hooks.");
             return;
         }
 
@@ -79,7 +81,7 @@ public class FacebookHook implements IXposedHookLoadPackage {
         };
 
         XposedHelpers.findAndHookConstructor(mainClass,  objects);
-        ApplicationLogMaintainer.sendBroadcast(context, "Facebook Hook class hooking successful for version : " + packageName);
+        ApplicationLogMaintainer.sendBroadcast(context, "Facebook Hook successful");
     }
 
 }
