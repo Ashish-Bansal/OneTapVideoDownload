@@ -55,6 +55,7 @@ import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionAdapter;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionIds;
 import com.phantom.utils.CheckPreferences;
 import com.phantom.utils.Global;
+import com.phantom.utils.HookClassNamesFetcher;
 import com.phantom.utils.Invokable;
 import com.phantom.utils.XposedChecker;
 import com.phantom.utils.enums.AppPermissions;
@@ -216,6 +217,9 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
                 } else {
                     Toast.makeText(this, R.string.ad_disabled, Toast.LENGTH_LONG).show();
                 }
+                break;
+            case R.id.update_hooks:
+                checkForHooksUpdate();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -525,5 +529,11 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         AdRequest request = new AdRequest.Builder()
                 .build();
         mAdView.loadAd(request);
+    }
+
+    private void checkForHooksUpdate() {
+        File hookFile = new File(Global.getHooksFilePath(this));
+        HookClassNamesFetcher hookClassNamesFetcher = new HookClassNamesFetcher(this, Global.getHooksUrl(), hookFile);
+        hookClassNamesFetcher.updateHooks();
     }
 }

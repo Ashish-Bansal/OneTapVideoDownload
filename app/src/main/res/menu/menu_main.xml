@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".ui.MainActivity">
+    <item android:id="@+id/update_hooks"
+        android:title="@string/menu_item_update_hooks" />
     <item android:id="@+id/menu_usage_instruction_title"
         android:title="@string/menu_item_usage_instruction_title" />
     <item android:id="@+id/adswitch"

@@ -16,7 +16,15 @@ import android.widget.Toast;
 
 import com.phantom.onetapvideodownload.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.HttpURLConnection;
@@ -35,6 +43,8 @@ public class Global {
     public static final String VIDEO_MIME = "video/*";
     public static final String DEVELOPER_EMAIL = "onetapvideodownload@gmail.com";
     public static final String MP4_FILE_EXTENSION = ".mp4";
+    public static final String HOOKS_FILE_NAME = "Hooks.json";
+    public static final String HOOKS_URL = "https://raw.githubusercontent.com/Ashish-Bansal/OneTapVideoDownload/master/app/src/main/assets/YoutubeHookClassnames.json";
 
     //List taken from Wikipedia
     public static final String[] VIDEO_FILE_EXTENSION = {"webm", "mkv", "flv", "vob", "ogv", "ogg",
@@ -336,5 +346,72 @@ public class Global {
             isAvailable = true;
         }
         return isAvailable;
+    }
+
+    public static String getHooksUrl() {
+        return HOOKS_URL;
+    }
+
+    public static String getHooksFileName() {
+        return HOOKS_FILE_NAME;
+    }
+
+    public static String getHooksDirectoryPath(Context context) {
+        File file = new File(context.getFilesDir() + "/");
+        file.mkdirs();
+
+        return context.getFilesDir().getAbsolutePath();
+    }
+
+    public static String getHooksFilePath(Context context) {
+        return new File(context.getFilesDir().getAbsolutePath(), getHooksFileName()).getAbsolutePath();
+    }
+
+    public static boolean writeStringToFile(File file, String content) {
+        try {
+            FileWriter fileWriter = new FileWriter(file);
+            fileWriter.write(content);
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static boolean isFileReadable(File file) {
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
+            bufferedReader.readLine();
+            bufferedReader.close();
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    public static String readFileToString(File file) {
+        String result = null;
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            byte[] data = new byte[(int) file.length()];
+            fis.read(data);
+            fis.close();
+
+            result = new String(data, "UTF-8");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static JSONObject isValidJSONObject(String jsonString) {
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = new JSONObject(jsonString);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
     }
 }

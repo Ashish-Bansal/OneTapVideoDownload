@@ -144,6 +144,13 @@
     <string name="prefs_enable_startup_errors_summary">Checks module requirements and reports if something is wrong.</string>
     <string name="feature_removed">Feature Removed</string>
     <string name="youtube_share_intent_removed">I\'m sorry to inform you that because of YouTube terms and conditions, this feature has been removed from the application.</string>
+    <string name="internet_not_available">Unable to access Internet</string>
+    <string name="internet_not_available_summary">Application is unable to access internet. Please enable WiFi or data services.</string>
+    <string name="open_wifi_settings">Open WiFi Settings</string>
+    <string name="fetching_hook_classes">Fetching Hook Class Names</string>
+    <string name="error_fetching_file">Error fetching file</string>
+    <string name="hooks_successfully_fetched">Hooks successfully updated!</string>
+    <string name="menu_item_update_hooks">Update Hooks</string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
