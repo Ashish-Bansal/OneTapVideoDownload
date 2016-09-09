@@ -50,7 +50,7 @@ public class Global {
     public static final String DEVELOPER_EMAIL = "onetapvideodownload@gmail.com";
     public static final String MP4_FILE_EXTENSION = ".mp4";
     public static final String HOOKS_FILE_NAME = "Hooks.json";
-    public static final String HOOKS_URL = "https://raw.githubusercontent.com/Ashish-Bansal/OneTapVideoDownload/master/app/src/main/assets/YoutubeHookClassnames.json";
+    public static final String HOOKS_URL = "https://raw.githubusercontent.com/Ashish-Bansal/OneTapVideoDownload/master/app/src/main/assets/HookClassnames.json";
 
     //List taken from Wikipedia
     public static final String[] VIDEO_FILE_EXTENSION = {"webm", "mkv", "flv", "vob", "ogv", "ogg",
