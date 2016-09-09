@@ -5,15 +5,19 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
+import android.support.v4.util.Pair;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
+import com.phantom.onetapvideodownload.BuildConfig;
 import com.phantom.onetapvideodownload.R;
 
 import org.json.JSONException;
@@ -30,8 +34,10 @@ import java.io.StringWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import de.robv.android.xposed.XposedHelpers;
 import okhttp3.OkHttpClient;
@@ -356,14 +362,21 @@ public class Global {
         return HOOKS_FILE_NAME;
     }
 
-    public static String getHooksDirectoryPath(Context context) {
-        File file = new File(context.getFilesDir() + "/");
-        file.mkdirs();
-
-        return context.getFilesDir().getAbsolutePath();
+    public static String getHooksDirectoryPath(Context context) throws PackageManager.NameNotFoundException{
+        PackageManager packageManager = context.getPackageManager();
+        PackageInfo packageInfo = packageManager.getPackageInfo(BuildConfig.APPLICATION_ID, 0);
+        String applicationDirectoryPath = packageInfo.applicationInfo.dataDir;
+        File hookDirectory = new File(applicationDirectoryPath, "files/");
+        return hookDirectory.getAbsolutePath();
     }
 
     public static String getHooksFilePath(Context context) {
+        try {
+            File hookFile = new File(getHooksDirectoryPath(context), Global.getHooksFileName());
+            return hookFile.getAbsolutePath();
+        } catch (Exception e) {
+            ApplicationLogMaintainer.sendBroadcast(context, getStackTrace(e));
+        }
         return new File(context.getFilesDir().getAbsolutePath(), getHooksFileName()).getAbsolutePath();
     }
 
@@ -413,5 +426,21 @@ public class Global {
             e.printStackTrace();
         }
         return jsonObject;
+    }
+
+    public static int getXSignificantDigits(int version, int x) {
+        return version / (int)Math.pow(10, (int)Math.log10(version) - x + 1);
+    }
+
+    public static void loadJSONToMap(Map<Integer, Pair<String, String>> map, JSONObject jsonObject) throws JSONException{
+        Iterator<String> jsonKeys = jsonObject.keys();
+        while (jsonKeys.hasNext()) {
+            String key = jsonKeys.next();
+            JSONObject value = jsonObject.getJSONObject(key);
+            String mainClass = value.keys().next();
+            String methodClass = value.getString(mainClass);
+            map.put(Integer.parseInt(key), new Pair<>(mainClass, methodClass));
+        }
+        ApplicationLogMaintainer.sendBroadcast(Global.getContext(), "Parsed JSON and class names added to map.");
     }
 }

@@ -27,14 +27,14 @@ public class ChromeHook implements IXposedHookLoadPackage {
                 try {
                     Uri uri = Uri.parse((String) hookParams.args[1]);
                     ApplicationLogMaintainer.sendBroadcast(Global.getContext(), "Chrome Hook : URL" + uri.toString());
-                    if (uri.toString().startsWith("http")) {
-                        IpcService.startSaveUrlAction(Global.getContext(), uri, packageName);
-                    }
-                } catch (Exception e) {
-                    ApplicationLogMaintainer.sendBroadcast(Global.getContext(), Global.getStackTrace(e));
-                }
-            }
-        };
+        if (uri.toString().startsWith("http")) {
+            IpcService.startSaveUrlAction(Global.getContext(), uri, packageName);
+        }
+    } catch (Exception e) {
+        ApplicationLogMaintainer.sendBroadcast(Global.getContext(), Global.getStackTrace(e));
+    }
+}
+};
 
         // RemoteMediaPlayerBridge(long nativeRemoteMediaPlayerBridge, String sourceUrl, String frameUrl, String userAgent)
         Class remoteMediaPlayerBridge = XposedHelpers.findClass("org.chromium.chrome.browser.media.remote.RemoteMediaPlayerBridge", lpparam.classLoader);

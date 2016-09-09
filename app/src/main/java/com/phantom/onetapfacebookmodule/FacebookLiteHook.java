@@ -1,11 +1,16 @@
 package com.phantom.onetapfacebookmodule;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
+import android.support.v4.util.Pair;
 
 import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
 import com.phantom.onetapvideodownload.IpcService;
 import com.phantom.utils.Global;
+
+import org.json.JSONObject;
+
+import java.io.File;
+import java.util.HashMap;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
@@ -15,8 +20,11 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 public class FacebookLiteHook implements IXposedHookLoadPackage {
     private static final String ONE_TAP_FACEBOOK_MODULE_PACKAGE_NAME = "com.phantom.onetapfacebookmodule";
     private static final String FACEBOOK_PACKAGE_NAME = "com.facebook.lite";
-    private static final String CLASS_NAME = "com.facebook.lite.r.e";
-    private static final String CLASS_NAME_1 = "com.a.a.a.d.b";
+    private static final HashMap<Integer, Pair<String, String>> classNamesMap = new HashMap<>();
+
+    static {
+        classNamesMap.put(36, new Pair<>("com.facebook.lite.r.e", "com.a.a.a.d.b"));
+    }
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
         if (!lpparam.packageName.equals(FACEBOOK_PACKAGE_NAME)) {
@@ -28,6 +36,28 @@ public class FacebookLiteHook implements IXposedHookLoadPackage {
         if (!Global.isPackageInstalled(context, ONE_TAP_FACEBOOK_MODULE_PACKAGE_NAME)) {
             ApplicationLogMaintainer.sendBroadcast(context, "One Tap Facebook Module not installed");
             return;
+        }
+
+        File hookFile = new File(Global.getHooksFilePath(context));
+        try {
+            if (!hookFile.exists())  {
+                ApplicationLogMaintainer.sendBroadcast(context, "Hook file doesn't exist");
+            }
+
+            if (!Global.isFileReadable(hookFile))  {
+                ApplicationLogMaintainer.sendBroadcast(context, "Unable to open file for reading");
+                ApplicationLogMaintainer.sendBroadcast(context, hookFile.getAbsolutePath());
+            }
+
+            String jsonString = Global.readFileToString(hookFile);
+            JSONObject jsonObject = Global.isValidJSONObject(jsonString);
+            if (jsonObject != null) {
+                classNamesMap.clear();
+                ApplicationLogMaintainer.sendBroadcast(Global.getContext(), "Cleared Class Names Map");
+                Global.loadJSONToMap(classNamesMap, jsonObject.getJSONObject("FacebookLite"));
+            }
+        } catch (Exception e) {
+            ApplicationLogMaintainer.sendBroadcast(context, Global.getStackTrace(e));
         }
 
         final XC_MethodHook methodHook = new XC_MethodHook() {
@@ -42,17 +72,25 @@ public class FacebookLiteHook implements IXposedHookLoadPackage {
             }
         };
 
-        String packageName = context.getPackageManager().getPackageInfo(FACEBOOK_PACKAGE_NAME,
-                PackageManager.GET_META_DATA).packageName;
+        int packageVersion = context.getPackageManager()
+                .getPackageInfo(lpparam.packageName, 0).versionCode;
 
-        if (!Global.isClassPresent(lpparam.classLoader, CLASS_NAME)
-                || !Global.isClassPresent(lpparam.classLoader, CLASS_NAME)) {
-            ApplicationLogMaintainer.sendBroadcast(context, "Facebook Lite Hook class not found. Package version : " + packageName);
+        ApplicationLogMaintainer.sendBroadcast(context, "Facebook Package Version : " + packageVersion);
+
+        Pair<String, String> classPair = classNamesMap.get(Global.getXSignificantDigits(packageVersion, 2));
+        if (classPair == null) {
+            ApplicationLogMaintainer.sendBroadcast(context, "ClassNamePair is null. Todo : Update Hooks");
             return;
         }
 
-        Class mainClass = XposedHelpers.findClass(CLASS_NAME, lpparam.classLoader);
-        Class subClass = XposedHelpers.findClass(CLASS_NAME_1, lpparam.classLoader);
+        if (!Global.isClassPresent(lpparam.classLoader, classPair.first)
+                || !Global.isClassPresent(lpparam.classLoader, classPair.second)) {
+            ApplicationLogMaintainer.sendBroadcast(context, "Facebook Lite Hooking failed even when ClassPair is not null." );
+            return;
+        }
+
+        Class mainClass = XposedHelpers.findClass(classPair.first, lpparam.classLoader);
+        Class subClass = XposedHelpers.findClass(classPair.second, lpparam.classLoader);
 
         Object [] objects = new Object[] {
                 String.class,
@@ -65,11 +103,16 @@ public class FacebookLiteHook implements IXposedHookLoadPackage {
                 boolean.class,
                 long.class,
                 String.class,
+                boolean.class,
                 methodHook
         };
 
-        XposedHelpers.findAndHookConstructor(mainClass, objects);
-        ApplicationLogMaintainer.sendBroadcast(context, "Facebook Lite hooking successful for version " + packageName);
+        try {
+            XposedHelpers.findAndHookConstructor(mainClass, objects);
+            ApplicationLogMaintainer.sendBroadcast(context, "Facebook Lite hooking successful");
+        } catch (XposedHelpers.ClassNotFoundError | NoSuchMethodError e) {
+            ApplicationLogMaintainer.sendBroadcast(context, Global.getStackTrace(e));
+        }
     }
 
 }
