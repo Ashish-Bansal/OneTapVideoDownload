@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.phantom.onetapvideodownload.AnalyticsApplication;
 import com.phantom.utils.enums.AppPermissions;
 import com.phantom.onetapvideodownload.ui.MainActivity;
 import com.phantom.onetapvideodownload.R;
@@ -393,7 +394,9 @@ public class DownloadManager extends Service {
         if (progress == 100) {
             mNotifyManager.cancel(mNotificationId);
             stopForeground(true);
-            showDownloadsFinishedNotification(mNotificationId);
+            if (!AnalyticsApplication.isActivityVisible()) {
+                showDownloadsFinishedNotification(mNotificationId);
+            }
         } else {
             mBuilder.setContentText(getNotificationContent());
             mBuilder.setProgress(100, progress, false);

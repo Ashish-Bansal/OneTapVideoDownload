@@ -134,6 +134,13 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         if (mPlusOneButton != null) {
             mPlusOneButton.initialize(APP_URL, 0);
         }
+        AnalyticsApplication.activityResumed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AnalyticsApplication.activityPaused();
     }
 
     private void handleActionShareIntent(Intent intent) {
