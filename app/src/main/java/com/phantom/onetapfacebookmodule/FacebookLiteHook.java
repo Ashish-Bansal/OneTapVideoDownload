@@ -22,10 +22,6 @@ public class FacebookLiteHook implements IXposedHookLoadPackage {
     private static final String FACEBOOK_PACKAGE_NAME = "com.facebook.lite";
     private static final HashMap<Integer, Pair<String, String>> classNamesMap = new HashMap<>();
 
-    static {
-        classNamesMap.put(36, new Pair<>("com.facebook.lite.r.e", "com.a.a.a.d.b"));
-    }
-
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
         if (!lpparam.packageName.equals(FACEBOOK_PACKAGE_NAME)) {
             return;
@@ -113,6 +109,16 @@ public class FacebookLiteHook implements IXposedHookLoadPackage {
         } catch (XposedHelpers.ClassNotFoundError | NoSuchMethodError e) {
             ApplicationLogMaintainer.sendBroadcast(context, Global.getStackTrace(e));
         }
+    }
+
+    static {
+        classNamesMap.put(31, new Pair<>("com.facebook.lite.r.e", "com.a.a.a.f.b"));
+        classNamesMap.put(32, new Pair<>("com.facebook.lite.r.e", "com.a.a.a.d.b"));
+        classNamesMap.put(34, new Pair<>("com.facebook.lite.r.e", "com.a.a.a.d.b"));
+        classNamesMap.put(35, new Pair<>("com.facebook.lite.r.e", "com.a.a.a.d.b"));
+        classNamesMap.put(36, new Pair<>("com.facebook.lite.r.e", "com.a.a.a.d.b"));
+        classNamesMap.put(37, new Pair<>("com.facebook.lite.r.e", "com.a.a.a.d.b"));
+        classNamesMap.put(38, new Pair<>("com.facebook.lite.r.e", "com.a.a.a.d.b"));
     }
 
 }
