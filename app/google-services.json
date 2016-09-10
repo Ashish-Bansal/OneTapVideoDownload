@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "254323701015",
+    "firebase_url": "https://xposed-one-tap-video-download.firebaseio.com",
+    "project_id": "xposed-one-tap-video-download",
+    "storage_bucket": "xposed-one-tap-video-download.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254323701015:android:2f26af899996ee4a",
+        "android_client_info": {
+          "package_name": "com.phantom.onetapvideodownload"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "254323701015-314ktj62iub22186bl0lhhsajqqp3mr0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.phantom.onetapvideodownload",
+            "certificate_hash": "ACE125C8581795A97573E001439B4EE3F86FAC8C"
+          }
+        },
+        {
+          "client_id": "254323701015-pnsjbomctiamtqtldc1a4ff7thjjblhl.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "254323701015-33393ms7dppiapg0mp5gur4q13n76adt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYEkjePHSMXkr-llXWnWq3jpBySh9CvS4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 2,
+          "analytics_property": {
+            "tracking_id": "UA-54782007-4"
+          }
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "254323701015-pnsjbomctiamtqtldc1a4ff7thjjblhl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
