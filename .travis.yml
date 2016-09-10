@@ -1,0 +1,13 @@
+language: android
+android:
+    components:
+        - tools
+        - platform-tools
+        - build-tools-24.0.1
+        - android-24
+        - extra-android-m2repository
+        - extra-google-m2repository
+        - oraclejdk8
+
+    script:
+        - ./gradlew build connectedCheck
