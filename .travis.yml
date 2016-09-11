@@ -1,6 +1,9 @@
+#Specify jdk version
 jdk:
     - oraclejdk8
+
 language: android
+
 android:
     components:
         - tools
@@ -9,5 +12,24 @@ android:
         - android-24
         - extra-android-m2repository
         - extra-google-m2repository
-    script:
-        - ./gradlew build connectedCheck
+
+#In default configuration, install contains command to assemble and run application on emulators.
+#Setting it true overrides it, allowing developer to specify product flavour type
+install:
+    - true
+
+script:
+    #Increase the heap memory limits
+    - 'export GRADLE_OPTS="-Xmx2048m -XX:MaxPermSize=512m -XX:+HeapDumpOnOutOfMemoryError"'
+    #Prints all the build tasks which are present in gradle configuration
+    - ./gradlew tasks
+    #Assemble all the dev builds
+    - ./gradlew assemble
+
+#Use the new container infrastructure on Travis
+sudo:
+    - false
+
+before_script:
+    #Remove the stack size limit
+    - ulimit -s unlimited
