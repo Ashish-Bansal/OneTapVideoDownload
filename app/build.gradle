@@ -75,6 +75,7 @@ dependencies {
     compile 'com.anjlab.android.iab.v3:library:1.0.+'
     compile 'com.github.bluejamesbond:textjustify-android:2.1.6'
     compile 'com.google.firebase:firebase-messaging:9.4.0'
+    compile 'com.evernote:android-job:1.0.12'
 }
 
 apply plugin: 'com.google.gms.google-services'

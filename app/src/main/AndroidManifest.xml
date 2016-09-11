@@ -16,7 +16,8 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:fullBackupContent="@xml/backup_config">
 
         <!--
          Register AnalyticsReceiver and AnalyticsService to support background

@@ -5,7 +5,6 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -17,7 +16,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
-import com.phantom.onetapvideodownload.BuildConfig;
 import com.phantom.onetapvideodownload.R;
 
 import org.json.JSONException;
@@ -49,8 +47,6 @@ public class Global {
     public static final String VIDEO_MIME = "video/*";
     public static final String DEVELOPER_EMAIL = "onetapvideodownload@gmail.com";
     public static final String MP4_FILE_EXTENSION = ".mp4";
-    public static final String HOOKS_FILE_NAME = "Hooks.json";
-    public static final String HOOKS_URL = "https://raw.githubusercontent.com/Ashish-Bansal/OneTapVideoDownload/master/app/src/main/assets/HookClassnames.json";
 
     //List taken from Wikipedia
     public static final String[] VIDEO_FILE_EXTENSION = {"webm", "mkv", "flv", "vob", "ogv", "ogg",
@@ -248,6 +244,7 @@ public class Global {
                 throw new IllegalArgumentException("Body content size is very large");
             }
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -352,32 +349,6 @@ public class Global {
             isAvailable = true;
         }
         return isAvailable;
-    }
-
-    public static String getHooksUrl() {
-        return HOOKS_URL;
-    }
-
-    public static String getHooksFileName() {
-        return HOOKS_FILE_NAME;
-    }
-
-    public static String getHooksDirectoryPath(Context context) throws PackageManager.NameNotFoundException{
-        PackageManager packageManager = context.getPackageManager();
-        PackageInfo packageInfo = packageManager.getPackageInfo(BuildConfig.APPLICATION_ID, 0);
-        String applicationDirectoryPath = packageInfo.applicationInfo.dataDir;
-        File hookDirectory = new File(applicationDirectoryPath, "files/");
-        return hookDirectory.getAbsolutePath();
-    }
-
-    public static String getHooksFilePath(Context context) {
-        try {
-            File hookFile = new File(getHooksDirectoryPath(context), Global.getHooksFileName());
-            return hookFile.getAbsolutePath();
-        } catch (Exception e) {
-            ApplicationLogMaintainer.sendBroadcast(context, getStackTrace(e));
-        }
-        return new File(context.getFilesDir().getAbsolutePath(), getHooksFileName()).getAbsolutePath();
     }
 
     public static boolean writeStringToFile(File file, String content) {

@@ -1,36 +1,56 @@
 package com.phantom.utils;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
+import com.phantom.onetapvideodownload.BuildConfig;
 import com.phantom.onetapvideodownload.R;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.concurrent.TimeUnit;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
-public class HookClassNamesFetcher {
+public class HookClassNamesFetcher extends AsyncTask<String, Integer, String> {
     private Context mContext;
     private String mHookUrl;
     private File mHookFile;
     private MaterialDialog mProgressDialog;
+
+    public static final String HOOKS_FILE_NAME = "Hooks.json";
+    public static final String HOOKS_URL = "https://raw.githubusercontent.com/Ashish-Bansal/OneTapVideoDownload/master/app/src/main/assets/HookClassnames.json";
+
+    public static void startHookFileUpdateOnMainThread(Context context) {
+        File hookFile = new File(getHooksFilePath(context));
+        HookClassNamesFetcher hookClassNamesFetcher = new HookClassNamesFetcher(context, getHooksUrl(), hookFile);
+        hookClassNamesFetcher.updateHooksOnMainThread();
+    }
+
+    public void updateHooksOnMainThread() {
+        String json = Global.getResponseBody(mHookUrl);
+        if (json == null) {
+            ApplicationLogMaintainer.sendBroadcast(mContext, "Error fetching Hook file " + mHookUrl);
+            return;
+        }
+
+        if (Global.writeStringToFile(mHookFile, json)) {
+            mHookFile.setReadable(true, false);
+            ApplicationLogMaintainer.sendBroadcast(mContext, "Hooks Successfully updated");
+        } else {
+            ApplicationLogMaintainer.sendBroadcast(mContext, "Error writing fetched file to : " + mHookFile.getAbsolutePath());
+        }
+    }
+
+    public static void startHookFileUpdateAsync(Context context) {
+        File hookFile = new File(getHooksFilePath(context));
+        new HookClassNamesFetcher(context, getHooksUrl(), hookFile).execute();
+    }
 
     public HookClassNamesFetcher(Context context, String url, File destinationPath) {
         mContext = context;
@@ -38,7 +58,16 @@ public class HookClassNamesFetcher {
         mHookFile = destinationPath;
     }
 
-    public void updateHooks() {
+    protected String doInBackground(String... urls) {
+        try {
+            return Global.getResponseBody(mHookUrl);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    protected void onPreExecute() {
         boolean internetAccess = Global.isInternetAvailable(mContext);
         if (!internetAccess) {
             new MaterialDialog.Builder(mContext)
@@ -54,6 +83,7 @@ public class HookClassNamesFetcher {
                         }
                     })
                     .show();
+            cancel(true);
             return;
         }
 
@@ -62,76 +92,50 @@ public class HookClassNamesFetcher {
                 .content(R.string.please_wait)
                 .progress(true, 0)
                 .show();
-        fetchFile();
     }
 
-    private void dismissProgressDialog() {
-        if (mProgressDialog != null) {
-            mProgressDialog.dismiss();
+    protected void onPostExecute(String json) {
+        mProgressDialog.dismiss();
+        if (json == null) {
+            ApplicationLogMaintainer.sendBroadcast(mContext, "Error fetching Hook file " + mHookUrl);
+            Toast.makeText(mContext, R.string.error_fetching_file, Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        if (Global.writeStringToFile(mHookFile, json)) {
+            mHookFile.setReadable(true, false);
+            Toast.makeText(mContext, R.string.hooks_successfully_updated, Toast.LENGTH_LONG).show();
+            ApplicationLogMaintainer.sendBroadcast(mContext, "Hooks Successfully updated");
+        } else {
+            Toast.makeText(mContext, R.string.unable_to_write_file, Toast.LENGTH_LONG).show();
+            ApplicationLogMaintainer.sendBroadcast(mContext, "Error writing fetched file to : " + mHookFile.getAbsolutePath());
         }
     }
 
-    private void createToastOnUiThread(final Integer stringId) {
-        final Activity activity = (Activity) mContext;
-        activity.runOnUiThread(new Runnable() {
-            public void run() {
-                Toast.makeText(activity, stringId, Toast.LENGTH_LONG).show();
-            }
-        });
+    public static String getHooksUrl() {
+        return HOOKS_URL;
     }
 
-    private void fetchFile() {
-        OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(15, TimeUnit.SECONDS)
-                .writeTimeout(15, TimeUnit.SECONDS)
-                .readTimeout(15, TimeUnit.SECONDS)
-                .build();
-
-        Request request = new Request.Builder()
-                .url(mHookUrl)
-                .build();
-
-        final Call mCall = client.newCall(request);
-        mCall.enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                ApplicationLogMaintainer.sendBroadcast(mContext, "Error fetching file : onFailure()" + mHookUrl);
-                createToastOnUiThread(R.string.error_fetching_file);
-                dismissProgressDialog();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) {
-                String result = null;
-                try {
-                    if (response.isSuccessful()) {
-                        InputStream inputStream = response.body().byteStream();
-                        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                        String line = bufferedReader.readLine();
-                        result = line;
-                        while((line = bufferedReader.readLine()) != null) {
-                            result += line;
-                        }
-                        response.body().close();
-                    } else {
-                        ApplicationLogMaintainer.sendBroadcast(mContext, "Error fetching file : " + mHookUrl);
-                        ApplicationLogMaintainer.sendBroadcast(mContext, "Status Code : " + response.code());
-                    }
-                } catch (IOException e) {
-                    Log.e("DownloadService", "Exception : ", e);
-                }
-
-                dismissProgressDialog();
-                if (result != null && Global.writeStringToFile(mHookFile, result)) {
-                    mHookFile.setReadable(true, false);
-                    createToastOnUiThread(R.string.hooks_successfully_fetched);
-                    ApplicationLogMaintainer.sendBroadcast(mContext, "Hooks Successfully updated");
-                } else {
-                    ApplicationLogMaintainer.sendBroadcast(mContext, "Error writing fetched file to : " + mHookFile.getAbsolutePath());
-                }
-            }
-        });
+    public static String getHooksFileName() {
+        return HOOKS_FILE_NAME;
     }
 
+    public static String getHooksDirectoryPath(Context context) throws PackageManager.NameNotFoundException{
+        PackageManager packageManager = context.getPackageManager();
+        PackageInfo packageInfo = packageManager.getPackageInfo(BuildConfig.APPLICATION_ID, 0);
+        String applicationDirectoryPath = packageInfo.applicationInfo.dataDir;
+        File hookDirectory = new File(applicationDirectoryPath, "files/");
+        return hookDirectory.getAbsolutePath();
+    }
+
+    public static String getHooksFilePath(Context context) {
+        try {
+            File hookFile = new File(getHooksDirectoryPath(context), getHooksFileName());
+            return hookFile.getAbsolutePath();
+        } catch (Exception e) {
+            ApplicationLogMaintainer.sendBroadcast(context, Global.getStackTrace(e));
+        }
+        return new File(context.getFilesDir().getAbsolutePath(), getHooksFileName()).getAbsolutePath();
+    }
 
 }

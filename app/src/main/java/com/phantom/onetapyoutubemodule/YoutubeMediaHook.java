@@ -6,6 +6,7 @@ import android.support.v4.util.Pair;
 import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
 import com.phantom.onetapvideodownload.IpcService;
 import com.phantom.utils.Global;
+import com.phantom.utils.HookClassNamesFetcher;
 
 import org.json.JSONObject;
 
@@ -39,7 +40,7 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
             return;
         }
 
-        File hookFile = new File(Global.getHooksFilePath(context));
+        File hookFile = new File(HookClassNamesFetcher.getHooksFilePath(context));
         try {
             if (!hookFile.exists())  {
                 ApplicationLogMaintainer.sendBroadcast(context, "Hook file doesn't exist");

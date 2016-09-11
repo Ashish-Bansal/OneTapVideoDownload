@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
                 }
                 break;
             case R.id.update_hooks:
-                checkForHooksUpdate();
+                HookClassNamesFetcher.startHookFileUpdateAsync(this);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -536,11 +536,5 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         AdRequest request = new AdRequest.Builder()
                 .build();
         mAdView.loadAd(request);
-    }
-
-    private void checkForHooksUpdate() {
-        File hookFile = new File(Global.getHooksFilePath(this));
-        HookClassNamesFetcher hookClassNamesFetcher = new HookClassNamesFetcher(this, Global.getHooksUrl(), hookFile);
-        hookClassNamesFetcher.updateHooks();
     }
 }

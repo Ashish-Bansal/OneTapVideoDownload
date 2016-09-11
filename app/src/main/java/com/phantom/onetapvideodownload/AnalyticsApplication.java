@@ -18,8 +18,11 @@ package com.phantom.onetapvideodownload;
 
 import android.app.Application;
 
+import com.evernote.android.job.JobManager;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.phantom.HookFetchJob;
+import com.phantom.HookFetchJobCreator;
 
 /**
  * This is a subclass of {@link Application} used to provide shared objects for this app, such as
@@ -28,6 +31,13 @@ import com.google.android.gms.analytics.Tracker;
 public class AnalyticsApplication extends Application {
     private static boolean activityVisible;
     private Tracker mTracker;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        JobManager.create(this).addJobCreator(new HookFetchJobCreator());
+        HookFetchJob.scheduleJob();
+    }
 
     /**
      * Gets the default {@link Tracker} for this {@link Application}.
