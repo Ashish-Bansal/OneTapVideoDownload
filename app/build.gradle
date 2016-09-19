@@ -25,8 +25,8 @@ android {
         applicationId "com.phantom.onetapvideodownload"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 29
-        versionName "3.8"
+        versionCode 30
+        versionName "3.9"
     }
 
     sourceSets {

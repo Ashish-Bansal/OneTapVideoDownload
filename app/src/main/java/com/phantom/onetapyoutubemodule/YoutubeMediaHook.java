@@ -91,7 +91,7 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
         if (isNotObfuscated) {
             currentPackage = classNamesMap.get(0);
         } else {
-            currentPackage = classNamesMap.get(Global.getXSignificantDigits(packageVersion, 4));
+            currentPackage = classNamesMap.get(Global.getXSignificantDigits(packageVersion, 6));
         }
 
         boolean successful = false;
