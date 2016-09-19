@@ -152,6 +152,9 @@
     <string name="unable_to_write_file">Unable to write downloaded file</string>
     <string name="hooks_successfully_updated">Hooks successfully updated!</string>
     <string name="menu_item_update_hooks">Update Hooks</string>
+    <string name="unable_to_write">Unable to write on selected directory. If you still think it\'s writable, enable force write from application settings</string>
+    <string name="prefs_enable_force_write_title">Enable Force Write</string>
+    <string name="prefs_enable_force_write_summary">If you are unable to select External SD for downloading files, then you can try enabling this option. Please note that this is *highly experimental* and can result into unexpected crashes.</string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>

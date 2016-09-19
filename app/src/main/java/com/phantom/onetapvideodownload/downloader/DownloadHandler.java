@@ -3,6 +3,8 @@ package com.phantom.onetapvideodownload.downloader;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -11,6 +13,7 @@ import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 import com.phantom.utils.Global;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
@@ -28,6 +31,7 @@ public class DownloadHandler {
     private final static String TAG = "DownloadHandler";
     private final static Long UPDATE_PROGRESS_TIME = 3000L;
     private final static Long READ_BUFFER_SIZE = 2048L;
+    private final static Handler handler = new Handler(Looper.getMainLooper());
     private Context mContext;
     private DownloadInfo mDownloadInfo;
     private static long lastWriteTime = System.currentTimeMillis();
@@ -114,7 +118,15 @@ public class DownloadHandler {
                         } else {
                             Log.v(TAG, "Status Code : " + response.code());
                         }
-                    } catch (IOException e) {
+                    } catch (FileNotFoundException e) {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(mContext, "Unable to download data into the destination path", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        stopDownload();
+                    } catch (Exception e) {
                         Log.e("DownloadService", "Exception : ", e);
                     }
                 }

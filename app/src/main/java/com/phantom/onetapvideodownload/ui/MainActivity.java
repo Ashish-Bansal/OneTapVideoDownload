@@ -315,21 +315,25 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         String tag = dialog.getTag();
         switch(tag) {
             case SettingsFragment.FOLDER_CHOOSER_TAG:
-                if(directory.canWrite()) {
+                if(directory.canWrite() || CheckPreferences.forceWriteEnabled(this)) {
                     CheckPreferences.setDownloadLocation(this, directory.getPath());
                     SettingsFragment.updatePreferenceSummary();
                 } else {
-                    Toast.makeText(this, "No write permission on selected directory", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.unable_to_write), Toast.LENGTH_LONG).show();
+                    ApplicationLogMaintainer.sendBroadcast(this, "Unable to write on selected directory :");
+                    ApplicationLogMaintainer.sendBroadcast(this, directory.getAbsolutePath());
                 }
                 break;
             case DownloadOptionAdapter.FOLDER_CHOOSER_TAG:
-                if(directory.canWrite()) {
+                if(directory.canWrite() || CheckPreferences.forceWriteEnabled(this)) {
                     DownloadOptionAdapter downloadOptionAdapter =
                             (DownloadOptionAdapter) mDownloadDialogRecyclerView.getAdapter();
                     downloadOptionAdapter.setDownloadLocation(directory.getPath());
                     SettingsFragment.updatePreferenceSummary();
                 } else {
-                    Toast.makeText(this, "No write permission on selected directory", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getResources().getString(R.string.unable_to_write), Toast.LENGTH_LONG).show();
+                    ApplicationLogMaintainer.sendBroadcast(this, "Unable to write on selected directory :");
+                    ApplicationLogMaintainer.sendBroadcast(this, directory.getAbsolutePath());
                 }
         }
     }

@@ -115,4 +115,16 @@ public class CheckPreferences {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getBoolean("prefs_enable_startup_errors", true);
     }
+
+    public static boolean forceWriteEnabled(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean("prefs_force_write_enabled", false);
+    }
+
+    public static void setForceWrite(Context context, Boolean forceWrite) {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("prefs_force_write_enabled", forceWrite);
+        editor.apply();
+    }
 }

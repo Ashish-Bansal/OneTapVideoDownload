@@ -38,6 +38,7 @@ public class FacebookHook implements IXposedHookLoadPackage {
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam hookParams) throws Throwable {
                 try {
                     Uri uri = (Uri) hookParams.args[0];
+                    ApplicationLogMaintainer.sendBroadcast(context, "Facebook Main URL : " + uri.toString());
                     String stringUri = "";
                     Set<String> keys = uri.getQueryParameterNames();
                     for (String key : keys) {
@@ -47,7 +48,7 @@ public class FacebookHook implements IXposedHookLoadPackage {
                         }
                     }
 
-                    ApplicationLogMaintainer.sendBroadcast(context, "Facebook URL : " + uri);
+                    ApplicationLogMaintainer.sendBroadcast(context, "Facebook Query Parameter URL : " + stringUri);
                     IpcService.startSaveUrlAction(context, stringUri, FACEBOOK_PACKAGE_NAME);
                 } catch (Exception e) {
                     ApplicationLogMaintainer.sendBroadcast(context, Global.getStackTrace(e));
