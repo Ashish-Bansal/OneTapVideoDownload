@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion "24.0.2"
 
     productFlavors {
         dev {
@@ -25,8 +25,8 @@ android {
         applicationId "com.phantom.onetapvideodownload"
         minSdkVersion 15
         targetSdkVersion 24
-        versionCode 28
-        versionName "3.7"
+        versionCode 29
+        versionName "3.8"
     }
 
     sourceSets {
@@ -57,11 +57,11 @@ dependencies {
     repositories {
         mavenCentral()
     }
-    compile 'com.android.support:appcompat-v7:24.2.0'
-    compile 'com.android.support:recyclerview-v7:24.2.0'
-    compile 'com.android.support:design:24.2.0'
+    compile 'com.android.support:appcompat-v7:24.2.1'
+    compile 'com.android.support:recyclerview-v7:24.2.1'
+    compile 'com.android.support:design:24.2.1'
     compile 'co.dift.ui.swipetoaction:library:1.1'
-    compile "com.android.support:preference-v7:24.2.0"
+    compile "com.android.support:preference-v7:24.2.1"
     compile 'net.xpece.android:support-preference:1.0.3'
     compile 'com.google.android.gms:play-services-analytics:9.4.0'
     compile 'com.google.android.gms:play-services-ads:9.4.0'
@@ -81,7 +81,7 @@ dependencies {
     compile 'com.squareup.okio:okio:1.9.0'
     compile 'com.github.paolorotolo:appintro:3.4.0'
     compile 'com.github.deano2390:MaterialShowcaseView:1.0.6@aar'
-    compile 'com.android.support:cardview-v7:24.2.0'
+    compile 'com.android.support:cardview-v7:24.2.1'
     compile 'me.zhanghai.android.materialprogressbar:library:1.1.7@aar'
     compile 'org.solovyev.android.views:linear-layout-manager:0.5@aar'
     compile 'com.anjlab.android.iab.v3:library:1.0.+'
