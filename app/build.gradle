@@ -4,6 +4,18 @@ android {
     compileSdkVersion 24
     buildToolsVersion "24.0.1"
 
+    productFlavors {
+        dev {
+            // test utilizes minSDKVersion = 21 to allow the Android gradle plugin
+            // to pre-dex each module and produce an APK that can be tested on
+            // Android Lollipop without time consuming dex merging processes.
+            minSdkVersion 21
+        }
+        prod {
+            minSdkVersion 15
+        }
+    }
+
     lintOptions{
         disable 'MissingTranslation'
         abortOnError false
