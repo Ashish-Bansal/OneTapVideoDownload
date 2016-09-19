@@ -9,7 +9,7 @@ import os
 
 url = "http://www.androidapksfree.com/apk/youtube-apk-latest-version-download/"
 
-json_file = open('HookClassnames.json').read()
+jsonString = open('HookClassnames.json').read()
 
 
 def process(key_val_pair):
@@ -27,7 +27,7 @@ def process(key_val_pair):
     app_found = app['found']
 
     if(app_found == 0):
-        json_data = json.loads(json_file)
+        json_data = json.loads(jsonString)
         json_data['Youtube'][str(app_version)] = dict()
         # Key_val pair changes later
         json_data['Youtube'][str(app_version)][key] = val
@@ -78,7 +78,7 @@ def apkDetailsFetcher(url):
 
 
 def isAlreadySupported(version):
-    json_data = json.loads(json_file)
+    json_data = json.loads(jsonString)
     youtube = json_data['Youtube']
     if (str(version) not in youtube):
         return 0
