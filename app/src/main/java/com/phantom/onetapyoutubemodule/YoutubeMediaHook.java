@@ -129,7 +129,7 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
                     methodHook
             };
             XposedHelpers.findAndHookConstructor(mainClass, objects);
-        } catch (Exception | NoSuchMethodError e) {
+        } catch (Exception | NoSuchMethodError | XposedHelpers.ClassNotFoundError e) {
             return false;
         }
         return true;
