@@ -1,6 +1,6 @@
 from APKFetch import process
-from automate import automate
+from pullReq import pullReq
 dic = {"git": "gud"}  # dark code ?!
 
 v = process(dic)  # returns app_version
-automate(v)  # git automation
+pullReq(v)  # git automation

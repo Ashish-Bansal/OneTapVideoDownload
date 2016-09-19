@@ -20,7 +20,7 @@ def process(key_val_pair):
     for k in key_val_pair:
         key, val = k, key_val_pair[k]
 
-    app = APKFetch(url)  # Printable print(app)
+    app = apkDetailsFetcher(url)  # Printable print(app)
     app_url = app['url']
     app_version = app['version']
     print(">> Latest Version:" + str(app_version))
@@ -38,12 +38,14 @@ def process(key_val_pair):
 
         # Downloading APK
         print("\nDownloading APK")
-        if(checkDir()):
+        if(checkDir('bin')):
+            subprocess.call("rm -rf bin", shell=True)
+            subprocess.call("mkdir bin", shell=True)
             subprocess.call(
                 ["wget --quiet {0} -P bin/".format(app_url)], shell=True)
         else:
             subprocess.call(
-                ["mkdir bin && wget --quiet {0} -P bin/".format(app_url)],
+                ["mkdir bin && wget {0} -P bin/".format(app_url)],
                 shell=True)
 
     else:
@@ -53,7 +55,7 @@ def process(key_val_pair):
     return app_version
 
 
-def APKFetch(url):
+def apkDetailsFetcher(url):
     result = {}
     data = requests.get(url).text
 
@@ -70,23 +72,22 @@ def APKFetch(url):
     version = title[2].zfill(6)[1:7]
 
     result['version'] = int(version)
-    result['found'] = jsonCheck(version)
+    result['found'] = isAlreadySupported(version)
 
     return result
 
 
-def jsonCheck(version):
+def isAlreadySupported(version):
     json_data = json.loads(json_file)
     youtube = json_data['Youtube']
     if (str(version) not in youtube):
         return 0
     else:
         return 1
-    json_file.close()
 
 
-def checkDir():
-    if(os.path.isdir('bin')):
+def checkDir(directoryName):
+    if(os.path.isdir(directoryName)):
         return 1
     else:
         return 0
