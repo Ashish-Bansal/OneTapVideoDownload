@@ -88,6 +88,8 @@ dependencies {
     compile 'com.github.bluejamesbond:textjustify-android:2.1.6'
     compile 'com.google.firebase:firebase-messaging:9.4.0'
     compile 'com.evernote:android-job:1.0.12'
+
+    testCompile 'junit:junit:4.12'
 }
 
 apply plugin: 'com.google.gms.google-services'

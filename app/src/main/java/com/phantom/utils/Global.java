@@ -71,7 +71,7 @@ public class Global {
     public static String getNewFilename(String filename) {
         int dotPos = filename.lastIndexOf('.');
         if (dotPos == -1) {
-            dotPos = filename.length() - 1;
+            dotPos = filename.length();
         }
 
         int openingBracketPos = filename.lastIndexOf('(');
@@ -84,10 +84,10 @@ public class Global {
                 filename = filename.substring(0, openingBracketPos + 1) + number.toString()
                         + filename.substring(closingBracketPos);
             } catch (Exception e) {
-                filename = filename.substring(0, dotPos) + "(1)" + filename.substring(dotPos);
+                filename = filename.substring(0, dotPos) + " (1)" + filename.substring(dotPos);
             }
         } else {
-            filename = filename.substring(0, dotPos) + "(1)" + filename.substring(dotPos);
+            filename = filename.substring(0, dotPos) + " (1)" + filename.substring(dotPos);
         }
         return filename;
     }
