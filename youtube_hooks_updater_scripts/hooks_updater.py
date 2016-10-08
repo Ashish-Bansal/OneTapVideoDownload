@@ -79,8 +79,9 @@ def createGitPullRequest(version):
     repo_root_path = os.path.join(script_path, '..')
     comment = '"Added class names for Youtube versions {0}"'.format(version)
     try:
-        subprocess.call(["git pull && git add ."], shell=True, cwd=repo_root_path)
-        subprocess.call(['git', 'commit', '-m', comment], cwd=repo_root_path)
+        subprocess.call(["git pull upstream master && git add ."], shell=True, cwd=repo_root_path)
+        subprocess.call(['git', 'commit', '--author="Automation Daemon<me@ashishbansal.in>"', '-m', comment], cwd=repo_root_path)
+        subprocess.call(['git', 'push', 'origin', 'master'], cwd=repo_root_path)
         subprocess.call(['hub', 'pull-request', '-m', comment, '-fb' 'Ashish-Bansal:master'], cwd=repo_root_path)
     except Exception as e:
         print e
