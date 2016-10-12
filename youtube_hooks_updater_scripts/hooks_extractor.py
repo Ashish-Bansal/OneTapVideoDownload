@@ -34,7 +34,7 @@ def extractor(apk_url):
                             local_variable_declaration = statement
                             sub_class_name = local_variable_declaration.declarators[0].initializer.type.name
 
-    # subprocess.call(['rm', '-rf', DECOMPILED_DIRECTORY])
+    subprocess.call(['rm', '-rf', DECOMPILED_DIRECTORY])
 
     print main_class_name, sub_class_name
     return [main_class_name, sub_class_name]
