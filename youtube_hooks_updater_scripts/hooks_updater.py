@@ -88,7 +88,7 @@ def pullLatestChanges():
 
 def createGitPullRequest(version):
     repo_root_path = repoRootPath()
-    comment = 'Added class names for Youtube versions {0}'.format(version)
+    comment = 'Added class names for Youtube version : {0}'.format(version)
     comment = quote(comment)
     try:
         subprocess.call(["git add ."], shell=True, cwd=repo_root_path)
