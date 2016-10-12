@@ -3,12 +3,12 @@ package com.phantom.onetapfacebookmodule;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.ParcelFileDescriptor;
 
 import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
 import com.phantom.onetapvideodownload.IpcService;
 import com.phantom.utils.Global;
 
+import java.lang.reflect.Constructor;
 import java.util.Set;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
@@ -19,7 +19,6 @@ import de.robv.android.xposed.callbacks.XC_LoadPackage;
 public class FacebookHook implements IXposedHookLoadPackage {
     private static final String FACEBOOK_PACKAGE_NAME = "com.facebook.katana";
     private static final String VIDEO_PLAY_REQUEST = "com.facebook.exoplayer.ipc.VideoPlayRequest";
-    private static final String VIDEO_URI_SOURCE_TYPE = "com.facebook.exoplayer.ipc.VideoPlayRequest$VideoUriSourceType";
     private static final String ONE_TAP_FACEBOOK_MODULE_PACKAGE_NAME = "com.phantom.onetapfacebookmodule";
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
@@ -61,28 +60,33 @@ public class FacebookHook implements IXposedHookLoadPackage {
 
         ApplicationLogMaintainer.sendBroadcast(context, "Facebook package version : " + versionName);
 
-        if (!Global.isClassPresent(lpparam.classLoader, VIDEO_PLAY_REQUEST)
-                || !Global.isClassPresent(lpparam.classLoader, VIDEO_URI_SOURCE_TYPE)) {
+        if (!Global.isClassPresent(lpparam.classLoader, VIDEO_PLAY_REQUEST)) {
             ApplicationLogMaintainer.sendBroadcast(context, "Facebook Hook class not found. ToDo: Update hooks.");
             return;
         }
 
         Class mainClass = XposedHelpers.findClass(VIDEO_PLAY_REQUEST, lpparam.classLoader);
-        Class subClass = XposedHelpers.findClass(VIDEO_URI_SOURCE_TYPE, lpparam.classLoader);
-
-        Object [] objects = new Object[] {
-                Uri.class,
-                String.class,
-                String.class,
-                Uri.class,
-                String.class,
-                ParcelFileDescriptor.class,
-                subClass,
-                methodHook
-        };
-
-        XposedHelpers.findAndHookConstructor(mainClass,  objects);
-        ApplicationLogMaintainer.sendBroadcast(context, "Facebook Hook successful");
+        Constructor[] constructors = mainClass.getConstructors();
+        try {
+            for(Constructor constructor:constructors) {
+                Class<?>[] params = constructor.getParameterTypes();
+                int n = params.length;
+                if(n > 4 && params[0].isAssignableFrom(Uri.class)
+                        && params[1].isAssignableFrom(String.class)
+                        && params[2].isAssignableFrom(String.class)
+                        && params[3].isAssignableFrom(Uri.class)) {
+                    Object [] objects = new Object[n+1];
+                    System.arraycopy(params, 0, objects, 0, n);
+                    objects[n] = methodHook;
+                    XposedHelpers.findAndHookConstructor(mainClass,  objects);
+                    ApplicationLogMaintainer.sendBroadcast(context, "Facebook Hook successful");
+                }
+            }
+            throw new Exception();
+        } catch (XposedHelpers.ClassNotFoundError | NoSuchMethodError | Exception e) {
+            ApplicationLogMaintainer.sendBroadcast(context, "Facebook Hooking Failed");
+            ApplicationLogMaintainer.sendBroadcast(context, Global.getStackTrace(e));
+        }
     }
 
 }
