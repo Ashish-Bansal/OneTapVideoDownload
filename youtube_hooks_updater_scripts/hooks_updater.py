@@ -5,6 +5,7 @@ import json
 import requests
 import subprocess
 import os
+import re
 
 YOUTUBE_APK_URL = 'http://www.androidapksfree.com/apk/youtube-apk-latest-version-download/'
 HOOKS_DIRECTORY_PATH = 'app/src/main/assets'
@@ -73,19 +74,31 @@ def getJsonString():
 def directoryExists(directory_name):
     return os.path.isdir(directory_name)
 
-
-def createGitPullRequest(version):
+def repoRootPath():
     script_path = os.path.dirname(os.path.abspath(__file__))
     repo_root_path = os.path.join(script_path, '..')
-    comment = '"Added class names for Youtube versions {0}"'.format(version)
+
+def pullLatestChanges():
+    repo_root_path = repoRootPath()
     try:
-        subprocess.call(["git pull upstream master && git add ."], shell=True, cwd=repo_root_path)
-        subprocess.call(['git', 'commit', '--author="Automation Daemon<me@ashishbansal.in>"', '-m', comment], cwd=repo_root_path)
+        subprocess.call(["git pull upstream master"], shell=True, cwd=repo_root_path)
+    except Exception as e:
+        print e
+
+def createGitPullRequest(version):
+    repo_root_path = repoRootPath()
+    comment = 'Added class names for Youtube versions {0}'.format(version)
+    comment = re.escape(comment)
+    try:
+        subprocess.call(["git add ."], shell=True, cwd=repo_root_path)
+        subprocess.call(['git commit --author="Automation Daemon <me@ashishbansal.in>" -m {0}'.format(comment)],
+                shell=True, cwd=repo_root_path)
         subprocess.call(['git', 'push', 'origin', 'master'], cwd=repo_root_path)
-        subprocess.call(['hub', 'pull-request', '-m', comment, '-fb' 'Ashish-Bansal:master'], cwd=repo_root_path)
+        subprocess.call(['hub', 'pull-request', '-m', comment, '-fb', 'Ashish-Bansal:master'], cwd=repo_root_path)
     except Exception as e:
         print e
 
 
 if __name__ == '__main__':
+    pullLatestChanges()
     addNewHookClassnames()
