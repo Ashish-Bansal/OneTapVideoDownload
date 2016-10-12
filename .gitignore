@@ -35,4 +35,4 @@ captures/
 
 *.jks
 *.DS_Store
-
+*.pyc
