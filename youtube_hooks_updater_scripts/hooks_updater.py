@@ -77,6 +77,7 @@ def directoryExists(directory_name):
 def repoRootPath():
     script_path = os.path.dirname(os.path.abspath(__file__))
     repo_root_path = os.path.join(script_path, '..')
+    return repo_root_path
 
 def pullLatestChanges():
     repo_root_path = repoRootPath()
