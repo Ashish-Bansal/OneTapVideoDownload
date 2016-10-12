@@ -5,7 +5,7 @@ import json
 import requests
 import subprocess
 import os
-import re
+from pipes import quote
 
 YOUTUBE_APK_URL = 'http://www.androidapksfree.com/apk/youtube-apk-latest-version-download/'
 HOOKS_DIRECTORY_PATH = 'app/src/main/assets'
@@ -88,7 +88,7 @@ def pullLatestChanges():
 def createGitPullRequest(version):
     repo_root_path = repoRootPath()
     comment = 'Added class names for Youtube versions {0}'.format(version)
-    comment = re.escape(comment)
+    comment = quote(comment)
     try:
         subprocess.call(["git add ."], shell=True, cwd=repo_root_path)
         subprocess.call(['git commit --author="Automation Daemon <me@ashishbansal.in>" -m {0}'.format(comment)],
