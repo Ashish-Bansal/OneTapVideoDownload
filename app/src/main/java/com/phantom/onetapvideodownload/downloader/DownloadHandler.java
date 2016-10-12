@@ -116,6 +116,7 @@ public class DownloadHandler {
                         }
                     } catch (IOException e) {
                         Log.e("DownloadService", "Exception : ", e);
+                        stopDownload();
                     }
                 }
             });
