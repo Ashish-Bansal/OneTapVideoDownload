@@ -319,7 +319,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
                     CheckPreferences.setDownloadLocation(this, directory.getPath());
                     SettingsFragment.updatePreferenceSummary();
                 } else {
-                    Toast.makeText(this, "Unable to write on selected directory", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.unable_to_select_sd_card, Toast.LENGTH_LONG).show();
                     ApplicationLogMaintainer.sendBroadcast(this, "Unable to write on selected directory :");
                     ApplicationLogMaintainer.sendBroadcast(this, directory.getAbsolutePath());
                 }
@@ -331,7 +331,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
                     downloadOptionAdapter.setDownloadLocation(directory.getPath());
                     SettingsFragment.updatePreferenceSummary();
                 } else {
-                    Toast.makeText(this, "Unable to write on selected directory", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.unable_to_select_sd_card, Toast.LENGTH_LONG).show();
                     ApplicationLogMaintainer.sendBroadcast(this, "Unable to write on selected directory :");
                     ApplicationLogMaintainer.sendBroadcast(this, directory.getAbsolutePath());
                 }

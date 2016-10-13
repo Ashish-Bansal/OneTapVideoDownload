@@ -152,7 +152,7 @@
     <string name="unable_to_write_file">Unable to write downloaded file</string>
     <string name="hooks_successfully_updated">Hooks successfully updated!</string>
     <string name="menu_item_update_hooks">Update Hooks</string>
-
+    <string name="unable_to_select_sd_card">"Unable to write on selected directory. On some devices, it's not possible to select External SD Card, please use XInternalSD Xposed Module in that case."</string>
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
         <item>2 Notifications</item>
