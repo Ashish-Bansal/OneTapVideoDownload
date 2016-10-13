@@ -80,9 +80,10 @@ public class FacebookHook implements IXposedHookLoadPackage {
                     objects[n] = methodHook;
                     XposedHelpers.findAndHookConstructor(mainClass,  objects);
                     ApplicationLogMaintainer.sendBroadcast(context, "Facebook Hook successful");
+                    return;
                 }
             }
-            throw new Exception();
+            throw new Exception("Constructor not found exception");
         } catch (XposedHelpers.ClassNotFoundError | NoSuchMethodError | Exception e) {
             ApplicationLogMaintainer.sendBroadcast(context, "Facebook Hooking Failed");
             ApplicationLogMaintainer.sendBroadcast(context, Global.getStackTrace(e));
