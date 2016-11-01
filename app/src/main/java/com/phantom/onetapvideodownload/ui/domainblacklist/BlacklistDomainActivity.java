@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,8 +23,6 @@ import com.google.android.gms.analytics.Tracker;
 import com.phantom.onetapvideodownload.AnalyticsApplication;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.utils.Global;
-
-import java.util.List;
 
 import co.dift.ui.SwipeToAction;
 
@@ -196,25 +193,10 @@ public class BlacklistDomainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         switch (id) {
-            case R.id.action_clear_videos :
-                mBlacklistDomainList.clearLocalList();
-                mBlacklistDomainList.loadSavedUrls();
-
-                final List<Pair<Long, String>> urlList = mBlacklistDomainList.getUrlList();
-
-                mBlacklistDomainList.clearLocalList();
+            case R.id.action_clear_domains :
                 mBlacklistDomainList.clearSavedUrls();
-
+                mBlacklistDomainList.reloadUrls();
                 mBlacklistDomainAdapter.notifyDataSetChanged();
-                displaySnackbar("URL List cleared", "Undo", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        for(Pair<Long, String> p : urlList) {
-                            mBlacklistDomainList.addUrl(p.second);
-                        }
-                        mBlacklistDomainAdapter.notifyDataSetChanged();
-                    }
-                });
                 return true;
             case android.R.id.home :
                 onBackPressed();

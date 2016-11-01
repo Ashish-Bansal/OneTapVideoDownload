@@ -124,7 +124,7 @@
     <string name="ad_disabled">Application restart is required to observe changes.</string>
     <string name="no_downloads">Empty Download List</string>
     <string name="action_add_domain">Blacklist New Domain</string>
-    <string name="action_clear_domain">Clear all domains</string>
+    <string name="action_clear_domain">Remove all URLs</string>
     <string name="pref_url_blacklisting_header">Domain Blacklisting</string>
     <string name="prefs_open_blacklist_domain_log">Open Blacklisted Domains</string>
     <string name="no_blacklisted_domains">No Blacklisted Domains</string>
