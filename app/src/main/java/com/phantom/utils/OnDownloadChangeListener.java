@@ -1,7 +1,8 @@
 package com.phantom.utils;
 
 public interface OnDownloadChangeListener {
-    void onDownloadAdded();
-    void onDownloadRemoved();
-    void onDownloadInfoUpdated();
+    void onDownloadAdded(int index);
+    void onDownloadRemoved(int index);
+    void onDownloadInfoUpdated(int index);
+    void onReset();
 }

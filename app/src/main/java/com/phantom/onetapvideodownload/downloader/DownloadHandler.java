@@ -146,9 +146,6 @@ public class DownloadHandler {
 
             setStatus(DownloadInfo.Status.Completed);
             writeToDatabase();
-
-            DownloadManager downloadManager = (DownloadManager) mContext;
-            downloadManager.updateUi();
         } catch (Exception e) {
             e.printStackTrace();
             try {
@@ -237,12 +234,12 @@ public class DownloadHandler {
         return mDownloadInfo.getDatabaseId();
     }
 
-    public void removeDownloadFromList() {
+    public void removeDownloadFromDatabase() {
         mDownloadInfo.removeDatabaseEntry();
     }
 
     public void deleteDownloadFromStorage() {
-        mDownloadInfo.removeDatabaseEntry();
+        removeDownloadFromDatabase();
         mDownloadInfo.deleteDownloadFromStorage(mContext);
     }
 }

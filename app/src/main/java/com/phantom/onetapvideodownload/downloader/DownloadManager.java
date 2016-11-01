@@ -20,12 +20,12 @@ import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.phantom.onetapvideodownload.AnalyticsApplication;
-import com.phantom.utils.enums.AppPermissions;
-import com.phantom.onetapvideodownload.ui.MainActivity;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
+import com.phantom.onetapvideodownload.ui.MainActivity;
 import com.phantom.utils.OnDownloadChangeListener;
+import com.phantom.utils.enums.AppPermissions;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -64,9 +64,6 @@ public class DownloadManager extends Service {
             DownloadHandler downloadHandler = new DownloadHandler(this, downloadInfo);
             mDownloadHandlers.add(Pair.create(downloadInfo.getDatabaseId(), downloadHandler));
         }
-
-        mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mBuilder = new NotificationCompat.Builder(this);
     }
 
     @Override
@@ -165,10 +162,9 @@ public class DownloadManager extends Service {
                     if (index == -1) throw new AssertionError("Index should not be -1");
                     DownloadHandler downloadHandler = mDownloadHandlers.get(index).second;
                     downloadHandler.startDownload();
+                    showNotification();
+                    startUiUpdateThread();
                 }
-
-                showNotification();
-                startUiUpdateThread();
             } else if (ACTION_DOWNLOAD_INSERTED.equals(action)) {
                 final long downloadId = intent.getLongExtra(EXTRA_DOWNLOAD_ID, -1);
                 if (downloadId == -1) {
@@ -228,13 +224,13 @@ public class DownloadManager extends Service {
     public void requestPermission(AppPermissions permission) {
         String title = "Storage permission required";
         String description = "Please enable this permission and restart your download.";
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
-        mBuilder.setSmallIcon(R.drawable.one_tap_small);
-        mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.one_tap_large));
-        mBuilder.setContentTitle(title);
-        mBuilder.setContentText(description);
-        mBuilder.setAutoCancel(true);
-        mBuilder.setOnlyAlertOnce(true);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setSmallIcon(R.drawable.one_tap_small);
+        builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.one_tap_large));
+        builder.setContentTitle(title);
+        builder.setContentText(description);
+        builder.setAutoCancel(true);
+        builder.setOnlyAlertOnce(true);
 
         Intent permissionIntent;
 
@@ -272,7 +268,7 @@ public class DownloadManager extends Service {
         onDownloadChangeListeners.removeAll(Collections.singleton(null));
         for (OnDownloadChangeListener onDownloadChangeListener : onDownloadChangeListeners) {
             Log.e(TAG, "Calling onDownloadAdded callback method " + onDownloadChangeListener.getClass().getName());
-            onDownloadChangeListener.onDownloadAdded();
+            onDownloadChangeListener.onDownloadAdded(mDownloadHandlers.size() - 1);
         }
     }
 
@@ -283,9 +279,8 @@ public class DownloadManager extends Service {
         }
 
         DownloadHandler downloadHandler = mDownloadHandlers.get(index).second;
-        downloadHandler.removeDownloadFromList();
+        downloadHandler.removeDownloadFromDatabase();
         removeDownloadHandler(index);
-        emitOnDownloadInfoUpdated();
     }
 
     private void handleActionDeleteDownload(long id) {
@@ -295,9 +290,9 @@ public class DownloadManager extends Service {
         }
 
         DownloadHandler downloadHandler = mDownloadHandlers.get(index).second;
+        downloadHandler.stopDownload();
         downloadHandler.deleteDownloadFromStorage();
         removeDownloadHandler(index);
-        emitOnDownloadInfoUpdated();
     }
 
     private void handleActionResumeDownload(long id) {
@@ -308,6 +303,9 @@ public class DownloadManager extends Service {
 
         DownloadHandler downloadHandler = mDownloadHandlers.get(index).second;
         downloadHandler.startDownload();
+        emitOnDownloadInfoUpdated(index);
+        startUiUpdateThread();
+        updateNotification();
     }
 
     private void handleActionStopDownload(long id) {
@@ -318,6 +316,8 @@ public class DownloadManager extends Service {
 
         DownloadHandler downloadHandler = mDownloadHandlers.get(index).second;
         downloadHandler.stopDownload();
+        emitOnDownloadInfoUpdated(index);
+        updateNotification();
     }
 
     public int getDownloadByDatabaseId(long databaseId) {
@@ -336,9 +336,10 @@ public class DownloadManager extends Service {
             mUiUpdateThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
+                    int downloadingCount = getDownloadCountByStatus(DownloadInfo.Status.Downloading);
+                    int completedCount = getDownloadCountByStatus(DownloadInfo.Status.Completed);
                     while (getDownloadCountByStatus(DownloadInfo.Status.Downloading) != 0) {
-                        updateNotification();
-                        emitOnDownloadInfoUpdated();
+                        updateUiByStatus(DownloadInfo.Status.Downloading);
                         try {
                             Thread.sleep(NOTIFICATION_UPDATE_WAIT_TIME);
                         } catch (InterruptedException e) {
@@ -347,27 +348,59 @@ public class DownloadManager extends Service {
                         }
                     }
 
-                    updateUi();
+                    if (getDownloadCountByStatus(DownloadInfo.Status.Completed) == completedCount + downloadingCount) {
+                        if (!AnalyticsApplication.isActivityVisible()) {
+                            showDownloadsFinishedNotification(mNotificationId);
+                        }
+                    }
+
+                    updateUiByStatus(DownloadInfo.Status.Stopped);
+                    updateUiByStatus(DownloadInfo.Status.Completed);
                 }
             });
             mUiUpdateThread.start();
         }
     }
 
-    public void updateUi() {
+    public void updateUiByStatus(DownloadInfo.Status status) {
         updateNotification();
-        emitOnDownloadInfoUpdated();
+        for (int i = 0; i < mDownloadHandlers.size(); i++) {
+            if (mDownloadHandlers.get(i).second.getStatus() == status) {
+                emitOnDownloadInfoUpdated(i);
+            }
+        }
     }
 
-    private synchronized void emitOnDownloadInfoUpdated() {
+    private void emitOnReset() {
+        onDownloadChangeListeners.removeAll(Collections.singleton(null));
+        for (OnDownloadChangeListener onDownloadChangeListener : onDownloadChangeListeners) {
+            Log.e(TAG, "Calling onReset callback method " + onDownloadChangeListener.getClass().getName());
+            onDownloadChangeListener.onReset();
+        }
+    }
+
+    private void emitOnDownloadInfoUpdated(int index) {
         onDownloadChangeListeners.removeAll(Collections.singleton(null));
         for (OnDownloadChangeListener onDownloadChangeListener : onDownloadChangeListeners) {
             Log.e(TAG, "Calling onDownloadInfoUpdated callback method " + onDownloadChangeListener.getClass().getName());
-            onDownloadChangeListener.onDownloadInfoUpdated();
+            onDownloadChangeListener.onDownloadInfoUpdated(index);
+        }
+    }
+
+    private void emitOnDownloadRemoved(int index) {
+        onDownloadChangeListeners.removeAll(Collections.singleton(null));
+        for (OnDownloadChangeListener onDownloadChangeListener : onDownloadChangeListeners) {
+            Log.e(TAG, "Calling onDownloadRemoved callback method " + onDownloadChangeListener.getClass().getName());
+            onDownloadChangeListener.onDownloadRemoved(index);
         }
     }
 
     private synchronized void showNotification() {
+        if (mNotifyManager == null || mBuilder == null) {
+            mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            mBuilder = new NotificationCompat.Builder(this);
+        }
+
         mBuilder.setSmallIcon(R.drawable.download);
         mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
         mBuilder.setContentTitle(getResources().getString(R.string.app_name));
@@ -390,13 +423,14 @@ public class DownloadManager extends Service {
     }
 
     private synchronized void updateNotification() {
+        if (mBuilder == null || mNotifyManager == null) {
+            return;
+        }
+
         int progress = getDownloadsAverageProgress();
         if (progress == 100) {
             mNotifyManager.cancel(mNotificationId);
             stopForeground(true);
-            if (!AnalyticsApplication.isActivityVisible()) {
-                showDownloadsFinishedNotification(mNotificationId);
-            }
         } else {
             mBuilder.setContentText(getNotificationContent());
             mBuilder.setProgress(100, progress, false);
@@ -525,14 +559,16 @@ public class DownloadManager extends Service {
     }
 
     public void removeDownloadHandler(int index) {
+        mDownloadHandlers.get(index).second.stopDownload();
         mDownloadHandlers.remove(index);
+        emitOnDownloadRemoved(index);
     }
 
     public void removeDownloadByIndex(int index) {
         if (mDownloadHandlers.size() > index) {
             Log.e(TAG,"RemovingDownloadByIndex " + mDownloadHandlers.get(index).second.getFilename());
             DownloadHandler downloadHandler = mDownloadHandlers.get(index).second;
-            downloadHandler.removeDownloadFromList();
+            downloadHandler.removeDownloadFromDatabase();
             removeDownloadHandler(index);
         }
     }

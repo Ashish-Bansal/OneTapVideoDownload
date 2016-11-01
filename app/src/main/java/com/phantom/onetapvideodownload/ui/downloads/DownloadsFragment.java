@@ -10,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +55,7 @@ public class DownloadsFragment extends Fragment implements OnDownloadChangeListe
 
         View rootView = inflater.inflate(R.layout.fragment_downloads, container, false);
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.downloadRecyclerView);
+        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
@@ -115,29 +117,40 @@ public class DownloadsFragment extends Fragment implements OnDownloadChangeListe
     }
 
     @Override
-    public void onDownloadAdded() {
+    public void onDownloadAdded(final int position) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mDownloadAdapter.notifyDataSetChanged();
+                mDownloadAdapter.notifyItemInserted(position);
             }
         });
         evaluateVisibility();
     }
 
     @Override
-    public void onDownloadRemoved() {
+    public void onDownloadRemoved(final int position) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mDownloadAdapter.notifyDataSetChanged();
+                mDownloadAdapter.notifyItemRemoved(position);
             }
         });
         evaluateVisibility();
     }
 
     @Override
-    public void onDownloadInfoUpdated() {
+    public void onDownloadInfoUpdated(final int position) {
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mDownloadAdapter.notifyItemChanged(position);
+            }
+        });
+        evaluateVisibility();
+    }
+
+    @Override
+    public void onReset() {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

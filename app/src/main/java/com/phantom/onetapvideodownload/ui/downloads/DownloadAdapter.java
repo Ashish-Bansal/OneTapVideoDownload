@@ -213,7 +213,6 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 Collections.reverse(keys);
                 for (Integer pos : keys) {
                     mDownloadManager.removeDownloadByIndex(pos);
-                    notifyItemRemoved(pos);
                 }
                 actionMode.finish();
                 return true;
