@@ -71,10 +71,7 @@ public class FacebookHook implements IXposedHookLoadPackage {
             for(Constructor constructor:constructors) {
                 Class<?>[] params = constructor.getParameterTypes();
                 int n = params.length;
-                if(n > 4 && params[0].isAssignableFrom(Uri.class)
-                        && params[1].isAssignableFrom(String.class)
-                        && params[2].isAssignableFrom(String.class)
-                        && params[3].isAssignableFrom(Uri.class)) {
+                if (n > 4 && params[0].isAssignableFrom(Uri.class)) {
                     Object [] objects = new Object[n+1];
                     System.arraycopy(params, 0, objects, 0, n);
                     objects[n] = methodHook;
