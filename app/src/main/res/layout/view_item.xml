@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_height">
+    android:layout_height="wrap_content">
 
     <!-- this view reveals when swipe right -->
     <RelativeLayout
@@ -14,7 +14,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:tint="@color/white"
@@ -31,7 +31,7 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
             android:tint="@color/white"
@@ -44,23 +44,24 @@
         android:tag="front"
         android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="@dimen/item_padding">
         <TextView
             android:id="@+id/url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:textSize="16dp"
-            android:textStyle="bold" />
+            android:ellipsize="end"
+            android:maxLines="2" />
 
         <TextView
             android:id="@+id/metadata"
             android:layout_below="@+id/url"
-            android:layout_alignLeft="@+id/url"
+            android:layout_alignStart="@+id/url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14dp" />
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:maxLines="2" />
     </RelativeLayout>
 
 
