@@ -88,6 +88,17 @@ public class BlacklistDomainList {
 
     public void updateUrl(String oldUrl, String newUrl) {
         mDomainBlacklistDatabase.updateUrl(oldUrl, newUrl);
+        updateUrlInMemory(oldUrl, newUrl);
+    }
+
+    private void updateUrlInMemory(String oldUrl, String newUrl) {
+        for(int i = 0; i < mList.size(); i++) {
+            Pair<Long, String> p = mList.get(i);
+            if (p.second.equals(oldUrl)) {
+                mList.add(i, new Pair<>(p.first, newUrl));
+                mList.remove(i + 1);
+            }
+        }
     }
 
     public boolean exists(String url) {
