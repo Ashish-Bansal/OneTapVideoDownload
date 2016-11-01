@@ -39,11 +39,13 @@ public class DownloadDatabase extends SQLiteOpenHelper {
 
     private static DownloadDatabase mDownloadDatabase;
     private Context mContext;
+    private SQLiteDatabase mSQLiteDatabase;
 
-    public static DownloadDatabase getDatabase(Context context) {
+    public static synchronized DownloadDatabase getDatabase(Context context) {
         if (mDownloadDatabase == null) {
             mDownloadDatabase = new DownloadDatabase(context);
             mDownloadDatabase.mContext = context;
+            mDownloadDatabase.mSQLiteDatabase = mDownloadDatabase.getWritableDatabase();
         }
 
         return mDownloadDatabase;
@@ -94,6 +96,18 @@ public class DownloadDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    @Override
+    public void finalize() throws Throwable{
+        super.finalize();
+        if (mDownloadDatabase != null) {
+            mDownloadDatabase.close();
+        }
+
+        if (mSQLiteDatabase != null) {
+            mSQLiteDatabase.close();
+        }
+    }
+
     public long addOrUpdateDownload(DownloadInfo download) {
         long id = downloadAlreadyExists(download);
         if (id == -1) {
@@ -104,27 +118,24 @@ public class DownloadDatabase extends SQLiteOpenHelper {
     }
 
     public long addDownload(DownloadInfo download) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
         long downloadId = -1;
         if (download instanceof BrowserDownloadInfo) {
             ContentValues videoListValues = new ContentValues();
             videoListValues.put(KEY_TYPE, DOWNLOAD_TYPE_BROWSER);
-            downloadId = db.insert(TABLE_VIDEO_DOWNLOAD_LIST, null, videoListValues);
+            downloadId = mSQLiteDatabase.insert(TABLE_VIDEO_DOWNLOAD_LIST, null, videoListValues);
             assert(downloadId != -1);
             ContentValues values = getContentValuesForBrowserVideo(download, downloadId);
-            db.insert(TABLE_BROWSER_DOWNLOAD_LIST, null, values);
+            mSQLiteDatabase.insert(TABLE_BROWSER_DOWNLOAD_LIST, null, values);
         } else if (download instanceof YoutubeDownloadInfo) {
             ContentValues downloadListValues = new ContentValues();
             downloadListValues.put(KEY_TYPE, DOWNLOAD_TYPE_YOUTUBE);
-            db.insert(TABLE_VIDEO_DOWNLOAD_LIST, null, downloadListValues);
-            downloadId = db.insert(TABLE_VIDEO_DOWNLOAD_LIST, null, downloadListValues);
+            mSQLiteDatabase.insert(TABLE_VIDEO_DOWNLOAD_LIST, null, downloadListValues);
+            downloadId = mSQLiteDatabase.insert(TABLE_VIDEO_DOWNLOAD_LIST, null, downloadListValues);
             assert(downloadId != -1);
             ContentValues values = getContentValuesForYoutubeVideo(download, downloadId);
-            db.insert(TABLE_YOUTUBE_DOWNLOAD_LIST, null, values);
+            mSQLiteDatabase.insert(TABLE_YOUTUBE_DOWNLOAD_LIST, null, values);
         }
 
-        db.close();
         return downloadId;
     }
 
@@ -164,15 +175,13 @@ public class DownloadDatabase extends SQLiteOpenHelper {
     }
 
     public DownloadInfo getDownload(int downloadCategory, long downloadId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
         String downloadQuery;
         Cursor downloadQueryCursor = null;
         switch(downloadCategory) {
             case DOWNLOAD_TYPE_BROWSER :
                 downloadQuery = "SELECT * FROM " + TABLE_BROWSER_DOWNLOAD_LIST + " WHERE "
                         + KEY_VIDEO_ID + "=" + downloadId;
-                downloadQueryCursor = db.rawQuery(downloadQuery, null);
+                downloadQueryCursor = mSQLiteDatabase.rawQuery(downloadQuery, null);
                 if (downloadQueryCursor.moveToFirst()) {
                     String url = downloadQueryCursor.getString(2);
                     String downloadPath = downloadQueryCursor.getString(3);
@@ -195,7 +204,7 @@ public class DownloadDatabase extends SQLiteOpenHelper {
             case DOWNLOAD_TYPE_YOUTUBE :
                 downloadQuery = "SELECT * FROM " + TABLE_YOUTUBE_DOWNLOAD_LIST
                         + " WHERE " + KEY_VIDEO_ID + "=" + downloadId;
-                downloadQueryCursor = db.rawQuery(downloadQuery, null);
+                downloadQueryCursor = mSQLiteDatabase.rawQuery(downloadQuery, null);
                 if (downloadQueryCursor.moveToFirst()) {
                     String param = downloadQueryCursor.getString(0);
                     int itag = downloadQueryCursor.getInt(2);
@@ -242,8 +251,7 @@ public class DownloadDatabase extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM " + TABLE_VIDEO_DOWNLOAD_LIST
                 + " WHERE " + KEY_TYPE + "=" + categoryType;
 
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor downloadListCursor = db.rawQuery(selectQuery, null);
+        Cursor downloadListCursor = mSQLiteDatabase.rawQuery(selectQuery, null);
 
         if (downloadListCursor.moveToFirst()) {
             do {
@@ -263,8 +271,7 @@ public class DownloadDatabase extends SQLiteOpenHelper {
 
     public int getDownloadCount() {
         String countQuery = "SELECT  * FROM " + TABLE_VIDEO_DOWNLOAD_LIST;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
+        Cursor cursor = mSQLiteDatabase.rawQuery(countQuery, null);
         int downloadCount = cursor.getCount();
         cursor.close();
 
@@ -294,13 +301,12 @@ public class DownloadDatabase extends SQLiteOpenHelper {
 
     public long updateDownload(long id, DownloadInfo downloadInfo) {
         if (downloadExistsById(id)) {
-            SQLiteDatabase db = this.getWritableDatabase();
             if (downloadInfo instanceof BrowserDownloadInfo) {
                 ContentValues values = getContentValuesForBrowserVideo(downloadInfo, id);
-                db.update(TABLE_BROWSER_DOWNLOAD_LIST, values, KEY_VIDEO_ID + "=" + id, null);
+                mSQLiteDatabase.update(TABLE_BROWSER_DOWNLOAD_LIST, values, KEY_VIDEO_ID + "=" + id, null);
             } else if (downloadInfo instanceof YoutubeDownloadInfo) {
                 ContentValues values = getContentValuesForYoutubeVideo(downloadInfo, id);
-                db.update(TABLE_YOUTUBE_DOWNLOAD_LIST, values, KEY_VIDEO_ID + "=" + id, null);
+                mSQLiteDatabase.update(TABLE_YOUTUBE_DOWNLOAD_LIST, values, KEY_VIDEO_ID + "=" + id, null);
             }
         } else {
             return -1;
@@ -310,12 +316,10 @@ public class DownloadDatabase extends SQLiteOpenHelper {
     }
 
     public boolean downloadExistsById(long id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
         String selectQuery = "SELECT * FROM " + TABLE_VIDEO_DOWNLOAD_LIST
                 + " WHERE " + KEY_ID + "=" + id;
 
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = mSQLiteDatabase.rawQuery(selectQuery, null);
         if (cursor.getCount() > 0) {
             cursor.close();
             return true;
@@ -326,12 +330,10 @@ public class DownloadDatabase extends SQLiteOpenHelper {
     }
 
     public int getCategory(long downloadId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
         String selectQuery = "SELECT * FROM " + TABLE_VIDEO_DOWNLOAD_LIST
                 + " WHERE " + KEY_ID + "=" + downloadId;
 
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = mSQLiteDatabase.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             int categoryId = cursor.getInt(1);
             cursor.close();
@@ -348,28 +350,24 @@ public class DownloadDatabase extends SQLiteOpenHelper {
             return;
         }
 
-        SQLiteDatabase db = this.getWritableDatabase();
-
         switch (categoryId) {
             case DOWNLOAD_TYPE_BROWSER :
-                db.delete(TABLE_BROWSER_DOWNLOAD_LIST, KEY_VIDEO_ID + " = ?",
+                mSQLiteDatabase.delete(TABLE_BROWSER_DOWNLOAD_LIST, KEY_VIDEO_ID + " = ?",
                         new String[] { String.valueOf(id) });
                 break;
             case DOWNLOAD_TYPE_YOUTUBE :
-                db.delete(TABLE_YOUTUBE_DOWNLOAD_LIST, KEY_VIDEO_ID + " = ?",
+                mSQLiteDatabase.delete(TABLE_YOUTUBE_DOWNLOAD_LIST, KEY_VIDEO_ID + " = ?",
                         new String[] { String.valueOf(id) });
                 break;
         }
 
-        db.delete(TABLE_VIDEO_DOWNLOAD_LIST, KEY_ID + " = ?",
+        mSQLiteDatabase.delete(TABLE_VIDEO_DOWNLOAD_LIST, KEY_ID + " = ?",
                 new String[] { String.valueOf(id) });
-        db.close();
     }
 
     public void clearDatabase() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_VIDEO_DOWNLOAD_LIST, null, null);
-        db.delete(TABLE_BROWSER_DOWNLOAD_LIST, null, null);
-        db.delete(TABLE_YOUTUBE_DOWNLOAD_LIST, null, null);
+        mSQLiteDatabase.delete(TABLE_VIDEO_DOWNLOAD_LIST, null, null);
+        mSQLiteDatabase.delete(TABLE_BROWSER_DOWNLOAD_LIST, null, null);
+        mSQLiteDatabase.delete(TABLE_YOUTUBE_DOWNLOAD_LIST, null, null);
     }
 }
