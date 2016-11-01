@@ -102,7 +102,7 @@ public class BlacklistDomainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(View v) {
                                 new MaterialDialog.Builder(BlacklistDomainActivity.this)
-                                        .title(R.string.add_new_domain)
+                                        .title(R.string.edit_blacklisted_domain)
                                         .inputType(InputType.TYPE_CLASS_TEXT)
                                         .input(getResources().getString(R.string.blacklist_domain_hint), domain, false, new MaterialDialog.InputCallback() {
                                             @Override
