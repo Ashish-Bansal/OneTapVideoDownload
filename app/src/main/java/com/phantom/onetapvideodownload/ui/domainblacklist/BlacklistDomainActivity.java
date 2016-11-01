@@ -106,13 +106,13 @@ public class BlacklistDomainActivity extends AppCompatActivity {
                                         .inputType(InputType.TYPE_CLASS_TEXT)
                                         .input(getResources().getString(R.string.blacklist_domain_hint), domain, false, new MaterialDialog.InputCallback() {
                                             @Override
-                                            public void onInput(@NonNull MaterialDialog dialog, CharSequence newUrl) {
-                                                String newDomain = Global.getDomain(newUrl.toString());
-                                                if (newDomain == null) {
+                                            public void onInput(@NonNull MaterialDialog dialog, CharSequence url) {
+                                                String newUrl = getHostNameFromUrl(url.toString());
+                                                if (newUrl == null || newUrl.isEmpty()) {
                                                     Toast.makeText(BlacklistDomainActivity.this, R.string.invalid_domain, Toast.LENGTH_LONG).show();
-                                                    return;
+                                                } else {
+                                                    editUrl(domain, newUrl);
                                                 }
-                                                editUrl(domain, newDomain);
                                             }
                                         }).show();
                             }
@@ -225,17 +225,38 @@ public class BlacklistDomainActivity extends AppCompatActivity {
                     .inputType(InputType.TYPE_CLASS_TEXT)
                     .input(R.string.blacklist_domain_hint, R.string.empty, false, new MaterialDialog.InputCallback() {
                         @Override
-                        public void onInput(@NonNull MaterialDialog dialog, CharSequence domain) {
-                            String domainName = Global.getDomain(domain.toString());
-                            if (domainName == null) {
+                        public void onInput(@NonNull MaterialDialog dialog, CharSequence url) {
+                            String hostname = getHostNameFromUrl(url.toString());
+                            if (hostname == null || hostname.isEmpty()) {
                                 Toast.makeText(BlacklistDomainActivity.this, R.string.invalid_domain, Toast.LENGTH_LONG).show();
-                                return;
+                            } else {
+                                addUrl(hostname);
                             }
-                            addUrl(domainName);
                         }
                     }).show();
             default :
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    // Used custom logic instead of Global.getDomain() to allow URL invalidity tolerance
+    String getHostNameFromUrl(String url) {
+        try {
+            int doubleSlash = url.indexOf("//");
+            if (doubleSlash == -1) {
+                doubleSlash = 0;
+            } else {
+                doubleSlash += 2;
+            }
+
+            int hostNameEnd = url.indexOf('/', doubleSlash);
+            if (hostNameEnd == -1) {
+                hostNameEnd = url.length();
+            }
+
+            return url.substring(doubleSlash, hostNameEnd);
+        } catch (IndexOutOfBoundsException e) {
+            return "";
         }
     }
 }
