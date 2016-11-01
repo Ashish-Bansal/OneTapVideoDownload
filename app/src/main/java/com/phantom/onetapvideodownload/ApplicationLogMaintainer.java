@@ -20,7 +20,7 @@ public class ApplicationLogMaintainer extends BroadcastReceiver {
     public static final String PACKAGE_NAME = "com.phantom.onetapvideodownload";
     public static final String CLASS_NAME = PACKAGE_NAME + ".ApplicationLogMaintainer";
     public static final String EXTRA_MESSAGE = PACKAGE_NAME + ".extra.message";
-    public static final Integer MAX_LOG_FILE_SIZE = 10000;
+    public static final Integer MAX_LOG_FILE_SIZE = 500000;
     public static final String LOG_DIRECTORY_NAME = ".OneTapVideoDownload";
     public static final String LOG_FILE_NAME = "Logs.txt";
 
