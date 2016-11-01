@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,20 +25,18 @@ import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements ActionMode.Callback  {
     private DownloadManager mDownloadManager;
     private boolean mBounded;
     private Context mContext;
-    private Map<Integer, View> mSelectedItems;
+    private SparseArray<View> mSelectedItems;
     private ActionMode mActionMode;
 
     public DownloadAdapter(Context context) {
         mContext = context;
-        mSelectedItems = new HashMap<>();
+        mSelectedItems = new SparseArray<>();
         context.startService(DownloadManager.getActionStartService());
         Intent mIntent = new Intent(context, DownloadManager.class);
         context.bindService(mIntent, mConnection, Context.BIND_ABOVE_CLIENT);
@@ -84,24 +83,17 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.download_item, parent, false);
 
-        return new DownloadViewHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        DownloadViewHolder vh = (DownloadViewHolder) holder;
-        vh.setDownloadTitle(mDownloadManager.getFilename(position));
-        vh.setDownloadUrl(mDownloadManager.getUrl(position));
+        final DownloadViewHolder vh = new DownloadViewHolder(view);
         vh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mActionMode == null) {
                     new MaterialDialog.Builder(mContext)
-                            .items(mDownloadManager.getOptions(holder.getAdapterPosition()))
-                            .itemsCallback(mDownloadManager.getOptionCallback(holder.getAdapterPosition()))
+                            .items(mDownloadManager.getOptions(vh.getLayoutPosition()))
+                            .itemsCallback(mDownloadManager.getOptionCallback(vh.getLayoutPosition()))
                             .show();
                 } else {
-                    itemClicked(holder.getAdapterPosition(), view);
+                    itemClicked(vh.getLayoutPosition(), view);
                 }
             }
         });
@@ -114,12 +106,19 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 }
 
                 mActionMode = ((AppCompatActivity)mContext).startSupportActionMode(DownloadAdapter.this);
-                int index = holder.getAdapterPosition();
+                int index = vh.getLayoutPosition();
                 itemClicked(index, view);
                 return true;
             }
         });
+        return vh;
+    }
 
+    @Override
+    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
+        DownloadViewHolder vh = (DownloadViewHolder) holder;
+        vh.setDownloadTitle(mDownloadManager.getFilename(position));
+        vh.setDownloadUrl(mDownloadManager.getUrl(position));
         vh.setImageForView(mDownloadManager.getPackageDrawable(position));
         vh.setStatus(mDownloadManager.getStatus(position));
         if (mDownloadManager.getStatus(position) == DownloadInfo.Status.Downloading) {
@@ -133,18 +132,17 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
 
         vh.setProgress(mDownloadManager.getDownloadProgress(position));
+        if (isSelected(position)) {
+            vh.setSelectedTickVisibility(true);
+        } else {
+            vh.setSelectedTickVisibility(false);
+        }
     }
 
     public void itemClicked(int index, View view) {
         toggleSelection(index, view);
         String title = String.valueOf(selectedItemsCount());
         mActionMode.setTitle(title);
-        ImageView tick = (ImageView) view.findViewById(R.id.tick);
-        if (isSelected(index)) {
-            tick.setVisibility(View.VISIBLE);
-        } else {
-            tick.setVisibility(View.GONE);
-        }
         if (selectedItemsCount() == 0) {
             mActionMode.finish();
         }
@@ -157,8 +155,15 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void toggleSelection(int pos, @Nullable View view) {
         if (mSelectedItems.get(pos) != null) {
             mSelectedItems.remove(pos);
-        } else {;
+        } else {
             mSelectedItems.put(pos, view);
+        }
+
+        ImageView tick = (ImageView) view.findViewById(R.id.tick);
+        if (isSelected(pos)) {
+            tick.setVisibility(View.VISIBLE);
+        } else {
+            tick.setVisibility(View.GONE);
         }
     }
 
@@ -170,9 +175,9 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
             ImageView tick = (ImageView) mSelectedItems.get(pos).findViewById(R.id.tick);
             tick.setVisibility(View.GONE);
+            notifyItemChanged(pos);
         }
         mSelectedItems.clear();
-        notifyDataSetChanged();
     }
 
     public int selectedItemsCount() {
@@ -180,7 +185,11 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     public ArrayList<Integer> getSelectedItems() {
-        return new ArrayList<>(mSelectedItems.keySet());
+        ArrayList<Integer> keySet = new ArrayList<>();
+        for(int i = 0; i < mSelectedItems.size(); i++) {
+            keySet.add(mSelectedItems.keyAt(i));
+        }
+        return keySet;
     }
 
     @Override
@@ -204,8 +213,8 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 Collections.reverse(keys);
                 for (Integer pos : keys) {
                     mDownloadManager.removeDownloadByIndex(pos);
+                    notifyItemRemoved(pos);
                 }
-                notifyDataSetChanged();
                 actionMode.finish();
                 return true;
             default:

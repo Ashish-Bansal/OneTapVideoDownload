@@ -1,6 +1,5 @@
 package com.phantom.onetapvideodownload.ui.downloads;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -19,16 +18,13 @@ import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 public class DownloadViewHolder extends RecyclerView.ViewHolder {
     private ImageView mApplicationImageView, mStatusStopped, mStatusCompleted;
     private TextView mDownloadTitle, mDownloadUrl, mPercentageTextView;
-    private Context mContext;
-    private View mView;
     private MaterialProgressBar mIndeterminateProgressBar;
     private MaterialProgressBar mProgressBar;
     private RelativeLayout mStatusDownloading;
+    private ImageView mSelectedTick;
 
     public DownloadViewHolder(View v) {
         super(v);
-        mView = v;
-        mContext = v.getContext();
         mApplicationImageView = (ImageView)itemView.findViewById(R.id.application_icon);
         mDownloadTitle = (TextView)itemView.findViewById(R.id.download_title);
         mDownloadUrl = (TextView)itemView.findViewById(R.id.download_url);
@@ -38,6 +34,7 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
         mStatusStopped = (ImageView) itemView.findViewById(R.id.status_stopped);
         mStatusCompleted = (ImageView) itemView.findViewById(R.id.status_completed);
         mStatusDownloading = (RelativeLayout) itemView.findViewById(R.id.status_downloading);
+        mSelectedTick = (ImageView) itemView.findViewById(R.id.tick);
     }
 
     public void setDownloadTitle(String title) {
@@ -59,11 +56,11 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setOnClickListener(View.OnClickListener onClickListener) {
-        mView.setOnClickListener(onClickListener);
+        itemView.setOnClickListener(onClickListener);
     }
 
     public void setOnLongClickListener(View.OnLongClickListener onLongClickListener) {
-        mView.setOnLongClickListener(onLongClickListener);
+        itemView.setOnLongClickListener(onLongClickListener);
     }
 
     public void setProgressBarState(boolean visibility, boolean indeterminate) {
@@ -107,6 +104,14 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
             mStatusStopped.setVisibility(View.VISIBLE);
             mStatusDownloading.setVisibility(View.GONE);
             mStatusCompleted.setVisibility(View.GONE);
+        }
+    }
+
+    public void setSelectedTickVisibility(boolean visibility) {
+        if (visibility) {
+            mSelectedTick.setVisibility(View.VISIBLE);
+        } else {
+            mSelectedTick.setVisibility(View.GONE);
         }
     }
 }
