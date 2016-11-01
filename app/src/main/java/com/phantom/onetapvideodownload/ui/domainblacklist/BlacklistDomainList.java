@@ -14,7 +14,7 @@ public class BlacklistDomainList {
     private BlacklistDomainList() {
     }
 
-    public static BlacklistDomainList mBlacklistDomainList;
+    private static BlacklistDomainList mBlacklistDomainList;
     List<Pair<Long, String>> mList = new ArrayList<>();
     private static DomainBlacklistDatabase mDomainBlacklistDatabase;
 
@@ -39,7 +39,8 @@ public class BlacklistDomainList {
     }
 
     public void addUrl(String url) {
-        mDomainBlacklistDatabase.addUrl(url);
+        long urlId = mDomainBlacklistDatabase.addUrl(url);
+        mList.add(new Pair<>(urlId, url));
         sortList();
     }
 
