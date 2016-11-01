@@ -129,7 +129,7 @@
             android:indeterminate="false"
             android:visibility="invisible"
             app:mpb_progressStyle="horizontal"
-            app:mpb_showTrack="true"
+            app:mpb_showProgressBackground="true"
             app:mpb_useIntrinsicPadding="false" />
 
         <me.zhanghai.android.materialprogressbar.MaterialProgressBar
@@ -141,7 +141,7 @@
             android:indeterminate="true"
             android:visibility="invisible"
             app:mpb_progressStyle="horizontal"
-            app:mpb_showTrack="true"
+            app:mpb_showProgressBackground="true"
             app:mpb_useIntrinsicPadding="false" />
     </android.support.v7.widget.CardView>
 
