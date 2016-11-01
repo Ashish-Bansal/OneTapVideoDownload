@@ -6,6 +6,8 @@ import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
 import com.phantom.onetapvideodownload.IpcService;
 import com.phantom.utils.Global;
 
+import java.util.ArrayList;
+
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XposedHelpers;
@@ -15,10 +17,22 @@ public class ChromeHook implements IXposedHookLoadPackage {
 
     @Override
     public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
-        String chromePackageName = "com.android.chrome";
-        String chromeDevPackageName = "com.chrome.dev";
+        ArrayList<String> chromiumBasedPackages = new ArrayList<>();
+        chromiumBasedPackages.add("com.android.chrome");
+        chromiumBasedPackages.add("com.chrome.dev");
+        chromiumBasedPackages.add("com.chrome.beta");
+        chromiumBasedPackages.add("com.chrome.canary");
+
         final String packageName = lpparam.packageName;
-        if (!packageName.equals(chromePackageName) && !packageName.equals(chromeDevPackageName)) {
+        Boolean chromiumBasedApplication = false;
+        for(String application : chromiumBasedPackages) {
+            if (application.equals(packageName)) {
+                chromiumBasedApplication = true;
+                break;
+            }
+        }
+
+        if (!chromiumBasedApplication) {
             return;
         }
 
