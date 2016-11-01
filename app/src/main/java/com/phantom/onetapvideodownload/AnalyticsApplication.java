@@ -36,7 +36,18 @@ public class AnalyticsApplication extends Application {
     public void onCreate() {
         super.onCreate();
         JobManager.create(this).addJobCreator(new HookFetchJobCreator());
-        HookFetchJob.scheduleJob();
+        int noOfJobRequests = JobManager.instance().getAllJobRequestsForTag(HookFetchJob.TAG).size();
+
+        // No of Job Requests for HookFetchJob would be greater than 1 for older version of
+        // application because of rescheduling of job again and again, causing large no. of wakelocks
+        if (noOfJobRequests > 1) {
+            JobManager.instance().cancelAllForTag(HookFetchJob.TAG);
+            noOfJobRequests = 0;
+        }
+
+        if (noOfJobRequests == 0) {
+            HookFetchJob.scheduleJob();
+        }
     }
 
     /**

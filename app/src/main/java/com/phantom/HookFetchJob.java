@@ -7,6 +7,8 @@ import com.evernote.android.job.JobRequest;
 import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
 import com.phantom.utils.HookClassNamesFetcher;
 
+import java.util.concurrent.TimeUnit;
+
 public class HookFetchJob extends Job {
 
     public static final String TAG = "hook_fetch_job";
@@ -21,7 +23,7 @@ public class HookFetchJob extends Job {
 
     public static void scheduleJob() {
         new JobRequest.Builder(HookFetchJob.TAG)
-                .setPeriodic(100_000_000L)
+                .setPeriodic(TimeUnit.DAYS.toMillis(1))
                 .setRequiredNetworkType(JobRequest.NetworkType.CONNECTED)
                 .build()
                 .schedule();
