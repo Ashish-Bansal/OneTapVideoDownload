@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
                     .detectLeakedSqlLiteObjects()
                     .penaltyLog()
-                    .penaltyDeath()
                     .build()
             );
         }
