@@ -145,6 +145,7 @@ public class DownloadHandler {
             bufferedSource.close();
 
             setStatus(DownloadInfo.Status.Completed);
+            Global.runMediaScanner(mContext, new String[] { mDownloadInfo.getDownloadLocation() });
             writeToDatabase();
         } catch (Exception e) {
             e.printStackTrace();

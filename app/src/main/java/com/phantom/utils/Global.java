@@ -6,6 +6,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.MediaScannerConnection;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -413,5 +414,12 @@ public class Global {
             map.put(Integer.parseInt(key), new Pair<>(mainClass, methodClass));
         }
         ApplicationLogMaintainer.sendBroadcast(Global.getContext(), "Parsed JSON and class names added to map.");
+    }
+
+    public static void runMediaScanner(Context context, String[] paths) {
+        MediaScannerConnection.scanFile(context,
+                paths,
+                null,
+                null);
     }
 }
