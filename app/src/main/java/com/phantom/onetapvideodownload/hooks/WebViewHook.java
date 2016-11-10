@@ -36,7 +36,6 @@ public class WebViewHook implements IXposedHookLoadPackage {
                 protected void beforeHookedMethod(MethodHookParam hookParams) throws Throwable {
                     Field urlField = webViewAwWebResourceRequest.getField("url");
                     String url = (String) urlField.get(hookParams.args[0]);
-                    log(lpparam.packageName + " URL : " + url);
                     IpcService.startInspectMediaUriAction(Global.getContext(), url, lpparam.packageName);
                 }
             };
