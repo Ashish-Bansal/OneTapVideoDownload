@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+import android.util.SparseArray;
 
 import com.phantom.onetapvideodownload.UriMediaChecker.MediaChecker;
 import com.phantom.onetapvideodownload.Video.BrowserVideo;
@@ -29,8 +30,6 @@ import com.phantom.utils.Global;
 import com.phantom.utils.Invokable;
 import com.phantom.utils.YoutubeParserProxy;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class IpcService extends Service implements Invokable<Video, Integer> {
@@ -49,8 +48,8 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     private Handler mHandler = new Handler();
     private final IBinder mBinder = new LocalBinder();
     private static final AtomicInteger notificationId = new AtomicInteger();
-    private static MediaChecker mMediaChecker;
-    private static final Map<Integer, Runnable> notificationCancelRunnables = new HashMap<>();
+    private final MediaChecker mMediaChecker = new MediaChecker(this);
+    private static final SparseArray<Runnable> notificationCancelRunnables = new SparseArray<>();
 
     public static void startSaveUrlAction(Context context, Uri uri, String packageName) {
         startSaveUrlAction(context, uri.toString(), packageName);
@@ -95,10 +94,6 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
         if (CheckPreferences.getModuleDisabled(this)) {
             ApplicationLogMaintainer.sendBroadcast(this, "Module has been disabled from settings. Returning!");
             return START_NOT_STICKY;
-        }
-
-        if (mMediaChecker == null) {
-            mMediaChecker = new MediaChecker(this);
         }
 
         if (intent != null && intent.getAction() != null) {
