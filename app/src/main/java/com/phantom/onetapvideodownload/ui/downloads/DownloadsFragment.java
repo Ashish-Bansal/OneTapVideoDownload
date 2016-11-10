@@ -105,7 +105,7 @@ public class DownloadsFragment extends Fragment implements OnDownloadChangeListe
     @Override
     public void onStop() {
         super.onStop();
-        if(mBounded) {
+        if(mBounded != null && mBounded) {
             mDownloadManager.removeOnDownloadChangeListener(this);
             getActivity().unbindService(mConnection);
             mBounded = false;
@@ -122,9 +122,9 @@ public class DownloadsFragment extends Fragment implements OnDownloadChangeListe
             @Override
             public void run() {
                 mDownloadAdapter.notifyItemInserted(position);
+                evaluateVisibility();
             }
         });
-        evaluateVisibility();
     }
 
     @Override
@@ -133,9 +133,9 @@ public class DownloadsFragment extends Fragment implements OnDownloadChangeListe
             @Override
             public void run() {
                 mDownloadAdapter.notifyItemRemoved(position);
+                evaluateVisibility();
             }
         });
-        evaluateVisibility();
     }
 
     @Override
@@ -146,7 +146,6 @@ public class DownloadsFragment extends Fragment implements OnDownloadChangeListe
                 mDownloadAdapter.notifyItemChanged(position);
             }
         });
-        evaluateVisibility();
     }
 
     @Override
@@ -155,8 +154,8 @@ public class DownloadsFragment extends Fragment implements OnDownloadChangeListe
             @Override
             public void run() {
                 mDownloadAdapter.notifyDataSetChanged();
+                evaluateVisibility();
             }
         });
-        evaluateVisibility();
     }
 }

@@ -83,6 +83,10 @@ public class BrowserDownloadInfo extends DownloadInfo {
 
     @Override
     public Integer getProgress() {
+        if (mContentLength == 0) {
+            return 0;
+        }
+
         return (int)((mDownloadedLength*100)/mContentLength);
     }
 
