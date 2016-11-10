@@ -75,7 +75,6 @@ dependencies {
 
     compile 'com.afollestad.material-dialogs:core:0.9.0.2'
     compile 'com.afollestad.material-dialogs:commons:0.9.0.2'
-    compile 'co.dift.ui.swipetoaction:library:1.1'
     compile 'net.xpece.android:support-preference:1.0.3'
     compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'com.squareup.okio:okio:1.11.0'
