@@ -7,6 +7,7 @@ import android.support.v7.preference.XpPreferenceFragment;
 
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.phantom.onetapvideodownload.R;
+import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
 import com.phantom.utils.CheckPreferences;
 
 import net.xpece.android.support.preference.ListPreference;
@@ -42,6 +43,18 @@ public class SettingsFragment extends XpPreferenceFragment {
                         .initialPath(Environment.getExternalStorageDirectory().getPath())
                         .allowNewFolder(true, R.string.new_folder)
                         .show();
+                return true;
+            }
+        });
+
+        findPreference("pref_url_logging").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                Boolean urlLogEnabled = (Boolean)newValue;
+                if (urlLogEnabled) {
+                    VideoDatabase videoDatabase = VideoDatabase.getDatabase(getContext());
+                    videoDatabase.clearDatabase();
+                }
                 return true;
             }
         });
