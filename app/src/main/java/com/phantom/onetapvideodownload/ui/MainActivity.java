@@ -344,6 +344,11 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     private void showVideoDownloadDialog(final long videoId) {
         VideoDatabase videoDatabase = VideoDatabase.getDatabase(this);
         final Video video = videoDatabase.getVideo(videoId);
+        if (video == null) {
+            Log.e(TAG, "Video Instance is null. It happens when video id has been removed from the database.");
+            return;
+        }
+
         video.setContext(this);
 
         final MaterialDialog dialog = new MaterialDialog.Builder(this)
