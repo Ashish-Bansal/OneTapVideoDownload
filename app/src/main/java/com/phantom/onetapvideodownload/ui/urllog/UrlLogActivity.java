@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,7 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.phantom.onetapvideodownload.AnalyticsApplication;
@@ -110,7 +114,41 @@ public class UrlLogActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onLongClick(Video itemData) {
+            public void onLongClick(final Video itemData) {
+                UrlLogActivity.this.runOnUiThread(new Runnable() {
+                    public void run() {
+                        MaterialDialog dialog = new MaterialDialog.Builder(UrlLogActivity.this)
+                                .title(R.string.details)
+                                .customView(R.layout.dialog_show_url_details, true)
+                                .positiveText(R.string.okay)
+                                .negativeText(R.string.copy_url)
+                                .positiveColorRes(R.color.primary)
+                                .negativeColorRes(R.color.primary)
+                                .onPositive(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .onNegative(new MaterialDialog.SingleButtonCallback() {
+                                    @Override
+                                    public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+                                        dialog.dismiss();
+                                        Global.copyUrlToClipboard(UrlLogActivity.this, itemData.getUrl());
+                                        Toast.makeText(UrlLogActivity.this, R.string.video_url_copied, Toast.LENGTH_LONG).show();
+                                    }
+                                })
+                                .show();
+
+                        View view = dialog.getCustomView();
+                        TextView filename = (TextView) view.findViewById(R.id.filename);
+                        filename.setText(itemData.getTitle());
+
+                        TextView videoUrlView = (TextView) view.findViewById(R.id.video_url);
+                        videoUrlView.setText(itemData.getUrl());
+                        view.requestFocus();
+                    }
+                });
             }
         });
 
