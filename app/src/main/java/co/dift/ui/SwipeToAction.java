@@ -30,6 +30,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class SwipeToAction {
 
@@ -43,12 +45,15 @@ public class SwipeToAction {
     private int activePointerId = INVALID_POINTER_ID;
 
     private RecyclerView recyclerView;
+
     private SwipeListener swipeListener;
     private View touchedView;
     private ViewHolder touchedViewHolder;
     private View frontView;
     private View revealLeftView;
     private View revealRightView;
+    private Timer timer;
+    private TimerTask timerTask;
 
     private float frontViewX;
     private float frontViewW;
@@ -71,7 +76,7 @@ public class SwipeToAction {
     public SwipeToAction(RecyclerView recyclerView, SwipeListener swipeListener) {
         this.recyclerView = recyclerView;
         this.swipeListener = swipeListener;
-
+        this.timer = new Timer();
         init();
     }
 
@@ -96,7 +101,14 @@ public class SwipeToAction {
 
                         // which item are we touching
                         resolveItem(downX, downY);
+                        timerTask = new TimerTask() {
+                            @Override
+                            public void run() {
+                                swipeListener.onLongClick(touchedViewHolder.getItemData());
+                            }
+                        };
 
+                        timer.schedule(timerTask, LONG_PRESS_TIME);
                         break;
                     }
 
@@ -106,6 +118,7 @@ public class SwipeToAction {
                         upTime = new Date().getTime();
                         activePointerId = INVALID_POINTER_ID;
 
+                        timerTask.cancel();
                         resolveState();
                         break;
                     }
@@ -130,6 +143,7 @@ public class SwipeToAction {
 
                         if (!shouldMove(dx)) break;
 
+                        timerTask.cancel();
                         // current position. moving only over x-axis
                         frontViewLastX = frontViewX + dx + (dx > 0 ? -REVEAL_THRESHOLD : REVEAL_THRESHOLD);
                         frontView.setX(frontViewLastX);
@@ -145,6 +159,7 @@ public class SwipeToAction {
 
                     case MotionEvent.ACTION_CANCEL: {
                         activePointerId = INVALID_POINTER_ID;
+                        timerTask.cancel();
                         resolveState();
 
                         break;
@@ -271,12 +286,7 @@ public class SwipeToAction {
             float diffY = Math.abs(downY - upY);
 
             if (diffX <= 5 && diffY <= 5) {
-                int pressTime = (int) (upTime - downTime);
-                if  (pressTime > LONG_PRESS_TIME) {
-                    swipeListener.onLongClick(touchedViewHolder.getItemData());
-                } else {
-                    swipeListener.onClick(touchedViewHolder.getItemData());
-                }
+                swipeListener.onClick(touchedViewHolder.getItemData());
             }
 
             resetPosition();
