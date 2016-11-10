@@ -203,17 +203,19 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
         notificationmanager.notify(id, mBuilder.build());
         int delayInSeconds = CheckPreferences.notificationDismissTime(this);
 
-        if (notificationCancelRunnables.get(id) != null) {
-            mHandler.removeCallbacks(notificationCancelRunnables.get(id));
-        }
-        Runnable runnable = new Runnable() {
-            public void run() {
-                notificationmanager.cancel(id);
-                notificationCancelRunnables.remove(id);
+        if (delayInSeconds != 0) {
+            if (notificationCancelRunnables.get(id) != null) {
+                mHandler.removeCallbacks(notificationCancelRunnables.get(id));
             }
-        };
-        notificationCancelRunnables.put(id, runnable);
-        mHandler.postDelayed(runnable, delayInSeconds*1000);
+            Runnable runnable = new Runnable() {
+                public void run() {
+                    notificationmanager.cancel(id);
+                    notificationCancelRunnables.remove(id);
+                }
+            };
+            notificationCancelRunnables.put(id, runnable);
+            mHandler.postDelayed(runnable, delayInSeconds * 1000);
+        }
     }
 
     private long saveUrlToDatabase(Video video) {
