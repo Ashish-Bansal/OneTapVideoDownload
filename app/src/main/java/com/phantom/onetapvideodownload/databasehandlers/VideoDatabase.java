@@ -36,11 +36,13 @@ public class VideoDatabase extends SQLiteOpenHelper {
 
     private static VideoDatabase mVideoDatabase;
     private Context mContext;
+    private SQLiteDatabase mSQLiteDatabase;
 
-    public static VideoDatabase getDatabase(Context context) {
+    public static synchronized VideoDatabase getDatabase(Context context) {
         if (mVideoDatabase == null) {
             mVideoDatabase = new VideoDatabase(context);
             mVideoDatabase.mContext = context;
+            mVideoDatabase.mSQLiteDatabase = mVideoDatabase.getWritableDatabase();
         }
 
         return mVideoDatabase;
@@ -85,6 +87,18 @@ public class VideoDatabase extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    @Override
+    public void finalize() throws Throwable{
+        super.finalize();
+        if (mVideoDatabase != null) {
+            mVideoDatabase.close();
+        }
+
+        if (mSQLiteDatabase != null) {
+            mSQLiteDatabase.close();
+        }
+    }
+
     public long addOrUpdateVideo(Video video) {
         long id = alreadyExists(video);
         if (id == -1) {
@@ -95,26 +109,24 @@ public class VideoDatabase extends SQLiteOpenHelper {
     }
 
     public long addVideo(Video video) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
         ContentValues values = new ContentValues();
         long videoId = -1;
         if (video instanceof BrowserVideo) {
             ContentValues videoListValues = new ContentValues();
             videoListValues.put(KEY_TYPE, VIDEO_TYPE_BROWSER);
-            videoId = db.insert(TABLE_VIDEO_LIST, null, videoListValues);
+            videoId = mSQLiteDatabase.insert(TABLE_VIDEO_LIST, null, videoListValues);
             assert(videoId != -1);
 
             values.put(KEY_TITLE, video.getTitle());
             values.put(KEY_URL, video.getUrl());
             values.put(KEY_VIDEO_ID, videoId);
             values.put(KEY_PACKAGE_NAME, video.getPackageName());
-            db.insert(TABLE_BROWSER_VIDEO_LIST, null, values);
+            mSQLiteDatabase.insert(TABLE_BROWSER_VIDEO_LIST, null, values);
         } else if (video instanceof YoutubeVideo) {
             ContentValues videoListValues = new ContentValues();
             videoListValues.put(KEY_TYPE, VIDEO_TYPE_YOUTUBE);
-            db.insert(TABLE_VIDEO_LIST, null, videoListValues);
-            videoId = db.insert(TABLE_VIDEO_LIST, null, videoListValues);
+            mSQLiteDatabase.insert(TABLE_VIDEO_LIST, null, videoListValues);
+            videoId = mSQLiteDatabase.insert(TABLE_VIDEO_LIST, null, videoListValues);
             assert(videoId != -1);
 
             YoutubeVideo youtubeVideo = (YoutubeVideo)video;
@@ -128,11 +140,10 @@ public class VideoDatabase extends SQLiteOpenHelper {
                 values.put(KEY_URL, format.url);
                 values.put(KEY_VIDEO_ID, videoId);
                 values.put(KEY_VIDEO_ITAG, format.itag);
-                db.insert(TABLE_YOUTUBE_VIDEO_LIST, null, values);
+                mSQLiteDatabase.insert(TABLE_YOUTUBE_VIDEO_LIST, null, values);
             }
         }
 
-        db.close();
         return videoId;
     }
 
@@ -142,15 +153,13 @@ public class VideoDatabase extends SQLiteOpenHelper {
     }
 
     public Video getVideo(int videoCategory, long videoId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
         String videoQuery;
         Cursor videoQueryCursor = null;
         switch(videoCategory) {
             case VIDEO_TYPE_BROWSER :
                 videoQuery = "SELECT * FROM " + TABLE_BROWSER_VIDEO_LIST + " WHERE "
                         + KEY_VIDEO_ID + "=" + videoId;
-                videoQueryCursor = db.rawQuery(videoQuery, null);
+                videoQueryCursor = mSQLiteDatabase.rawQuery(videoQuery, null);
                 if (videoQueryCursor.moveToFirst()) {
                     String url = videoQueryCursor.getString(2);
                     String title = videoQueryCursor.getString(3);
@@ -165,7 +174,7 @@ public class VideoDatabase extends SQLiteOpenHelper {
             case VIDEO_TYPE_YOUTUBE :
                 videoQuery = "SELECT * FROM " + TABLE_YOUTUBE_VIDEO_LIST
                         + " WHERE " + KEY_VIDEO_ID + "=" + videoId;
-                videoQueryCursor = db.rawQuery(videoQuery, null);
+                videoQueryCursor = mSQLiteDatabase.rawQuery(videoQuery, null);
                 if (videoQueryCursor.moveToFirst()) {
                     String title = videoQueryCursor.getString(4);
                     String param = videoQueryCursor.getString(0);
@@ -203,8 +212,7 @@ public class VideoDatabase extends SQLiteOpenHelper {
         String selectQuery = "SELECT * FROM " + TABLE_VIDEO_LIST
                 + " WHERE " + KEY_TYPE + "=" + categoryType;
 
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor videoListCursor = db.rawQuery(selectQuery, null);
+        Cursor videoListCursor = mSQLiteDatabase.rawQuery(selectQuery, null);
 
         if (videoListCursor.moveToFirst()) {
             do {
@@ -225,8 +233,7 @@ public class VideoDatabase extends SQLiteOpenHelper {
 
     public int getVideoCount() {
         String countQuery = "SELECT  * FROM " + TABLE_VIDEO_LIST;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(countQuery, null);
+        Cursor cursor = mSQLiteDatabase.rawQuery(countQuery, null);
         int videoCount = cursor.getCount();
         cursor.close();
 
@@ -260,12 +267,10 @@ public class VideoDatabase extends SQLiteOpenHelper {
     }
 
     public int getCategory(long videoId) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
         String selectQuery = "SELECT * FROM " + TABLE_VIDEO_LIST
                 + " WHERE " + KEY_ID + "=" + videoId;
 
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        Cursor cursor = mSQLiteDatabase.rawQuery(selectQuery, null);
         if (cursor.moveToFirst()) {
             int categoryId = cursor.getInt(1);
             cursor.close();
@@ -282,29 +287,25 @@ public class VideoDatabase extends SQLiteOpenHelper {
             return;
         }
 
-        SQLiteDatabase db = this.getWritableDatabase();
-
         switch (categoryId) {
             case VIDEO_TYPE_BROWSER :
-                db.delete(TABLE_BROWSER_VIDEO_LIST, KEY_VIDEO_ID + " = ?",
+                mSQLiteDatabase.delete(TABLE_BROWSER_VIDEO_LIST, KEY_VIDEO_ID + " = ?",
                         new String[] { String.valueOf(id) });
                 break;
             case VIDEO_TYPE_YOUTUBE :
 
-                db.delete(TABLE_YOUTUBE_VIDEO_LIST, KEY_VIDEO_ID + " = ?",
+                mSQLiteDatabase.delete(TABLE_YOUTUBE_VIDEO_LIST, KEY_VIDEO_ID + " = ?",
                         new String[] { String.valueOf(id) });
                 break;
         }
 
-        db.delete(TABLE_VIDEO_LIST, KEY_ID + " = ?",
+        mSQLiteDatabase.delete(TABLE_VIDEO_LIST, KEY_ID + " = ?",
                 new String[] { String.valueOf(id) });
-        db.close();
     }
 
     public void clearDatabase() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_VIDEO_LIST, null, null);
-        db.delete(TABLE_BROWSER_VIDEO_LIST, null, null);
-        db.delete(TABLE_YOUTUBE_VIDEO_LIST, null, null);
+        mSQLiteDatabase.delete(TABLE_VIDEO_LIST, null, null);
+        mSQLiteDatabase.delete(TABLE_BROWSER_VIDEO_LIST, null, null);
+        mSQLiteDatabase.delete(TABLE_YOUTUBE_VIDEO_LIST, null, null);
     }
 }
