@@ -105,7 +105,7 @@ public class BlacklistDomainActivity extends AppCompatActivity {
                                             @Override
                                             public void onInput(@NonNull MaterialDialog dialog, CharSequence url) {
                                                 String newUrl = getHostNameFromUrl(url.toString());
-                                                if (newUrl == null || newUrl.isEmpty()) {
+                                                if (newUrl.isEmpty()) {
                                                     Toast.makeText(BlacklistDomainActivity.this, R.string.invalid_domain, Toast.LENGTH_LONG).show();
                                                 } else {
                                                     editUrl(domain, newUrl);
@@ -209,7 +209,7 @@ public class BlacklistDomainActivity extends AppCompatActivity {
                         @Override
                         public void onInput(@NonNull MaterialDialog dialog, CharSequence url) {
                             String hostname = getHostNameFromUrl(url.toString());
-                            if (hostname == null || hostname.isEmpty()) {
+                            if (hostname.isEmpty()) {
                                 Toast.makeText(BlacklistDomainActivity.this, R.string.invalid_domain, Toast.LENGTH_LONG).show();
                             } else {
                                 addUrl(hostname);
@@ -222,7 +222,7 @@ public class BlacklistDomainActivity extends AppCompatActivity {
     }
 
     // Used custom logic instead of Global.getDomain() to allow URL invalidity tolerance
-    String getHostNameFromUrl(String url) {
+    public static String getHostNameFromUrl(String url) {
         try {
             int doubleSlash = url.indexOf("//");
             if (doubleSlash == -1) {

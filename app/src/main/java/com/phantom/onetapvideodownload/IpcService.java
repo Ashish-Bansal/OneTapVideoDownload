@@ -22,6 +22,7 @@ import com.phantom.onetapvideodownload.Video.YoutubeVideo;
 import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
 import com.phantom.onetapvideodownload.downloader.ProxyDownloadManager;
 import com.phantom.onetapvideodownload.ui.MainActivity;
+import com.phantom.onetapvideodownload.ui.domainblacklist.BlacklistDomainActivity;
 import com.phantom.onetapvideodownload.ui.domainblacklist.BlacklistDomainList;
 import com.phantom.utils.CheckPreferences;
 import com.phantom.utils.Global;
@@ -110,7 +111,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
                 if (url == null
                         || url.isEmpty()
                         || Global.getFilenameFromUrl(url) == null
-                        || BlacklistDomainList.getUrlListSingleTon(this).exists(Global.getDomain(url))) {
+                        || BlacklistDomainList.getUrlListSingleTon(this).exists(BlacklistDomainActivity.getHostNameFromUrl(url))) {
                     return START_NOT_STICKY;
                 }
 
