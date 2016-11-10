@@ -91,6 +91,11 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if (CheckPreferences.getModuleDisabled(this)) {
+            ApplicationLogMaintainer.sendBroadcast(this, "Module has been disabled from settings. Returning!");
+            return START_NOT_STICKY;
+        }
+
         if (mMediaChecker == null) {
             mMediaChecker = new MediaChecker(this);
         }

@@ -3,14 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <PreferenceCategory android:title="@string/pref_download_header">
+    <PreferenceCategory android:title="@string/pref_general_header">
+        <SwitchPreference
+            android:title="@string/pref_disable_module_temp_title"
+            android:summary="@string/pref_disable_module_temp_summary"
+            android:key="pref_module_disabled"
+            android:defaultValue="false" />
+
         <Preference
             android:title="@string/prefs_download_location_title"
             android:key="pref_download_location">
         </Preference>
-    </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_url_blacklisting_header">
         <Preference
             android:title="@string/prefs_open_blacklist_domain_log">
             <intent android:action="com.phantom.onetapvideodownload.ui.domainblacklist.BlacklistDomainActivity" />

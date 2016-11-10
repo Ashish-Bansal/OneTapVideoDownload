@@ -115,4 +115,9 @@ public class CheckPreferences {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getBoolean("prefs_enable_startup_errors", true);
     }
+
+    public static boolean getModuleDisabled(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getBoolean("pref_module_disabled", false);
+    }
 }

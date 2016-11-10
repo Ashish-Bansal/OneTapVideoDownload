@@ -37,7 +37,6 @@
     <string name="default_vibrate_amount">200</string>
     <string name="pref_notification_headsup_title">Enable Heads up notification</string>
     <string name="pref_notification_headsup_summary">Heads up notification along with normal notification</string>
-    <string name="pref_download_header">Download Options</string>
     <string name="prefs_download_location_title">Choose Download Directory</string>
     <string name="open">Open</string>
     <string name="share">Share</string>
@@ -125,7 +124,6 @@
     <string name="no_downloads">Empty Download List</string>
     <string name="action_add_domain">Blacklist New Domain</string>
     <string name="action_clear_domain">Remove all URLs</string>
-    <string name="pref_url_blacklisting_header">Domain Blacklisting</string>
     <string name="prefs_open_blacklist_domain_log">Open Blacklisted Domains</string>
     <string name="no_blacklisted_domains">No Blacklisted Domains</string>
     <string name="blacklisted_domains">Blacklisted Domains</string>
@@ -154,6 +152,9 @@
     <string name="menu_item_update_hooks">Update Hooks</string>
     <string name="unable_to_select_sd_card">"Unable to write on selected directory. On some devices, it's not possible to select External SD Card, please use XInternalSD Xposed Module in that case."</string>
     <string name="video_url">Video URL</string>
+    <string name="pref_general_header">General Options</string>
+    <string name="pref_disable_module_temp_title">Disable Module Temporarily</string>
+    <string name="pref_disable_module_temp_summary">Disables Module Temporarily, skipping url logging and notifications</string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
