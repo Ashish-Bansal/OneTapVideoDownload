@@ -236,7 +236,15 @@ public class BlacklistDomainActivity extends AppCompatActivity {
                 hostNameEnd = url.length();
             }
 
-            return url.substring(doubleSlash, hostNameEnd);
+            String subDomain = url.substring(doubleSlash, hostNameEnd);
+            int lastIndexOfDot = subDomain.lastIndexOf('.');
+            int secondLastIndexOfDot = subDomain.lastIndexOf('.', lastIndexOfDot - 1);
+
+            if (secondLastIndexOfDot == -1) {
+                return subDomain;
+            } else {
+                return subDomain.substring(secondLastIndexOfDot + 1);
+            }
         } catch (IndexOutOfBoundsException e) {
             return "";
         }
