@@ -176,8 +176,10 @@ public class YoutubeDownloadInfo extends DownloadInfo implements Invokable<Video
 
     @Override
     public Integer invoke(Video video) {
-        YoutubeVideo youtubeVideo = (YoutubeVideo)video;
         if (video != null) {
+            YoutubeVideo youtubeVideo = (YoutubeVideo)video;
+            youtubeVideo.setPackageName("com.google.android.youtube");
+
             long id = saveVideoToDatabase(youtubeVideo);
             Intent downloadIntent = new Intent(mContext, MainActivity.class);
             downloadIntent.setAction(MainActivity.ACTION_SHOW_DOWNLOAD_DIALOG);
