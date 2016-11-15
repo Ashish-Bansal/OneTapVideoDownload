@@ -240,7 +240,6 @@ public class DownloadHandler {
     }
 
     public void deleteDownloadFromStorage() {
-        removeDownloadFromDatabase();
         mDownloadInfo.deleteDownloadFromStorage(mContext);
     }
 }
