@@ -346,14 +346,14 @@ public class DownloadManager extends Service {
                         }
                     }
 
+                    updateUiByStatus(DownloadInfo.Status.Stopped);
+                    updateUiByStatus(DownloadInfo.Status.Completed);
+
                     if (getDownloadCountByStatus(DownloadInfo.Status.Completed) == completedCount + downloadingCount) {
                         if (!AnalyticsApplication.isActivityVisible()) {
                             showDownloadsFinishedNotification(mNotificationId);
                         }
                     }
-
-                    updateUiByStatus(DownloadInfo.Status.Stopped);
-                    updateUiByStatus(DownloadInfo.Status.Completed);
                 }
             });
             mUiUpdateThread.start();
