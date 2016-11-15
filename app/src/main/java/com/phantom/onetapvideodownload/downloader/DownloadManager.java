@@ -278,8 +278,6 @@ public class DownloadManager extends Service {
             return;
         }
 
-        DownloadHandler downloadHandler = mDownloadHandlers.get(index).second;
-        downloadHandler.removeDownloadFromDatabase();
         removeDownloadHandler(index);
     }
 
@@ -559,7 +557,9 @@ public class DownloadManager extends Service {
     }
 
     public void removeDownloadHandler(int index) {
-        mDownloadHandlers.get(index).second.stopDownload();
+        DownloadHandler downloadHandler = mDownloadHandlers.get(index).second;
+        downloadHandler.stopDownload();
+        downloadHandler.removeDownloadFromDatabase();
         mDownloadHandlers.remove(index);
         emitOnDownloadRemoved(index);
     }
