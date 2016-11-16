@@ -183,5 +183,11 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
         classNamesMap.put(113253, new Pair<>("nsz", "uik"));
         classNamesMap.put(113355, new Pair<>("ntm", "ukl"));
         classNamesMap.put(113358, new Pair<>("ntm", "ukl"));
+        classNamesMap.put(113560, new Pair<>("nzj", "uti"));
+        classNamesMap.put(113854, new Pair<>("ocr", "ury"));
+        classNamesMap.put(113956, new Pair<>("odr", "utk"));
+        classNamesMap.put(114156, new Pair<>("ofb", "vas"));
+        classNamesMap.put(114352, new Pair<>("oit", "vay"));
+        classNamesMap.put(114354, new Pair<>("oit", "vay"));
     }
 }

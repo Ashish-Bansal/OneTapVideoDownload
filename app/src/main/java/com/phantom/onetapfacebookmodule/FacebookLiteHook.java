@@ -120,6 +120,11 @@ public class FacebookLiteHook implements IXposedHookLoadPackage {
         classNamesMap.put(36, new Pair<>("com.facebook.lite.r.e", "com.a.a.a.d.b"));
         classNamesMap.put(37, new Pair<>("com.facebook.lite.r.e", "com.a.a.a.d.b"));
         classNamesMap.put(38, new Pair<>("com.facebook.lite.r.e", "com.a.a.a.d.b"));
+        classNamesMap.put(39, new Pair<>("com.facebook.lite.r.e", "com.a.a.a.d.b"));
+        classNamesMap.put(40, new Pair<>("com.facebook.lite.r.e", "com.a.a.a.d.b"));
+        classNamesMap.put(41, new Pair<>("com.facebook.lite.r.e", "com.a.a.a.d.b"));
+        classNamesMap.put(42, new Pair<>("com.facebook.lite.r.e", "com.a.a.a.d.b"));
+        classNamesMap.put(43, new Pair<>("X.OH", "X.56"));
     }
 
 }
