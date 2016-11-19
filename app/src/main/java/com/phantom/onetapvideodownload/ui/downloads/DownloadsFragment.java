@@ -42,6 +42,7 @@ public class DownloadsFragment extends Fragment implements OnDownloadChangeListe
             mDownloadManager = mLocalBinder.getServiceInstance();
             mDownloadManager.addOnDownloadChangeListener(DownloadsFragment.this);
             evaluateVisibility();
+            onReset();
         }
     };
 
