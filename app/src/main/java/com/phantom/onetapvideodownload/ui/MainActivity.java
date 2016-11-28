@@ -27,7 +27,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -40,14 +39,15 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.plus.PlusOneButton;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.millennialmedia.InlineAd;
-import com.millennialmedia.MMException;
 import com.phantom.onetapvideodownload.AnalyticsApplication;
 import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
 import com.phantom.onetapvideodownload.BuildConfig;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
+import com.phantom.onetapvideodownload.ads.AdManager;
+import com.phantom.onetapvideodownload.ads.FacebookBannerAd;
+import com.phantom.onetapvideodownload.ads.MillennialBannerAd;
 import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
 import com.phantom.onetapvideodownload.downloader.DownloadOptionItem;
 import com.phantom.onetapvideodownload.downloader.ProxyDownloadManager;
@@ -63,18 +63,16 @@ import com.phantom.utils.enums.AppPermissions;
 import java.io.File;
 
 public class MainActivity extends AppCompatActivity implements FolderChooserDialog.FolderCallback,
-        Invokable<Video, Integer>, InlineAd.InlineListener {
+        Invokable<Video, Integer> {
     private final static String TAG = "MainActivity";
     private Toolbar toolbar;
     private Tracker mTracker;
+    private AdManager mAdManager;
+
     private static RecyclerView mDownloadDialogRecyclerView;
     private static final String APP_URL = "https://play.google.com/store/apps/details?id=com.phantom.onetapvideodownload";
     private PlusOneButton mPlusOneButton;
     private ApplicationUpdateNotification mApplicationUpdateNotification;
-    private MaterialDialog mProgressDialog;
-    private InlineAd mInlineAd;
-    private View mAdContainer;
-    public final static String PLACEMENT_ID = "229962";
 
     public final static String ACTION_SHOW_DOWNLOAD_DIALOG = "com.phantom.onetapvideodownload.action.saveurl";
 
@@ -91,18 +89,12 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        mAdContainer = findViewById(R.id.ad_container);
 
         if (CheckPreferences.getAdEnabled(this)) {
-            try {
-                mInlineAd = InlineAd.createInstance(PLACEMENT_ID, (ViewGroup) mAdContainer);
-                mInlineAd.setListener(this);
-                showAd();
-            } catch (MMException e) {
-                Log.e(TAG, "Error creating inline ad", e);
-            }
-        } else {
-            hideAd();
+            mAdManager = new AdManager(this);
+            mAdManager.add(new MillennialBannerAd(this));
+            mAdManager.add(new FacebookBannerAd(this));
+            mAdManager.processQueue();
         }
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -148,6 +140,12 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     protected void onPause() {
         super.onPause();
         AnalyticsApplication.activityPaused();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mAdManager.destroy();
     }
 
     private void handleActionShareIntent(Intent intent) {
@@ -513,10 +511,6 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
 
     @Override
     public Integer invoke(Video video) {
-        if (mProgressDialog != null) {
-            mProgressDialog.dismiss();
-        }
-
         if (video != null) {
             YoutubeVideo youtubeVideo = (YoutubeVideo)video;
             youtubeVideo.setPackageName("com.google.android.youtube");
@@ -539,67 +533,5 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
 
     public void openUsageInstructionActivity() {
         startActivity(UsageInstruction.class);
-    }
-
-    private void hideAd() {
-        mAdContainer.setVisibility(View.GONE);
-    }
-
-    private void showAd() {
-        if (mInlineAd != null) {
-            //The AdRequest instance is used to pass additional metadata to the server to improve ad selection
-            final InlineAd.InlineAdMetadata inlineAdMetadata = new InlineAd.InlineAdMetadata().
-                    setAdSize(InlineAd.AdSize.BANNER);
-
-            //Request ads from the server.  If automatic refresh is enabled for your placement new ads will be shown
-            //automatically
-            mInlineAd.request(inlineAdMetadata);
-        }
-    }
-
-    @Override
-    public void onRequestSucceeded(InlineAd inlineAd) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mAdContainer.setVisibility(View.VISIBLE);
-            }
-        });
-        Log.i(TAG, "Inline Banner Ad loaded.");
-    }
-
-    @Override
-    public void onRequestFailed(InlineAd inlineAd, InlineAd.InlineErrorStatus errorStatus) {
-        Log.i(TAG, errorStatus.toString());
-    }
-
-    @Override
-    public void onClicked(InlineAd inlineAd) {
-        Log.i(TAG, "Inline Banner Ad clicked.");
-    }
-
-    @Override
-    public void onResize(InlineAd inlineAd, int width, int height) {
-        Log.i(TAG, "Inline Banner Ad starting resize.");
-    }
-
-    @Override
-    public void onResized(InlineAd inlineAd, int width, int height, boolean toOriginalSize) {
-        Log.i(TAG, "Inline Banner Ad resized.");
-    }
-
-    @Override
-    public void onExpanded(InlineAd inlineAd) {
-        Log.i(TAG, "Inline Banner Ad expanded.");
-    }
-
-    @Override
-    public void onCollapsed(InlineAd inlineAd) {
-        Log.i(TAG, "Inline Banner Ad collapsed.");
-    }
-
-    @Override
-    public void onAdLeftApplication(InlineAd inlineAd) {
-        Log.i(TAG, "Inline Banner Ad left application.");
     }
 }
