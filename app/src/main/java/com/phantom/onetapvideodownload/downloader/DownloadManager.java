@@ -58,6 +58,9 @@ public class DownloadManager extends Service {
 
     @Override
     public void onCreate() {
+        mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        mBuilder = new NotificationCompat.Builder(this);
+
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(this);
         List<DownloadInfo> downloadInfos = downloadDatabase.getAllDownloads();
         for (DownloadInfo downloadInfo : downloadInfos) {
@@ -239,7 +242,7 @@ public class DownloadManager extends Service {
                 permissionIntent = new Intent(this, MainActivity.class);
                 PendingIntent permissionPendingIntent = PendingIntent.getActivity(this, 0, permissionIntent, 0);
                 mBuilder.setContentIntent(permissionPendingIntent);
-                mBuilder.addAction(R.drawable.transparent, "Enable", permissionPendingIntent);
+                mBuilder.addAction(R.drawable.transparent, "Need Storage Permission", permissionPendingIntent);
                 break;
             default:
                 return;
@@ -394,11 +397,6 @@ public class DownloadManager extends Service {
     }
 
     private synchronized void showNotification() {
-        if (mNotifyManager == null || mBuilder == null) {
-            mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            mBuilder = new NotificationCompat.Builder(this);
-        }
-
         mBuilder.setSmallIcon(R.drawable.download);
         mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
         mBuilder.setContentTitle(getResources().getString(R.string.app_name));
