@@ -241,8 +241,13 @@ public class DownloadManager extends Service {
             case External_Storage_Permission:
                 permissionIntent = new Intent(this, MainActivity.class);
                 PendingIntent permissionPendingIntent = PendingIntent.getActivity(this, 0, permissionIntent, 0);
+                mBuilder.setSmallIcon(R.drawable.one_tap_small);
+                mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.one_tap_large));
+                mBuilder.setContentTitle(getResources().getString(R.string.app_name));
+                mBuilder.setContentText("Need Storage Permission");
+                mBuilder.setAutoCancel(false);
                 mBuilder.setContentIntent(permissionPendingIntent);
-                mBuilder.addAction(R.drawable.transparent, "Need Storage Permission", permissionPendingIntent);
+                mBuilder.addAction(R.drawable.transparent, "Open Application", permissionPendingIntent);
                 break;
             default:
                 return;
