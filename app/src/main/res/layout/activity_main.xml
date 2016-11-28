@@ -22,13 +22,13 @@
             android:layout_height="0dip"
             android:layout_weight="1"/>
 
-        <com.google.android.gms.ads.NativeExpressAdView
-            android:id="@+id/adView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            ads:adUnitId="@string/banner_ad_unit_id"
-            ads:adSize="FULL_WIDTHx80">
-        </com.google.android.gms.ads.NativeExpressAdView>
+        <!-- Millennial Media SDK will fill this container with an ad -->
+        <RelativeLayout
+            android:id="@+id/ad_container"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/darker_gray"
+            android:padding="1dp"
+            android:visibility="gone"/>
     </LinearLayout>
-
 </RelativeLayout>

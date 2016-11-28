@@ -17,10 +17,13 @@
 package com.phantom.onetapvideodownload;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.evernote.android.job.JobManager;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
+import com.millennialmedia.MMException;
+import com.millennialmedia.MMSDK;
 import com.phantom.HookFetchJob;
 import com.phantom.HookFetchJobCreator;
 
@@ -35,6 +38,12 @@ public class AnalyticsApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        try {
+            MMSDK.initialize(this);
+        } catch (MMException e) {
+            Log.e("Application", "Error initializing the MM SDK", e);
+        }
+
         JobManager.create(this).addJobCreator(new HookFetchJobCreator());
         int noOfJobRequests = JobManager.instance().getAllJobRequestsForTag(HookFetchJob.TAG).size();
 

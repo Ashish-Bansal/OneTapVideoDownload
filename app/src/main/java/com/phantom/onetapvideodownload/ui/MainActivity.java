@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,13 +36,12 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.NativeExpressAdView;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.plus.PlusOneButton;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.millennialmedia.InlineAd;
+import com.millennialmedia.MMException;
 import com.phantom.onetapvideodownload.AnalyticsApplication;
 import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
 import com.phantom.onetapvideodownload.BuildConfig;
@@ -63,7 +63,7 @@ import com.phantom.utils.enums.AppPermissions;
 import java.io.File;
 
 public class MainActivity extends AppCompatActivity implements FolderChooserDialog.FolderCallback,
-        Invokable<Video, Integer> {
+        Invokable<Video, Integer>, InlineAd.InlineListener {
     private final static String TAG = "MainActivity";
     private Toolbar toolbar;
     private Tracker mTracker;
@@ -72,7 +72,9 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     private PlusOneButton mPlusOneButton;
     private ApplicationUpdateNotification mApplicationUpdateNotification;
     private MaterialDialog mProgressDialog;
-    private NativeExpressAdView mAdView;
+    private InlineAd mInlineAd;
+    private View mAdContainer;
+    public final static String PLACEMENT_ID = "229962";
 
     public final static String ACTION_SHOW_DOWNLOAD_DIALOG = "com.phantom.onetapvideodownload.action.saveurl";
 
@@ -89,10 +91,16 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-4007739214025921~1601743291");
-        mAdView = (NativeExpressAdView)findViewById(R.id.adView);
+        mAdContainer = findViewById(R.id.ad_container);
+
         if (CheckPreferences.getAdEnabled(this)) {
-            showAd();
+            try {
+                mInlineAd = InlineAd.createInstance(PLACEMENT_ID, (ViewGroup) mAdContainer);
+                mInlineAd.setListener(this);
+                showAd();
+            } catch (MMException e) {
+                Log.e(TAG, "Error creating inline ad", e);
+            }
         } else {
             hideAd();
         }
@@ -534,15 +542,64 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     }
 
     private void hideAd() {
-        mAdView.setEnabled(false);
-        mAdView.setVisibility(View.GONE);
+        mAdContainer.setVisibility(View.GONE);
     }
 
     private void showAd() {
-        mAdView.setEnabled(true);
-        mAdView.setVisibility(View.VISIBLE);
-        AdRequest request = new AdRequest.Builder()
-                .build();
-        mAdView.loadAd(request);
+        if (mInlineAd != null) {
+            //The AdRequest instance is used to pass additional metadata to the server to improve ad selection
+            final InlineAd.InlineAdMetadata inlineAdMetadata = new InlineAd.InlineAdMetadata().
+                    setAdSize(InlineAd.AdSize.BANNER);
+
+            //Request ads from the server.  If automatic refresh is enabled for your placement new ads will be shown
+            //automatically
+            mInlineAd.request(inlineAdMetadata);
+        }
+    }
+
+    @Override
+    public void onRequestSucceeded(InlineAd inlineAd) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mAdContainer.setVisibility(View.VISIBLE);
+            }
+        });
+        Log.i(TAG, "Inline Banner Ad loaded.");
+    }
+
+    @Override
+    public void onRequestFailed(InlineAd inlineAd, InlineAd.InlineErrorStatus errorStatus) {
+        Log.i(TAG, errorStatus.toString());
+    }
+
+    @Override
+    public void onClicked(InlineAd inlineAd) {
+        Log.i(TAG, "Inline Banner Ad clicked.");
+    }
+
+    @Override
+    public void onResize(InlineAd inlineAd, int width, int height) {
+        Log.i(TAG, "Inline Banner Ad starting resize.");
+    }
+
+    @Override
+    public void onResized(InlineAd inlineAd, int width, int height, boolean toOriginalSize) {
+        Log.i(TAG, "Inline Banner Ad resized.");
+    }
+
+    @Override
+    public void onExpanded(InlineAd inlineAd) {
+        Log.i(TAG, "Inline Banner Ad expanded.");
+    }
+
+    @Override
+    public void onCollapsed(InlineAd inlineAd) {
+        Log.i(TAG, "Inline Banner Ad collapsed.");
+    }
+
+    @Override
+    public void onAdLeftApplication(InlineAd inlineAd) {
+        Log.i(TAG, "Inline Banner Ad left application.");
     }
 }
