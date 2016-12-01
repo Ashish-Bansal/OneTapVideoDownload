@@ -33,3 +33,4 @@
 -keep class com.phantom.onetapfacebookmodule.** { *; }
 -keep class com.phantom.onetapyoutubemodule.** { *; }
 -keep class com.mopub.mobileads.** { *; }
+
