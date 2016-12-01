@@ -1,6 +1,6 @@
 package com.phantom.onetapvideodownload.ads;
 
-import android.view.View;
+import android.widget.RelativeLayout;
 
 import com.phantom.utils.Invokable;
 
@@ -9,6 +9,6 @@ interface Ad {
         Success, Failed
     }
 
-    void loadAd(Invokable<Response, Void> invokable, View adContainer);
+    void loadAd(Invokable<Response, Void> invokable, RelativeLayout adContainer);
     void destroy();
 }

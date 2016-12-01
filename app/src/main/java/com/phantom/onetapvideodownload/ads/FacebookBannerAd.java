@@ -2,7 +2,6 @@ package com.phantom.onetapvideodownload.ads;
 
 import android.content.Context;
 import android.util.Log;
-import android.view.View;
 import android.widget.RelativeLayout;
 
 import com.facebook.ads.AdError;
@@ -24,22 +23,26 @@ public class FacebookBannerAd implements Ad, AdListener {
     }
 
     @Override
-    public void loadAd(Invokable<Ad.Response, Void> invokable, View adContainer) {
+    public void loadAd(Invokable<Ad.Response, Void> invokable, RelativeLayout adContainer) {
         Log.d(TAG, "Trying to load Facebook Banner Ad");
-        mAdView = new AdView(mContext, PLACEMENT_ID, AdSize.BANNER_HEIGHT_50);
-
-        mInvokable = invokable;
-        RelativeLayout layout = (RelativeLayout) (adContainer);
-        layout.addView(mAdView);
-        mAdView.setAdListener(this);
         AdSettings.addTestDevice("7bb256905151fbeea6ba45b920643bf5");
+        mAdView = new AdView(mContext, PLACEMENT_ID, AdSize.BANNER_HEIGHT_50);
+        mAdView.setAdListener(this);
         mAdView.loadAd();
+        adContainer.addView(mAdView);
+        mInvokable = invokable;
     }
 
     @Override
     public void onError(com.facebook.ads.Ad ad, AdError error) {
-        Log.e(TAG, "Unable to load Facebook Ad");
+        Log.e(TAG, "Unable to load Facebook Banner Ad");
         Log.e(TAG, error.getErrorMessage());
+        if (mInvokable == null) {
+            Log.e(TAG, "Invokable object is null; Returning");
+            return;
+        }
+
+        mInvokable.invoke(Response.Failed);
     }
 
     @Override

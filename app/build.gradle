@@ -54,6 +54,10 @@ android {
 
 dependencies {
     provided fileTree(dir: 'libs', include: ['XposedBridgeApi-20150213.jar'])
+    compile('com.mopub:mopub-sdk-banner:4.9.0@aar') {
+        transitive = true
+    }
+
     compile(name:'millennial-ad-sdk', ext:'aar')
 
     repositories {

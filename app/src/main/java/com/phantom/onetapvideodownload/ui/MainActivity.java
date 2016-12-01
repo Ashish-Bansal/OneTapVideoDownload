@@ -48,6 +48,7 @@ import com.phantom.onetapvideodownload.Video.YoutubeVideo;
 import com.phantom.onetapvideodownload.ads.AdManager;
 import com.phantom.onetapvideodownload.ads.FacebookBannerAd;
 import com.phantom.onetapvideodownload.ads.MillennialBannerAd;
+import com.phantom.onetapvideodownload.ads.MoPubAd;
 import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
 import com.phantom.onetapvideodownload.downloader.DownloadOptionItem;
 import com.phantom.onetapvideodownload.downloader.ProxyDownloadManager;
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
 
         if (CheckPreferences.getAdEnabled(this)) {
             mAdManager = new AdManager(this);
+            mAdManager.add(new MoPubAd(this));
             mAdManager.add(new MillennialBannerAd(this));
             mAdManager.add(new FacebookBannerAd(this));
             mAdManager.processQueue();
