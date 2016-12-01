@@ -160,14 +160,7 @@ public class DownloadManager extends Service {
                 }
 
                 handleActionDownloadInserted(downloadId);
-                if (checkPermissionGranted(AppPermissions.External_Storage_Permission)) {
-                    int index = getDownloadByDatabaseId(downloadId);
-                    if (index == -1) throw new AssertionError("Index should not be -1");
-                    DownloadHandler downloadHandler = mDownloadHandlers.get(index).second;
-                    downloadHandler.startDownload();
-                    showNotification();
-                    startUiUpdateThread();
-                }
+                handleActionResumeDownload(downloadId);
             } else if (ACTION_DOWNLOAD_INSERTED.equals(action)) {
                 final long downloadId = intent.getLongExtra(EXTRA_DOWNLOAD_ID, -1);
                 if (downloadId == -1) {
@@ -302,6 +295,11 @@ public class DownloadManager extends Service {
     }
 
     private void handleActionResumeDownload(long id) {
+        if (!checkPermissionGranted(AppPermissions.External_Storage_Permission)) {
+            Log.e(TAG, "External Storage Permission not granted. Handle Action Resume Download failed.");
+            return;
+        }
+
         int index = getDownloadByDatabaseId(id);
         if (index == -1) {
             return;
@@ -311,6 +309,7 @@ public class DownloadManager extends Service {
         downloadHandler.startDownload();
         emitOnDownloadInfoUpdated(index);
         startUiUpdateThread();
+        showNotification();
         updateNotification();
     }
 
