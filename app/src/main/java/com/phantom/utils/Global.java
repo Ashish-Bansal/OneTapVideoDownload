@@ -10,6 +10,8 @@ import android.media.MediaScannerConnection;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
 import android.support.v4.util.Pair;
@@ -421,5 +423,19 @@ public class Global {
                 paths,
                 null,
                 null);
+    }
+
+    public static void showToastFromNonUiThread(final Context context, final Integer messageId, final Integer timePeriod) {
+        showToastFromNonUiThread(context, context.getResources().getString(messageId), timePeriod);
+    }
+
+    public static void showToastFromNonUiThread(final Context context, final String message, final Integer timePeriod) {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(context, message, timePeriod).show();
+            }
+        });
     }
 }

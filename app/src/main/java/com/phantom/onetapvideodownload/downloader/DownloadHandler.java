@@ -112,7 +112,10 @@ public class DownloadHandler {
                             BufferedSink bufferedSink = Okio.buffer(Okio.appendingSink(file));;
                             writeData(bufferedSource, bufferedSink);
                         } else {
-                            Log.v(TAG, "Status Code : " + response.code());
+                            stopDownload();
+                            String message = "Download Failed! Response Code : " + response.code();
+                            Log.v(TAG, message);
+                            Global.showToastFromNonUiThread(mContext, message, Toast.LENGTH_SHORT);
                         }
                     } catch (IOException e) {
                         Log.e("DownloadService", "Exception : ", e);
