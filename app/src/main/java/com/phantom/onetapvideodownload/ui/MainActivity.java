@@ -94,8 +94,8 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         if (CheckPreferences.getAdEnabled(this)) {
             mAdManager = new AdManager(this);
             mAdManager.add(new MoPubAd(this));
-            mAdManager.add(new MillennialBannerAd(this));
             mAdManager.add(new FacebookBannerAd(this));
+            mAdManager.add(new MillennialBannerAd(this));
             mAdManager.processQueue();
         }
 
