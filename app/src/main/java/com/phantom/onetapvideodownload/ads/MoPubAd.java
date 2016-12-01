@@ -28,6 +28,10 @@ public class MoPubAd implements Ad, MoPubView.BannerAdListener {
 
         mInvokable = invokable;
         adContainer.addView(mAdView);
+        RelativeLayout.LayoutParams layoutParams =
+                new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+        mAdView.setLayoutParams(layoutParams);
         mAdView.loadAd();
     }
 
