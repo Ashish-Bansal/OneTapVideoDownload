@@ -121,6 +121,7 @@ public class DownloadHandler {
                 }
             });
         } else {
+            Toast.makeText(mContext, R.string.internet_not_available_summary, Toast.LENGTH_LONG).show();
             setStatus(DownloadInfo.Status.NetworkNotAvailable);
             writeToDatabase();
         }
