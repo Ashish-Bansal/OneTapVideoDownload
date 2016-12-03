@@ -7,12 +7,11 @@ import android.text.InputType;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.phantom.onetapvideodownload.R;
+import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionItem;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionAdapter;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionIds;
 import com.phantom.utils.Global;
-import com.phantom.onetapvideodownload.ui.MainActivity;
-import com.phantom.onetapvideodownload.R;
-import com.phantom.onetapvideodownload.downloader.DownloadOptionItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -185,7 +184,7 @@ public class YoutubeVideo implements Video {
     }
 
     @Override
-    public List<DownloadOptionItem> getOptions(final Context context) {
+    public List<DownloadOptionItem> getOptions(final Context context, final DownloadOptionAdapter downloadOptionAdapter) {
         List<DownloadOptionItem> options = new ArrayList<>();
         options.add(new DownloadOptionItem(DownloadOptionIds.Filename,
                 R.drawable.file,
@@ -194,8 +193,6 @@ public class YoutubeVideo implements Video {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final DownloadOptionAdapter downloadOptionAdapter =
-                                MainActivity.getDownloadOptionAdapter();
                         final DownloadOptionItem filenameOptionItem = downloadOptionAdapter.getOptionItem(DownloadOptionIds.Filename);
                                 new MaterialDialog.Builder(context)
                                 .title(R.string.enter_filename)
@@ -236,8 +233,6 @@ public class YoutubeVideo implements Video {
                                 .itemsCallback(new MaterialDialog.ListCallback() {
                                     @Override
                                     public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                                        DownloadOptionAdapter downloadOptionAdapter =
-                                                MainActivity.getDownloadOptionAdapter();
                                         DownloadOptionItem formatOptionItem = downloadOptionAdapter.getOptionItem(DownloadOptionIds.Format);
                                         formatOptionItem.setOptionValue(text.toString());
                                         downloadOptionAdapter.setOptionItem(formatOptionItem);

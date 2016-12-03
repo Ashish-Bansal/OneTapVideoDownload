@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
-import com.phantom.onetapvideodownload.ui.MainActivity;
 import com.phantom.onetapvideodownload.R;
-import com.phantom.onetapvideodownload.downloader.DownloadOptionItem;
+import com.phantom.onetapvideodownload.Video.Video;
+import com.phantom.onetapvideodownload.ui.MainActivity;
 import com.phantom.utils.CheckPreferences;
 
 import java.util.ArrayList;
@@ -21,12 +21,12 @@ public class DownloadOptionAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private Context mContext;
     private String mDownloadLocation;
 
-    public DownloadOptionAdapter(final Context context, List<DownloadOptionItem> optionList) {
+    public DownloadOptionAdapter(final Context context, Video video) {
         mContext = context;
         mDownloadLocation = CheckPreferences.getDownloadLocation(context);
         mOptionList = new ArrayList<>();
         addDefaultOptions();
-        mOptionList.addAll(optionList);
+        mOptionList.addAll(video.getOptions(context, this));
     }
 
     private void addDefaultOptions() {

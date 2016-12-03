@@ -1,8 +1,6 @@
-package com.phantom.onetapvideodownload.downloader;
+package com.phantom.onetapvideodownload.ui.downloadoptions;
 
 import android.view.View;
-
-import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionIds;
 
 public class DownloadOptionItem {
     private Integer mIconId, mLabelStringId;

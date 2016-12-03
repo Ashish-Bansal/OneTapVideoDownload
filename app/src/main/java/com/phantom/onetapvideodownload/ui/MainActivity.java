@@ -50,7 +50,7 @@ import com.phantom.onetapvideodownload.ads.FacebookBannerAd;
 import com.phantom.onetapvideodownload.ads.MillennialBannerAd;
 import com.phantom.onetapvideodownload.ads.MoPubAd;
 import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
-import com.phantom.onetapvideodownload.downloader.DownloadOptionItem;
+import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionItem;
 import com.phantom.onetapvideodownload.downloader.ProxyDownloadManager;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionAdapter;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionIds;
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     private Tracker mTracker;
     private AdManager mAdManager;
 
-    private static RecyclerView mDownloadDialogRecyclerView;
+    private RecyclerView mDownloadDialogRecyclerView;
     private static final String APP_URL = "https://play.google.com/store/apps/details?id=com.phantom.onetapvideodownload";
     private PlusOneButton mPlusOneButton;
     private ApplicationUpdateNotification mApplicationUpdateNotification;
@@ -347,10 +347,6 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         }
     }
 
-    public static DownloadOptionAdapter getDownloadOptionAdapter() {
-        return (DownloadOptionAdapter)mDownloadDialogRecyclerView.getAdapter();
-    }
-
     private void showVideoDownloadDialog(final long videoId) {
         VideoDatabase videoDatabase = VideoDatabase.getDatabase(this);
         final Video video = videoDatabase.getVideo(videoId);
@@ -372,7 +368,8 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         LinearLayoutManager layoutManager = new org.solovyev.android.views.llm.LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mDownloadDialogRecyclerView.setLayoutManager(layoutManager);
         mDownloadDialogRecyclerView.setHasFixedSize(true);
-        mDownloadDialogRecyclerView.setAdapter(new DownloadOptionAdapter(this, video.getOptions(this)));
+        final DownloadOptionAdapter downloadOptionAdapter = new DownloadOptionAdapter(this, video);
+        mDownloadDialogRecyclerView.setAdapter(downloadOptionAdapter);
 
         ImageView closeButton = (ImageView)dialogView.findViewById(R.id.close);
         closeButton.setOnClickListener(new View.OnClickListener() {
@@ -390,7 +387,6 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                DownloadOptionAdapter downloadOptionAdapter = getDownloadOptionAdapter();
                 String filename = downloadOptionAdapter.getOptionItem(DownloadOptionIds.Filename).getOptionValue();
                 String downloadLocation = downloadOptionAdapter.getOptionItem(DownloadOptionIds.DownloadLocation).getOptionValue();
 
@@ -413,7 +409,6 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                DownloadOptionAdapter downloadOptionAdapter = getDownloadOptionAdapter();
                 String filename = downloadOptionAdapter.getOptionItem(DownloadOptionIds.Filename).getOptionValue();
                 String downloadLocation = downloadOptionAdapter.getOptionItem(DownloadOptionIds.DownloadLocation).getOptionValue();
 

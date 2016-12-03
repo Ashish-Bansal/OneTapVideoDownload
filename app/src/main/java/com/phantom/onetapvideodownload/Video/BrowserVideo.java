@@ -5,12 +5,11 @@ import android.text.InputType;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.phantom.onetapvideodownload.R;
+import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionItem;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionAdapter;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionIds;
 import com.phantom.utils.Global;
-import com.phantom.onetapvideodownload.ui.MainActivity;
-import com.phantom.onetapvideodownload.R;
-import com.phantom.onetapvideodownload.downloader.DownloadOptionItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +59,7 @@ public class BrowserVideo implements Video {
     }
 
     @Override
-    public List<DownloadOptionItem> getOptions(final Context context) {
+    public List<DownloadOptionItem> getOptions(final Context context, final DownloadOptionAdapter downloadOptionAdapter) {
         List<DownloadOptionItem> options = new ArrayList<>();
         options.add(new DownloadOptionItem(DownloadOptionIds.Filename,
                 R.drawable.file,
@@ -69,8 +68,6 @@ public class BrowserVideo implements Video {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        final DownloadOptionAdapter downloadOptionAdapter =
-                                MainActivity.getDownloadOptionAdapter();
                         final DownloadOptionItem filenameOptionItem = downloadOptionAdapter.getOptionItem(DownloadOptionIds.Filename);
                         new MaterialDialog.Builder(context)
                                 .title(R.string.enter_filename)
