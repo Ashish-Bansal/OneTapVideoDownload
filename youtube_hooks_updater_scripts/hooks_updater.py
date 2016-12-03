@@ -82,7 +82,9 @@ def repoRootPath():
 def pullLatestChanges():
     repo_root_path = repoRootPath()
     try:
+        subprocess.call(["git reset HEAD~100 --hard"], shell=True, cwd=repo_root_path)
         subprocess.call(["git pull upstream master"], shell=True, cwd=repo_root_path)
+        subprocess.call(["git push origin master --force"], shell=True, cwd=repo_root_path)
     except Exception as e:
         print e
 
