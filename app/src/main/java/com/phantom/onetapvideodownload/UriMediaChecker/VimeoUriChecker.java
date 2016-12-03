@@ -30,7 +30,7 @@ public class VimeoUriChecker implements AbstractUriChecker {
                     .getString("url");
 
             if (videoUrl != null && !videoUrl.isEmpty()) {
-                return new BrowserVideo(mContext, videoUrl);
+                return new BrowserVideo(videoUrl);
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -24,7 +24,7 @@ public class YoutubeUriChecker implements AbstractUriChecker {
             if (videoId == null) {
                 return null;
             }
-            return new YoutubeVideo(mContext, "", videoId);
+            return new YoutubeVideo("", videoId);
         } catch (Exception e) {
             e.printStackTrace();
         }

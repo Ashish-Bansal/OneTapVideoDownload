@@ -13,7 +13,6 @@ public interface Video {
     String getTitle();
     long getDatabaseId();
     void setDatabaseId(long databaseId);
-    List<DownloadOptionItem> getOptions();
-    void setContext(Context context);
+    List<DownloadOptionItem> getOptions(Context context);
     boolean isResourceAvailable();
 }

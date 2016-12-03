@@ -21,7 +21,7 @@ public class YoutubeParserProxy {
             @Override
             public void onUrisAvailable(String videoId, String videoTitle, SparseArray<YtFile> ytFiles) {
                 if (ytFiles != null) {
-                    YoutubeVideo video = new YoutubeVideo(context, videoTitle, videoId);
+                    YoutubeVideo video = new YoutubeVideo(videoTitle, videoId);
                     for(Pair p : YoutubeVideo.itagQualityMapping) {
                         YtFile videoFormat = ytFiles.get(Integer.parseInt(p.first.toString()));
                         if (videoFormat == null) {

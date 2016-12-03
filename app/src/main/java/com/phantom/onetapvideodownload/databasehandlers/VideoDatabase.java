@@ -163,7 +163,7 @@ public class VideoDatabase extends SQLiteOpenHelper {
                     String url = videoQueryCursor.getString(2);
                     String title = videoQueryCursor.getString(3);
                     String packageName = videoQueryCursor.getString(4);
-                    Video video = new BrowserVideo(mContext, url, title);
+                    Video video = new BrowserVideo(url, title);
                     video.setDatabaseId(videoId);
                     video.setPackageName(packageName);
                     videoQueryCursor.close();
@@ -178,7 +178,7 @@ public class VideoDatabase extends SQLiteOpenHelper {
                     String title = videoQueryCursor.getString(4);
                     String param = videoQueryCursor.getString(0);
                     String packageName = videoQueryCursor.getString(6);
-                    YoutubeVideo youtubeVideo = new YoutubeVideo(mContext, title, param);
+                    YoutubeVideo youtubeVideo = new YoutubeVideo(title, param);
                     youtubeVideo.setDatabaseId(videoId);
                     youtubeVideo.setPackageName(packageName);
                     do {

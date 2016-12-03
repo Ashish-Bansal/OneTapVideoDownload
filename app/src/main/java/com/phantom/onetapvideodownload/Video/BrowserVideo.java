@@ -18,10 +18,8 @@ import java.util.List;
 public class BrowserVideo implements Video {
     private String mTitle, mUrl, mPackageName;
     private long mDatabaseId = -1;
-    private Context mContext;
 
-    public BrowserVideo(Context context, String url) {
-        mContext = context;
+    public BrowserVideo(String url) {
         mUrl = url;
         mTitle = Global.getFilenameFromUrl(url);
         if (mTitle.isEmpty()) {
@@ -29,8 +27,7 @@ public class BrowserVideo implements Video {
         }
     }
 
-    public BrowserVideo(Context context, String url, String title) {
-        mContext = context;
+    public BrowserVideo(String url, String title) {
         mUrl = url;
         mTitle = title;
         if (mTitle == null || mTitle.isEmpty()) {
@@ -63,12 +60,7 @@ public class BrowserVideo implements Video {
     }
 
     @Override
-    public void setContext(Context context) {
-        mContext = context;
-    }
-
-    @Override
-    public List<DownloadOptionItem> getOptions() {
+    public List<DownloadOptionItem> getOptions(final Context context) {
         List<DownloadOptionItem> options = new ArrayList<>();
         options.add(new DownloadOptionItem(DownloadOptionIds.Filename,
                 R.drawable.file,
@@ -80,7 +72,7 @@ public class BrowserVideo implements Video {
                         final DownloadOptionAdapter downloadOptionAdapter =
                                 MainActivity.getDownloadOptionAdapter();
                         final DownloadOptionItem filenameOptionItem = downloadOptionAdapter.getOptionItem(DownloadOptionIds.Filename);
-                        new MaterialDialog.Builder(mContext)
+                        new MaterialDialog.Builder(context)
                                 .title(R.string.enter_filename)
                                 .inputType(InputType.TYPE_CLASS_TEXT)
                                 .input("", filenameOptionItem.getOptionValue(), new MaterialDialog.InputCallback() {

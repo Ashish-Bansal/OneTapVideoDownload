@@ -359,8 +359,6 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
             return;
         }
 
-        video.setContext(this);
-
         final MaterialDialog dialog = new MaterialDialog.Builder(this)
                 .customView(R.layout.dialog_download_file, false)
                 .canceledOnTouchOutside(false)
@@ -374,7 +372,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         LinearLayoutManager layoutManager = new org.solovyev.android.views.llm.LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         mDownloadDialogRecyclerView.setLayoutManager(layoutManager);
         mDownloadDialogRecyclerView.setHasFixedSize(true);
-        mDownloadDialogRecyclerView.setAdapter(new DownloadOptionAdapter(this, video.getOptions()));
+        mDownloadDialogRecyclerView.setAdapter(new DownloadOptionAdapter(this, video.getOptions(this)));
 
         ImageView closeButton = (ImageView)dialogView.findViewById(R.id.close);
         closeButton.setOnClickListener(new View.OnClickListener() {

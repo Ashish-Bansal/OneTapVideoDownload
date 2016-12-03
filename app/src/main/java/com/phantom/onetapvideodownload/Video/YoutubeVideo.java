@@ -22,7 +22,6 @@ public class YoutubeVideo implements Video {
     private long mDatabaseId = -1;
     public static List<Pair<Integer, String>> itagQualityMapping = new ArrayList<>();
     public static List<Pair<Integer, String>> itagExtensionMapping = new ArrayList<>();
-    private Context mContext;
 
     static {
         itagQualityMapping.add(Pair.create(22, "MP4 - 720p"));
@@ -61,8 +60,7 @@ public class YoutubeVideo implements Video {
 
     private SparseArrayCompat<Format> mFormatList = new SparseArrayCompat<>();
 
-    public YoutubeVideo(Context context, String title, String param) {
-        mContext = context;
+    public YoutubeVideo(String title, String param) {
         mTitle = title;
         mParam = param;
     }
@@ -187,12 +185,7 @@ public class YoutubeVideo implements Video {
     }
 
     @Override
-    public void setContext(Context context) {
-        mContext = context;
-    }
-
-    @Override
-    public List<DownloadOptionItem> getOptions() {
+    public List<DownloadOptionItem> getOptions(final Context context) {
         List<DownloadOptionItem> options = new ArrayList<>();
         options.add(new DownloadOptionItem(DownloadOptionIds.Filename,
                 R.drawable.file,
@@ -204,7 +197,7 @@ public class YoutubeVideo implements Video {
                         final DownloadOptionAdapter downloadOptionAdapter =
                                 MainActivity.getDownloadOptionAdapter();
                         final DownloadOptionItem filenameOptionItem = downloadOptionAdapter.getOptionItem(DownloadOptionIds.Filename);
-                                new MaterialDialog.Builder(mContext)
+                                new MaterialDialog.Builder(context)
                                 .title(R.string.enter_filename)
                                 .inputType(InputType.TYPE_CLASS_TEXT)
                                 .input("", filenameOptionItem.getOptionValue(), new MaterialDialog.InputCallback() {
@@ -237,7 +230,7 @@ public class YoutubeVideo implements Video {
                             displayStrings.add(formatDescription);
                         }
 
-                        new MaterialDialog.Builder(mContext)
+                        new MaterialDialog.Builder(context)
                                 .title(R.string.video_quality)
                                 .items(displayStrings)
                                 .itemsCallback(new MaterialDialog.ListCallback() {

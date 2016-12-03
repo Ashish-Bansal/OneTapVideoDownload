@@ -110,7 +110,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
                     return START_NOT_STICKY;
                 }
 
-                Video video = new BrowserVideo(this, url, title);
+                Video video = new BrowserVideo(url, title);
                 if (packageName != null) {
                     video.setPackageName(packageName);
                 }
