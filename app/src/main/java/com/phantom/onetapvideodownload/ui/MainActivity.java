@@ -147,7 +147,9 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mAdManager.destroy();
+        if (mAdManager != null) {
+            mAdManager.destroy();
+        }
     }
 
     private void handleActionShareIntent(Intent intent) {
@@ -375,7 +377,6 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         mDownloadDialogRecyclerView.setAdapter(new DownloadOptionAdapter(this, video.getOptions()));
 
         ImageView closeButton = (ImageView)dialogView.findViewById(R.id.close);
-        assert(closeButton != null);
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

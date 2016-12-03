@@ -139,12 +139,12 @@ public class DownloadManager extends Service {
     }
 
     public void addOnDownloadChangeListener(OnDownloadChangeListener object) {
-        Log.e(TAG, "Registering DownloadChangeListener " + object.getClass().getName());
+        Log.i(TAG, "Registering DownloadChangeListener " + object.getClass().getName());
         onDownloadChangeListeners.add(object);
     }
 
     public void removeOnDownloadChangeListener(OnDownloadChangeListener object) {
-        Log.e(TAG, "UnRegistering DownloadChangeListener " + object.getClass().getName());
+        Log.i(TAG, "UnRegistering DownloadChangeListener " + object.getClass().getName());
         onDownloadChangeListeners.remove(object);
     }
 
@@ -264,11 +264,11 @@ public class DownloadManager extends Service {
             requestPermission(AppPermissions.External_Storage_Permission);
         }
 
-        Log.e(TAG, "onDownloadChangeListeners Size : " + onDownloadChangeListeners.size());
+        Log.i(TAG, "onDownloadChangeListeners Size : " + onDownloadChangeListeners.size());
 
         onDownloadChangeListeners.removeAll(Collections.singleton(null));
         for (OnDownloadChangeListener onDownloadChangeListener : onDownloadChangeListeners) {
-            Log.e(TAG, "Calling onDownloadAdded callback method " + onDownloadChangeListener.getClass().getName());
+            Log.i(TAG, "Calling onDownloadAdded callback method " + onDownloadChangeListener.getClass().getName());
             onDownloadChangeListener.onDownloadAdded(mDownloadHandlers.size() - 1);
         }
     }
@@ -348,8 +348,7 @@ public class DownloadManager extends Service {
                         try {
                             Thread.sleep(NOTIFICATION_UPDATE_WAIT_TIME);
                         } catch (InterruptedException e) {
-                            Log.e(TAG, "Notification Update Thread Interrupted Exception");
-                            e.printStackTrace();
+                            Log.e(TAG, "Notification Update Thread Interrupted Exception", e);
                         }
                     }
 
@@ -379,7 +378,7 @@ public class DownloadManager extends Service {
     private void emitOnReset() {
         onDownloadChangeListeners.removeAll(Collections.singleton(null));
         for (OnDownloadChangeListener onDownloadChangeListener : onDownloadChangeListeners) {
-            Log.e(TAG, "Calling onReset callback method " + onDownloadChangeListener.getClass().getName());
+            Log.i(TAG, "Calling onReset callback method " + onDownloadChangeListener.getClass().getName());
             onDownloadChangeListener.onReset();
         }
     }
@@ -387,7 +386,7 @@ public class DownloadManager extends Service {
     private void emitOnDownloadInfoUpdated(int index) {
         onDownloadChangeListeners.removeAll(Collections.singleton(null));
         for (OnDownloadChangeListener onDownloadChangeListener : onDownloadChangeListeners) {
-            Log.e(TAG, "Calling onDownloadInfoUpdated callback method " + onDownloadChangeListener.getClass().getName());
+            Log.i(TAG, "Calling onDownloadInfoUpdated callback method " + onDownloadChangeListener.getClass().getName());
             onDownloadChangeListener.onDownloadInfoUpdated(index);
         }
     }
@@ -395,7 +394,7 @@ public class DownloadManager extends Service {
     private void emitOnDownloadRemoved(int index) {
         onDownloadChangeListeners.removeAll(Collections.singleton(null));
         for (OnDownloadChangeListener onDownloadChangeListener : onDownloadChangeListeners) {
-            Log.e(TAG, "Calling onDownloadRemoved callback method " + onDownloadChangeListener.getClass().getName());
+            Log.i(TAG, "Calling onDownloadRemoved callback method " + onDownloadChangeListener.getClass().getName());
             onDownloadChangeListener.onDownloadRemoved(index);
         }
     }
@@ -568,7 +567,7 @@ public class DownloadManager extends Service {
 
     public void removeDownloadByIndex(int index) {
         if (mDownloadHandlers.size() > index) {
-            Log.e(TAG,"RemovingDownloadByIndex " + mDownloadHandlers.get(index).second.getFilename());
+            Log.i(TAG,"RemovingDownloadByIndex " + mDownloadHandlers.get(index).second.getFilename());
             DownloadHandler downloadHandler = mDownloadHandlers.get(index).second;
             downloadHandler.removeDownloadFromDatabase();
             removeDownloadHandler(index);

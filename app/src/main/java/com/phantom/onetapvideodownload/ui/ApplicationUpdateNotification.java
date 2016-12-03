@@ -24,7 +24,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class ApplicationUpdateNotification {
+class ApplicationUpdateNotification {
     private static final String UPDATE_JSON_URL = "https://raw.githubusercontent.com/Ashish-Bansal/OneTapVideoDownload/master/version.json";
     private static final String TAG = "UpdateNotification";
     private Context mContext;
@@ -38,11 +38,11 @@ public class ApplicationUpdateNotification {
     }
      */
 
-    public ApplicationUpdateNotification(Context context) {
+    ApplicationUpdateNotification(Context context) {
         mContext = context;
     }
 
-    public void checkForUpdate() {
+    void checkForUpdate() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -91,7 +91,7 @@ public class ApplicationUpdateNotification {
         }).start();
     }
 
-    public String getDownloadUrl(@NonNull JSONObject jsonObject) {
+    private String getDownloadUrl(@NonNull JSONObject jsonObject) {
         try {
             return jsonObject.getString("latest_version_url");
         } catch (JSONException e) {
@@ -100,7 +100,7 @@ public class ApplicationUpdateNotification {
         }
     }
 
-    public int latestApplicationVersion(@NonNull JSONObject jsonObject) {
+    private int latestApplicationVersion(@NonNull JSONObject jsonObject) {
         try {
             return jsonObject.getInt("latest_version_code");
         } catch (JSONException e) {
@@ -109,22 +109,17 @@ public class ApplicationUpdateNotification {
         }
     }
 
-    public JSONObject getLatestJson() {
+    private JSONObject getLatestJson() {
         String json = getResultFromUrl(getUpdateJsonUrl());
-        if (json == null || json.isEmpty()) {
-            Log.e("HERE", "HERE");
-            return null;
-        }
-
         try {
             return new JSONObject(json);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            Log.e(TAG, "Exception while creating JSON Object", e);
             return null;
         }
     }
 
-    public String getResultFromUrl(@NonNull String stringUrl) {
+    private String getResultFromUrl(@NonNull String stringUrl) {
         StringBuilder result = new StringBuilder();
         HttpURLConnection urlConnection = null;
         try {
@@ -147,7 +142,7 @@ public class ApplicationUpdateNotification {
         return result.toString();
     }
 
-    public int installedApplicationVersion() {
+    private int installedApplicationVersion() {
         try {
             PackageInfo pInfo = mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), 0);
             return pInfo.versionCode;
@@ -157,7 +152,7 @@ public class ApplicationUpdateNotification {
         }
     }
 
-    public static String getUpdateJsonUrl() {
+    private String getUpdateJsonUrl() {
         return UPDATE_JSON_URL;
     }
 }

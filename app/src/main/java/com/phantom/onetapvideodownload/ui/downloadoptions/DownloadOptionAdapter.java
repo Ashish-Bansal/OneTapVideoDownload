@@ -41,7 +41,6 @@ public class DownloadOptionAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        MainActivity mainActivity = (MainActivity)mContext;
                         new FolderChooserDialog.Builder((MainActivity)mContext)
                                 .chooseButton(R.string.md_choose_label)
                                 .tag(FOLDER_CHOOSER_TAG)

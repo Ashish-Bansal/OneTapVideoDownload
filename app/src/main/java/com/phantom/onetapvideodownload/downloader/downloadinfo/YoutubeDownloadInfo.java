@@ -77,7 +77,7 @@ public class YoutubeDownloadInfo extends DownloadInfo implements Invokable<Video
 
     @Override
     public void setStatus(Status status) {
-        Log.e(TAG, "Download Status changed from " + mStatus.name() + " to " + status.name());
+        Log.i(TAG, "Download Status changed from " + mStatus.name() + " to " + status.name());
         mStatus = status;
     }
 

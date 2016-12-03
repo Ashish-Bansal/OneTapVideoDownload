@@ -38,7 +38,7 @@ public class DownloadHandler {
         mDownloadInfo = downloadInfo;
     }
 
-    public void startDownload() {
+    void startDownload() {
         File filePath = new File(mDownloadInfo.getDownloadLocation());
         setStatus(DownloadInfo.Status.Downloading);
         downloadFile(mDownloadInfo.getUrl(), filePath);
@@ -169,31 +169,31 @@ public class DownloadHandler {
         }
     }
 
-    public Integer getProgress() {
+    Integer getProgress() {
         return mDownloadInfo.getProgress();
     }
 
-    public DownloadInfo.Status getStatus() {
+    DownloadInfo.Status getStatus() {
         return mDownloadInfo.getStatus();
     }
 
-    public void setStatus(DownloadInfo.Status status) {
+    void setStatus(DownloadInfo.Status status) {
         mDownloadInfo.setStatus(status);
     }
 
-    public long getContentLength() {
+    long getContentLength() {
         return mDownloadInfo.getContentLength();
     }
 
-    public String getFilename() {
+    String getFilename() {
         return mDownloadInfo.getFilename();
     }
 
-    public String getUrl() {
+    String getUrl() {
         return mDownloadInfo.getUrl();
     }
 
-    public Drawable getPackageDrawable() {
+    Drawable getPackageDrawable() {
         try {
             Drawable d = mContext.getPackageManager().getApplicationIcon(mDownloadInfo.getPackageName());
             return d;
@@ -202,28 +202,28 @@ public class DownloadHandler {
         }
     }
 
-    public Collection<String> getOptions() {
+    Collection<String> getOptions() {
         return mDownloadInfo.getOptions();
     }
 
-    public int findIdByString(Context context, String string) {
+    int findIdByString(Context context, String string) {
         return mDownloadInfo.findIdByString(context, string);
     }
 
-    public boolean handleOptionClicks(Context context, int resId) {
+    boolean handleOptionClicks(Context context, int resId) {
         // Used Activity context instead of ApplicationContext
         return mDownloadInfo.handleOptionClicks(context, resId);
     }
 
-    public long getDownloadedLength() {
+    long getDownloadedLength() {
         return mDownloadInfo.getDownloadedLength();
     }
 
-    public boolean started() {
+    boolean started() {
         return getDownloadedLength() != 0;
     }
 
-    public void stopDownload() {
+    void stopDownload() {
         if (mCall != null) {
             mCall.cancel();
         }
@@ -231,19 +231,19 @@ public class DownloadHandler {
         writeToDatabase();
     }
 
-    public void writeToDatabase() {
+    void writeToDatabase() {
         mDownloadInfo.writeToDatabase();
     }
 
-    public long getDatabaseId() {
+    long getDatabaseId() {
         return mDownloadInfo.getDatabaseId();
     }
 
-    public void removeDownloadFromDatabase() {
+    void removeDownloadFromDatabase() {
         mDownloadInfo.removeDatabaseEntry();
     }
 
-    public void deleteDownloadFromStorage() {
+    void deleteDownloadFromStorage() {
         mDownloadInfo.deleteDownloadFromStorage(mContext);
     }
 }

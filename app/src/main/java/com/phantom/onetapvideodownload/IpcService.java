@@ -98,7 +98,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
 
         if (intent != null && intent.getAction() != null) {
             String action = intent.getAction();
-            Log.e("IpcService", action);
+            Log.i("IpcService", action);
             if (ACTION_SAVE_BROWSER_VIDEO.equals(action)) {
                 String url = intent.getStringExtra(EXTRA_URL);
                 String packageName = intent.getStringExtra(EXTRA_PACKAGE_NAME);
@@ -234,7 +234,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     private void handleActionSaveYoutubeVideo(String paramString) {
         final Context context = this;
         if (!CheckPreferences.notificationsEnabled(context) && !CheckPreferences.loggingEnabled(context)) {
-            Log.e(TAG, "Notifications and Logging is disabled");
+            Log.i(TAG, "Notifications and Logging is disabled");
             return;
         }
         YoutubeParserProxy.startParsing(this, paramString, this);

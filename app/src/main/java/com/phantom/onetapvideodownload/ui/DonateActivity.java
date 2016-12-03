@@ -65,7 +65,7 @@ public class DonateActivity extends AppCompatActivity implements BillingProcesso
         /*
          * Called when BillingProcessor was initialized and it's ready to purchase
          */
-        Log.e(TAG, "Billing Processor Initialized");
+        Log.i(TAG, "Billing Processor Initialized");
     }
 
     @Override

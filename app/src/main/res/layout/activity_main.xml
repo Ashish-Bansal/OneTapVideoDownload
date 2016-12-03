@@ -22,13 +22,12 @@
             android:layout_height="0dip"
             android:layout_weight="1"/>
 
-        <!-- Millennial Media SDK will fill this container with an ad -->
+        <!-- Ads SDK will fill this container with an ad -->
         <RelativeLayout
             android:id="@+id/ad_container"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/white"
-            android:padding="1dp"
             android:visibility="gone"/>
     </LinearLayout>
 </RelativeLayout>

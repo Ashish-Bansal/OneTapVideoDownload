@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import com.phantom.onetapvideodownload.Video.BrowserVideo;
 import com.phantom.onetapvideodownload.Video.Video;
@@ -88,7 +87,7 @@ public class VideoDatabase extends SQLiteOpenHelper {
     }
 
     @Override
-    public void finalize() throws Throwable{
+    protected void finalize() throws Throwable{
         super.finalize();
         if (mVideoDatabase != null) {
             mVideoDatabase.close();
@@ -218,7 +217,6 @@ public class VideoDatabase extends SQLiteOpenHelper {
             do {
                 int videoId = videoListCursor.getInt(0);
                 int videoCategory = videoListCursor.getInt(1);
-                Log.e("getVideosOfType", " Video Category " + videoCategory + " Id " + videoId);
                 Video video = getVideo(videoCategory, videoId);
                 if (video != null) {
                     video.setDatabaseId(videoId);
