@@ -34,13 +34,11 @@ public class VideoDatabase extends SQLiteOpenHelper {
     private static final String KEY_PACKAGE_NAME = "package_name";
 
     private static VideoDatabase mVideoDatabase;
-    private Context mContext;
     private SQLiteDatabase mSQLiteDatabase;
 
     public static synchronized VideoDatabase getDatabase(Context context) {
         if (mVideoDatabase == null) {
             mVideoDatabase = new VideoDatabase(context);
-            mVideoDatabase.mContext = context;
             mVideoDatabase.mSQLiteDatabase = mVideoDatabase.getWritableDatabase();
         }
 

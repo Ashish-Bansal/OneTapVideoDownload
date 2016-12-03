@@ -10,14 +10,10 @@ import android.support.v7.app.AlertDialog;
 import com.phantom.onetapvideodownload.R;
 
 public class XposedChecker {
-    private static Context mContext;
-
-    public static void showXposedNotFound(Context context) {
-        mContext = context;
-
+    public static void showXposedNotFound(final Activity context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(mContext.getResources().getString(R.string.xposed_not_found_title));
-        builder.setMessage(mContext.getResources().getString(R.string.xposed_not_found_description));
+        builder.setTitle(context.getResources().getString(R.string.xposed_not_found_title));
+        builder.setMessage(context.getResources().getString(R.string.xposed_not_found_description));
 
         builder.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
             @Override
@@ -32,21 +28,21 @@ public class XposedChecker {
                 String url = "http://repo.xposed.info/module/de.robv.android.xposed.installer";
                 Intent viewIntent = new Intent(Intent.ACTION_VIEW);
                 viewIntent.setData(Uri.parse(url));
-                mContext.startActivity(viewIntent);
+                context.startActivity(viewIntent);
             }
         });
 
         builder.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                exit(dialog);
+                exit(context, dialog);
             }
         });
 
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                exit(dialog);
+                exit(context, dialog);
             }
         });
 
@@ -55,17 +51,15 @@ public class XposedChecker {
         alert.show();
     }
 
-    public static void showModuleNotEnalbed(Context context) {
-        mContext = context;
-
+    public static void showModuleNotEnalbed(final Activity context) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(mContext.getResources().getString(R.string.module_not_enabled_title));
-        builder.setMessage(mContext.getResources().getString(R.string.module_not_enabled_description));
+        builder.setTitle(context.getResources().getString(R.string.module_not_enabled_title));
+        builder.setMessage(context.getResources().getString(R.string.module_not_enabled_description));
 
         builder.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                exit(dialog);
+                exit(context, dialog);
             }
         });
 
@@ -79,7 +73,7 @@ public class XposedChecker {
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
-                exit(dialog);
+                exit(context, dialog);
             }
         });
 
@@ -88,9 +82,9 @@ public class XposedChecker {
         alert.show();
     }
 
-    public static void exit(DialogInterface dialog) {
+    public static void exit(Activity context, DialogInterface dialog) {
         dialog.dismiss();
-        ((Activity)mContext).finish();
+        context.finish();
     }
 
     public static boolean isXposedInstalled(Context context) {
