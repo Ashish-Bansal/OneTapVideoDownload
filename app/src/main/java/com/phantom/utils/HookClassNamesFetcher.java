@@ -23,8 +23,8 @@ public class HookClassNamesFetcher extends AsyncTask<String, Integer, String> {
     private File mHookFile;
     private MaterialDialog mProgressDialog;
 
-    public static final String HOOKS_FILE_NAME = "Hooks.json";
-    public static final String HOOKS_URL = "https://raw.githubusercontent.com/Ashish-Bansal/OneTapVideoDownload/master/app/src/main/assets/HookClassnames.json";
+    private static final String HOOKS_FILE_NAME = "Hooks.json";
+    private static final String HOOKS_URL = "https://raw.githubusercontent.com/Ashish-Bansal/OneTapVideoDownload/master/app/src/main/assets/HookClassnames.json";
 
     public static void startHookFileUpdateOnMainThread(Context context) {
         File hookFile = new File(getHooksFilePath(context));
@@ -32,7 +32,7 @@ public class HookClassNamesFetcher extends AsyncTask<String, Integer, String> {
         hookClassNamesFetcher.updateHooksOnMainThread();
     }
 
-    public void updateHooksOnMainThread() {
+    private void updateHooksOnMainThread() {
         String json = Global.getResponseBody(mHookUrl);
         if (json == null) {
             ApplicationLogMaintainer.sendBroadcast(mContext, "Error fetching Hook file " + mHookUrl);
@@ -52,7 +52,7 @@ public class HookClassNamesFetcher extends AsyncTask<String, Integer, String> {
         new HookClassNamesFetcher(context, getHooksUrl(), hookFile).execute();
     }
 
-    public HookClassNamesFetcher(Context context, String url, File destinationPath) {
+    private HookClassNamesFetcher(Context context, String url, File destinationPath) {
         mContext = context;
         mHookUrl = url;
         mHookFile = destinationPath;

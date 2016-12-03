@@ -26,16 +26,16 @@ public class MediaChecker {
         nonMediaSuffixList.add("js");
     }
 
-    public List<AbstractUriChecker> getWebsiteSpecificUriCheckers() {
+    private List<AbstractUriChecker> getWebsiteSpecificUriCheckers() {
         List<AbstractUriChecker> websiteSpecificUriCheckers = new ArrayList<>();
         websiteSpecificUriCheckers.add(new VimeoUriChecker(mContext));
         websiteSpecificUriCheckers.add(new YoutubeUriChecker(mContext));
         return websiteSpecificUriCheckers;
     }
 
-    class UriMediaCheckThread implements Runnable {
+    private class UriMediaCheckThread implements Runnable {
         private String mUrl, mPackageName;
-        public UriMediaCheckThread(String url, String packageName){
+        UriMediaCheckThread(String url, String packageName){
             mUrl = url;
             mPackageName = packageName;
         }
@@ -62,7 +62,7 @@ public class MediaChecker {
         mExecutorService.execute(uriMediaCheckThread);
     }
 
-    public void startSaveUrlAction(Video video) {
+    private void startSaveUrlAction(Video video) {
         if (video instanceof BrowserVideo) {
             IpcService.startSaveUrlAction(mContext, Uri.parse(video.getUrl()), video.getPackageName());
         } else if (video instanceof YoutubeVideo){

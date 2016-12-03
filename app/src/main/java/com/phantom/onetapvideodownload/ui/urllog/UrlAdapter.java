@@ -8,11 +8,11 @@ import android.view.ViewGroup;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.Video.Video;
 
-public class UrlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+class UrlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private VideoList mVideoList;
 
-    public UrlAdapter(VideoList urlList) {
+    UrlAdapter(VideoList urlList) {
         this.mVideoList = urlList;
     }
 

@@ -15,7 +15,7 @@ import java.util.Locale;
 
 import me.zhanghai.android.materialprogressbar.MaterialProgressBar;
 
-public class DownloadViewHolder extends RecyclerView.ViewHolder {
+class DownloadViewHolder extends RecyclerView.ViewHolder {
     private ImageView mApplicationImageView, mStatusStopped, mStatusCompleted;
     private TextView mDownloadTitle, mDownloadUrl, mPercentageTextView;
     private MaterialProgressBar mIndeterminateProgressBar;
@@ -23,7 +23,7 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
     private RelativeLayout mStatusDownloading;
     private ImageView mSelectedTick;
 
-    public DownloadViewHolder(View v) {
+    DownloadViewHolder(View v) {
         super(v);
         mApplicationImageView = (ImageView)itemView.findViewById(R.id.application_icon);
         mDownloadTitle = (TextView)itemView.findViewById(R.id.download_title);
@@ -37,11 +37,11 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
         mSelectedTick = (ImageView) itemView.findViewById(R.id.tick);
     }
 
-    public void setDownloadTitle(String title) {
+    void setDownloadTitle(String title) {
         mDownloadTitle.setText(title);
     }
 
-    public void setDownloadUrl(String url) {
+    void setDownloadUrl(String url) {
         try {
             mDownloadUrl.setText(URLDecoder.decode(url, "UTF-8").replace("%20", " "));
         } catch (Exception e) {
@@ -51,19 +51,19 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    public void setImageForView(Drawable icon) {
+    void setImageForView(Drawable icon) {
         mApplicationImageView.setImageDrawable(icon);
     }
 
-    public void setOnClickListener(View.OnClickListener onClickListener) {
+    void setOnClickListener(View.OnClickListener onClickListener) {
         itemView.setOnClickListener(onClickListener);
     }
 
-    public void setOnLongClickListener(View.OnLongClickListener onLongClickListener) {
+    void setOnLongClickListener(View.OnLongClickListener onLongClickListener) {
         itemView.setOnLongClickListener(onLongClickListener);
     }
 
-    public void setProgressBarState(boolean visibility, boolean indeterminate) {
+    void setProgressBarState(boolean visibility, boolean indeterminate) {
         if (visibility) {
             if (indeterminate) {
                 mProgressBar.setVisibility(View.INVISIBLE);
@@ -80,7 +80,7 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
         mIndeterminateProgressBar.postInvalidate();
     }
 
-    public void setProgress(int progress) {
+    void setProgress(int progress) {
         mProgressBar.setProgress(progress);
         try {
             mPercentageTextView.setText(String.format(Locale.getDefault(), "%d%%", progress));
@@ -89,7 +89,7 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    public void setStatus(DownloadInfo.Status status) {
+    void setStatus(DownloadInfo.Status status) {
         if (status == DownloadInfo.Status.Downloading) {
             mStatusDownloading.setVisibility(View.VISIBLE);
             mStatusStopped.setVisibility(View.GONE);
@@ -107,7 +107,7 @@ public class DownloadViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    public void setSelectedTickVisibility(boolean visibility) {
+    void setSelectedTickVisibility(boolean visibility) {
         if (visibility) {
             mSelectedTick.setVisibility(View.VISIBLE);
         } else {

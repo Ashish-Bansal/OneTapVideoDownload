@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 
 import com.phantom.onetapvideodownload.R;
 
-public class BlacklistDomainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+class BlacklistDomainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private BlacklistDomainList mBlacklistDomainList;
-    public BlacklistDomainAdapter(BlacklistDomainList blacklistDomainList) {
+    BlacklistDomainAdapter(BlacklistDomainList blacklistDomainList) {
         this.mBlacklistDomainList = blacklistDomainList;
     }
 

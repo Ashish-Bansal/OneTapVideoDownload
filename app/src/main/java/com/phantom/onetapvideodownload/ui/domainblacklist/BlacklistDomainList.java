@@ -15,7 +15,7 @@ public class BlacklistDomainList {
     }
 
     private static BlacklistDomainList mBlacklistDomainList;
-    List<Pair<Long, String>> mList = new ArrayList<>();
+    private List<Pair<Long, String>> mList = new ArrayList<>();
     private static DomainBlacklistDatabase mDomainBlacklistDatabase;
 
     public static BlacklistDomainList getUrlListSingleTon(Context context) {
@@ -29,7 +29,7 @@ public class BlacklistDomainList {
         return mBlacklistDomainList;
     }
 
-    public void sortList() {
+    void sortList() {
         Collections.sort(mList, new Comparator<Pair<Long, String>>() {
             @Override
             public int compare(Pair<Long, String> lhs, Pair<Long, String> rhs) {
@@ -38,13 +38,13 @@ public class BlacklistDomainList {
         });
     }
 
-    public void addUrl(String url) {
+    void addUrl(String url) {
         long urlId = mDomainBlacklistDatabase.addUrl(url);
         mList.add(new Pair<>(urlId, url));
         sortList();
     }
 
-    public void removeUrl(String url) {
+    void removeUrl(String url) {
         mDomainBlacklistDatabase.deleteUrl(url);
         for (int i = mList.size() - 1; i > -1; i--) {
             if (mList.get(i).second.equals(url) ) {
@@ -53,40 +53,40 @@ public class BlacklistDomainList {
         }
     }
 
-    public int size() {
+    int size() {
         return mList.size();
     }
 
-    public String getUrl(int pos) {
+    String getUrl(int pos) {
         return mList.get(pos).second;
     }
 
-    public void clearLocalList() {
+    void clearLocalList() {
         mList.clear();
     }
 
-    public void clearSavedUrls() {
+    void clearSavedUrls() {
         mDomainBlacklistDatabase.clearDatabase();
     }
 
-    public void loadSavedUrls() {
+    void loadSavedUrls() {
         mList = mDomainBlacklistDatabase.getAllUrls();
     }
 
-    public List<Pair<Long, String>> getUrlList() {
+    List<Pair<Long, String>> getUrlList() {
         return new ArrayList<>(mList);
     }
 
-    public boolean isEmpty() {
+    boolean isEmpty() {
         return size() <= 0;
     }
 
-    public void reloadUrls() {
+    void reloadUrls() {
         clearLocalList();
         loadSavedUrls();
     }
 
-    public void updateUrl(String oldUrl, String newUrl) {
+    void updateUrl(String oldUrl, String newUrl) {
         mDomainBlacklistDatabase.updateUrl(oldUrl, newUrl);
         updateUrlInMemory(oldUrl, newUrl);
     }

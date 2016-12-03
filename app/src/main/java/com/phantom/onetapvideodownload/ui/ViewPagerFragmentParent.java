@@ -43,7 +43,7 @@ public class ViewPagerFragmentParent extends Fragment {
         private List<String> mTitles;
 
         List<Fragment> fragmentList = new ArrayList<>();
-        public NavigationAdapter(Context context, FragmentManager fm) {
+        NavigationAdapter(Context context, FragmentManager fm) {
             super(fm);
             mContext = context;
             mTitles = new ArrayList<>();

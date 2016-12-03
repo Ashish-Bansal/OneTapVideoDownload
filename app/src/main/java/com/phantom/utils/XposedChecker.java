@@ -82,7 +82,7 @@ public class XposedChecker {
         alert.show();
     }
 
-    public static void exit(Activity context, DialogInterface dialog) {
+    private static void exit(Activity context, DialogInterface dialog) {
         dialog.dismiss();
         context.finish();
     }

@@ -10,30 +10,28 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class VideoList {
+class VideoList {
     private VideoList() {
     }
 
     public static final String PREFS_NAME = "SavedUrls";
-    public static VideoList mUrlList;
-    List<Video> mList = new ArrayList<>();
-    private static Context mContext;
+    private static VideoList mUrlList;
+    private List<Video> mList = new ArrayList<>();
     private static VideoDatabase mVideoDatabase;
 
-    public static VideoList getVideoListSingleton(Context context) {
+    static VideoList getVideoListSingleton(Context context) {
         if (mUrlList != null) {
             return mUrlList;
         }
 
         mUrlList = new VideoList();
-        mContext = context;
         mVideoDatabase = VideoDatabase.getDatabase(context);
         mUrlList.loadSavedVideos();
 
         return mUrlList;
     }
 
-    public void sortList() {
+    void sortList() {
         Collections.sort(mList, new Comparator<Video>() {
             @Override
             public int compare(Video lhs, Video rhs) {
@@ -42,47 +40,46 @@ public class VideoList {
         });
     }
 
-    public void addVideo(Video video) {
+    void addVideo(Video video) {
         long videoId = mVideoDatabase.addOrUpdateVideo(video);
         video.setDatabaseId(videoId);
         sortList();
     }
 
-    public void removeVideo(Video video) {
+    void removeVideo(Video video) {
         mVideoDatabase.deleteVideo(video.getDatabaseId());
         mList.remove(video);
     }
 
-    public int size() {
+    int size() {
         return mList.size();
     }
 
-    public Video getVideo(int pos) {
-        assert pos < mList.size();
+    Video getVideo(int pos) {
         return mList.get(pos);
     }
 
-    public void clearLocalList() {
+    void clearLocalList() {
         mList.clear();
     }
 
-    public void clearSavedVideos() {
+    void clearSavedVideos() {
         mVideoDatabase.clearDatabase();
     }
 
-    public void loadSavedVideos() {
+    void loadSavedVideos() {
         mList = mVideoDatabase.getAllVideos();
     }
 
-    public ArrayList<Video> getVideoList() {
+    ArrayList<Video> getVideoList() {
         return new ArrayList<>(mList);
     }
 
-    public boolean isEmpty() {
+    boolean isEmpty() {
         return size() <= 0;
     }
 
-    public void reloadVideos() {
+    void reloadVideos() {
         clearLocalList();
         loadSavedVideos();
     }

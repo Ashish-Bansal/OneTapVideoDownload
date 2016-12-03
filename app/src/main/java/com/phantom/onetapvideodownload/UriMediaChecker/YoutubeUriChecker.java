@@ -6,10 +6,10 @@ import android.net.Uri;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
 
-public class YoutubeUriChecker implements AbstractUriChecker {
+class YoutubeUriChecker implements AbstractUriChecker {
     private Context mContext;
 
-    public YoutubeUriChecker(Context context) {
+    YoutubeUriChecker(Context context) {
         mContext = context;
     }
     @Override

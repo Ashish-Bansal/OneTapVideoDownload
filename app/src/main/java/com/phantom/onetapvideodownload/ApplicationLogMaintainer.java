@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Environment;
+import android.util.Log;
 
 import com.phantom.utils.Global;
 
@@ -17,6 +18,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class ApplicationLogMaintainer extends BroadcastReceiver {
+    public static final String TAG = "ApplicationLog";
     public static final String PACKAGE_NAME = "com.phantom.onetapvideodownload";
     public static final String CLASS_NAME = PACKAGE_NAME + ".ApplicationLogMaintainer";
     public static final String EXTRA_MESSAGE = PACKAGE_NAME + ".extra.message";
@@ -55,12 +57,14 @@ public class ApplicationLogMaintainer extends BroadcastReceiver {
                         PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
                         writeToLog("OneTapVideoDownload Version " + packageInfo.versionName);
                     } catch (Exception e) {
+                        Log.e(TAG, "Exception in onReceive", e);
                     }
                 } else {
                     writeToLog("---------------------------");
                     writeToLog(logMessage);
                 }
             } catch (Exception e) {
+                Log.e(TAG, "Exception in onReceive", e);
             }
         } else {
             writeToLog(logMessage);
@@ -88,6 +92,7 @@ public class ApplicationLogMaintainer extends BroadcastReceiver {
             bufferedWriter.append(message);
             bufferedWriter.close();
         } catch (IOException e) {
+            Log.e(TAG, "Exception in writeToLog", e);
         }
     }
 }

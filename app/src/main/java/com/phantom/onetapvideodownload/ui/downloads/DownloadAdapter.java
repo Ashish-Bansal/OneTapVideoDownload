@@ -26,7 +26,7 @@ import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
+class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         implements ActionMode.Callback  {
     private DownloadManager mDownloadManager;
     private boolean mBounded;
@@ -34,7 +34,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private SparseArray<View> mSelectedItems;
     private ActionMode mActionMode;
 
-    public DownloadAdapter(Context context) {
+    DownloadAdapter(Context context) {
         mContext = context;
         mSelectedItems = new SparseArray<>();
         context.startService(DownloadManager.getActionStartService());
@@ -57,7 +57,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     };
 
-    public void onStop() {
+    void onStop() {
         if(mBounded) {
             mContext.unbindService(mConnection);
             mBounded = false;
@@ -139,7 +139,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public void itemClicked(int index, View view) {
+    private void itemClicked(int index, View view) {
         toggleSelection(index, view);
         String title = String.valueOf(selectedItemsCount());
         mActionMode.setTitle(title);
@@ -152,7 +152,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return mSelectedItems.get(pos) != null;
     }
 
-    public void toggleSelection(int pos, @Nullable View view) {
+    private void toggleSelection(int pos, @Nullable View view) {
         if (mSelectedItems.get(pos) != null) {
             mSelectedItems.remove(pos);
         } else {
@@ -167,7 +167,7 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         }
     }
 
-    public void clearSelections() {
+    private void clearSelections() {
         for(Integer pos : getSelectedItems()) {
             if (mSelectedItems.get(pos) == null) {
                 continue;
@@ -180,11 +180,11 @@ public class DownloadAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         mSelectedItems.clear();
     }
 
-    public int selectedItemsCount() {
+    private int selectedItemsCount() {
         return mSelectedItems.size();
     }
 
-    public ArrayList<Integer> getSelectedItems() {
+    private ArrayList<Integer> getSelectedItems() {
         ArrayList<Integer> keySet = new ArrayList<>();
         for(int i = 0; i < mSelectedItems.size(); i++) {
             keySet.add(mSelectedItems.keyAt(i));

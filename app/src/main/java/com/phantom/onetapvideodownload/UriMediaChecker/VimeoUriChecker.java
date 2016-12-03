@@ -8,10 +8,10 @@ import com.phantom.utils.Global;
 
 import org.json.JSONObject;
 
-public class VimeoUriChecker implements AbstractUriChecker {
+class VimeoUriChecker implements AbstractUriChecker {
     private Context mContext;
 
-    public VimeoUriChecker(Context context) {
+    VimeoUriChecker(Context context) {
         mContext = context;
     }
     @Override
