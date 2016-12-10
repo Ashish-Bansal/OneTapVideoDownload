@@ -73,8 +73,12 @@ public class FacebookLiteHook implements IXposedHookLoadPackage {
                 .getPackageInfo(lpparam.packageName, 0).versionCode;
 
         ApplicationLogMaintainer.sendBroadcast(context, "Facebook Lite Package Version : " + packageVersion);
+        Pair<String, String> classPair = classNamesMap.get(Global.getXSignificantDigits(packageVersion, 4));
+        if (classPair == null) {
+            // Legacy code for hooking older facebook versions
+            classPair = classNamesMap.get(Global.getXSignificantDigits(packageVersion, 2));
+        }
 
-        Pair<String, String> classPair = classNamesMap.get(Global.getXSignificantDigits(packageVersion, 2));
         if (classPair == null) {
             ApplicationLogMaintainer.sendBroadcast(context, "ClassNamePair is null. Todo : Update Hooks");
             return;
@@ -83,6 +87,7 @@ public class FacebookLiteHook implements IXposedHookLoadPackage {
         if (!Global.isClassPresent(lpparam.classLoader, classPair.first)
                 || !Global.isClassPresent(lpparam.classLoader, classPair.second)) {
             ApplicationLogMaintainer.sendBroadcast(context, "Facebook Lite Hooking failed even when ClassPair is not null." );
+            ApplicationLogMaintainer.sendBroadcast(context, "Class names being used : " + classPair.first + " " + classPair.second);
             return;
         }
 
