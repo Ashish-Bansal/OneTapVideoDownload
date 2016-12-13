@@ -217,7 +217,7 @@ public class DownloadManager extends Service {
         return true;
     }
 
-    public void requestPermission(AppPermissions permission) {
+    private void requestPermission(AppPermissions permission) {
         String title = "Storage permission required";
         String description = "Please enable this permission and restart your download.";
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
@@ -336,7 +336,7 @@ public class DownloadManager extends Service {
         return -1;
     }
 
-    public void startUiUpdateThread() {
+    private void startUiUpdateThread() {
         if (mUiUpdateThread == null || !mUiUpdateThread.isAlive()) {
             mUiUpdateThread = new Thread(new Runnable() {
                 @Override
@@ -366,7 +366,7 @@ public class DownloadManager extends Service {
         }
     }
 
-    public void updateUiByStatus(DownloadInfo.Status status) {
+    private void updateUiByStatus(DownloadInfo.Status status) {
         updateNotification();
         for (int i = 0; i < mDownloadHandlers.size(); i++) {
             if (mDownloadHandlers.get(i).second.getStatus() == status) {

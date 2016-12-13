@@ -114,7 +114,7 @@ public class DownloadDatabase extends SQLiteOpenHelper {
             ContentValues videoListValues = new ContentValues();
             videoListValues.put(KEY_TYPE, DOWNLOAD_TYPE_BROWSER);
             downloadId = mSQLiteDatabase.insert(TABLE_VIDEO_DOWNLOAD_LIST, null, videoListValues);
-            assert(downloadId != -1);
+
             ContentValues values = getContentValuesForBrowserVideo(download, downloadId);
             mSQLiteDatabase.insert(TABLE_BROWSER_DOWNLOAD_LIST, null, values);
         } else if (download instanceof YoutubeDownloadInfo) {
@@ -122,7 +122,7 @@ public class DownloadDatabase extends SQLiteOpenHelper {
             downloadListValues.put(KEY_TYPE, DOWNLOAD_TYPE_YOUTUBE);
             mSQLiteDatabase.insert(TABLE_VIDEO_DOWNLOAD_LIST, null, downloadListValues);
             downloadId = mSQLiteDatabase.insert(TABLE_VIDEO_DOWNLOAD_LIST, null, downloadListValues);
-            assert(downloadId != -1);
+
             ContentValues values = getContentValuesForYoutubeVideo(download, downloadId);
             mSQLiteDatabase.insert(TABLE_YOUTUBE_DOWNLOAD_LIST, null, values);
         }
@@ -130,7 +130,7 @@ public class DownloadDatabase extends SQLiteOpenHelper {
         return downloadId;
     }
 
-    public ContentValues getContentValuesForBrowserVideo(DownloadInfo downloadInfo, long downloadId) {
+    private ContentValues getContentValuesForBrowserVideo(DownloadInfo downloadInfo, long downloadId) {
         ContentValues values = new ContentValues();
         values.put(KEY_FILENAME, downloadInfo.getFilename());
         values.put(KEY_VIDEO_ID, downloadId);
@@ -143,7 +143,7 @@ public class DownloadDatabase extends SQLiteOpenHelper {
         return values;
     }
 
-    public ContentValues getContentValuesForYoutubeVideo(DownloadInfo downloadInfo, long downloadId) {
+    private ContentValues getContentValuesForYoutubeVideo(DownloadInfo downloadInfo, long downloadId) {
         ContentValues values = new ContentValues();
         values.put(KEY_FILENAME, downloadInfo.getFilename());
         values.put(KEY_URL, downloadInfo.getUrl());
