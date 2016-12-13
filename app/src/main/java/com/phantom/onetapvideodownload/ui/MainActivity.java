@@ -204,18 +204,18 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.menu_plus_one:
-                showPlusOneDialog();
-                break;
-            case R.id.menu_rate_my_app :
-                openAppInPlayStore();
-                break;
-            case R.id.menu_donate :
-                openDonateActivity();
-                break;
-            case R.id.menu_translate :
-                sendEmailForTranslation();
-                break;
+//            case R.id.menu_plus_one:
+//                showPlusOneDialog();
+//                break;
+//            case R.id.menu_rate_my_app :
+//                openAppInPlayStore();
+//                break;
+//            case R.id.menu_donate :
+//                openDonateActivity();
+//                break;
+//            case R.id.menu_translate :
+//                sendEmailForTranslation();
+//                break;
             case R.id.menu_require_help :
                 sendEmailForHelp();
                 break;
