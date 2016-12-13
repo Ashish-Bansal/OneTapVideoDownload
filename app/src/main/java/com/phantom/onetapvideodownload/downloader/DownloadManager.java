@@ -557,7 +557,7 @@ public class DownloadManager extends Service {
         return mDownloadHandlers.get(index).second.getPackageDrawable();
     }
 
-    public void removeDownloadHandler(int index) {
+    private void removeDownloadHandler(int index) {
         DownloadHandler downloadHandler = mDownloadHandlers.get(index).second;
         downloadHandler.stopDownload();
         downloadHandler.removeDownloadFromDatabase();
@@ -566,11 +566,9 @@ public class DownloadManager extends Service {
     }
 
     public void removeDownloadByIndex(int index) {
-        if (mDownloadHandlers.size() > index) {
-            Log.i(TAG,"RemovingDownloadByIndex " + mDownloadHandlers.get(index).second.getFilename());
-            DownloadHandler downloadHandler = mDownloadHandlers.get(index).second;
-            downloadHandler.removeDownloadFromDatabase();
-            removeDownloadHandler(index);
+        if (mDownloadHandlers.size() <= index) {
+            Log.e(TAG,"Download Handler size is less than download id requested to download");
         }
+        removeDownloadHandler(index);
     }
 }

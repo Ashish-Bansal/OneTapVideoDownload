@@ -350,6 +350,8 @@ public class DownloadDatabase extends SQLiteOpenHelper {
             return;
         }
 
+        mSQLiteDatabase.delete(TABLE_VIDEO_DOWNLOAD_LIST, KEY_ID + " = ?",
+                new String[] { String.valueOf(id) });
         switch (categoryId) {
             case DOWNLOAD_TYPE_BROWSER :
                 mSQLiteDatabase.delete(TABLE_BROWSER_DOWNLOAD_LIST, KEY_VIDEO_ID + " = ?",
