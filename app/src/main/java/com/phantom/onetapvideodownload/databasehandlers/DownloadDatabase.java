@@ -108,15 +108,6 @@ public class DownloadDatabase extends SQLiteOpenHelper {
         }
     }
 
-    public long addOrUpdateDownload(DownloadInfo download) {
-        long id = downloadAlreadyExists(download);
-        if (id == -1) {
-            return addDownload(download);
-        } else {
-            return updateDownload(id, download);
-        }
-    }
-
     public long addDownload(DownloadInfo download) {
         long downloadId = -1;
         if (download instanceof BrowserDownloadInfo) {
@@ -276,27 +267,6 @@ public class DownloadDatabase extends SQLiteOpenHelper {
         cursor.close();
 
         return downloadCount;
-    }
-
-    public long downloadAlreadyExists(DownloadInfo download) {
-        List<DownloadInfo> downloadInfos;
-        if (download instanceof BrowserDownloadInfo) {
-            downloadInfos = getDownloadsOfType(DOWNLOAD_TYPE_BROWSER);
-            for(DownloadInfo downloadInfo : downloadInfos) {
-                if (downloadInfo.getUrl().equals(download.getUrl())) {
-                    return downloadInfo.getDatabaseId();
-                }
-            }
-        } else if (download instanceof YoutubeDownloadInfo) {
-            downloadInfos = getDownloadsOfType(DOWNLOAD_TYPE_YOUTUBE);
-            for(DownloadInfo downloadInfo : downloadInfos) {
-                if (((YoutubeDownloadInfo)downloadInfo).getParam().equals(((YoutubeDownloadInfo)download).getParam())) {
-                    return downloadInfo.getDatabaseId();
-                }
-            }
-        }
-
-        return -1;
     }
 
     public long updateDownload(long id, DownloadInfo downloadInfo) {

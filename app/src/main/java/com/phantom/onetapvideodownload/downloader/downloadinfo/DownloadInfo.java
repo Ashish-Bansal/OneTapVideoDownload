@@ -225,7 +225,7 @@ public abstract class DownloadInfo {
 
     public void writeToDatabase() {
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(getContext());
-        downloadDatabase.addOrUpdateDownload(this);
+        downloadDatabase.updateDownload(getDatabaseId(), this);
     }
 
 }
