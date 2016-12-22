@@ -38,7 +38,7 @@ public class FacebookHook implements IXposedHookLoadPackage {
                 try {
                     Uri uri = (Uri) hookParams.args[0];
                     ApplicationLogMaintainer.sendBroadcast(context, "Facebook Main URL : " + uri.toString());
-                    String stringUri = "";
+                    String stringUri = uri.toString();
                     Set<String> keys = uri.getQueryParameterNames();
                     for (String key : keys) {
                         String value = uri.getQueryParameter(key);
