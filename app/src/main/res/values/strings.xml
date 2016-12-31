@@ -78,6 +78,7 @@
     <string name="menu_item_plus_one">Give it a +1</string>
     <string name="menu_item_rate">Rate this app</string>
     <string name="menu_item_donate">Donate</string>
+    <string name="menu_item_remove_ads">Remove Ads</string>
     <string name="menu_item_translate">Help to translate</string>
     <string name="menu_item_help">Need Help ?</string>
     <string name="menu_item_about">About</string>
@@ -100,7 +101,7 @@
     <string name="about_credits">Credits : Haariger Harald, ihelp101, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Julia Yanovskaya, Open.Orange, Matheus Coelho, Carlo, Harminizer, 尹崇业 and all others who I might have forgot to specify.</string>
 
     <string name="donate">Donate</string>
-    <string name="donate_description">I work on One Tap Video Download in my free time. Please support development by donating if possible. Thanks!</string>
+    <string name="donate_description">Please donate to remove Ads and support application development. (If you have donated before v5.0 release, you can contact me to get up to 3 licenses.)</string>
     <string name="via_wallet">Via Google Wallet</string>
     <string name="via_paypal">Via Paypal</string>
     <string name="via_playstore">Via Playstore</string>

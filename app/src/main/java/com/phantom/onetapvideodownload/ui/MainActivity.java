@@ -88,10 +88,8 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         }
 
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-
-        if (CheckPreferences.getAdEnabled(this)) {
+        if (!CheckPreferences.getDonationStatus(this)) {
             mAdManager = new AdManager(this);
             mAdManager.add(new MoPubAd(this));
             mAdManager.add(new FacebookBannerAd(this));
@@ -195,8 +193,10 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        MenuItem adSwitch = menu.findItem(R.id.adswitch);
-        adSwitch.setChecked(CheckPreferences.getAdEnabled(this));
+        if (CheckPreferences.getDonationStatus(this)) {
+            MenuItem removeAds = menu.findItem(R.id.menu_remove_ads);
+            removeAds.setVisible(false);
+        }
         return true;
     }
 
@@ -216,6 +216,9 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
 //            case R.id.menu_translate :
 //                sendEmailForTranslation();
 //                break;
+            case R.id.menu_remove_ads :
+                openDonateActivity();
+                break;
             case R.id.menu_require_help :
                 sendEmailForHelp();
                 break;
@@ -224,15 +227,6 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
                 break;
             case R.id.menu_usage_instruction_title:
                 openUsageInstructionActivity();
-                break;
-            case R.id.adswitch:
-                item.setChecked(!item.isChecked());
-                CheckPreferences.toggleAdEnabled(this);
-                if (item.isChecked()) {
-                    Toast.makeText(this, R.string.ad_enabled, Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(this, R.string.ad_disabled, Toast.LENGTH_LONG).show();
-                }
                 break;
             case R.id.update_hooks:
                 HookClassNamesFetcher.startHookFileUpdateAsync(this);
