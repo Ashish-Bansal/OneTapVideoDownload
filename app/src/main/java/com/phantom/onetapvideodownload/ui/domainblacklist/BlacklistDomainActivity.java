@@ -22,6 +22,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.phantom.onetapvideodownload.AnalyticsApplication;
 import com.phantom.onetapvideodownload.R;
+import com.phantom.onetapvideodownload.ThemeManager;
 import com.phantom.utils.Global;
 
 import co.dift.ui.SwipeToAction;
@@ -64,6 +65,7 @@ public class BlacklistDomainActivity extends AppCompatActivity {
         layoutManager.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setBackgroundColor(ThemeManager.getBackgroundColor(this));
 
         mBlacklistDomainAdapter = new BlacklistDomainAdapter(mBlacklistDomainList);
         mRecyclerView.setAdapter(mBlacklistDomainAdapter);
@@ -126,6 +128,7 @@ public class BlacklistDomainActivity extends AppCompatActivity {
         mTracker = application.getDefaultTracker();
         mTracker.setScreenName("Activity~" + getClass().getName());
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        ThemeManager.applyTheme(this);
     }
 
     @Override

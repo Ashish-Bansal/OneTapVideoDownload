@@ -43,6 +43,7 @@ import com.phantom.onetapvideodownload.AnalyticsApplication;
 import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
 import com.phantom.onetapvideodownload.BuildConfig;
 import com.phantom.onetapvideodownload.R;
+import com.phantom.onetapvideodownload.ThemeManager;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
 import com.phantom.onetapvideodownload.ads.AdManager;
@@ -66,7 +67,6 @@ import java.io.File;
 public class MainActivity extends AppCompatActivity implements FolderChooserDialog.FolderCallback,
         Invokable<Video, Integer> {
     private final static String TAG = "MainActivity";
-    private Toolbar toolbar;
     private Tracker mTracker;
     private AdManager mAdManager;
 
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
             mAdManager.processQueue();
         }
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FragmentManager fm = getSupportFragmentManager();
         if (fm.findFragmentByTag(ViewPagerFragmentParent.FRAGMENT_TAG) == null) {
@@ -124,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         } else {
             FirebaseMessaging.getInstance().subscribeToTopic("non_playstore_users_notifications");
         }
+        ThemeManager.applyTheme(this);
     }
 
     @Override

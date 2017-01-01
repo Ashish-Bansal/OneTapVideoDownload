@@ -10,6 +10,13 @@
             android:key="pref_module_disabled"
             android:defaultValue="false" />
 
+        <SwitchPreference
+            android:title="@string/pref_enable_dark_theme_title"
+            android:summary="@string/pref_enable_dark_theme_summary"
+            app:asp_tintEnabled="false"
+            android:key="pref_dark_theme_enabled"
+            android:defaultValue="false" />
+
         <Preference
             android:title="@string/prefs_download_location_title"
             android:key="pref_download_location">

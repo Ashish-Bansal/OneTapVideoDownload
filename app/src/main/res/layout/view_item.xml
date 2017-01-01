@@ -41,6 +41,7 @@
 
     <!-- this is the item front view -->
     <RelativeLayout
+        android:id="@+id/front_layout"
         android:tag="front"
         android:background="@color/white"
         android:layout_width="match_parent"
@@ -66,7 +67,8 @@
 
 
     <!-- just a divider -->
-    <View android:background="@color/grey"
+    <View
+        android:id="@+id/item_divider"
         android:layout_width="fill_parent"
         android:layout_height="0.5dp" />
 

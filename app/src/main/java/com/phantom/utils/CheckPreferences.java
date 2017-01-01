@@ -120,4 +120,18 @@ public class CheckPreferences {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         return prefs.getBoolean("pref_module_disabled", false);
     }
+
+
+    public static Boolean getDarkThemeEnabled(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getBoolean("pref_dark_theme_enabled", false);
+    }
+
+    public static void setDarkThemeEnabled(Context context, Boolean enabled) {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean("pref_dark_theme_enabled", enabled);
+        editor.apply();
+    }
+
 }

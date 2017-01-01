@@ -24,6 +24,7 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 import com.phantom.onetapvideodownload.AnalyticsApplication;
 import com.phantom.onetapvideodownload.R;
+import com.phantom.onetapvideodownload.ThemeManager;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.utils.Global;
 
@@ -74,7 +75,7 @@ public class UrlLogActivity extends AppCompatActivity {
 
         mUrlAdapter = new UrlAdapter(mVideoList);
         mRecyclerView.setAdapter(mUrlAdapter);
-
+        mRecyclerView.setBackgroundColor(ThemeManager.getBackgroundColor(this));
 
         mEmptyView = (TextView) findViewById(R.id.empty_view);
         evaluateVisibility();
@@ -156,6 +157,7 @@ public class UrlLogActivity extends AppCompatActivity {
         mTracker = application.getDefaultTracker();
         mTracker.setScreenName("Activity~" + getClass().getName());
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        ThemeManager.applyTheme(this);
     }
 
     @Override

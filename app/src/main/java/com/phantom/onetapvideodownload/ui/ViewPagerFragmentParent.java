@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.google.samples.apps.iosched.ui.widget.SlidingTabLayout;
 import com.phantom.onetapvideodownload.R;
+import com.phantom.onetapvideodownload.ThemeManager;
 import com.phantom.onetapvideodownload.ui.downloads.DownloadsFragment;
 
 import java.util.ArrayList;
@@ -25,6 +26,9 @@ public class ViewPagerFragmentParent extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_view_pager_parent, container, false);
+        view.findViewById(R.id.container).setBackgroundColor(ThemeManager.getBackgroundColor(getContext()));
+        view.findViewById(R.id.pager).setBackgroundColor(ThemeManager.getBackgroundColor(getContext()));
+        view.findViewById(R.id.sliding_tabs).setBackgroundColor(ThemeManager.getPrimaryColor(getContext()));
 
         PagerAdapter pagerAdapter = new NavigationAdapter(view.getContext(), getChildFragmentManager());
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.pager);

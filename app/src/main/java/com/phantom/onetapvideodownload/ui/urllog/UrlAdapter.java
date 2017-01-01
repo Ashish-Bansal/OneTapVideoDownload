@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.phantom.onetapvideodownload.R;
+import com.phantom.onetapvideodownload.ThemeManager;
 import com.phantom.onetapvideodownload.Video.Video;
 
 class UrlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -30,7 +31,8 @@ class UrlAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.view_item, parent, false);
-
+        view.findViewById(R.id.front_layout).setBackgroundColor(ThemeManager.getLightBackgroundColor(view.getContext()));
+        view.findViewById(R.id.item_divider).setBackgroundColor(ThemeManager.getBackgroundColor(view.getContext()));
         return new UrlViewHolder(view);
     }
 

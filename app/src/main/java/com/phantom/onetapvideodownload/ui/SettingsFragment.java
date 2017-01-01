@@ -7,6 +7,7 @@ import android.support.v7.preference.XpPreferenceFragment;
 
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.phantom.onetapvideodownload.R;
+import com.phantom.onetapvideodownload.ThemeManager;
 import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
 import com.phantom.utils.CheckPreferences;
 
@@ -55,6 +56,14 @@ public class SettingsFragment extends XpPreferenceFragment {
                     VideoDatabase videoDatabase = VideoDatabase.getDatabase(getContext());
                     videoDatabase.clearDatabase();
                 }
+                return true;
+            }
+        });
+
+        findPreference("pref_dark_theme_enabled").setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                ThemeManager.onThemeChanged(getActivity());
                 return true;
             }
         });

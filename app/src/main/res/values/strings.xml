@@ -156,6 +156,8 @@
     <string name="pref_general_header">General Options</string>
     <string name="pref_disable_module_temp_title">Disable Module Temporarily</string>
     <string name="pref_disable_module_temp_summary">Disables Module Temporarily, skipping url logging and notifications</string>
+    <string name="pref_enable_dark_theme_title">Enable Dark Theme</string>
+    <string name="pref_enable_dark_theme_summary">Dark theme for sensitive eyes</string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>

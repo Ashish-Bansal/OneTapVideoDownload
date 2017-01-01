@@ -5,18 +5,33 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/dark_primary</item>
-
         <item name="alertDialogTheme">@style/AppTheme.Dialog.Alert</item>
         <item name="dialogTheme">@style/AppTheme.Dialog</item>
-
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Material</item>
-
         <item name="colorAccent">@color/accent</item>
-        <item name="android:navigationBarColor" tools:targetApi="21">@color/primary</item>
-        <item name="windowActionModeOverlay">true</item>
-        <item name="android:actionModeBackground">@color/primary</item>
         <item name="actionModeBackground">@color/primary</item>
+        <item name="windowActionModeOverlay">true</item>
         <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Material</item>
+        <item name="selectableItemBackground">@color/white</item>
+        <item name="asp_preferenceIconTint">?colorAccent</item>
+        <item name="asp_preferenceDialogIconTint">?asp_preferenceIconTint</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@color/dark_background</item>
+        <item name="android:colorBackground">@color/dark_background</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/dark_primary</item>
+        <item name="alertDialogTheme">@style/AppTheme.Dialog.Alert.Dark</item>
+        <item name="dialogTheme">@style/AppTheme.Dialog.Dark</item>
+        <item name="colorAccent">@color/primary</item>
+        <item name="actionModeBackground">@color/dark_background</item>
+        <item name="android:itemBackground">@color/dark_background</item>
+        <item name="android:panelFullBackground">@color/dark_background</item>
+        <item name="windowActionModeOverlay">true</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Material</item>
+        <item name="selectableItemBackground">@color/dark_background</item>
+        <item name="actionBarPopupTheme">@style/ThemeOverlay.AppCompat.Dark</item>
         <item name="asp_preferenceIconTint">?colorAccent</item>
         <item name="asp_preferenceDialogIconTint">?asp_preferenceIconTint</item>
     </style>
@@ -28,10 +43,29 @@
         <item name="android:textColorHighlight">@color/highlight</item>
     </style>
 
+    <style name="AppTheme.Dialog.Dark" parent="Theme.AppCompat.Dialog">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorAccent">@color/accent</item>
+
+        <item name="android:textColorHighlight">@color/highlight</item>
+    </style>
+
     <style name="AppTheme.Dialog.Alert" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:textColorHighlight">@color/highlight</item>
+    </style>
+
+    <style name="AppTheme.Dialog.Alert.Dark" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:textColorHighlight">@color/highlight</item>
+    </style>
+
+    <style name="AppTheme.ThemeOverlay.AppCompat.Dark" parent="ThemeOverlay.AppCompat.Dark">
+    </style>
+
+    <style name="AppTheme.ThemeOverlay.AppCompat.Light" parent="ThemeOverlay.AppCompat.Light">
     </style>
 
 </resources>

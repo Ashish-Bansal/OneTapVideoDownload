@@ -28,4 +28,7 @@
     <color name="stopped">#EF3333</color>
     <color name="completed">#2ECC71</color>
 
+    <color name="dark_background">#303030</color>
+    <color name="dark_ligher_background">#424242</color>
+    <color name="black">#000</color>
 </resources>
