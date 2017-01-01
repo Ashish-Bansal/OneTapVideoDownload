@@ -307,6 +307,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
             case External_Storage_Permission : {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this, R.string.permission_accepted, Toast.LENGTH_LONG).show();
+                    HookClassNamesFetcher.startHookFileUpdateAsync(this);
                 } else {
                     Toast.makeText(this, R.string.permission_denied, Toast.LENGTH_LONG).show();
                 }
