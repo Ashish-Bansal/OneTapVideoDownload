@@ -91,6 +91,7 @@ public class HookClassNamesFetcher extends AsyncTask<String, Integer, String> {
                 .title(R.string.fetching_hook_classes)
                 .content(R.string.please_wait)
                 .progress(true, 0)
+                .cancelable(false)
                 .show();
     }
 
