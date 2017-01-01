@@ -237,6 +237,33 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
             Log.i(TAG, "Notifications and Logging is disabled");
             return;
         }
+
+        boolean invalidId = true;
+        for (int i = 0; i < paramString.length(); i++) {
+            if (paramString.charAt(i) != 'z') {
+                invalidId = false;
+                break;
+            }
+        }
+
+        if (invalidId) {
+            final NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            int possibleId = notificationId.getAndIncrement();
+            if (possibleId >= CheckPreferences.notificationCountAllowed(this)) {
+                possibleId = 0;
+                notificationId.set(possibleId);
+            }
+            final int id = possibleId;
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+            mBuilder.setSmallIcon(R.drawable.one_tap_small);
+            mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.one_tap_large));
+            mBuilder.setContentTitle(getResources().getString(R.string.youtube_next_video_title));
+            mBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(getResources().getString(R.string.youtube_next_video_summary)));
+            mBuilder.setAutoCancel(true);
+            mBuilder.setOnlyAlertOnce(false);
+            notificationmanager.notify(id, mBuilder.build());
+            return;
+        }
         YoutubeParserProxy.startParsing(this, paramString, this);
     }
 
