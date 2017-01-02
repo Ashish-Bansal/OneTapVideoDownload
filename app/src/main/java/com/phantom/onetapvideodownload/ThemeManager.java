@@ -85,4 +85,20 @@ public class ThemeManager {
             return ContextCompat.getColor(context, R.color.primary);
         }
     }
+
+    public static int getHeadingTextColor(Context context) {
+        if (CheckPreferences.getDarkThemeEnabled(context)) {
+            return ContextCompat.getColor(context, R.color.heading_white);
+        } else {
+            return ContextCompat.getColor(context, R.color.heading_black);
+        }
+    }
+
+    public static int getTextColor(Context context) {
+        if (CheckPreferences.getDarkThemeEnabled(context)) {
+            return ContextCompat.getColor(context, R.color.white);
+        } else {
+            return ContextCompat.getColor(context, R.color.black);
+        }
+    }
 }

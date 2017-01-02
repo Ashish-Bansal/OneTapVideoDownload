@@ -19,6 +19,7 @@
     <color name="dark_primary">@color/indigo_700</color>
     <color name="grey">#CCC</color>
     <color name="white">#FFF</color>
+    <color name="heading_white">#80FFFFFF</color>
     <color name="highlight">@color/blue_accent</color>
 
     <color name="dialog_background">#961a237e</color>
@@ -31,4 +32,5 @@
     <color name="dark_background">#303030</color>
     <color name="dark_ligher_background">#424242</color>
     <color name="black">#000</color>
+    <color name="heading_black">#80000000</color>
 </resources>

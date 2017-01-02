@@ -2,13 +2,14 @@ package com.phantom.onetapvideodownload.downloader.downloadinfo;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.phantom.onetapvideodownload.R;
+import com.phantom.onetapvideodownload.ThemeManager;
 import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
 import com.phantom.onetapvideodownload.downloader.DownloadManager;
 import com.phantom.utils.Global;
@@ -123,8 +124,20 @@ public abstract class DownloadInfo {
                         })
                         .build();
 
-                View materialDialogView = materialDialog.getCustomView();
+                LinearLayout materialDialogView = (LinearLayout)materialDialog.getCustomView();
+                int n = materialDialogView.getChildCount();
+                for (int index = 0; index < n; index++) {
+                    try {
+                        LinearLayout detailGroup = (LinearLayout) materialDialogView.getChildAt(index);
+                        TextView headingTextView = (TextView) detailGroup.getChildAt(0);
+                        headingTextView.setTextColor(ThemeManager.getHeadingTextColor(getContext()));
 
+                        TextView infoTextView = (TextView) detailGroup.getChildAt(1);
+                        infoTextView.setTextColor(ThemeManager.getTextColor(getContext()));
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
                 try {
                     TextView filename = (TextView)materialDialogView.findViewById(R.id.filename);
                     filename.setText(getFilename());
