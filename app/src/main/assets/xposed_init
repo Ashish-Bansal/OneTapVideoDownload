@@ -3,6 +3,7 @@ com.phantom.onetapvideodownload.hooks.SelfHook
 com.phantom.onetapvideodownload.hooks.WebViewHook
 com.phantom.onetapvideodownload.hooks.ChromeHook
 com.phantom.onetapvideodownload.hooks.MediaMetadataRetriever
+com.phantom.onetapvideodownload.hooks.SoundCloudHook
 com.phantom.onetapyoutubemodule.YoutubeMediaHook
 com.phantom.onetapfacebookmodule.FacebookHook
 com.phantom.onetapfacebookmodule.FacebookLiteHook
