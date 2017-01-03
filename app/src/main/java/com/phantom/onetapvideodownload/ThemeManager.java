@@ -17,8 +17,8 @@ public class ThemeManager {
         Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(ThemeManager.getPrimaryColor(activity));
         toolbar.setPopupTheme(getPopupMenuTheme(activity));
-        activity.getWindow().setStatusBarColor(ThemeManager.getPrimaryDarkColor(activity));
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            activity.getWindow().setStatusBarColor(ThemeManager.getPrimaryDarkColor(activity));
             activity.getWindow().setNavigationBarColor(ThemeManager.getNavigationBarColor(activity));
         }
     }
