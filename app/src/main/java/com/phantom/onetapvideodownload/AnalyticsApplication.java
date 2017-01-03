@@ -21,20 +21,13 @@ import android.app.Application;
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
 import com.evernote.android.job.JobManager;
-import com.google.android.gms.analytics.GoogleAnalytics;
-import com.google.android.gms.analytics.Tracker;
 import com.phantom.HookFetchJob;
 import com.phantom.HookFetchJobCreator;
 import com.phantom.utils.CheckPreferences;
 import com.phantom.utils.Global;
 
-/**
- * This is a subclass of {@link Application} used to provide shared objects for this app, such as
- * the {@link Tracker}.
- */
 public class AnalyticsApplication extends Application implements BillingProcessor.IBillingHandler {
     private static boolean activityVisible;
-    private Tracker mTracker;
     private BillingProcessor mBillingProcessor;
 
     @Override
@@ -56,21 +49,6 @@ public class AnalyticsApplication extends Application implements BillingProcesso
         }
 
         mBillingProcessor = new BillingProcessor(this, Global.PUBLIC_LICENSE_KEY, this);
-    }
-
-    /**
-     * Gets the default {@link Tracker} for this {@link Application}.
-     *
-     * @return tracker
-     */
-    synchronized public Tracker getDefaultTracker() {
-        if (mTracker == null) {
-            GoogleAnalytics analytics = GoogleAnalytics.getInstance(this);
-            // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
-            mTracker = analytics.newTracker(R.xml.global_tracker);
-            mTracker.enableAdvertisingIdCollection(true);
-        }
-        return mTracker;
     }
 
     public static boolean isActivityVisible() {

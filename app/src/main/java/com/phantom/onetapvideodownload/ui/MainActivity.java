@@ -35,9 +35,8 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.plus.PlusOneButton;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.phantom.onetapvideodownload.AnalyticsApplication;
 import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
@@ -67,7 +66,6 @@ import java.io.File;
 public class MainActivity extends AppCompatActivity implements FolderChooserDialog.FolderCallback,
         Invokable<Video, Integer> {
     private final static String TAG = "MainActivity";
-    private Tracker mTracker;
     private AdManager mAdManager;
 
     private RecyclerView mDownloadDialogRecyclerView;
@@ -108,11 +106,10 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
             fm.executePendingTransactions();
         }
 
-        AnalyticsApplication application = (AnalyticsApplication) getApplication();
-        mTracker = application.getDefaultTracker();
-
-        mTracker.setScreenName("Activity~" + getClass().getName());
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Activity~" + getClass().getName());
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
         if (CheckPreferences.xposedErrorsEnabled(this)) {
             checkXposedInstallation();
         }

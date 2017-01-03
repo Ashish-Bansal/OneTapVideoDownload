@@ -20,9 +20,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.google.android.gms.analytics.HitBuilders;
-import com.google.android.gms.analytics.Tracker;
-import com.phantom.onetapvideodownload.AnalyticsApplication;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.ThemeManager;
 import com.phantom.onetapvideodownload.Video.Video;
@@ -40,7 +38,6 @@ public class UrlLogActivity extends AppCompatActivity {
     private UrlAdapter mUrlAdapter;
     private SwipeToAction mSwipeToAction;
     private TextView mEmptyView;
-    private Tracker mTracker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,10 +150,10 @@ public class UrlLogActivity extends AppCompatActivity {
             }
         });
 
-        AnalyticsApplication application = (AnalyticsApplication) getApplication();
-        mTracker = application.getDefaultTracker();
-        mTracker.setScreenName("Activity~" + getClass().getName());
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Activity~" + getClass().getName());
+        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.APP_OPEN, bundle);
         ThemeManager.applyTheme(this);
     }
 
@@ -164,8 +161,6 @@ public class UrlLogActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         reload();
-        mTracker.setScreenName("Activity~" + getClass().getName());
-        mTracker.send(new HitBuilders.ScreenViewBuilder().build());
     }
 
     private void displaySnackbar(String text, String actionName, View.OnClickListener action) {
