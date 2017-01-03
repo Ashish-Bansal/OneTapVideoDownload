@@ -32,22 +32,11 @@
             ext:documentView_lineHeightMultiplier="1.5"
             ext:documentView_maxLines="10"
             ext:documentView_reverse="false"
-            ext:documentView_text="@string/donate_description"
+            ext:documentView_text="@string/purchased_description"
             ext:documentView_textAlignment="justified"
             ext:documentView_textColor="@android:color/white"
             ext:documentView_textFormat="plain"
             ext:documentView_textSize="15sp" />
-
-        <Button
-            android:id="@+id/donate_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/description"
-            android:layout_centerHorizontal="true"
-            android:background="@color/donate_translucent"
-            android:text="@string/donate"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
     </RelativeLayout>
 
 </RelativeLayout>

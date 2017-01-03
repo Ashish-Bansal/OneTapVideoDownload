@@ -11,8 +11,7 @@
         <!--android:title="@string/menu_item_rate" />-->
     <!--<item android:id="@+id/menu_translate"-->
         <!--android:title="@string/menu_item_translate" />-->
-    <item android:id="@+id/menu_remove_ads"
-        android:title="@string/menu_item_remove_ads" />
+    <item android:id="@+id/menu_donation" />
     <item android:id="@+id/menu_require_help"
         android:title="@string/menu_item_help" />
     <item android:id="@+id/menu_about"

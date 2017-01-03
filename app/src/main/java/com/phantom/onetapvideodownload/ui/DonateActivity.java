@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anjlab.android.iab.v3.BillingProcessor;
@@ -25,9 +26,13 @@ public class DonateActivity extends AppCompatActivity implements BillingProcesso
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_donation);
+        if (CheckPreferences.getDonationStatus(this)) {
+            setContentView(R.layout.activity_purchased);
+            return;
+        }
+
+        setContentView(R.layout.activity_remove_ads);
         mBillingProcessor = new BillingProcessor(this, mPublicLicenseKey, this);
-        mBillingProcessor.loadOwnedPurchasesFromGoogle();
 
         Button donateButton = (Button) findViewById(R.id.donate_button);
         donateButton.setOnClickListener(new View.OnClickListener() {
@@ -45,7 +50,24 @@ public class DonateActivity extends AppCompatActivity implements BillingProcesso
                 }
             }
         });
+
+        Button restorePurchases = (Button) findViewById(R.id.restore_purchases);
+        restorePurchases.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isAvailable = BillingProcessor.isIabServiceAvailable(DonateActivity.this);
+                if (isAvailable) {
+                    if (mBillingProcessor.isInitialized() && mBillingProcessor.loadOwnedPurchasesFromGoogle()) {
+                        onPurchaseHistoryRestored();
+                        Toast.makeText(DonateActivity.this, getResources().getText(R.string.purchases_loaded), Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    Toast.makeText(DonateActivity.this, getResources().getText(R.string.google_services_not_found_title), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
+
 
     @Override
     public void onBillingInitialized() {
@@ -53,6 +75,9 @@ public class DonateActivity extends AppCompatActivity implements BillingProcesso
          * Called when BillingProcessor was initialized and it's ready to purchase
          */
         Log.i(TAG, "Billing Processor Initialized");
+        if (mBillingProcessor.loadOwnedPurchasesFromGoogle()) {
+            onPurchaseHistoryRestored();
+        }
     }
 
     @Override

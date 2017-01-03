@@ -194,9 +194,11 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
+        MenuItem donation = menu.findItem(R.id.menu_donation);
         if (CheckPreferences.getDonationStatus(this)) {
-            MenuItem removeAds = menu.findItem(R.id.menu_remove_ads);
-            removeAds.setVisible(false);
+            donation.setTitle(getResources().getString(R.string.menu_item_purchases));
+        } else {
+            donation.setTitle(getResources().getString(R.string.menu_item_remove_ads));
         }
         return true;
     }
@@ -217,7 +219,7 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
 //            case R.id.menu_translate :
 //                sendEmailForTranslation();
 //                break;
-            case R.id.menu_remove_ads :
+            case R.id.menu_donation :
                 openDonateActivity();
                 break;
             case R.id.menu_require_help :

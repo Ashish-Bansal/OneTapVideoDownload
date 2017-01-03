@@ -79,6 +79,7 @@
     <string name="menu_item_rate">Rate this app</string>
     <string name="menu_item_donate">Donate</string>
     <string name="menu_item_remove_ads">Remove Ads</string>
+    <string name="menu_item_purchases">Purchases</string>
     <string name="menu_item_translate">Help to translate</string>
     <string name="menu_item_help">Need Help ?</string>
     <string name="menu_item_about">About</string>
@@ -101,7 +102,7 @@
     <string name="about_credits">Credits : Haariger Harald, ihelp101, Stefan Ivic, Deepak Sharma, Rutvik Rajagopal, Julia Yanovskaya, Open.Orange, Matheus Coelho, Carlo, Harminizer, 尹崇业 and all others who I might have forgot to specify.</string>
 
     <string name="donate">Donate</string>
-    <string name="donate_description">Please donate to remove Ads and support application development. (If you have donated before v5.0 release, you can contact me to get up to 3 licenses.)</string>
+    <string name="donate_description">Please donate to remove Ads and support application development.</string>
     <string name="via_wallet">Via Google Wallet</string>
     <string name="via_paypal">Via Paypal</string>
     <string name="via_playstore">Via Playstore</string>
@@ -160,6 +161,9 @@
     <string name="pref_enable_dark_theme_summary">Dark theme for sensitive eyes</string>
     <string name="youtube_next_video_title">Play next Video</string>
     <string name="youtube_next_video_summary">Notification for downloading videos from YouTube will appear from next video. So, please skip this video and play the next video.</string>
+    <string name="purchases_loaded">Purchases Restored!</string>
+    <string name="purchased_description">Thanks a lot for purchasing!\n\nIf you have ever donated in year 2016, you can contact me to get three more licenses for free.</string>
+    <string name="restore_purchases">Restore Purchases</string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
