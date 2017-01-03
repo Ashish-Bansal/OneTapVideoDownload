@@ -58,8 +58,6 @@ dependencies {
         transitive = true
     }
 
-    compile(name:'millennial-ad-sdk', ext:'aar')
-
     repositories {
         mavenCentral()
     }

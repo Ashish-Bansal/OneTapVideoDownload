@@ -47,13 +47,12 @@ import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
 import com.phantom.onetapvideodownload.ads.AdManager;
 import com.phantom.onetapvideodownload.ads.FacebookBannerAd;
-import com.phantom.onetapvideodownload.ads.MillennialBannerAd;
 import com.phantom.onetapvideodownload.ads.MoPubAd;
 import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
-import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionItem;
 import com.phantom.onetapvideodownload.downloader.ProxyDownloadManager;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionAdapter;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionIds;
+import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionItem;
 import com.phantom.utils.CheckPreferences;
 import com.phantom.utils.Global;
 import com.phantom.utils.HookClassNamesFetcher;
@@ -91,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
             mAdManager = new AdManager(this);
             mAdManager.add(new MoPubAd(this));
             mAdManager.add(new FacebookBannerAd(this));
-            mAdManager.add(new MillennialBannerAd(this));
             mAdManager.processQueue();
         }
 
