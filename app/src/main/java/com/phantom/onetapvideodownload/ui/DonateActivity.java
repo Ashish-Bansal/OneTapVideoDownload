@@ -59,10 +59,10 @@ public class DonateActivity extends AppCompatActivity implements BillingProcesso
                 if (isAvailable) {
                     if (mBillingProcessor.isInitialized() && mBillingProcessor.loadOwnedPurchasesFromGoogle()) {
                         onPurchaseHistoryRestored();
-                        Toast.makeText(DonateActivity.this, getResources().getText(R.string.purchases_loaded), Toast.LENGTH_LONG).show();
+                        Toast.makeText(DonateActivity.this, getResources().getText(R.string.purchases_loaded), Toast.LENGTH_SHORT).show();
                     }
                 } else {
-                    Toast.makeText(DonateActivity.this, getResources().getText(R.string.google_services_not_found_title), Toast.LENGTH_LONG).show();
+                    Toast.makeText(DonateActivity.this, getResources().getText(R.string.google_services_not_found_title), Toast.LENGTH_SHORT).show();
                 }
             }
         });
