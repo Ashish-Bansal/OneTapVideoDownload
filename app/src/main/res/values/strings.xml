@@ -86,14 +86,14 @@
     <string name="menu_item_usage_instruction_title">Usage Instructions</string>
 
     <string name="usage_instruction_summary">
-        \n 1. Enable One Tap Video Download in Xposed Installer
-        \n 2. Reboot your device
-        \n 3. Play a video in browser
-        \n 4. Notification will show in notification panel with different options
-        \n (Please note that  this notification will disappear automatically in 30 seconds if you haven\'t changed this setting in main application)
-        \n 5. Enjoy your video offline by downloading or play it using your favorite video player from the notification itself
+        \n1. Enable One Tap Video Download in Xposed Installer
+        \n2. Reboot your device
+        \n3. Play a video in browser
+        \n4. Notification will show in notification panel with different options
+        \n(Please note that  this notification will disappear automatically in 30 seconds if you haven\'t changed this setting in main application)
+        \n5. Enjoy your video offline by downloading or play it using your favorite video player from the notification itself
 
-        \n Still unable to follow? <a href="https://youtu.be/uTME1FudFmU">Watch video in English here</a>
+        \nStill unable to follow? <a href="https://youtu.be/uTME1FudFmU">Watch video in English here</a>
     </string>
     <string name="about_intro">One Tap Video Download is a Free and Open Source Xposed Module which enables user to download/play video from many applications like browser, facebook etc.</string>
     <string name="about_developed_by">Developed By</string>
