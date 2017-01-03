@@ -26,7 +26,20 @@ public class SoundCloudHook implements IXposedHookLoadPackage {
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam hookParams) throws Throwable {
                 try  {
                     String url = hookParams.getResult().toString();
-                    ApplicationLogMaintainer.sendBroadcast(Global.getContext(), "Sound Cloud URL : " + url);
+                    ApplicationLogMaintainer.sendBroadcast(Global.getContext(), "Sound Cloud Original URL : " + url);
+
+                    String soundCloudTrackInfo = url.split("/")[4];
+                    ApplicationLogMaintainer.sendBroadcast(Global.getContext(), "Sound Cloud Track Info : " + soundCloudTrackInfo);
+
+                    String trackNumber = soundCloudTrackInfo.split(":")[2];
+                    ApplicationLogMaintainer.sendBroadcast(Global.getContext(), "Sound Cloud Track Number : " + trackNumber);
+
+                    String queryParameters = url.split("\\?")[1];
+                    ApplicationLogMaintainer.sendBroadcast(Global.getContext(), "Sound Cloud queryParameters : " + queryParameters);
+
+                    // https://api.soundcloud.com/tracks/trackNo/stream?client_id=foobar
+                    url = "https://api.soundcloud.com/tracks/" + trackNumber + "/stream?" + queryParameters;
+                    ApplicationLogMaintainer.sendBroadcast(Global.getContext(), "Sound Cloud Final Url : " + url);
                     IpcService.startSaveUrlAction(Global.getContext(), url, packageName);
                 } catch (Exception e) {
                     ApplicationLogMaintainer.sendBroadcast(Global.getContext(), Global.getStackTrace(e));
