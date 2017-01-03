@@ -13,15 +13,11 @@ import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.utils.CheckPreferences;
-
-import java.util.Arrays;
-import java.util.List;
+import com.phantom.utils.Global;
 
 public class DonateActivity extends AppCompatActivity implements BillingProcessor.IBillingHandler {
     private BillingProcessor mBillingProcessor;
-    private String mPublicLicenseKey = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkRWe3yER6u5+R4OWEn2DfIsdM7Ojxm+gVTbQrLJpROg+qr4zqcN/SKJB+yi9Jos8BvAHPemx7OX9uTjDGoBJ//GyScNGN+IQUKdXOUrrPtZGqeR02QlnonF5dM/abIKwlEX4qiIERYtsooi87k4kPn1cCe55YE8wyZkRHR5vy3rjJ0BMLkVkTVVlxlRgy+h0ihbDVvDU2sbb3kEDc5mOW5n6+hoofhCPoErzUhSlTOCmDxL1AaISA05JqOvWliSAQoM9ixCaWMoHcbnzf8HyR7ijyUNdifn6R9a791lvk2b8Ry5Y96p+VNsnLNUNrCjwwXkuJnmBvntRFrtrr0I0TwIDAQAB";
     private String TAG = "DonateActivity";
-    private List<String> donationProductIds = Arrays.asList("donate", "donate2", "donate4");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +28,7 @@ public class DonateActivity extends AppCompatActivity implements BillingProcesso
         }
 
         setContentView(R.layout.activity_remove_ads);
-        mBillingProcessor = new BillingProcessor(this, mPublicLicenseKey, this);
+        mBillingProcessor = new BillingProcessor(this, Global.PUBLIC_LICENSE_KEY, this);
 
         Button donateButton = (Button) findViewById(R.id.donate_button);
         donateButton.setOnClickListener(new View.OnClickListener() {
@@ -40,7 +36,7 @@ public class DonateActivity extends AppCompatActivity implements BillingProcesso
             public void onClick(View v) {
                 boolean isAvailable = BillingProcessor.isIabServiceAvailable(DonateActivity.this);
                 if (isAvailable) {
-                    mBillingProcessor.purchase(DonateActivity.this, donationProductIds.get(0));
+                    mBillingProcessor.purchase(DonateActivity.this, Global.DONATION_PRODUCT_IDS.get(0));
                 } else {
                     new MaterialDialog.Builder(DonateActivity.this)
                             .title(R.string.google_services_not_found_title)
@@ -108,7 +104,7 @@ public class DonateActivity extends AppCompatActivity implements BillingProcesso
          * was loaded from Google Play
          */
         boolean purchased = false;
-        for (String productId : donationProductIds) {
+        for (String productId : Global.DONATION_PRODUCT_IDS) {
             TransactionDetails transactionDetails = mBillingProcessor.getPurchaseTransactionDetails(productId);
             if (transactionDetails != null) {
                 purchased = true;

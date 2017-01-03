@@ -18,19 +18,24 @@ package com.phantom.onetapvideodownload;
 
 import android.app.Application;
 
+import com.anjlab.android.iab.v3.BillingProcessor;
+import com.anjlab.android.iab.v3.TransactionDetails;
 import com.evernote.android.job.JobManager;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.phantom.HookFetchJob;
 import com.phantom.HookFetchJobCreator;
+import com.phantom.utils.CheckPreferences;
+import com.phantom.utils.Global;
 
 /**
  * This is a subclass of {@link Application} used to provide shared objects for this app, such as
  * the {@link Tracker}.
  */
-public class AnalyticsApplication extends Application {
+public class AnalyticsApplication extends Application implements BillingProcessor.IBillingHandler {
     private static boolean activityVisible;
     private Tracker mTracker;
+    private BillingProcessor mBillingProcessor;
 
     @Override
     public void onCreate() {
@@ -49,6 +54,8 @@ public class AnalyticsApplication extends Application {
         if (noOfJobRequests == 0) {
             HookFetchJob.scheduleJob();
         }
+
+        mBillingProcessor = new BillingProcessor(this, Global.PUBLIC_LICENSE_KEY, this);
     }
 
     /**
@@ -76,5 +83,34 @@ public class AnalyticsApplication extends Application {
 
     public static void activityPaused() {
         activityVisible = false;
+    }
+
+
+    @Override
+    public void onBillingInitialized() {
+        if (mBillingProcessor.loadOwnedPurchasesFromGoogle()) {
+            onPurchaseHistoryRestored();
+        }
+    }
+
+    @Override
+    public void onProductPurchased(String productId, TransactionDetails details) {
+    }
+
+    @Override
+    public void onBillingError(int errorCode, Throwable error) {
+    }
+
+    @Override
+    public void onPurchaseHistoryRestored() {
+        boolean purchased = false;
+        for (String productId : Global.DONATION_PRODUCT_IDS) {
+            TransactionDetails transactionDetails = mBillingProcessor.getPurchaseTransactionDetails(productId);
+            if (transactionDetails != null) {
+                purchased = true;
+                break;
+            }
+        }
+        CheckPreferences.setDonationStatus(this, purchased);
     }
 }
