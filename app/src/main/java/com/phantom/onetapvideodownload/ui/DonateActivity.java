@@ -8,7 +8,6 @@ import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anjlab.android.iab.v3.BillingProcessor;
@@ -47,22 +46,6 @@ public class DonateActivity extends AppCompatActivity implements BillingProcesso
                             .content(R.string.google_services_not_found_summary)
                             .positiveText(R.string.okay)
                             .show();
-                }
-            }
-        });
-
-        Button restorePurchases = (Button) findViewById(R.id.restore_purchases);
-        restorePurchases.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean isAvailable = BillingProcessor.isIabServiceAvailable(DonateActivity.this);
-                if (isAvailable) {
-                    if (mBillingProcessor.isInitialized() && mBillingProcessor.loadOwnedPurchasesFromGoogle()) {
-                        onPurchaseHistoryRestored();
-                        Toast.makeText(DonateActivity.this, getResources().getText(R.string.purchases_loaded), Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(DonateActivity.this, getResources().getText(R.string.google_services_not_found_title), Toast.LENGTH_SHORT).show();
                 }
             }
         });

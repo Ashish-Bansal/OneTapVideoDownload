@@ -17,6 +17,7 @@
 package com.phantom.onetapvideodownload;
 
 import android.app.Application;
+import android.widget.Toast;
 
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
@@ -88,6 +89,9 @@ public class AnalyticsApplication extends Application implements BillingProcesso
                 purchased = true;
                 break;
             }
+        }
+        if (purchased && !CheckPreferences.getDonationStatus(this)) {
+            Toast.makeText(this, getResources().getText(R.string.purchases_loaded), Toast.LENGTH_SHORT).show();
         }
         CheckPreferences.setDonationStatus(this, purchased);
     }
