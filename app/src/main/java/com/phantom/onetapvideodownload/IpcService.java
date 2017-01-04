@@ -258,6 +258,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
             mBuilder.setSmallIcon(R.drawable.one_tap_small);
             mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.one_tap_large));
             mBuilder.setContentTitle(getResources().getString(R.string.youtube_next_video_title));
+            mBuilder.setContentInfo(getResources().getString(R.string.youtube_next_video_summary));
             mBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(getResources().getString(R.string.youtube_next_video_summary)));
             mBuilder.setAutoCancel(true);
             mBuilder.setOnlyAlertOnce(false);
