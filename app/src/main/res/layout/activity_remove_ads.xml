@@ -25,7 +25,6 @@
             android:layout_centerHorizontal="true"
             ext:documentView_antialias="true"
             ext:documentView_cacheConfig="auto_quality"
-            ext:documentView_insetPaddingBottom="15sp"
             ext:documentView_insetPaddingLeft="15sp"
             ext:documentView_insetPaddingRight="15sp"
             ext:documentView_insetPaddingTop="15sp"
@@ -44,8 +43,25 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/description"
             android:layout_centerHorizontal="true"
+            android:layout_marginTop="15sp"
+            android:paddingLeft="15sp"
+            android:paddingRight="15sp"
             android:background="@color/donate_translucent"
             android:text="@string/donate"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/redeem_promo_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/donate_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15sp"
+            android:paddingLeft="15sp"
+            android:paddingRight="15sp"
+            android:background="@color/donate_translucent"
+            android:text="@string/redeem_promo_code"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
@@ -53,7 +69,7 @@
             android:id="@+id/restore_purchases"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/donate_button"
+            android:layout_below="@+id/redeem_promo_code"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15sp"
             android:paddingLeft="15sp"

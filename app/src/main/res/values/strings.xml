@@ -164,6 +164,10 @@
     <string name="purchases_loaded">Purchases Restored!</string>
     <string name="purchased_description">Thanks a lot for purchasing!\n\nIf you have ever donated in year 2016, you can contact me to get three more licenses for free.</string>
     <string name="restore_purchases">Restore Purchases</string>
+    <string name="submit">Submit</string>
+    <string name="redeem_promo_code">Redeem Promo Code</string>
+    <string name="enter_promo_code">Enter Promo Code</string>
+    <string name="buy_premium_version">Buy Premium</string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>

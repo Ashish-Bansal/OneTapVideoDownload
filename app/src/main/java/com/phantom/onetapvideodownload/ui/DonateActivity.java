@@ -1,8 +1,10 @@
 package com.phantom.onetapvideodownload.ui;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -14,6 +16,8 @@ import com.anjlab.android.iab.v3.TransactionDetails;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.utils.CheckPreferences;
 import com.phantom.utils.Global;
+
+import java.net.URLEncoder;
 
 public class DonateActivity extends AppCompatActivity implements BillingProcessor.IBillingHandler {
     private BillingProcessor mBillingProcessor;
@@ -60,6 +64,28 @@ public class DonateActivity extends AppCompatActivity implements BillingProcesso
                 } else {
                     Toast.makeText(DonateActivity.this, getResources().getText(R.string.google_services_not_found_title), Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        Button redeemPromoCode = (Button) findViewById(R.id.redeem_promo_code);
+        redeemPromoCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new MaterialDialog.Builder(DonateActivity.this)
+                        .title(R.string.enter_promo_code)
+                        .inputType(InputType.TYPE_CLASS_TEXT)
+                        .positiveText(R.string.submit)
+                        .input(R.string.enter_promo_code, R.string.empty, new MaterialDialog.InputCallback() {
+                            @Override
+                            public void onInput(MaterialDialog dialog, CharSequence input) {
+                                try {
+                                    String url = "https://play.google.com/redeem?code=" + URLEncoder.encode(input.toString(), "UTF-8");
+                                    DonateActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).show();
             }
         });
     }
