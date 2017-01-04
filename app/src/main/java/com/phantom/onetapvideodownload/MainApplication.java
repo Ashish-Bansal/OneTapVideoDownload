@@ -27,7 +27,7 @@ import com.phantom.HookFetchJobCreator;
 import com.phantom.utils.CheckPreferences;
 import com.phantom.utils.Global;
 
-public class AnalyticsApplication extends Application implements BillingProcessor.IBillingHandler {
+public class MainApplication extends Application implements BillingProcessor.IBillingHandler {
     private static boolean activityVisible;
     private BillingProcessor mBillingProcessor;
 

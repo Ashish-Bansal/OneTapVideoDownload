@@ -38,7 +38,7 @@ import com.afollestad.materialdialogs.folderselector.FolderChooserDialog;
 import com.google.android.gms.plus.PlusOneButton;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.phantom.onetapvideodownload.AnalyticsApplication;
+import com.phantom.onetapvideodownload.MainApplication;
 import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
 import com.phantom.onetapvideodownload.BuildConfig;
 import com.phantom.onetapvideodownload.R;
@@ -129,13 +129,13 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         if (mPlusOneButton != null) {
             mPlusOneButton.initialize(APP_URL, 0);
         }
-        AnalyticsApplication.activityResumed();
+        MainApplication.activityResumed();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        AnalyticsApplication.activityPaused();
+        MainApplication.activityPaused();
     }
 
     @Override

@@ -19,7 +19,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.afollestad.materialdialogs.MaterialDialog;
-import com.phantom.onetapvideodownload.AnalyticsApplication;
+import com.phantom.onetapvideodownload.MainApplication;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
@@ -356,7 +356,7 @@ public class DownloadManager extends Service {
                     updateUiByStatus(DownloadInfo.Status.Completed);
 
                     if (getDownloadCountByStatus(DownloadInfo.Status.Completed) == completedCount + downloadingCount) {
-                        if (!AnalyticsApplication.isActivityVisible()) {
+                        if (!MainApplication.isActivityVisible()) {
                             showDownloadsFinishedNotification(mNotificationId);
                         }
                     }
