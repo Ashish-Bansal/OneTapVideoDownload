@@ -47,7 +47,7 @@
             android:paddingLeft="15sp"
             android:paddingRight="15sp"
             android:background="@color/donate_translucent"
-            android:text="@string/donate"
+            android:text="@string/buy_premium_version"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
