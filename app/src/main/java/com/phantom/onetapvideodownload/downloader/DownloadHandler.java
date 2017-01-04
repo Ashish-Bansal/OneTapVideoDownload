@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 import com.phantom.utils.Global;
@@ -73,6 +74,7 @@ public class DownloadHandler {
                     BufferedSink bufferedSink = Okio.buffer(Okio.appendingSink(file));
                     writeData(bufferedSource, bufferedSink);
                 } catch (Exception e) {
+                    FirebaseCrash.report(e);
                     e.printStackTrace();
                 }
             }
@@ -163,6 +165,7 @@ public class DownloadHandler {
                 }
             } catch (IOException ioException) {
                 ioException.printStackTrace();
+                FirebaseCrash.report(ioException);
             }
         } finally {
             writeToDatabase();

@@ -12,6 +12,7 @@ import android.widget.Button;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.anjlab.android.iab.v3.BillingProcessor;
 import com.anjlab.android.iab.v3.TransactionDetails;
+import com.google.firebase.crash.FirebaseCrash;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.utils.CheckPreferences;
 import com.phantom.utils.Global;
@@ -65,6 +66,7 @@ public class DonateActivity extends AppCompatActivity implements BillingProcesso
                                     String url = "https://play.google.com/redeem?code=" + URLEncoder.encode(input.toString(), "UTF-8");
                                     DonateActivity.this.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
                                 } catch (Exception e) {
+                                    FirebaseCrash.report(e);
                                     e.printStackTrace();
                                 }
                             }

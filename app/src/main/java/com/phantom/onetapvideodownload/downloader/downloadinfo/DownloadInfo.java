@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.firebase.crash.FirebaseCrash;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.ThemeManager;
 import com.phantom.onetapvideodownload.databasehandlers.DownloadDatabase;
@@ -135,6 +136,7 @@ public abstract class DownloadInfo {
                         TextView infoTextView = (TextView) detailGroup.getChildAt(1);
                         infoTextView.setTextColor(ThemeManager.getTextColor(getContext()));
                     } catch (Exception e) {
+                        FirebaseCrash.report(e);
                         e.printStackTrace();
                     }
                 }
@@ -160,6 +162,7 @@ public abstract class DownloadInfo {
                     TextView downloadUrl = (TextView)materialDialogView.findViewById(R.id.download_url);
                     downloadUrl.setText(getUrl());
                 } catch (NullPointerException e) {
+                    FirebaseCrash.report(e);
                     e.printStackTrace();
                 }
 

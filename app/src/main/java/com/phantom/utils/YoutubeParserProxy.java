@@ -6,6 +6,7 @@ import android.support.v4.util.Pair;
 import android.util.Log;
 import android.util.SparseArray;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
 
@@ -33,6 +34,7 @@ public class YoutubeParserProxy {
                     try {
                         invokable.invoke(video);
                     } catch (java.lang.Exception e) {
+                        FirebaseCrash.report(e);
                         e.printStackTrace();
                     }
                 } else {

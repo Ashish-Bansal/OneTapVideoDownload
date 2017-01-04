@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.downloader.downloadinfo.DownloadInfo;
 
@@ -45,6 +46,7 @@ class DownloadViewHolder extends RecyclerView.ViewHolder {
         try {
             mDownloadUrl.setText(URLDecoder.decode(url, "UTF-8").replace("%20", " "));
         } catch (Exception e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
         } finally {
             mDownloadUrl.setText(url.replace("%20", " "));
@@ -85,6 +87,7 @@ class DownloadViewHolder extends RecyclerView.ViewHolder {
         try {
             mPercentageTextView.setText(String.format(Locale.getDefault(), "%d%%", progress));
         } catch (Exception e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
         }
     }

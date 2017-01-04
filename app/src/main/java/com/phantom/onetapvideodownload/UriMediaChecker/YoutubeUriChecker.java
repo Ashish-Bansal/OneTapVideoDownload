@@ -3,6 +3,7 @@ package com.phantom.onetapvideodownload.UriMediaChecker;
 import android.content.Context;
 import android.net.Uri;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
 
@@ -26,6 +27,7 @@ class YoutubeUriChecker implements AbstractUriChecker {
             }
             return new YoutubeVideo("", videoId);
         } catch (Exception e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
         }
 

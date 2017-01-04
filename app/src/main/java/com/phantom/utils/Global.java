@@ -18,6 +18,7 @@ import android.support.v4.util.Pair;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
 import com.phantom.onetapvideodownload.R;
 
@@ -132,6 +133,7 @@ public class Global {
                 return true;
             }
         } catch (Exception e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
         }
 
@@ -151,6 +153,7 @@ public class Global {
                 return urlConnection.getHeaderField("Content-Type");
             }
         } catch (Exception e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
         }
 
@@ -177,11 +180,13 @@ public class Global {
             openIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(openIntent);
         } catch (ActivityNotFoundException e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
             Toast.makeText(context,
                     context.getResources().getString(R.string.play_video_activity_not_found),
                     Toast.LENGTH_LONG).show();
         } catch (IllegalArgumentException e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
             Toast.makeText(context,
                     context.getResources().getString(R.string.unable_to_file_file) + fileLocation,
@@ -202,11 +207,13 @@ public class Global {
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             context.startActivity(shareIntent);
         } catch (ActivityNotFoundException e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
             Toast.makeText(context,
                     context.getResources().getString(R.string.share_video_activity_not_found),
                     Toast.LENGTH_LONG).show();
         } catch (IllegalArgumentException e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
             Toast.makeText(context,
                     context.getResources().getString(R.string.unable_to_file_file) + fileLocation,
@@ -250,6 +257,7 @@ public class Global {
                 throw new IllegalArgumentException("Body content size is very large");
             }
         } catch (Exception e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
             return null;
         }
@@ -297,6 +305,7 @@ public class Global {
                 packageManager.getPackageInfo(packageName, 0);
                 return true;
             } catch (PackageManager.NameNotFoundException e) {
+                FirebaseCrash.report(e);
             }
         }
         Log.v(TAG, "Playstore not available on the device!");
@@ -364,6 +373,7 @@ public class Global {
             fileWriter.flush();
             fileWriter.close();
         } catch (IOException e) {
+            FirebaseCrash.report(e);
             return false;
         }
         return true;
@@ -375,6 +385,7 @@ public class Global {
             bufferedReader.readLine();
             bufferedReader.close();
         } catch (Exception e) {
+            FirebaseCrash.report(e);
             return false;
         }
         return true;
@@ -390,6 +401,7 @@ public class Global {
 
             result = new String(data, "UTF-8");
         } catch (IOException e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
         }
         return result;
@@ -400,6 +412,7 @@ public class Global {
         try {
             jsonObject = new JSONObject(jsonString);
         } catch (JSONException e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
         }
         return jsonObject;

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.firebase.crash.FirebaseCrash;
 import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
 import com.phantom.onetapvideodownload.BuildConfig;
 import com.phantom.onetapvideodownload.R;
@@ -62,6 +63,7 @@ public class HookClassNamesFetcher extends AsyncTask<String, Integer, String> {
         try {
             return Global.getResponseBody(mHookUrl);
         } catch (Exception e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
         }
         return null;

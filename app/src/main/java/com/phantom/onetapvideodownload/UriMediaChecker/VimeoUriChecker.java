@@ -2,6 +2,7 @@ package com.phantom.onetapvideodownload.UriMediaChecker;
 
 import android.content.Context;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.phantom.onetapvideodownload.Video.BrowserVideo;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.utils.Global;
@@ -33,6 +34,7 @@ class VimeoUriChecker implements AbstractUriChecker {
                 return new BrowserVideo(videoUrl);
             }
         } catch (Exception e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
         }
 

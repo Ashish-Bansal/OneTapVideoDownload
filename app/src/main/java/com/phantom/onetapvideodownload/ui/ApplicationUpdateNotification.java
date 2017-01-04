@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.firebase.crash.FirebaseCrash;
 import com.phantom.onetapvideodownload.R;
 import com.phantom.utils.Global;
 
@@ -95,6 +96,7 @@ class ApplicationUpdateNotification {
         try {
             return jsonObject.getString("latest_version_url");
         } catch (JSONException e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
             return null;
         }
@@ -104,6 +106,7 @@ class ApplicationUpdateNotification {
         try {
             return jsonObject.getInt("latest_version_code");
         } catch (JSONException e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
             return 0;
         }
@@ -133,6 +136,7 @@ class ApplicationUpdateNotification {
                 result.append(line);
             }
         } catch( Exception e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
         } finally {
             if (urlConnection != null) {
@@ -147,6 +151,7 @@ class ApplicationUpdateNotification {
             PackageInfo pInfo = mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), 0);
             return pInfo.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
+            FirebaseCrash.report(e);
             e.printStackTrace();
             return -1;
         }
