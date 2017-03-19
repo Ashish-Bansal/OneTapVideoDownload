@@ -5,6 +5,7 @@ import json
 import requests
 import subprocess
 import os
+import sys
 from pipes import quote
 
 YOUTUBE_APK_URL = 'http://www.androidapksfree.com/apk/youtube-apk-latest-version-download/'
@@ -103,5 +104,8 @@ def createGitPullRequest(version):
 
 
 if __name__ == '__main__':
+    if len(sys.argv) > 1:
+        YOUTUBE_APK_URL = sys.argv[1]
+
     pullLatestChanges()
     addNewHookClassnames()
