@@ -337,6 +337,10 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         }
     }
 
+    @Override
+    public void onFolderChooserDismissed(@NonNull FolderChooserDialog dialog) {
+    }
+
     private void showVideoDownloadDialog(final long videoId) {
         VideoDatabase videoDatabase = VideoDatabase.getDatabase(this);
         final Video video = videoDatabase.getVideo(videoId);
