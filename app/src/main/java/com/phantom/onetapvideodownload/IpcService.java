@@ -117,6 +117,10 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
                 handleActionSaveBrowserVideo(video);
             } else if (ACTION_SAVE_YOUTUBE_VIDEO.equals(action)) {
                 final String paramString = intent.getStringExtra(EXTRA_PARAM_STRING);
+                if (paramString == null
+                        || paramString.isEmpty()) {
+                    return START_NOT_STICKY;
+                }
                 handleActionSaveYoutubeVideo(paramString);
             } else if (ACTION_INSPECT_MEDIA_URI.equals(action)) {
                 String url = intent.getStringExtra(EXTRA_URL);
