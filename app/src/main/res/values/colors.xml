@@ -22,7 +22,7 @@
     <color name="heading_white">#80FFFFFF</color>
     <color name="highlight">@color/blue_accent</color>
 
-    <color name="dialog_background">#961a237e</color>
+    <color name="dialog_background">@color/indigo_800</color>
     <color name="transparent">#00000000</color>
     <color name="donate_translucent">#33FFFFFF</color>
 
