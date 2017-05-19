@@ -49,9 +49,7 @@ def apkDetailsFetcher():
             result['direct_url'] = x
             break
 
-    title = soup.title.text.split()
-    version = title[2].zfill(6)[1:7]
-
+    version = result['direct_url'].split('/')[-1].split('-')[1]
     result['version'] = version[:6]
     return result
 
