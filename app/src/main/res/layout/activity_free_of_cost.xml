@@ -32,7 +32,7 @@
             ext:documentView_lineHeightMultiplier="1.5"
             ext:documentView_maxLines="10"
             ext:documentView_reverse="false"
-            ext:documentView_text="@string/purchased_description"
+            ext:documentView_text="@string/free_of_cost"
             ext:documentView_textAlignment="justified"
             ext:documentView_textColor="@android:color/white"
             ext:documentView_textFormat="plain"

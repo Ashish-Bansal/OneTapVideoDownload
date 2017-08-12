@@ -54,10 +54,6 @@ android {
 
 dependencies {
     provided fileTree(dir: 'libs', include: ['XposedBridgeApi-20150213.jar'])
-    compile('com.mopub:mopub-sdk-banner:4.9.0@aar') {
-        transitive = true
-    }
-
     repositories {
         mavenCentral()
     }
@@ -84,9 +80,6 @@ dependencies {
     compile 'com.anjlab.android.iab.v3:library:1.0.+'
     compile 'com.github.bluejamesbond:textjustify-android:2.1.6'
     compile 'com.evernote:android-job:1.1.7'
-    compile ('com.facebook.android:audience-network-sdk:4.+') {
-        exclude group:"com.google.android.gms"
-    }
 
     testCompile 'junit:junit:4.12'
 }

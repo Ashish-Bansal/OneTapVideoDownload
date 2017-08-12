@@ -27,9 +27,8 @@ import com.phantom.HookFetchJobCreator;
 import com.phantom.utils.CheckPreferences;
 import com.phantom.utils.Global;
 
-public class MainApplication extends Application implements BillingProcessor.IBillingHandler {
+public class MainApplication extends Application {
     private static boolean activityVisible;
-    private BillingProcessor mBillingProcessor;
 
     @Override
     public void onCreate() {
@@ -48,8 +47,6 @@ public class MainApplication extends Application implements BillingProcessor.IBi
         if (noOfJobRequests == 0) {
             HookFetchJob.scheduleJob();
         }
-
-        mBillingProcessor = new BillingProcessor(this, Global.PUBLIC_LICENSE_KEY, this);
     }
 
     public static boolean isActivityVisible() {
@@ -62,37 +59,5 @@ public class MainApplication extends Application implements BillingProcessor.IBi
 
     public static void activityPaused() {
         activityVisible = false;
-    }
-
-
-    @Override
-    public void onBillingInitialized() {
-        if (mBillingProcessor.loadOwnedPurchasesFromGoogle()) {
-            onPurchaseHistoryRestored();
-        }
-    }
-
-    @Override
-    public void onProductPurchased(String productId, TransactionDetails details) {
-    }
-
-    @Override
-    public void onBillingError(int errorCode, Throwable error) {
-    }
-
-    @Override
-    public void onPurchaseHistoryRestored() {
-        boolean purchased = false;
-        for (String productId : Global.DONATION_PRODUCT_IDS) {
-            TransactionDetails transactionDetails = mBillingProcessor.getPurchaseTransactionDetails(productId);
-            if (transactionDetails != null) {
-                purchased = true;
-                break;
-            }
-        }
-        if (purchased && !CheckPreferences.getDonationStatus(this)) {
-            Toast.makeText(this, getResources().getText(R.string.purchases_loaded), Toast.LENGTH_SHORT).show();
-        }
-        CheckPreferences.setDonationStatus(this, purchased);
     }
 }

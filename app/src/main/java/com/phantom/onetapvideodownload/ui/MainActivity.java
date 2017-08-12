@@ -45,9 +45,6 @@ import com.phantom.onetapvideodownload.R;
 import com.phantom.onetapvideodownload.ThemeManager;
 import com.phantom.onetapvideodownload.Video.Video;
 import com.phantom.onetapvideodownload.Video.YoutubeVideo;
-import com.phantom.onetapvideodownload.ads.AdManager;
-import com.phantom.onetapvideodownload.ads.FacebookBannerAd;
-import com.phantom.onetapvideodownload.ads.MoPubAd;
 import com.phantom.onetapvideodownload.databasehandlers.VideoDatabase;
 import com.phantom.onetapvideodownload.downloader.ProxyDownloadManager;
 import com.phantom.onetapvideodownload.ui.downloadoptions.DownloadOptionAdapter;
@@ -65,7 +62,6 @@ import java.io.File;
 public class MainActivity extends AppCompatActivity implements FolderChooserDialog.FolderCallback,
         Invokable<Video, Integer> {
     private final static String TAG = "MainActivity";
-    private AdManager mAdManager;
 
     private RecyclerView mDownloadDialogRecyclerView;
     private static final String APP_URL = "https://play.google.com/store/apps/details?id=com.phantom.onetapvideodownload";
@@ -86,12 +82,6 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (!CheckPreferences.getDonationStatus(this)) {
-            mAdManager = new AdManager(this);
-            mAdManager.add(new MoPubAd(this));
-            mAdManager.add(new FacebookBannerAd(this));
-            mAdManager.processQueue();
-        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -138,14 +128,6 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
         MainApplication.activityPaused();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mAdManager != null) {
-            mAdManager.destroy();
-        }
-    }
-
     private void handleActionShareIntent(Intent intent) {
         String type = intent.getType();
         if (type != null && type.startsWith("text")) {
@@ -187,34 +169,13 @@ public class MainActivity extends AppCompatActivity implements FolderChooserDial
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        MenuItem donation = menu.findItem(R.id.menu_donation);
-        if (CheckPreferences.getDonationStatus(this)) {
-            donation.setTitle(getResources().getString(R.string.menu_item_purchases));
-        } else {
-            donation.setTitle(getResources().getString(R.string.menu_item_remove_ads));
-        }
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
             case R.id.menu_plus_one:
                 showPlusOneDialog();
                 break;
-//            case R.id.menu_rate_my_app :
-//                openAppInPlayStore();
-//                break;
-//            case R.id.menu_donate :
-//                openDonateActivity();
-//                break;
-//            case R.id.menu_translate :
-//                sendEmailForTranslation();
-//                break;
-            case R.id.menu_donation :
+            case R.id.menu_free :
                 openDonateActivity();
                 break;
             case R.id.menu_require_help :
