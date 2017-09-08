@@ -24,9 +24,8 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
     private static final String ONE_TAP_PACKAGE_NAME = "com.phantom.onetapvideodownload";
     private static final String ONE_TAP_YOUTUBE_MODULE_PACKAGE_NAME = "com.phantom.onetapyoutubemodule";
     private static final String PACKAGE_NAME = "com.google.android.youtube";
-    private static final String ORIGINAL_MAIN_CLASS_NAME = "com.google.android.libraries.youtube.innertube.model.media.FormatStreamModel";
-    private static final String ORIGINAL_METHOD_CLASS_NAME = "com.google.android.libraries.youtube.proto.nano.InnerTubeApi.FormatStream";
-    private static final HashMap<Integer, Pair<String, String>> classNamesMap = new HashMap<>();
+    private static final String ORIGINAL_CLASS_NAME = "com.google.android.libraries.youtube.innertube.model.media.FormatStreamModel";
+    private static final HashMap<Integer, String> classNamesMap = new HashMap<>();
     private static long lastVideoTime = System.currentTimeMillis();
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
@@ -57,7 +56,7 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
             if (jsonObject != null) {
                 classNamesMap.clear();
                 ApplicationLogMaintainer.sendBroadcast(Global.getContext(), "Cleared Class Names Map");
-                Global.loadJSONToMap(classNamesMap, jsonObject.getJSONObject("Youtube"));
+                Global.parseYoutubeHooksFromJson(classNamesMap, jsonObject.getJSONObject("Youtube"));
             }
         } catch (Exception e) {
             ApplicationLogMaintainer.sendBroadcast(context, Global.getStackTrace(e));
@@ -67,7 +66,7 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
         // public MainClass(MethodParameterClass paramJlb, String paramString, long paramLong)
 
         final ClassLoader loader = lpparam.classLoader;
-        boolean isNotObfuscated = Global.isClassPresent(loader, ORIGINAL_MAIN_CLASS_NAME);
+        boolean isNotObfuscated = Global.isClassPresent(loader, ORIGINAL_CLASS_NAME);
 
         final XC_MethodHook methodHook = new XC_MethodHook() {
             protected void afterHookedMethod(XC_MethodHook.MethodHookParam hookParams) throws Throwable {
@@ -93,27 +92,26 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
 
         ApplicationLogMaintainer.sendBroadcast(context, "Youtube Package version Code : " + packageVersion);
 
-        Pair<String, String> currentPackage;
+        String className;
         if (isNotObfuscated) {
-            currentPackage = classNamesMap.get(0);
+            className = classNamesMap.get(0);
         } else {
-            currentPackage = classNamesMap.get(Global.getXSignificantDigits(packageVersion, 6));
+            className = classNamesMap.get(Global.getXSignificantDigits(packageVersion, 6));
         }
 
         boolean successful = false;
-        if (currentPackage == null) {
+        if (className == null) {
             ApplicationLogMaintainer.sendBroadcast(context, "Trying bruteforcing using Map");
-            for (Map.Entry<Integer, Pair<String, String>> pair : classNamesMap.entrySet()) {
-                String className = pair.getValue().first;
-                successful = hookYoutube(lpparam.classLoader, methodHook, className);
+            for (Map.Entry<Integer, String> possibleClassName : classNamesMap.entrySet()) {
+                successful = hookYoutube(lpparam.classLoader, methodHook, possibleClassName.getValue());
                 if (successful) {
                     break;
                 }
             }
         } else {
-            String className = currentPackage.first;
             successful = hookYoutube(lpparam.classLoader, methodHook, className);
         }
+
         if (successful) {
             ApplicationLogMaintainer.sendBroadcast(context, "Youtube Hooking Successful");
         } else {
@@ -132,6 +130,6 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
     }
 
     static {
-        classNamesMap.put(0, new Pair<>(ORIGINAL_MAIN_CLASS_NAME, ORIGINAL_METHOD_CLASS_NAME));
+        classNamesMap.put(0, ORIGINAL_CLASS_NAME);
     }
 }

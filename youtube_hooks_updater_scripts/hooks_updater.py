@@ -22,13 +22,10 @@ def addNewHookClassnames():
         return
 
     direct_url = app_details['direct_url']
-    class_name_pair = extractor(direct_url)
-    main_class_name = class_name_pair[0]
-    sub_class_name = class_name_pair[1]
+    class_name = extractor(direct_url)
 
     json_data = json.loads(getJsonString())
-    json_data['Youtube'][app_version] = dict()
-    json_data['Youtube'][app_version][main_class_name] = sub_class_name
+    json_data['Youtube'][app_version] = class_name
     with open(getHookFilePath(), 'w') as f:
         json.dump(json_data, f, sort_keys=True, indent=4, separators=(',', ':'))
     print 'Updated HookClassnames.json for version : ', app_version

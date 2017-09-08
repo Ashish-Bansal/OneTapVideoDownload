@@ -434,6 +434,16 @@ public class Global {
         ApplicationLogMaintainer.sendBroadcast(Global.getContext(), "Parsed JSON and class names added to map.");
     }
 
+    public static void parseYoutubeHooksFromJson(Map<Integer, String> map, JSONObject jsonObject) throws JSONException{
+        Iterator<String> jsonKeys = jsonObject.keys();
+        while (jsonKeys.hasNext()) {
+            String key = jsonKeys.next();
+            String className = jsonObject.getString(key);
+            map.put(Integer.parseInt(key), className);
+        }
+        ApplicationLogMaintainer.sendBroadcast(Global.getContext(), "Parsed JSON and class names added to map.");
+    }
+
     public static void runMediaScanner(Context context, String[] paths) {
         MediaScannerConnection.scanFile(context,
                 paths,
