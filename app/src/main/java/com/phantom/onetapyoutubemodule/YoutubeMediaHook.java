@@ -133,57 +133,5 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
 
     static {
         classNamesMap.put(0, new Pair<>(ORIGINAL_MAIN_CLASS_NAME, ORIGINAL_METHOD_CLASS_NAME));
-        classNamesMap.put(108358, new Pair<>("jci", "noo"));
-        classNamesMap.put(107756, new Pair<>("ipz", "myv"));
-        classNamesMap.put(108754, new Pair<>("knr", "pkl"));
-        classNamesMap.put(108959, new Pair<>("kqo", "pqh"));
-        classNamesMap.put(107858, new Pair<>("irs", "nax"));
-        classNamesMap.put(102857, new Pair<>("hwt", "lqk"));
-        classNamesMap.put(108553, new Pair<>("jmv", "oae"));
-        classNamesMap.put(102555, new Pair<>("hux", "lkq"));
-        classNamesMap.put(103457, new Pair<>("idv", "mpj"));
-        classNamesMap.put(108058, new Pair<>("jcw", "noc"));
-        classNamesMap.put(102952, new Pair<>("hxz", "lsy"));
-        classNamesMap.put(103351, new Pair<>("ift", "mkx"));
-        classNamesMap.put(110354, new Pair<>("lkn", "qcf"));
-        classNamesMap.put(101855, new Pair<>("gmg", "jlb"));
-        classNamesMap.put(103155, new Pair<>("ibx", "map"));
-        classNamesMap.put(101653, new Pair<>("gin", "jda"));
-        classNamesMap.put(101253, new Pair<>("gfl", "iur"));
-        classNamesMap.put(100203, new Pair<>("fmo", "hoi"));
-        classNamesMap.put(110153, new Pair<>("kts", "pgj"));
-        classNamesMap.put(102455, new Pair<>("hfz", "ktr"));
-        classNamesMap.put(100506, new Pair<>("fwc", "ibn"));
-        classNamesMap.put(100305, new Pair<>("foe", "hrf"));
-        classNamesMap.put(100405, new Pair<>("ftp", "hxs"));
-        classNamesMap.put(103553, new Pair<>("lkn", "qcf"));
-        classNamesMap.put(100852, new Pair<>("geg", "iny"));
-        classNamesMap.put(108957, new Pair<>("kqo", "pqh"));
-        classNamesMap.put(110759, new Pair<>("lxg", "qub"));
-        classNamesMap.put(111060, new Pair<>("mdn", "rgd"));
-        classNamesMap.put(111356, new Pair<>("mnv", "rtv"));
-        classNamesMap.put(111555, new Pair<>("mzy", "sir"));
-        classNamesMap.put(111662, new Pair<>("nhl", "srt"));
-        classNamesMap.put(111752, new Pair<>("nif", "suk"));
-        classNamesMap.put(111852, new Pair<>("nji", "sxd"));
-        classNamesMap.put(111956, new Pair<>("naw", "sru"));
-        classNamesMap.put(112054, new Pair<>("nau", "suv"));
-        classNamesMap.put(112153, new Pair<>("ngq", "tae"));
-        classNamesMap.put(112254, new Pair<>("niz", "tbz"));
-        classNamesMap.put(112356, new Pair<>("niv", "tcp"));
-        classNamesMap.put(112555, new Pair<>("nlk", "tht"));
-        classNamesMap.put(112559, new Pair<>("nlk", "tht"));
-        classNamesMap.put(112753, new Pair<>("nms", "tlb"));
-        classNamesMap.put(112953, new Pair<>("nmj", "tyt"));
-        classNamesMap.put(112955, new Pair<>("nkn", "tww"));
-        classNamesMap.put(113253, new Pair<>("nsz", "uik"));
-        classNamesMap.put(113355, new Pair<>("ntm", "ukl"));
-        classNamesMap.put(113358, new Pair<>("ntm", "ukl"));
-        classNamesMap.put(113560, new Pair<>("nzj", "uti"));
-        classNamesMap.put(113854, new Pair<>("ocr", "ury"));
-        classNamesMap.put(113956, new Pair<>("odr", "utk"));
-        classNamesMap.put(114156, new Pair<>("ofb", "vas"));
-        classNamesMap.put(114352, new Pair<>("oit", "vay"));
-        classNamesMap.put(114354, new Pair<>("oit", "vay"));
     }
 }
