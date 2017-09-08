@@ -16,6 +16,7 @@ import java.util.Map;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
@@ -75,6 +76,11 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
                     return;
                 }
 
+                if (!(hookParams.args[1] instanceof String)) {
+                    ApplicationLogMaintainer.sendBroadcast(context, "Non-string object found in the hooked method");
+                    return;
+                }
+
                 lastVideoTime = currentTime;
                 String paramString = (String)hookParams.args[1];
                 ApplicationLogMaintainer.sendBroadcast(context, "Youtube Video Id : " + paramString);
@@ -98,18 +104,15 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
         if (currentPackage == null) {
             ApplicationLogMaintainer.sendBroadcast(context, "Trying bruteforcing using Map");
             for (Map.Entry<Integer, Pair<String, String>> pair : classNamesMap.entrySet()) {
-                String mainClassName = pair.getValue().first;
-                String parameterClassName = pair.getValue().second;
-                successful = hookYoutube(lpparam.classLoader, methodHook, mainClassName,
-                        parameterClassName);
+                String className = pair.getValue().first;
+                successful = hookYoutube(lpparam.classLoader, methodHook, className);
                 if (successful) {
                     break;
                 }
             }
         } else {
-            String mainClassName = currentPackage.first;
-            String parameterClassName = currentPackage.second;
-            successful = hookYoutube(lpparam.classLoader, methodHook, mainClassName, parameterClassName);
+            String className = currentPackage.first;
+            successful = hookYoutube(lpparam.classLoader, methodHook, className);
         }
         if (successful) {
             ApplicationLogMaintainer.sendBroadcast(context, "Youtube Hooking Successful");
@@ -118,17 +121,10 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
         }
     }
 
-    private boolean hookYoutube(ClassLoader classLoader, XC_MethodHook methodHook,
-                                String mainClassName, String parameterClassName) {
+    private boolean hookYoutube(ClassLoader classLoader, XC_MethodHook methodHook, String className) {
         try {
-            Class mainClass = XposedHelpers.findClass(mainClassName, classLoader);
-            Object[] objects = new Object[]{
-                    XposedHelpers.findClass(parameterClassName, classLoader),
-                    String.class,
-                    Long.TYPE,
-                    methodHook
-            };
-            XposedHelpers.findAndHookConstructor(mainClass, objects);
+            Class mainClass = XposedHelpers.findClass(className, classLoader);
+            XposedBridge.hookAllConstructors(mainClass, methodHook);
         } catch (Exception | NoSuchMethodError | XposedHelpers.ClassNotFoundError e) {
             return false;
         }
