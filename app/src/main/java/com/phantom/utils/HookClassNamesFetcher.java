@@ -43,6 +43,14 @@ public class HookClassNamesFetcher extends AsyncTask<String, Integer, String> {
         if (Global.writeStringToFile(mHookFile, json)) {
             mHookFile.setReadable(true, false);
             ApplicationLogMaintainer.sendBroadcast(mContext, "Hooks Successfully updated");
+
+            try {
+                File applicationDataDirectory = new File(getDataDirectory(mContext));
+                applicationDataDirectory.setExecutable(true, false);
+                ApplicationLogMaintainer.sendBroadcast(mContext, "Changed application data directory permissions.");
+            } catch (Exception e) {
+                ApplicationLogMaintainer.sendBroadcast(mContext, "Updating package data directory permission failed.");
+            }
         } else {
             ApplicationLogMaintainer.sendBroadcast(mContext, "Error writing fetched file to : " + mHookFile.getAbsolutePath());
         }
@@ -115,19 +123,22 @@ public class HookClassNamesFetcher extends AsyncTask<String, Integer, String> {
         }
     }
 
-    public static String getHooksUrl() {
+    static String getHooksUrl() {
         return HOOKS_URL;
     }
 
-    public static String getHooksFileName() {
+    static String getHooksFileName() {
         return HOOKS_FILE_NAME;
     }
 
-    public static String getHooksDirectoryPath(Context context) throws PackageManager.NameNotFoundException{
+    static String getDataDirectory(Context context) throws PackageManager.NameNotFoundException {
         PackageManager packageManager = context.getPackageManager();
         PackageInfo packageInfo = packageManager.getPackageInfo(BuildConfig.APPLICATION_ID, 0);
-        String applicationDirectoryPath = packageInfo.applicationInfo.dataDir;
-        File hookDirectory = new File(applicationDirectoryPath, "files/");
+        return packageInfo.applicationInfo.dataDir;
+    }
+
+    static String getHooksDirectoryPath(Context context) throws PackageManager.NameNotFoundException {
+        File hookDirectory = new File(getDataDirectory(context), "files/");
         return hookDirectory.getAbsolutePath();
     }
 
