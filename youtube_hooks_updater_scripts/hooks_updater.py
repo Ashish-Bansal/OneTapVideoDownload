@@ -8,7 +8,7 @@ import os
 import sys
 from pipes import quote
 
-YOUTUBE_APK_URL = 'http://www.androidapksfree.com/apk/youtube-apk-latest-version-download/'
+YOUTUBE_APK_URL = 'https://www.androidapksfree.com/apk/youtube-apk-latest-version-download/download/'
 HOOKS_DIRECTORY_PATH = 'app/src/main/assets'
 HOOKS_FILENAME = 'HookClassnames.json'
 
