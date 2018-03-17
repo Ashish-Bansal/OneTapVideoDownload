@@ -2,6 +2,7 @@ package com.phantom.onetapvideodownload.downloader;
 
 import android.annotation.TargetApi;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -11,10 +12,11 @@ import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
-import android.support.v7.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 
@@ -59,7 +61,16 @@ public class DownloadManager extends Service {
     @Override
     public void onCreate() {
         mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mBuilder = new NotificationCompat.Builder(this);
+        String notification_channel_id = "otvd_notification_channel";
+        mBuilder = new NotificationCompat.Builder(this, notification_channel_id);
+        mBuilder.setOnlyAlertOnce(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_LOW;
+            CharSequence name = getString(R.string.otvd_channel);
+            NotificationChannel mChannel = new NotificationChannel(notification_channel_id, name, importance);
+            mChannel.setSound(null, null);
+            mNotifyManager.createNotificationChannel(mChannel);
+        }
 
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(this);
         List<DownloadInfo> downloadInfos = downloadDatabase.getAllDownloads();

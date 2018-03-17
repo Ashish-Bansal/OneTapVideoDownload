@@ -14,7 +14,7 @@ import com.phantom.utils.CheckPreferences;
 public class ThemeManager {
     public static void applyTheme(AppCompatActivity activity) {
         activity.setTheme(ThemeManager.getTheme(activity));
-        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
+        Toolbar toolbar = activity.findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(ThemeManager.getPrimaryColor(activity));
         toolbar.setPopupTheme(getPopupMenuTheme(activity));
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -26,7 +26,7 @@ public class ThemeManager {
     public static void onThemeChanged(Activity activity) {
         activity.finish();
         final Intent intent = activity.getIntent();
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
     }
 

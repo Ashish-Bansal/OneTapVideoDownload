@@ -1,6 +1,7 @@
 package com.phantom.onetapvideodownload;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
@@ -12,7 +13,8 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.support.v7.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -133,7 +135,8 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     }
 
     private void showNotification(String url, String title, long videoId) {
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+        String notification_channel_id = "otvd_notification_channel";
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, notification_channel_id);
         mBuilder.setSmallIcon(R.drawable.one_tap_small);
         mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.one_tap_large));
         mBuilder.setContentTitle(title);
@@ -205,6 +208,14 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
         final NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
         final int id = possibleId;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            int importance = NotificationManager.IMPORTANCE_LOW;
+            CharSequence name = getString(R.string.otvd_channel);
+            NotificationChannel mChannel = new NotificationChannel(notification_channel_id, name, importance);
+            mChannel.setSound(null, null);
+            notificationmanager.createNotificationChannel(mChannel);
+        }
+
         notificationmanager.notify(id, mBuilder.build());
         int delayInSeconds = CheckPreferences.notificationDismissTime(this);
 

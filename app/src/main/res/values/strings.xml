@@ -163,6 +163,7 @@
     <string name="youtube_next_video_summary">Notification for downloading videos from YouTube will appear from next video. So, please skip this video and play the next video.</string>
     <string name="submit">Submit</string>
     <string name="free_of_cost">Due to full time job, I\'m unable to continue work on this application. Thanks a lot for supporting this project!</string>
+    <string name="otvd_channel">One Tap Video Download</string>
 
     <string-array name="pref_notification_count_titles">
         <item>1 Notification</item>
