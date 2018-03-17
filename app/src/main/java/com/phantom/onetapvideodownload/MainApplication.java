@@ -17,15 +17,10 @@
 package com.phantom.onetapvideodownload;
 
 import android.app.Application;
-import android.widget.Toast;
 
-import com.anjlab.android.iab.v3.BillingProcessor;
-import com.anjlab.android.iab.v3.TransactionDetails;
 import com.evernote.android.job.JobManager;
 import com.phantom.HookFetchJob;
 import com.phantom.HookFetchJobCreator;
-import com.phantom.utils.CheckPreferences;
-import com.phantom.utils.Global;
 
 public class MainApplication extends Application {
     private static boolean activityVisible;
