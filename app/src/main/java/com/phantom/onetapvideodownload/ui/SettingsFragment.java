@@ -43,7 +43,7 @@ public class SettingsFragment extends XpPreferenceFragment {
                         .tag(FOLDER_CHOOSER_TAG)
                         .initialPath(Environment.getExternalStorageDirectory().getPath())
                         .allowNewFolder(true, R.string.new_folder)
-                        .show();
+                        .show(mainActivity);
                 return true;
             }
         });

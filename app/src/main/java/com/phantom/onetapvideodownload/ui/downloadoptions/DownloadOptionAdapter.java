@@ -1,6 +1,7 @@
 package com.phantom.onetapvideodownload.ui.downloadoptions;
 
 import android.content.Context;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,12 +42,12 @@ public class DownloadOptionAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        new FolderChooserDialog.Builder((MainActivity)mContext)
+                        new FolderChooserDialog.Builder(mContext)
                                 .chooseButton(R.string.md_choose_label)
                                 .tag(FOLDER_CHOOSER_TAG)
                                 .initialPath(mDownloadLocation)
                                 .allowNewFolder(true, R.string.new_folder)
-                                .show();
+                                .show((MainActivity) mContext);
                     }
                 }
         );
