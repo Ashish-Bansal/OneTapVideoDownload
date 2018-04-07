@@ -14,7 +14,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
-import android.support.v7.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 
@@ -59,7 +59,7 @@ public class DownloadManager extends Service {
     @Override
     public void onCreate() {
         mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        mBuilder = new NotificationCompat.Builder(this);
+        mBuilder = new NotificationCompat.Builder(this, PACKAGE_NAME + "." + TAG);
 
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(this);
         List<DownloadInfo> downloadInfos = downloadDatabase.getAllDownloads();
@@ -220,7 +220,8 @@ public class DownloadManager extends Service {
     private void requestPermission(AppPermissions permission) {
         String title = "Storage permission required";
         String description = "Please enable this permission and restart your download.";
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,
+                PACKAGE_NAME + "." + TAG);
         builder.setSmallIcon(R.drawable.one_tap_small);
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.one_tap_large));
         builder.setContentTitle(title);

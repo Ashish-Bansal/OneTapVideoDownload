@@ -1,7 +1,7 @@
 package com.phantom.onetapyoutubemodule;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v4.util.Pair;
 
 import com.phantom.onetapvideodownload.ApplicationLogMaintainer;
 import com.phantom.onetapvideodownload.IpcService;
@@ -21,11 +21,12 @@ import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.callbacks.XC_LoadPackage;
 
 public class YoutubeMediaHook implements IXposedHookLoadPackage {
-    private static final String ONE_TAP_PACKAGE_NAME = "com.phantom.onetapvideodownload";
+    //    private static final String ONE_TAP_PACKAGE_NAME = "com.phantom.onetapvideodownload";
     private static final String ONE_TAP_YOUTUBE_MODULE_PACKAGE_NAME = "com.phantom.onetapyoutubemodule";
     private static final String PACKAGE_NAME = "com.google.android.youtube";
     private static final String ORIGINAL_CLASS_NAME = "com.google.android.libraries.youtube.innertube.model.media.FormatStreamModel";
-    private static final HashMap<Integer, String> classNamesMap = new HashMap<>();
+    @SuppressLint("UseSparseArrays")
+    private static final Map<Integer, String> classNamesMap = new HashMap<>();
     private static long lastVideoTime = System.currentTimeMillis();
 
     public void handleLoadPackage(final XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
@@ -42,11 +43,11 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
 
         File hookFile = new File(HookClassNamesFetcher.getHooksFilePath(context));
         try {
-            if (!hookFile.exists())  {
+            if (!hookFile.exists()) {
                 ApplicationLogMaintainer.sendBroadcast(context, "Hook file doesn't exist");
             }
 
-            if (!Global.isFileReadable(hookFile))  {
+            if (!Global.isFileReadable(hookFile)) {
                 ApplicationLogMaintainer.sendBroadcast(context, "Unable to open file for reading");
                 ApplicationLogMaintainer.sendBroadcast(context, hookFile.getAbsolutePath());
             }
@@ -69,7 +70,7 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
         boolean isNotObfuscated = Global.isClassPresent(loader, ORIGINAL_CLASS_NAME);
 
         final XC_MethodHook methodHook = new XC_MethodHook() {
-            protected void afterHookedMethod(XC_MethodHook.MethodHookParam hookParams) throws Throwable {
+            protected void afterHookedMethod(XC_MethodHook.MethodHookParam hookParams) {
                 long currentTime = System.currentTimeMillis();
                 if (currentTime - lastVideoTime < 1200L) {
                     return;
@@ -77,11 +78,13 @@ public class YoutubeMediaHook implements IXposedHookLoadPackage {
 
                 if (!(hookParams.args[1] instanceof String)) {
                     ApplicationLogMaintainer.sendBroadcast(context, "Non-string object found in the hooked method");
+                    ApplicationLogMaintainer.sendBroadcast(context, "Object is " +
+                            hookParams.args[1]);
                     return;
                 }
 
                 lastVideoTime = currentTime;
-                String paramString = (String)hookParams.args[1];
+                String paramString = (String) hookParams.args[1];
                 ApplicationLogMaintainer.sendBroadcast(context, "Youtube Video Id : " + paramString);
                 IpcService.startSaveYoutubeVideoAction(context, paramString);
             }

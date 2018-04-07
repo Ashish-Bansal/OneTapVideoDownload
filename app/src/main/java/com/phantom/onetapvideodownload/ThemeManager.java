@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -14,7 +13,7 @@ import com.phantom.utils.CheckPreferences;
 public class ThemeManager {
     public static void applyTheme(AppCompatActivity activity) {
         activity.setTheme(ThemeManager.getTheme(activity));
-        Toolbar toolbar = (Toolbar) activity.findViewById(R.id.toolbar);
+        Toolbar toolbar = activity.findViewById(R.id.toolbar);
         toolbar.setBackgroundColor(ThemeManager.getPrimaryColor(activity));
         toolbar.setPopupTheme(getPopupMenuTheme(activity));
         if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -26,11 +25,11 @@ public class ThemeManager {
     public static void onThemeChanged(Activity activity) {
         activity.finish();
         final Intent intent = activity.getIntent();
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
     }
 
-    public static int getTheme(Context context) {
+    private static int getTheme(Context context) {
         if (CheckPreferences.getDarkThemeEnabled(context)) {
             return R.style.AppTheme_Dark;
         } else {
@@ -38,7 +37,7 @@ public class ThemeManager {
         }
     }
 
-    public static int getPopupMenuTheme(Context context) {
+    private static int getPopupMenuTheme(Context context) {
         if (CheckPreferences.getDarkThemeEnabled(context)) {
             return R.style.AppTheme_ThemeOverlay_AppCompat_Dark;
         } else {
@@ -70,7 +69,7 @@ public class ThemeManager {
         }
     }
 
-    public static int getPrimaryDarkColor(Context context) {
+    private static int getPrimaryDarkColor(Context context) {
         if (CheckPreferences.getDarkThemeEnabled(context)) {
             return ContextCompat.getColor(context, R.color.dark_background);
         } else {
@@ -78,7 +77,7 @@ public class ThemeManager {
         }
     }
 
-    public static int getNavigationBarColor(Context context) {
+    private static int getNavigationBarColor(Context context) {
         if (CheckPreferences.getDarkThemeEnabled(context)) {
             return ContextCompat.getColor(context, R.color.black);
         } else {
