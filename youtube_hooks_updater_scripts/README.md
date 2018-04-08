@@ -26,4 +26,5 @@ Options:
 - [jd-core-java](https://github.com/nviennot/jd-core-java)
     - Expects a script called `jd-core-java` in the `PATH` which would execute the `jd-core-java` 
     jar with the specified parameters.
+- [hub](https://github.com/github/hub) should be present in the `PATH`
 
