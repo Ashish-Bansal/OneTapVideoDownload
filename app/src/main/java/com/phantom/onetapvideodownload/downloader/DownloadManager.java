@@ -57,19 +57,19 @@ public class DownloadManager extends Service {
     private final Integer mNotificationId = 20;
     private final Long NOTIFICATION_UPDATE_WAIT_TIME = 2500L;
     private Thread mUiUpdateThread;
+    private static final String NOTIFICATION_CHANNEL_NAME = "One Tap Video Download";
 
     @Override
     public void onCreate() {
         mNotifyManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        String notification_channel_id = "otvd_notification_channel";
-        mBuilder = new NotificationCompat.Builder(this, notification_channel_id);
+        String channelId = PACKAGE_NAME + "." + TAG;
+        mBuilder = new NotificationCompat.Builder(this, channelId);
         mBuilder.setOnlyAlertOnce(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            int importance = NotificationManager.IMPORTANCE_LOW;
-            CharSequence name = getString(R.string.otvd_channel);
-            NotificationChannel mChannel = new NotificationChannel(notification_channel_id, name, importance);
-            mChannel.setSound(null, null);
-            mNotifyManager.createNotificationChannel(mChannel);
+            NotificationChannel channel = new NotificationChannel(channelId, NOTIFICATION_CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_LOW);
+            channel.setSound(null, null);
+            mNotifyManager.createNotificationChannel(channel);
         }
 
         DownloadDatabase downloadDatabase = DownloadDatabase.getDatabase(this);
@@ -231,7 +231,8 @@ public class DownloadManager extends Service {
     private void requestPermission(AppPermissions permission) {
         String title = "Storage permission required";
         String description = "Please enable this permission and restart your download.";
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,
+                PACKAGE_NAME + "." + TAG);
         builder.setSmallIcon(R.drawable.one_tap_small);
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.one_tap_large));
         builder.setContentTitle(title);

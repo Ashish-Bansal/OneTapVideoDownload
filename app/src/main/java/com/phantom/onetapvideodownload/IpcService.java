@@ -1,5 +1,6 @@
 package com.phantom.onetapvideodownload;
 
+import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -14,7 +15,8 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.app.ServiceCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -47,6 +49,8 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     public static final String EXTRA_PARAM_STRING = PACKAGE_NAME + ".extra.url";
     public static final String EXTRA_PACKAGE_NAME = PACKAGE_NAME + ".extra.package_name";
 
+    private static final String NOTIFICATION_CHANNEL_NAME = "One Tap Video Download";
+
     private Handler mHandler = new Handler();
     private final IBinder mBinder = new LocalBinder();
     private static final AtomicInteger notificationId = new AtomicInteger();
@@ -62,14 +66,14 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent.putExtra(EXTRA_URL, uri);
         intent.putExtra(EXTRA_PACKAGE_NAME, packageName);
-        context.startService(intent);
+        ContextCompat.startForegroundService(context, intent);
     }
 
     public static void startSaveYoutubeVideoAction(Context context, String paramString) {
         Intent intent = new Intent(ACTION_SAVE_YOUTUBE_VIDEO);
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent.putExtra(EXTRA_PARAM_STRING, paramString);
-        context.startService(intent);
+        ContextCompat.startForegroundService(context, intent);
     }
 
     public static void startInspectMediaUriAction(Context context, String uri, String packageName) {
@@ -77,7 +81,23 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent.putExtra(EXTRA_URL, uri);
         intent.putExtra(EXTRA_PACKAGE_NAME, packageName);
-        context.startService(intent);
+        ContextCompat.startForegroundService(context, intent);
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        // On Oreo, we need a notification to show that the app is running in background
+        // Refer - https://stackoverflow.com/a/47654126 - for more information
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            startForeground(1024, new Notification());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            ServiceCompat.stopForeground(this, ServiceCompat.STOP_FOREGROUND_REMOVE);
     }
 
     @Override
@@ -85,10 +105,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
         return mBinder;
     }
 
-    public class LocalBinder extends Binder {
-        public IpcService getServiceInstance() {
-            return IpcService.this;
-        }
+    private class LocalBinder extends Binder {
     }
 
     @Override
@@ -135,8 +152,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     }
 
     private void showNotification(String url, String title, long videoId) {
-        String notification_channel_id = "otvd_notification_channel";
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, notification_channel_id);
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, PACKAGE_NAME);
         mBuilder.setSmallIcon(R.drawable.one_tap_small);
         mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.one_tap_large));
         mBuilder.setContentTitle(title);
@@ -146,7 +162,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
 
         // 0 if vibration is disabled.
         long vibrationAmount = CheckPreferences.vibrationAmount(this);
-        mBuilder.setVibrate(new long[] {0, vibrationAmount});
+        mBuilder.setVibrate(new long[]{0, vibrationAmount});
 
         int currentApiVersion = android.os.Build.VERSION.SDK_INT;
         if (CheckPreferences.headsUpEnabled(this) && currentApiVersion >= Build.VERSION_CODES.JELLY_BEAN) {
@@ -165,7 +181,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
             instantDownloadIntent = ProxyDownloadManager.getActionBrowserDownload(this, videoId,
                     title, CheckPreferences.getDownloadLocation(this));
         } else if (VideoDatabase.VIDEO_TYPE_YOUTUBE == videoDatabase.getCategory(videoId)) {
-            YoutubeVideo video = (YoutubeVideo)videoDatabase.getVideo(videoId);
+            YoutubeVideo video = (YoutubeVideo) videoDatabase.getVideo(videoId);
             int itag = video.getBestVideoFormat().itag;
             instantDownloadIntent = ProxyDownloadManager.getActionYoutubeDownload(this, videoId,
                     title, CheckPreferences.getDownloadLocation(this), itag);
@@ -206,14 +222,13 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
         mBuilder.setContentIntent(downloadPendingIntent);
 
         final NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if (notificationmanager == null) {
+            return;
+        }
 
         final int id = possibleId;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            int importance = NotificationManager.IMPORTANCE_LOW;
-            CharSequence name = getString(R.string.otvd_channel);
-            NotificationChannel mChannel = new NotificationChannel(notification_channel_id, name, importance);
-            mChannel.setSound(null, null);
-            notificationmanager.createNotificationChannel(mChannel);
+            notificationmanager.createNotificationChannel(getNotificationChannel());
         }
 
         notificationmanager.notify(id, mBuilder.build());
@@ -263,20 +278,28 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
 
         if (invalidId) {
             final NotificationManager notificationmanager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            if (notificationmanager == null) {
+                return;
+            }
+
             int possibleId = notificationId.getAndIncrement();
             if (possibleId >= CheckPreferences.notificationCountAllowed(this)) {
                 possibleId = 0;
                 notificationId.set(possibleId);
             }
             final int id = possibleId;
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, PACKAGE_NAME);
             mBuilder.setSmallIcon(R.drawable.one_tap_small);
+            mBuilder.setChannelId(PACKAGE_NAME);
             mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.one_tap_large));
             mBuilder.setContentTitle(getResources().getString(R.string.youtube_next_video_title));
             mBuilder.setContentInfo(getResources().getString(R.string.youtube_next_video_summary));
             mBuilder.setStyle(new NotificationCompat.BigTextStyle().bigText(getResources().getString(R.string.youtube_next_video_summary)));
             mBuilder.setAutoCancel(true);
             mBuilder.setOnlyAlertOnce(false);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                notificationmanager.createNotificationChannel(getNotificationChannel());
+            }
             notificationmanager.notify(id, mBuilder.build());
             return;
         }
@@ -286,7 +309,7 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
     @Override
     public Integer invoke(Video video) {
         if (video != null) {
-            YoutubeVideo youtubeVideo = (YoutubeVideo)video;
+            YoutubeVideo youtubeVideo = (YoutubeVideo) video;
             youtubeVideo.setPackageName("com.google.android.youtube");
             String bestFormatUrl = youtubeVideo.getBestVideoFormat().url;
             if (bestFormatUrl == null
@@ -301,5 +324,11 @@ public class IpcService extends Service implements Invokable<Video, Integer> {
             }
         }
         return 0;
+    }
+
+    @TargetApi(Build.VERSION_CODES.O)
+    private NotificationChannel getNotificationChannel() {
+        return new NotificationChannel(PACKAGE_NAME, NOTIFICATION_CHANNEL_NAME,
+                NotificationManager.IMPORTANCE_DEFAULT);
     }
 }
