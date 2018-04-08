@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -30,7 +29,7 @@ public class ThemeManager {
         activity.startActivity(intent);
     }
 
-    public static int getTheme(Context context) {
+    private static int getTheme(Context context) {
         if (CheckPreferences.getDarkThemeEnabled(context)) {
             return R.style.AppTheme_Dark;
         } else {
@@ -38,7 +37,7 @@ public class ThemeManager {
         }
     }
 
-    public static int getPopupMenuTheme(Context context) {
+    private static int getPopupMenuTheme(Context context) {
         if (CheckPreferences.getDarkThemeEnabled(context)) {
             return R.style.AppTheme_ThemeOverlay_AppCompat_Dark;
         } else {
@@ -70,7 +69,7 @@ public class ThemeManager {
         }
     }
 
-    public static int getPrimaryDarkColor(Context context) {
+    private static int getPrimaryDarkColor(Context context) {
         if (CheckPreferences.getDarkThemeEnabled(context)) {
             return ContextCompat.getColor(context, R.color.dark_background);
         } else {
@@ -78,7 +77,7 @@ public class ThemeManager {
         }
     }
 
-    public static int getNavigationBarColor(Context context) {
+    private static int getNavigationBarColor(Context context) {
         if (CheckPreferences.getDarkThemeEnabled(context)) {
             return ContextCompat.getColor(context, R.color.black);
         } else {

@@ -84,6 +84,7 @@ public class ApplicationLogMaintainer extends BroadcastReceiver {
 
             File logFile = new File(getLogFilePath());
             if (!logFile.getParentFile().exists()) {
+                //noinspection ResultOfMethodCallIgnored
                 logFile.getParentFile().mkdirs();
             }
 

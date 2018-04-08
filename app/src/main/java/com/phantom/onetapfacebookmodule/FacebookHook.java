@@ -34,7 +34,7 @@ public class FacebookHook implements IXposedHookLoadPackage {
         }
 
         final XC_MethodHook methodHook = new XC_MethodHook() {
-            protected void afterHookedMethod(XC_MethodHook.MethodHookParam hookParams) throws Throwable {
+            protected void afterHookedMethod(XC_MethodHook.MethodHookParam hookParams) {
                 try {
                     Uri uri = (Uri) hookParams.args[0];
                     ApplicationLogMaintainer.sendBroadcast(context, "Facebook Main URL : " + uri.toString());
