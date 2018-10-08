@@ -17,14 +17,8 @@ Now Youtube Videos can be downloaded as well by using [this](http://repo.xposed.
 &#8226; Configure the application as you like.<br/>
 
 Any kind of contributions are welcomed!
-
-<b>Credits :</b><br>
-★ Image Graphics: Stefan Ivic<br>
-★ Application Name : Deepak Sharma<br>
-★ Xposed Module Inspiration : Rutvik Rajagopal<br>
-★ Module Developer : Ashish Bansal
  
-If you find any bugs or issues, please post it on github or Google+ community page.
+If you find any bugs or issues, please post it on github.
 
 <b>*DISCLAIMER*</b></br>
 I take no responsibility for any fault or damage caused by any procedures of the app. No warranties of any kind are given.
