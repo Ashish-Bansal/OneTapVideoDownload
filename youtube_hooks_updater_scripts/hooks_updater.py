@@ -118,7 +118,7 @@ def createGitPullRequest(version):
 @click.command()
 @click.option('--youtube-apk-url', type=str, default=YOUTUBE_APK_URL,
               help='URL to download latest Youtube APKs')
-@click.option('--dont-create-pr', type=bool, default=False,
+@click.option('--create-pr', type=bool, default=False,
               help='Create a PR against master')
 def main(youtube_apk_url, create_pr):
     YOUTUBE_APK_URL = youtube_apk_url
