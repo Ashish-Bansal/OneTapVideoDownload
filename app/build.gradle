@@ -1,8 +1,8 @@
 apply plugin: "com.android.application"
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
 
     lintOptions{
         disable "MissingTranslation"
@@ -12,9 +12,9 @@ android {
     defaultConfig {
         applicationId "com.phantom.onetapvideodownload"
         minSdkVersion 15
-        targetSdkVersion 27
-        versionCode 46
-        versionName "5.5"
+        targetSdkVersion 28
+        versionCode 48
+        versionName "5.6"
     }
 
     sourceSets {
@@ -43,24 +43,24 @@ android {
 dependencies {
     compileOnly fileTree(dir: 'libs', include: ['XposedBridgeApi-20150213.jar'])
 
-    implementation 'com.android.support:support-compat:27.1.1'
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
-    implementation "com.android.support:preference-v7:27.1.1"
-    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:support-compat:28.0.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+    implementation "com.android.support:preference-v7:28.0.0"
+    implementation 'com.android.support:cardview-v7:28.0.0'
 
-    implementation 'com.google.firebase:firebase-core:12.0.1'
-    implementation 'com.google.firebase:firebase-crash:12.0.1'
-    implementation 'com.google.android.gms:play-services-plus:12.0.1'
-    implementation 'com.google.firebase:firebase-messaging:12.0.1'
+    implementation 'com.google.firebase:firebase-core:16.0.4'
+    implementation 'com.google.firebase:firebase-crash:16.2.1'
+    implementation 'com.google.android.gms:play-services-plus:15.0.1'
+    implementation 'com.google.firebase:firebase-messaging:17.3.3'
     implementation 'com.github.HaarigerHarald:android-youtubeExtractor:v1.7.0'
 
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     implementation 'net.xpece.android:support-preference:2.1.1'
-    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
-    implementation 'com.squareup.okio:okio:1.13.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okio:okio:1.14.0'
     implementation 'me.zhanghai.android.materialprogressbar:library:1.4.2@aar'
     implementation 'org.solovyev.android.views:linear-layout-manager:0.5@aar'
     implementation 'com.github.bluejamesbond:textjustify-android:2.1.6'
